@@ -1,0 +1,2 @@
+﻿TC.registerModel(function (pane) {
+});

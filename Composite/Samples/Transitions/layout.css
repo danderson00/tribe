@@ -1,0 +1,23 @@
+﻿.target {
+    position: absolute;
+    left: 50%;
+    margin-left: -100px;
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.one {
+    background: lightgoldenrodyellow;    
+}
+
+.two {
+    background: white;
+}
+
+.three {
+    background: lightgray;
+}

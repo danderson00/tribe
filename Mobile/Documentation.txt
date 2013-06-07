@@ -1,0 +1,13 @@
+﻿Common Panes
+============
+
+List
+----
+
+options: {
+    items: array,
+    itemText: string,
+    itemClick: function,
+    cssClass: string,
+    headerText: string
+}

@@ -1,0 +1,28 @@
+﻿.screenContainer > * {
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transform: translate3d(0, 0, 0) rotate(0) scale(1);
+
+    background-color: #cbd2d8;
+    background-image: -webkit-gradient(linear, 0% 50%, 7 50%, color-stop(0%, rgba(197, 205, 212, 0)), color-stop(14.286%, rgba(197, 205, 212, 0)), color-stop(14.286%, #c5cdd4), color-stop(100%, #c5cdd4));
+    background-image: -webkit-linear-gradient(left, rgba(197, 205, 212, 0), rgba(197, 205, 212, 0) 1px, #c5cdd4 1px, #c5cdd4 7px);
+    background-image: linear-gradient(left, rgba(197, 205, 212, 0), rgba(197, 205, 212, 0) 1px, #c5cdd4 1px, #c5cdd4 7px);
+    background-size: 7px;
+}

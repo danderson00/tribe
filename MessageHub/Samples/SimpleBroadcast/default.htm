@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Simple SignalR.MessageBus Broadcast Sample</title>
+    <link rel="stylesheet" href="Content/site.css" />
+    <script type="text/javascript" src="Dependencies/jquery.js"></script>
+    <script type="text/javascript" src="Dependencies/jquery.signalR-1.0.1.js"></script>
+    <script type="text/javascript" src="Dependencies/Tribe.PubSub.js"></script>
+    <script type="text/javascript" src="Dependencies/Tribe.MessageHub.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var pubsub = new Tribe.PubSub();
+            var hub = new Tribe.MessageHub();
+            hub.initialise(pubsub);
+            var session = hub.createSession(['chat.message']);
+
+            $('button').on('click', function() {
+                pubsub.publish('chat.message', $('input').val());
+            });
+
+            pubsub.subscribe("chat.message", function(message) {
+                $('.messages').append(message + '<br/>');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="chat">
+        <div class="messages"></div>
+
+        Enter message to send 
+        <input /><button >Send</button>
+    </div>
+</body>
+</html>

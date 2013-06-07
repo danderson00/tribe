@@ -1,0 +1,7 @@
+﻿.editable > * {
+    display: block;
+}
+
+.editable input {
+    width: 100%;
+}

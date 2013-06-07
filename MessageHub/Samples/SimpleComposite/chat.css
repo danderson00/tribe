@@ -1,0 +1,12 @@
+﻿.chat {
+    width: 400px;
+}
+
+.chat .messages {
+    width: 100%;
+    height: 300px;
+}
+
+.chat input {
+    width: 100%;
+}

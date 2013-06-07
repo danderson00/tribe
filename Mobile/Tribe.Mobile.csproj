@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{25A3AD00-CF30-4DE7-83A5-D11554420B30}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tribe.Mobile</RootNamespace>
+    <AssemblyName>Tribe.Mobile</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="..\Tribe.js">
+      <Link>Dependencies\Tribe.js</Link>
+    </Content>
+    <Content Include="Build\Tribe.Mobile.js" />
+    <Content Include="Build\Tribe.Mobile.min.js" />
+    <Content Include="Source\Css\elements.css" />
+    <Content Include="Source\Css\core.css" />
+    <Content Include="Source\Css\buttons.css" />
+    <Content Include="Source\Css\forms.css" />
+    <Content Include="Documentation.txt" />
+    <Content Include="pack.js" />
+    <Content Include="Source\Panes\blank.js" />
+    <Content Include="Source\Panes\editable.css" />
+    <Content Include="Source\Panes\editable.js" />
+    <Content Include="Source\Panes\editable.htm" />
+    <Content Include="Source\Panes\list.css" />
+    <Content Include="Source\Panes\list.htm" />
+    <Content Include="Source\Panes\list.js" />
+    <Content Include="Source\Panes\main.css" />
+    <Content Include="Source\Panes\main.htm" />
+    <Content Include="Source\Panes\main.js" />
+    <Content Include="Source\Panes\options.css" />
+    <Content Include="Source\Panes\options.htm" />
+    <Content Include="Source\Panes\options.js" />
+    <Content Include="Source\Panes\overlay.css" />
+    <Content Include="Source\Panes\overlay.htm" />
+    <Content Include="Source\Panes\overlay.js" />
+    <Content Include="Source\Panes\toolbar.css" />
+    <Content Include="Source\Panes\toolbar.htm" />
+    <Content Include="Source\Panes\toolbar.js" />
+    <Content Include="Dependencies\jquery-1.7.1.js" />
+    <Content Include="Dependencies\knockout-2.1.0.debug.js" />
+    <Content Include="Samples\Basic\index.html" />
+    <Content Include="Samples\Basic\layout.htm" />
+    <Content Include="Samples\Basic\layout.js" />
+    <Content Include="Samples\Basic\overlay.htm" />
+    <Content Include="Source\Binding Handlers\click.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
