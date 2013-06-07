@@ -1,0 +1,41 @@
+.tabPanel {
+    position: fixed;
+    z-index: 10;
+}
+
+.tabPanel ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.tabContent {
+    display: none;
+    overflow: visible;
+}
+
+.tabButtonContainer {
+    
+}
+
+.tabButton {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    color: black;
+    z-index: 11;
+}
+
+.tabButton .tabButtonIcon {
+    width: 0;
+    height: 0;
+}
+
+.tabSelected {
+}
+
+.tabButtonText {
+    white-space: nowrap;
+}

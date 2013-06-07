@@ -1,0 +1,86 @@
+﻿.topTabPanel {
+    top: 0;
+    right: 45px;
+    margin-top: -1px;
+    z-index: 11;
+}
+
+.desktop .topTabPanel {
+    -webkit-border-bottom-right-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);       
+}
+
+.desktop .topTabPanel .tabButtonContainer li:last-child {
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;    
+}    	    
+
+.desktop .topTabPanel .tabButtonContainer li:first-child {
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;
+}
+    	    
+.topTabPanel .tabButton {
+    float: right;
+    height: 21px;
+    width: 75px;
+    padding: 10px 15px;
+    padding-top: 7px;
+
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    margin-left: -1px;  
+    
+    background: rgb(238,241,241);
+}
+
+.desktop .topTabPanel .tabButton {
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VlZjFmMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkMGRjZGMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  rgba(238,241,241,1) 0%, rgba(208,220,220,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,241,241,1)), color-stop(100%,rgba(208,220,220,1)));
+    background: -webkit-linear-gradient(top,  rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);
+    background: -o-linear-gradient(top,  rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);
+    background: linear-gradient(top,  rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eef1f1', endColorstr='#d0dcdc',GradientType=0 );
+}
+
+.mobile .topTabPanel .tabButton {
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.topTabPanel .tabButton:hover {
+}
+
+.topTabPanel .tabContent {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    margin-left: 1px;
+    padding-top: 33px;
+    border: 1px solid #CCCCCC;    
+}
+
+.desktop .topTabPanel .tabContent {
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;   
+
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);       
+}

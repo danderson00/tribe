@@ -55,7 +55,57 @@
         }
     }
 })();
-$('<style/>')
+$(function () {
+    var page = document.body,
+        ua = navigator.userAgent,
+        iphone = ~ua.indexOf('iPhone') || ~ua.indexOf('iPod'),
+        ipad = ~ua.indexOf('iPad'),
+        ios = iphone || ipad,
+        // Detect if this is running as a fullscreen app from the homescreen
+        fullscreen = window.navigator.standalone,
+        android = ~ua.indexOf('Android'),
+        lastWidth = 0;
+
+    if (android) {
+        // Android's browser adds the scroll position to the innerHeight, just to
+        // make this really fucking difficult. Thus, once we are scrolled, the
+        // page height value needs to be corrected in case the page is loaded
+        // when already scrolled down. The pageYOffset is of no use, since it always
+        // returns 0 while the address bar is displayed.
+        window.onscroll = function () {
+            page.style.height = window.innerHeight + 'px';
+        };
+    }
+    var setupScroll = window.onload = function () {
+        // Start out by adding the height of the location bar to the width, so that
+        // we can scroll past it
+        if (ios) {
+            // iOS reliably returns the innerWindow size for documentElement.clientHeight
+            // but window.innerHeight is sometimes the wrong value after rotating
+            // the orientation
+            var height = document.documentElement.clientHeight;
+            // Only add extra padding to the height on iphone / ipod, since the ipad
+            // browser doesn't scroll off the location bar.
+            if (iphone && !fullscreen) height += 60;
+            page.style.height = height + 'px';
+        } else if (android) {
+            // The stock Android browser has a location bar height of 56 pixels, but
+            // this very likely could be broken in other Android browsers.
+            page.style.height = (window.innerHeight + 56) + 'px';
+        }
+        // Scroll after a timeout, since iOS will scroll to the top of the page
+        // after it fires the onload event
+        setTimeout(scrollTo, 0, 0, 1);
+    };
+    (window.onresize = function () {
+        var pageWidth = page.offsetWidth;
+        // Android doesn't support orientation change, so check for when the width
+        // changes to figure out when the orientation changes
+        if (lastWidth == pageWidth) return;
+        lastWidth = pageWidth;
+        setupScroll();
+    })();
+});$('<style/>')
     .attr('class', '__tribe')
     .text('button.blue{background-color:#2f7ce3;color:#fff;text-shadow:#1a63c5 0 -1px 0}button.white,button.gray,button.red,button.blue,button.green{display:block;font-size:20px;font-weight:bold;margin:10px 20px;padding:10px;text-align:center;text-decoration:inherit;-webkit-border-radius:8px;border-radius:8px;-webkit-box-shadow:rgba(0,0,0,.4) 0 1px 3px,rgba(0,0,0,.4) 0 0 0 5px,rgba(255,255,255,.3) 0 1px 0 5px;box-shadow:rgba(0,0,0,.4) 0 1px 3px,rgba(0,0,0,.4) 0 0 0 5px,rgba(255,255,255,.3) 0 1px 0 5px}button.white.active,button.white:active,button.gray.active,button.gray:active,button.red.active,button.red:active,button.blue.active,button.blue:active,button.green.active,button.green:active{background-image:none;background-color:#2952a3;background-image:-webkit-gradient(linear,50% 0%,50% 100%,color-stop(0%,#4775d1),color-stop(50%,#2e5cb8),color-stop(51%,#2952a3),color-stop(100%,#24478f));background-image:-webkit-linear-gradient(top,#4775d1,#2e5cb8 50%,#2952a3 51%,#24478f);background-image:linear-gradient(top,#4775d1,#2e5cb8 50%,#2952a3 51%,#24478f);color:#fff;text-shadow:#1f3d7a 0 -1px 0}button.white{background-image:none;background-color:#eee;background-image:-webkit-gradient(linear,50% 0%,50% 100%,color-stop(0%,#fff),color-stop(50%,#fbfbfb),color-stop(51%,#eee),color-stop(100%,#e1e1e1));background-image:-webkit-linear-gradient(top,#fff,#fbfbfb 50%,#eee 51%,#e1e1e1);background-image:linear-gradient(top,#fff,#fbfbfb 50%,#eee 51%,#e1e1e1);color:#151515;text-shadow:white 0 1px 0}button.gray{background-image:none;background-color:#444;background-image:-webkit-gradient(linear,50% 0%,50% 100%,color-stop(0%,#6a6a6a),color-stop(50%,#515151),color-stop(51%,#444),color-stop(100%,#373737));background-image:-webkit-linear-gradient(top,#6a6a6a,#515151 50%,#444 51%,#373737);background-image:linear-gradient(top,#6a6a6a,#515151 50%,#444 51%,#373737);color:#fff;text-shadow:#2b2b2b 0 -1px 0}button.red{background-image:none;background-color:#d83b38;background-image:-webkit-gradient(linear,50% 0%,50% 100%,color-stop(0%,#e57a78),color-stop(50%,#dc504d),color-stop(51%,#d83b38),color-stop(100%,#ce2c28));background-image:-webkit-linear-gradient(top,#e57a78,#dc504d 50%,#d83b38 51%,#ce2c28);background-image:linear-gradient(top,#e57a78,#dc504d 50%,#d83b38 51%,#ce2c28);color:#fff;text-shadow:#b92724 0 -1px 0}button.red.active,button.red:active{background-image:none;background-color:#c12926;background-image:-webkit-gradient(linear,50% 0%,50% 100%,color-stop(0%,#de5856),color-stop(50%,#d52e2b),color-stop(51%,#c12926),color-stop(100%,#ac2422));background-image:-webkit-linear-gradient(top,#de5856,#d52e2b 50%,#c12926 51%,#ac2422);background-image:linear-gradient(top,#de5856,#d52e2b 50%,#c12926 51%,#ac2422);color:#fff;text-shadow:#97201e 0 -1px 0}button.green{background-image:none;background-color:#36c;background-image:-webkit-gradient(linear,50% 0%,50% 100%,color-stop(0%,#7094db),color-stop(50%,#4775d1),color-stop(51%,#36c),color-stop(100%,#2e5cb8));background-image:-webkit-linear-gradient(top,#7094db,#4775d1 50%,#36c 51%,#2e5cb8);background-image:linear-gradient(top,#7094db,#4775d1 50%,#36c 51%,#2e5cb8);color:#fff;text-shadow:#2952a3 0 -1px 0}')
     .appendTo('head');

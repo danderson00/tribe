@@ -1,0 +1,83 @@
+<script type="text/template" id="template--Common-contentHeader"><div class="contentHeader roundedTop gradient" data-bind="cssClass: gradientClass">
+    <ul>
+        <li class="heading"><span data-bind="text: text"></span></li>
+        <div data-bind="foreach: buttons">
+            <li class="right button" data-bind="click: click, visible: visible"><a data-bind="text: text"></a></li>
+        </div>
+    </ul>
+</div>
+</script>
+<script type="text/template" id="template--Common-dropDown"><div class="dropDownTrigger roundedSmall borderDark" data-bind="visible: showTrigger">
+    <span data-bind="text: selectedText"></span>
+    <div class="dropDownIcon smallArrowDown"></div>
+</div>
+
+<div class="dropDownPanel rounded subpanel">
+    <!-- ko if: allowCreate -->
+        <div><span>Create new:</span></div>
+        <div class="dropDownNewItem"><input type="text" /></div>
+    <!-- /ko -->
+        
+    <!-- ko if: items() && items().length > 0 -->
+        <div style="clear: left"><span>Select:</span></div>
+        <div style="clear: left" data-bind="foreach: items">
+            <div class="listItem" data-bind="click: $parent.selectItem, css: { selected: $parent.isItemSelected($data) }">
+                <span style="white-space: nowrap" data-bind="html: $parent.displayText($data)"></span>
+                <div style="float: right" />
+            </div>
+        </div>
+    <!-- /ko -->
+</div>
+</script>
+<script type="text/template" id="template--Common-expander"><div class="expander rounded borderLight" data-bind="css: { expanded: expanded }">
+    <div class="expanderHeader gradientGreen roundedTop roundedBottom" data-bind="click: click">        
+        <div class="arrow smallArrowDown"></div>
+        <div class="icon" />
+        <span class="headerText" data-bind="text: headerText"></span>
+        <!--<div class="iconPrint" data-bind="click: print"></div>-->
+    </div>
+    <div class="expanderContent roundedBottom">
+    </div>
+</div></script>
+<script type="text/template" id="template--Common-expanderList"><div class="expanderList" data-bind="foreach: expanders">
+    <div class="expanderContainer" data-bind="pane: '/Common/expander', data: $data"></div>
+</div></script>
+<script type="text/template" id="template--Common-graph"><div class="graphSeriesSelect" data-bind="visible: showSeriesSelect, displayText: seriesSelectText, selectField: selectedSeries, items: availableSeries, multipleSelect: true"></div>
+<div class="graphContainer" style="overflow: hidden; clear: left">
+    <div class="graph" style="float: left"></div>
+    <div class="legend" style="float: left"></div>
+</div></script>
+<script type="text/template" id="template--Common-grid"><!-- ko if: filters -->
+<div data-bind="foreach: filters" class="grid-filters">
+    <div data-bind="field: $data" class="grid-filter"></div>
+</div>
+<!-- /ko -->
+<div style="clear: left"></div>
+<div class="gridContainer">
+    <table class="grid" data-bind="if: $data.rows().length > 0">
+        <thead data-bind="visible: showHeader">
+            <!-- ko if: groupings().length > 0 -->
+            <tr class="grid-grouping" data-bind="foreach: groupings">
+                <!-- ko if: grouping == '' -->
+                <th data-bind="colspan: columnCount"></th>
+                <!-- /ko -->
+                <!-- ko if: grouping != '' -->
+                <th class="grid-grouping-item" data-bind="html: grouping, colspan: columnCount"></th>
+                <!-- /ko -->
+            </tr>
+            <!-- /ko -->
+
+            <tr class="grid-column-list grid-header" data-bind="foreach: headings">
+                <th class="grid-header-item" data-bind="html: $data, click: function (data, event) { $parent.sort($(event.currentTarget).index()); }"></th> 
+            </tr>
+        </thead>
+
+        <tbody data-bind="foreach: rows">
+            <tr class="grid-column-list grid-row" data-bind="foreach: $data, click: function () { $parent.rowClick($data); }">
+                <td class="grid-row-item" data-bind="cssClass: cssClass">
+                    <span data-bind="html: $data.display"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div></script>

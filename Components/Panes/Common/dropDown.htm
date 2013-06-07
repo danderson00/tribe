@@ -1,0 +1,21 @@
+﻿<div class="dropDownTrigger roundedSmall borderDark" data-bind="visible: showTrigger">
+    <span data-bind="text: selectedText"></span>
+    <div class="dropDownIcon smallArrowDown"></div>
+</div>
+
+<div class="dropDownPanel rounded subpanel">
+    <!-- ko if: allowCreate -->
+        <div><span>Create new:</span></div>
+        <div class="dropDownNewItem"><input type="text" /></div>
+    <!-- /ko -->
+        
+    <!-- ko if: items() && items().length > 0 -->
+        <div style="clear: left"><span>Select:</span></div>
+        <div style="clear: left" data-bind="foreach: items">
+            <div class="listItem" data-bind="click: $parent.selectItem, css: { selected: $parent.isItemSelected($data) }">
+                <span style="white-space: nowrap" data-bind="html: $parent.displayText($data)"></span>
+                <div style="float: right" />
+            </div>
+        </div>
+    <!-- /ko -->
+</div>

@@ -1,0 +1,83 @@
+﻿.dropDownTrigger {
+    position: relative;
+    font-family: Arial;
+    font-size: 13px;
+    margin: 0;
+    padding-top: 2px;
+    padding-left: 3px;
+    height: 18px;
+    width: 150px;
+    overflow: hidden;
+    cursor: pointer;
+}
+        
+.dropDownTrigger span {
+    white-space: nowrap;
+}
+
+.dropDownIcon {
+    position: absolute;
+    right: 0px;
+    top: 2px;
+    background-color: white;
+    margin-top: 6px;
+    margin-right: 6px;
+}
+        
+.dropDownPanel {    
+    position: absolute;
+    padding: 3px;
+    overflow: auto;
+    display: none;
+    z-index: 1;
+}
+
+.dropDownPanel input {
+    margin: 5px 3px;
+}
+
+.dropDownNewItem {
+    float: left;
+}
+
+.listItem {
+    width: auto;
+    background-color: #CCCCCC;
+    margin-bottom: 5px;
+    height: 31px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.listItem span {
+    display: block;
+    overflow: hidden;
+    padding: 5px 10px;
+    color: black;
+}
+
+.listItem input {
+    width: auto;
+    font-family: 'Segoe UI', "Trebuchet MS", Arial, Helvetica, Verdana, sans-serif;
+    height: 29px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #999999;
+    padding: 0 0 0 5px;
+    font-size: inherit;
+    outline: none;
+}
+
+.listItem:hover {
+    background-color: darkgray;
+    color: white;
+}
+
+.listItem.selected {
+    background-color: #bbccee;
+}
+

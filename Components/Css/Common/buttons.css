@@ -1,0 +1,73 @@
+﻿button {
+	-moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+	box-shadow: inset 0px 1px 0px 0px #ffffff;
+	
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color: #ededed;
+	
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;	
+	border: 1px solid #dcdcdc;
+	
+	display: inline-block;
+	color: #777777;
+	font-size: 15px;
+	font-weight: bold;
+    font-family: 'Segoe UI', Arial, "Trebuchet MS", Helvetica, Verdana, sans-serif;
+	padding: 6px 24px;
+    margin: 2px;
+	text-decoration: none;
+	text-shadow: 1px 1px 0px #ffffff;
+    vertical-align: top;
+}
+
+button:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}
+
+button:active {
+	-moz-box-shadow: inset 1px 1px 0px 0px #ededed;
+	-webkit-box-shadow: inset 1px 1px 0px 0px #ededed;
+	box-shadow: inset 1px 1px 0px 0px #ededed;
+    padding: 7px 23px 5px 25px;
+}
+
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+button:disabled {
+    background: #ededed;
+    padding-top: 4px;
+    text-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+    color: #999999;
+}
+
+button:disabled:hover {
+    background: #ededed;
+}
+
+button:disabled:active {
+    margin-top: 0;
+}
+
+button div {
+    display: inline-block;
+    margin-left: 15px;
+}

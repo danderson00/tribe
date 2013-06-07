@@ -1,0 +1,53 @@
+﻿.iconLoading {
+    background-image: url(images/loading16.gif) !important;
+    width: 16px;
+    height: 16px;
+}
+
+.iconCheckboxNo {
+    background-image: url(images/checkbox_no.png) !important;
+    width: 16px;
+    height: 16px;
+}
+
+.iconCheckboxYes {
+    background-image: url(images/checkbox_yes.png) !important;
+    width: 16px;
+    height: 16px;
+}
+
+.iconTick {
+    background-image: url(images/tick_circle.png) !important;
+    width: 16px;
+    height: 16px;
+}
+
+.iconSettings {
+    background-image: url(images/icon.cog.png) !important;
+    width: 16px;
+    height: 16px;
+}
+
+.iconHelp {
+    background-image: url(images/icon.help.png) !important;
+    width: 16px;
+    height: 16px;
+}
+
+.iconPrint {
+    background-image: url(images/icon.print.png) !important;
+    width: 16px;
+    height: 16px;
+}
+
+.iconDownload {
+    background-image: url(images/icon.download.png) !important;
+    width: 16px;
+    height: 16px;
+}
+
+.iconTips {
+    background-image: url(images/icon.tips.png) !important;
+    width: 22px;
+    height: 22px;
+}

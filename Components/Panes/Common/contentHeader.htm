@@ -1,0 +1,8 @@
+﻿<div class="contentHeader roundedTop gradient" data-bind="cssClass: gradientClass">
+    <ul>
+        <li class="heading"><span data-bind="text: text"></span></li>
+        <div data-bind="foreach: buttons">
+            <li class="right button" data-bind="click: click, visible: visible"><a data-bind="text: text"></a></li>
+        </div>
+    </ul>
+</div>

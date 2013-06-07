@@ -1,5 +1,5 @@
 ﻿var includes = [
-    { files: 'Source/Binding Handlers/*.js' },
+    { files: 'Source/Infrastructure/*.js' },
     { files: 'Source/Css/*.css', template: 'embedCss' },
     { files: 'Source/Panes/*.css', template: 'embedCss' },
     { files: 'Source/Panes/*.htm', template: { name: 'embedTemplate', data: { component: 'Mobile' } } },

@@ -1,4 +1,4 @@
-﻿this.component = function (component, platform) {
+﻿this.component = function (component, platform, outputPath) {
     platform = platform && platforms[platform];
     return [
         {
@@ -6,6 +6,7 @@
             include: [
                 panes(platform.folder, 'viewModel', 'js'),
                 panes('Common', 'viewModel', 'js'),
+                scripts('Infrastructure'),
                 scripts('Model'),
                 scripts('Processes'),
                 scripts('Sagas')
@@ -54,6 +55,6 @@
     }
 
     function target(extension) {
-        return '../Build/Output/Components/' + component + '.' + platform.name + '.' + extension;
+        return outputPath + component + '.' + platform.name + '.' + extension;
     }
 };
