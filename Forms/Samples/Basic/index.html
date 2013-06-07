@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Basic Forms</title>
+    <script type="text/javascript" src="../../../Libraries/jquery.js"></script>
+    <script type="text/javascript" src="../../../Libraries/knockout.js"></script>
+    <script type="text/javascript" src="../../Build/Tribe.Forms.desktop.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var model = {
+                string: ko.observable().extend({ required: true }),
+                email: ko.observable().extend({ email: 'This' }),
+                date: ko.observable().extend({ date: true }),
+                test: function () { }
+            };
+
+            ko.applyBindings(model);
+        });
+    </script>
+</head>
+<body>
+    <div data-bind="textField: string, displayText: 'A string'"></div>
+    <div data-bind="textField: email, displayText: 'An email'"></div>
+    <div data-bind="dateField: date, displayText: 'A date'"></div>
+    <button data-bind="validatedClick: test">Test</button>
+</body>
+</html>
