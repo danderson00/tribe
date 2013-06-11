@@ -5,8 +5,30 @@
     <script type="text/javascript" src="../Libraries/jquery.js"></script>
     <script type="text/javascript" src="../Libraries/knockout.js"></script>
     <script type="text/javascript" src="../Tribe.js"></script>
+    <script type="text/javascript" src="Build/Tribe.Components.desktop.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var model = {
+                gridSource: [
+                    { string: 'Hello', first: 1, second: 2 },
+                    { string: 'World', first: 2, second: 3 }
+                ],
+                gridColumns: [
+                    { property: 'string', heading: 'String' },
+                    { grouping: 'Grouping', columns: [
+                        { property: 'first', heading: 'First' },
+                        { property: 'second', heading: 'Second' }
+                    ]}
+                ]
+            };
+
+            TC.options.basePath = 'Sample/';
+            ko.applyBindings(model);
+        });
+    </script>
 </head>
 <body>
-
+    <div data-bind="pane: 'sample', data: { panePath: '/Common/contentHeader', paneData: { text: 'test' } }"></div>
+    <div data-bind="pane: 'sample', data: { panePath: '/Common/grid', paneData: { source: gridSource, columns: gridColumns } }"></div>
 </body>
 </html>

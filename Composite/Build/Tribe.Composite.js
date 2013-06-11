@@ -259,6 +259,7 @@ window.Tribe.PubSub = function (options) {
     global.TC.Transitions = {};
     global.TC.Types = {};
     global.TC.Utils = {};
+    global.T = global.TC.Utils;
 
     $(function() {
         $('head').append('<style class="__tribe">.__rendering { position: fixed; top: -10000px; left: -10000px; }</style>');
@@ -305,7 +306,26 @@ TC.options = TC.defaultOptions();(function () {
         };
     }
 
-})();TC.Utils.elementDestroyed = function (element) {
+})();(function (utils) {    
+    utils.map = function(collection, iterator) {
+        return $.map(collection, iterator);
+    };
+
+    utils.filter = function(array, iterator) {
+        var result = [];
+        $.each(array, function(index, value) {
+            if (iterator(value, index))
+                result.push(value);
+        });
+        return result;
+    };
+
+    utils.each = function(collection, iterator) {
+        return $.each(collection, function(index, value) {
+            return iterator(value, index);
+        });
+    };
+})(TC.Utils);TC.Utils.elementDestroyed = function (element) {
     if (element.constructor === jQuery)
         element = element[0];
     

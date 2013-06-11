@@ -1,4 +1,6 @@
-﻿namespace('TC.grid');
+﻿TC = window.TC || {};
+TC.grid = TC.grid || {};
+
 (function () {
     TC.registerModel(function (pane) {
         var pubsub = pane.pubsub;
@@ -7,7 +9,7 @@
 
         var grid = TC.grid;
         var source = ko.utils.unwrapObservable(data.source);
-        var id = uuid.v4();
+        var id = TC.Utils.getUniqueId();
         var columnList = extractColumnList();
         var lastSort;
 
@@ -15,7 +17,7 @@
         this.columnList = columnList;
         this.groupings = ko.observableArray(extractGroupingList());
         this.headings = ko.observableArray(generateHeadings());
-        this.filters = _.map(data.filters, function (filter) {
+        this.filters = $.map(data.filters, function (filter) {
             return new grid.Filter(filter, id, pubsub);
         });
 
@@ -54,7 +56,7 @@
         function generateRows(sort) {
             if (source) {
                 var rows = grid.applyFilters(source, self.filters);
-                rows = _.map(rows, generateRow);
+                rows = $.map(rows, generateRow);
                 if (sort !== null && sort !== undefined)
                     rows = sortRows(rows, sort);
                 return rows;
@@ -70,7 +72,7 @@
         function generateRow(item) {
             var row;
             if (data.columns)
-                row = _.map(columnList, function (column) { return generateCell(item, column); });
+                row = $.map(columnList, function (column) { return generateCell(item, column); });
             else
                 row = cellValues(item);
 
@@ -123,7 +125,7 @@
 
         function generateHeadings() {
             if (data.columns)
-                return _.map(columnList, function (column) { return column.heading; });
+                return $.map(columnList, function (column) { return column.heading; });
             else
                 return source && propertyNames(source[0]);
         }
@@ -206,10 +208,10 @@
     grid.applyFilters = function (source, filters) {
         // funky use of ternaries here is so if there are no filters defined, we don't copy the source array
         var filtered;
-        _.each(filters, function (filter) {
+        $.each(filters, function (index, filter) {
             var value = filter.value();
             if (filter.filterFunction && value !== null && value !== undefined)
-                filtered = _.filter(filtered ? filtered : source, executeFilterFunction);
+                filtered = $.filter(filtered ? filtered : source, executeFilterFunction);
 
             function executeFilterFunction(item) {
                 return filter.filterFunction(item, filter.value());

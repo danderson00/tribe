@@ -164,7 +164,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
         };
 
         this.click = function (item) {
-            var clickData = _.isFunction(item.data) ? item.data() : item.data;
+            var clickData = $.isFunction(item.data) ? item.data() : item.data;
             if (item.action && item.action === 'slide') {
                 toggle(item);
             } else {
@@ -461,7 +461,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
 
         this.gradientClass = data.gradientClass ? data.gradientClass : 'gradientGreen';
         this.text = data.text;
-        this.buttons = _.map(data.buttons, function (button) {
+        this.buttons = $.map(data.buttons || [], function (button) {
             return {
                 click: button.click ? button.click : null,
                 text: button.text ? button.text : null,
@@ -499,7 +499,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/dropDown' };
                 return data.nullItemText;
 
             if (data.itemText) {
-                if (_.isFunction(data.itemText))
+                if ($.isFunction(data.itemText))
                     return data.itemText(item);
                 else
                     return item[data.itemText];
@@ -510,7 +510,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/dropDown' };
 
         if (multipleSelect) {
             var initialValues = ko.utils.unwrapObservable(data.value);
-            if (!_.isArray(initialValues))
+            if (!$.isArray(initialValues))
                 initialValues = initialValues ? [initialValues] : [];
 
             this.selectedItem = ko.observableArray(initialValues);
@@ -845,7 +845,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
         }
 
         function extractSeries(source, filter) {
-            if (_.isArray(source))
+            if ($.isArray(source))
                 return data.modifier ? applyModifier(source, data.modifier) : source;
 
             if (filter && filter.length > 0)
@@ -857,7 +857,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
         }
 
         function extractPlayers(source) {
-            if (_.isArray(source))
+            if ($.isArray(source))
                 return [];
             return _.map(source, function (item, key) { return key; });
         }
@@ -907,7 +907,9 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
 })();
 //@ sourceURL=/Common/Panes/graph
 TC.scriptEnvironment = { resourcePath: '/Common/grid' };
-namespace('TC.grid');
+TC = window.TC || {};
+TC.grid = TC.grid || {};
+
 (function () {
     TC.registerModel(function (pane) {
         var pubsub = pane.pubsub;
@@ -916,7 +918,7 @@ namespace('TC.grid');
 
         var grid = TC.grid;
         var source = ko.utils.unwrapObservable(data.source);
-        var id = uuid.v4();
+        var id = TC.Utils.getUniqueId();
         var columnList = extractColumnList();
         var lastSort;
 
@@ -924,7 +926,7 @@ namespace('TC.grid');
         this.columnList = columnList;
         this.groupings = ko.observableArray(extractGroupingList());
         this.headings = ko.observableArray(generateHeadings());
-        this.filters = _.map(data.filters, function (filter) {
+        this.filters = $.map(data.filters, function (filter) {
             return new grid.Filter(filter, id, pubsub);
         });
 
@@ -963,7 +965,7 @@ namespace('TC.grid');
         function generateRows(sort) {
             if (source) {
                 var rows = grid.applyFilters(source, self.filters);
-                rows = _.map(rows, generateRow);
+                rows = $.map(rows, generateRow);
                 if (sort !== null && sort !== undefined)
                     rows = sortRows(rows, sort);
                 return rows;
@@ -979,7 +981,7 @@ namespace('TC.grid');
         function generateRow(item) {
             var row;
             if (data.columns)
-                row = _.map(columnList, function (column) { return generateCell(item, column); });
+                row = $.map(columnList, function (column) { return generateCell(item, column); });
             else
                 row = cellValues(item);
 
@@ -1032,7 +1034,7 @@ namespace('TC.grid');
 
         function generateHeadings() {
             if (data.columns)
-                return _.map(columnList, function (column) { return column.heading; });
+                return $.map(columnList, function (column) { return column.heading; });
             else
                 return source && propertyNames(source[0]);
         }
@@ -1115,10 +1117,10 @@ namespace('TC.grid');
     grid.applyFilters = function (source, filters) {
         // funky use of ternaries here is so if there are no filters defined, we don't copy the source array
         var filtered;
-        _.each(filters, function (filter) {
+        $.each(filters, function (index, filter) {
             var value = filter.value();
             if (filter.filterFunction && value !== null && value !== undefined)
-                filtered = _.filter(filtered ? filtered : source, executeFilterFunction);
+                filtered = $.filter(filtered ? filtered : source, executeFilterFunction);
 
             function executeFilterFunction(item) {
                 return filter.filterFunction(item, filter.value());
@@ -1153,7 +1155,7 @@ namespace('TC.grid');
 
     TC.renderTooltips = function (tooltips, topic, parentPane, show) {
         if (!Configuration.mobile()) {
-            if (_.isArray(tooltips))
+            if ($.isArray(tooltips))
                 for (var i = 0; i < tooltips.length; i++)
                     renderTooltip(tooltips[i], true);
             else

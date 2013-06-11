@@ -31,6 +31,59 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Build\Common.desktop.css" />
+    <Content Include="Build\Common.desktop.htm" />
+    <Content Include="Build\Common.desktop.js" />
+    <Content Include="Build\Common.mobile.css" />
+    <Content Include="Build\Common.mobile.htm" />
+    <Content Include="Build\Common.mobile.js" />
+    <Content Include="Build\Tribe.Components.desktop.js" />
+    <Content Include="Build\Tribe.Components.desktop.min.js" />
+    <Content Include="Build\Tribe.Components.mobile.js" />
+    <Content Include="Build\Tribe.Components.mobile.min.js" />
+    <Content Include="Css\Common\arrows.css" />
+    <Content Include="Css\Common\buttons.css" />
+    <Content Include="Css\Common\gradients.css" />
+    <Content Include="Css\Common\icons.css" />
+    <Content Include="index.html" />
+    <Content Include="Infrastructure\tooltipBindingHandler.js" />
+    <Content Include="pack.js" />
+    <Content Include="Panes\Common\contentHeader.css" />
+    <Content Include="Panes\Common\contentHeader.htm" />
+    <Content Include="Panes\Common\contentHeader.js" />
+    <Content Include="Panes\Common\dropDown.css" />
+    <Content Include="Panes\Common\dropDown.htm" />
+    <Content Include="Panes\Common\dropDown.js" />
+    <Content Include="Panes\Common\expander.css" />
+    <Content Include="Panes\Common\expander.htm" />
+    <Content Include="Panes\Common\expander.js" />
+    <Content Include="Panes\Common\expanderList.css" />
+    <Content Include="Panes\Common\expanderList.htm" />
+    <Content Include="Panes\Common\expanderList.js" />
+    <Content Include="Panes\Common\graph.css" />
+    <Content Include="Panes\Common\graph.htm" />
+    <Content Include="Panes\Common\graph.js" />
+    <Content Include="Panes\Common\grid.css" />
+    <Content Include="Panes\Common\grid.htm" />
+    <Content Include="Panes\Common\grid.js" />
+    <Content Include="Panes\Desktop\dialog.css" />
+    <Content Include="Panes\Desktop\dialog.htm" />
+    <Content Include="Panes\Desktop\dialog.js" />
+    <Content Include="Panes\Desktop\tabPanel.css" />
+    <Content Include="Panes\Desktop\tabPanel.htm" />
+    <Content Include="Panes\Desktop\tabPanel.js" />
+    <Content Include="Panes\Desktop\tabPanel.right.css" />
+    <Content Include="Panes\Desktop\tabPanel.top.css" />
+    <Content Include="Panes\Desktop\tooltip.css" />
+    <Content Include="Panes\Desktop\tooltip.htm" />
+    <Content Include="Panes\Desktop\tooltip.js" />
+    <Content Include="Panes\Mobile\tooltip.js" />
+    <Content Include="Sample\sample.css" />
+    <Content Include="Sample\sample.htm" />
+    <Content Include="Sample\sample.js" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

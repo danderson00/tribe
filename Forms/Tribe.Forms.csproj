@@ -31,6 +31,41 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Samples\Composite\" />
+    <Folder Include="Tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Binding Handlers\fields.js" />
+    <Content Include="Binding Handlers\focus.js" />
+    <Content Include="Binding Handlers\select.js" />
+    <Content Include="Binding Handlers\validatedClick.js" />
+    <Content Include="Binding Handlers\validationMessage.tooltip.js" />
+    <Content Include="Build\Tribe.Forms.desktop.js" />
+    <Content Include="Build\Tribe.Forms.desktop.min.js" />
+    <Content Include="Build\Tribe.Forms.mobile.js" />
+    <Content Include="Build\Tribe.Forms.mobile.min.js" />
+    <Content Include="Css\datepicker.css" />
+    <Content Include="Css\desktop.css" />
+    <Content Include="Css\mobile.css" />
+    <Content Include="Dependencies\jquery.lw-datepicker.js" />
+    <Content Include="Dependencies\knockout.validation.js" />
+    <Content Include="Infrastructure\observableExtensions.js" />
+    <Content Include="Infrastructure\templates.js" />
+    <Content Include="Infrastructure\validationRules.js" />
+    <Content Include="pack.js" />
+    <Content Include="Samples\Basic\index.html" />
+    <Content Include="Templates\booleanField.htm" />
+    <Content Include="Templates\dateField.htm" />
+    <Content Include="Templates\display.htm" />
+    <Content Include="Templates\passwordField.htm" />
+    <Content Include="Templates\radioField.htm" />
+    <Content Include="Templates\select.grouped.htm" />
+    <Content Include="Templates\select.list.htm" />
+    <Content Include="Templates\selectField.htm" />
+    <Content Include="Templates\textField.htm" />
+    <Content Include="Templates\validationMessage.htm" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -15,6 +15,7 @@
     global.TC.Transitions = {};
     global.TC.Types = {};
     global.TC.Utils = {};
+    global.T = global.TC.Utils;
 
     $(function() {
         $('head').append('<style class="__tribe">.__rendering { position: fixed; top: -10000px; left: -10000px; }</style>');

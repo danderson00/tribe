@@ -43,6 +43,7 @@
     <Content Include="Source\Css\forms.css" />
     <Content Include="Documentation.txt" />
     <Content Include="pack.js" />
+    <Content Include="Source\Infrastructure\screen.js" />
     <Content Include="Source\Panes\blank.js" />
     <Content Include="Source\Panes\editable.css" />
     <Content Include="Source\Panes\editable.js" />
@@ -68,7 +69,7 @@
     <Content Include="Samples\Basic\layout.htm" />
     <Content Include="Samples\Basic\layout.js" />
     <Content Include="Samples\Basic\overlay.htm" />
-    <Content Include="Source\Binding Handlers\click.js" />
+    <Content Include="Source\Infrastructure\click.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />

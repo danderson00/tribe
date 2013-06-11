@@ -25,7 +25,7 @@
                 return data.nullItemText;
 
             if (data.itemText) {
-                if (_.isFunction(data.itemText))
+                if ($.isFunction(data.itemText))
                     return data.itemText(item);
                 else
                     return item[data.itemText];
@@ -36,7 +36,7 @@
 
         if (multipleSelect) {
             var initialValues = ko.utils.unwrapObservable(data.value);
-            if (!_.isArray(initialValues))
+            if (!$.isArray(initialValues))
                 initialValues = initialValues ? [initialValues] : [];
 
             this.selectedItem = ko.observableArray(initialValues);

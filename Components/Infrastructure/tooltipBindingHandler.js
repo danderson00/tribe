@@ -22,7 +22,7 @@
 
     TC.renderTooltips = function (tooltips, topic, parentPane, show) {
         if (!Configuration.mobile()) {
-            if (_.isArray(tooltips))
+            if ($.isArray(tooltips))
                 for (var i = 0; i < tooltips.length; i++)
                     renderTooltip(tooltips[i], true);
             else

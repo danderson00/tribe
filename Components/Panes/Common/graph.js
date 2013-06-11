@@ -51,7 +51,7 @@
         }
 
         function extractSeries(source, filter) {
-            if (_.isArray(source))
+            if ($.isArray(source))
                 return data.modifier ? applyModifier(source, data.modifier) : source;
 
             if (filter && filter.length > 0)
@@ -63,7 +63,7 @@
         }
 
         function extractPlayers(source) {
-            if (_.isArray(source))
+            if ($.isArray(source))
                 return [];
             return _.map(source, function (item, key) { return key; });
         }

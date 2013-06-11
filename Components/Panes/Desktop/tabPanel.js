@@ -32,7 +32,7 @@
         };
 
         this.click = function (item) {
-            var clickData = _.isFunction(item.data) ? item.data() : item.data;
+            var clickData = $.isFunction(item.data) ? item.data() : item.data;
             if (item.action && item.action === 'slide') {
                 toggle(item);
             } else {

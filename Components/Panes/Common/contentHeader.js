@@ -5,7 +5,7 @@
 
         this.gradientClass = data.gradientClass ? data.gradientClass : 'gradientGreen';
         this.text = data.text;
-        this.buttons = _.map(data.buttons, function (button) {
+        this.buttons = $.map(data.buttons || [], function (button) {
             return {
                 click: button.click ? button.click : null,
                 text: button.text ? button.text : null,
