@@ -17,7 +17,7 @@ TC.grid = TC.grid || {};
         this.columnList = columnList;
         this.groupings = ko.observableArray(extractGroupingList());
         this.headings = ko.observableArray(generateHeadings());
-        this.filters = $.map(data.filters, function (filter) {
+        this.filters = T.map(data.filters, function (filter) {
             return new grid.Filter(filter, id, pubsub);
         });
 
@@ -56,7 +56,7 @@ TC.grid = TC.grid || {};
         function generateRows(sort) {
             if (source) {
                 var rows = grid.applyFilters(source, self.filters);
-                rows = $.map(rows, generateRow);
+                rows = T.map(rows, generateRow);
                 if (sort !== null && sort !== undefined)
                     rows = sortRows(rows, sort);
                 return rows;
@@ -72,7 +72,7 @@ TC.grid = TC.grid || {};
         function generateRow(item) {
             var row;
             if (data.columns)
-                row = $.map(columnList, function (column) { return generateCell(item, column); });
+                row = T.map(columnList, function (column) { return generateCell(item, column); });
             else
                 row = cellValues(item);
 
@@ -125,7 +125,7 @@ TC.grid = TC.grid || {};
 
         function generateHeadings() {
             if (data.columns)
-                return $.map(columnList, function (column) { return column.heading; });
+                return T.map(columnList, function (column) { return column.heading; });
             else
                 return source && propertyNames(source[0]);
         }
@@ -208,10 +208,10 @@ TC.grid = TC.grid || {};
     grid.applyFilters = function (source, filters) {
         // funky use of ternaries here is so if there are no filters defined, we don't copy the source array
         var filtered;
-        $.each(filters, function (index, filter) {
+        T.each(filters, function (filter) {
             var value = filter.value();
             if (filter.filterFunction && value !== null && value !== undefined)
-                filtered = $.filter(filtered ? filtered : source, executeFilterFunction);
+                filtered = T.filter(filtered ? filtered : source, executeFilterFunction);
 
             function executeFilterFunction(item) {
                 return filter.filterFunction(item, filter.value());

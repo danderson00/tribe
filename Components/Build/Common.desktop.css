@@ -70,16 +70,16 @@
     list-style-type: none;
 }
 
-.tabContent {
+.tabPanel .tabContent {
     display: none;
     overflow: visible;
 }
 
-.tabButtonContainer {
+.tabPanel .tabButtonContainer {
     
 }
 
-.tabButton {
+.tabPanel .tabButton {
     display: block;
     font-size: 16px;
     font-weight: bold;
@@ -89,15 +89,15 @@
     z-index: 11;
 }
 
-.tabButton .tabButtonIcon {
+.tabPanel .tabButton .tabButtonIcon {
     width: 0;
     height: 0;
 }
 
-.tabSelected {
+.tabPanel .tabSelected {
 }
 
-.tabButtonText {
+.tabPanel .tabButtonText {
     white-space: nowrap;
 }.rightTabPanel {
     top: 100px;
@@ -612,7 +612,25 @@
     font-size: 0;
 }
 
-.smallArrowUp {
+.tabList .tab {
+    float: left;
+    padding: 10px 20px;
+    border: 1px solid grey;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin: 0 5px -1px 5px;
+}
+
+.tabList .tab.active {
+    background: white;
+    border-bottom: 1px solid white;
+}
+
+.tabContent {
+    clear: both;
+    padding: 10px;
+    border: 1px solid grey;
+}.smallArrowUp {
     border: 4px solid transparent;
     border-bottom-color: #999999;
     height: 0px;

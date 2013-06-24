@@ -9,16 +9,16 @@
     list-style-type: none;
 }
 
-.tabContent {
+.tabPanel .tabContent {
     display: none;
     overflow: visible;
 }
 
-.tabButtonContainer {
+.tabPanel .tabButtonContainer {
     
 }
 
-.tabButton {
+.tabPanel .tabButton {
     display: block;
     font-size: 16px;
     font-weight: bold;
@@ -28,14 +28,14 @@
     z-index: 11;
 }
 
-.tabButton .tabButtonIcon {
+.tabPanel .tabButton .tabButtonIcon {
     width: 0;
     height: 0;
 }
 
-.tabSelected {
+.tabPanel .tabSelected {
 }
 
-.tabButtonText {
+.tabPanel .tabButtonText {
     white-space: nowrap;
 }

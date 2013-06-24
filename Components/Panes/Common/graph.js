@@ -10,7 +10,7 @@
         var $legend;
         var $plot;
 
-        this.id = data.id ? data.id : uuid.v4();
+        this.id = data.id ? data.id : T.getUniqueId();
         
         this.selectedSeries = ko.observableArray();
         this.availableSeries = extractPlayers(data.series);
@@ -57,7 +57,7 @@
             if (filter && filter.length > 0)
                 source = filterProperties(source, filter);
 
-            return _.map(source, function (item, key) {
+            return T.map(source, function (item, key) {
                 return { data: data.modifier ? applyModifier(item, data.modifier) : item, label: key };
             });
         }
@@ -65,7 +65,7 @@
         function extractPlayers(source) {
             if ($.isArray(source))
                 return [];
-            return _.map(source, function (item, key) { return key; });
+            return T.map(source, function (item, key) { return key; });
         }
 
         function filterProperties(source, propertyList) {

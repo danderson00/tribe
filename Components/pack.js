@@ -19,3 +19,9 @@ function build(platform) {
         minify: true
     });
 }
+
+pack({
+    to: 'samples.js',
+    include: 'Samples/*.*',
+    template: 'sampleContent'
+});

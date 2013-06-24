@@ -11,7 +11,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
 
         this.gradientClass = data.gradientClass ? data.gradientClass : 'gradientGreen';
         this.text = data.text;
-        this.buttons = $.map(data.buttons || [], function (button) {
+        this.buttons = T.map(data.buttons || [], function (button) {
             return {
                 click: button.click ? button.click : null,
                 text: button.text ? button.text : null,
@@ -354,7 +354,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
         var $legend;
         var $plot;
 
-        this.id = data.id ? data.id : uuid.v4();
+        this.id = data.id ? data.id : T.getUniqueId();
         
         this.selectedSeries = ko.observableArray();
         this.availableSeries = extractPlayers(data.series);
@@ -401,7 +401,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
             if (filter && filter.length > 0)
                 source = filterProperties(source, filter);
 
-            return _.map(source, function (item, key) {
+            return T.map(source, function (item, key) {
                 return { data: data.modifier ? applyModifier(item, data.modifier) : item, label: key };
             });
         }
@@ -409,7 +409,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
         function extractPlayers(source) {
             if ($.isArray(source))
                 return [];
-            return _.map(source, function (item, key) { return key; });
+            return T.map(source, function (item, key) { return key; });
         }
 
         function filterProperties(source, propertyList) {
@@ -476,7 +476,7 @@ TC.grid = TC.grid || {};
         this.columnList = columnList;
         this.groupings = ko.observableArray(extractGroupingList());
         this.headings = ko.observableArray(generateHeadings());
-        this.filters = $.map(data.filters, function (filter) {
+        this.filters = T.map(data.filters, function (filter) {
             return new grid.Filter(filter, id, pubsub);
         });
 
@@ -515,7 +515,7 @@ TC.grid = TC.grid || {};
         function generateRows(sort) {
             if (source) {
                 var rows = grid.applyFilters(source, self.filters);
-                rows = $.map(rows, generateRow);
+                rows = T.map(rows, generateRow);
                 if (sort !== null && sort !== undefined)
                     rows = sortRows(rows, sort);
                 return rows;
@@ -531,7 +531,7 @@ TC.grid = TC.grid || {};
         function generateRow(item) {
             var row;
             if (data.columns)
-                row = $.map(columnList, function (column) { return generateCell(item, column); });
+                row = T.map(columnList, function (column) { return generateCell(item, column); });
             else
                 row = cellValues(item);
 
@@ -584,7 +584,7 @@ TC.grid = TC.grid || {};
 
         function generateHeadings() {
             if (data.columns)
-                return $.map(columnList, function (column) { return column.heading; });
+                return T.map(columnList, function (column) { return column.heading; });
             else
                 return source && propertyNames(source[0]);
         }
@@ -667,10 +667,10 @@ TC.grid = TC.grid || {};
     grid.applyFilters = function (source, filters) {
         // funky use of ternaries here is so if there are no filters defined, we don't copy the source array
         var filtered;
-        $.each(filters, function (index, filter) {
+        T.each(filters, function (filter) {
             var value = filter.value();
             if (filter.filterFunction && value !== null && value !== undefined)
-                filtered = $.filter(filtered ? filtered : source, executeFilterFunction);
+                filtered = T.filter(filtered ? filtered : source, executeFilterFunction);
 
             function executeFilterFunction(item) {
                 return filter.filterFunction(item, filter.value());
@@ -680,6 +680,145 @@ TC.grid = TC.grid || {};
     };
 })();
 //@ sourceURL=/Common/Panes/grid
+TC.scriptEnvironment = { resourcePath: '/Common/tabs' };
+TC.registerModel(function (pane) {
+    var self = this;
+
+    this.content = ko.observable();
+    this.tabs = T.map(pane.data.tabs, mapTab);
+
+    this.renderComplete = function() {
+        self.select(self.tabs[0]);
+    };
+
+    this.select = function (tab) {
+        self.content(tab.content);
+        setActive(tab);
+        if (pane.data.tabSelected)
+            pane.data.tabSelected(tab);
+    };
+
+    function mapTab(tab) {
+        return {
+            header: tab.header,
+            content: tab.content,
+            active: ko.observable(false)
+        };
+    }
+    
+    function setActive(activeTab) {
+        T.each(self.tabs, function(tab) {
+            tab.active(tab === activeTab);
+        });
+    }
+});
+//@ sourceURL=/Common/Panes/tabs
+
+ko.bindingHandlers.colspan = {
+    update: function (element, valueAccessor) {
+        $(element).attr('colspan', valueAccessor());
+    }
+};
+//@ sourceURL=/Common/Infrastructure/colspanBindingHandler
+
+(function(utils) {
+    utils.checkHorizontalPosition = function(element, margin) {
+        var offset = element.offset();
+        if (!margin) margin = 5;
+
+        if (offset.left < margin)
+            element.css({ 'margin-left': margin - offset.left });
+
+        var right = offset.left + element.outerWidth();
+
+        if (right > screen.width - margin)
+            element.css({ 'margin-left': screen.width - right - margin });
+    };
+
+    utils.checkVerticalPosition = function(target) {
+        var $target = $(target);
+        var maxHeight = $(window).height();
+        var targetHeight = $target.outerHeight();
+
+        if ($target.offset().top + targetHeight > maxHeight) {
+            var newTop = maxHeight - targetHeight;
+            var $parent = $target.offsetParent();
+            var adjustment = $parent.offset().top - $parent.position().top;
+            target.css('top', newTop - adjustment);
+        }
+    };
+
+    function findParentElement(element, filter) {
+        if (filter(element))
+            return element;
+
+        var parents = $(element).parents().filter(function() {
+            return filter(this);
+        });
+
+        if (parents.length > 0)
+            return parents[0];
+
+        return null;
+    };
+
+    utils.viewportElementFor = function(element) {
+        var viewport = findParentElement(element, function(target) {
+            return $(target).css('overflow') === 'hidden' || $(target).css('overflow') === 'auto';
+        });
+
+        return viewport ? viewport : $('body');
+    };
+
+    utils.containingElementFor = function(element) {
+        var viewport = findParentElement(element, function(target) {
+            return $(target).css('position') === 'relative';
+        });
+
+        return viewport ? viewport : $('body');
+    };
+
+    utils.elementIsRightAligned = function(element) {
+        return findParentElement(element, function(target) {
+            if ($(target).css('right') !== 'auto' && $(target).css('left') === 'auto') {
+                TC.logger.debug("Element is aligned right by position (" + $(target).css('right') + "): " + $(element).attr('class'));
+                return target;
+            }
+            if ($(target).css('float') === 'right') {
+                TC.logger.debug("Element is aligned right by float: " + $(element).attr('class'));
+                return target;
+            }
+            return false;
+        }) !== null;
+    };
+
+    utils.elementIsFixed = function(element) {
+        return findParentElement(element, function(target) {
+            if ($(target).css('position') === 'fixed')
+                return target;
+        });
+    };
+})(TC.Utils);
+
+//@ sourceURL=/Common/Infrastructure/elements
+
+(function() {
+    // based on http://stackoverflow.com/questions/979256/how-to-sort-an-array-of-javascript-objects
+    function sortBy(field, reverse, primer) {
+        function key(x) { return primer ? primer(x[field]) : x[field]; };
+
+        return function (a, b) {
+            var A = key(a), B = key(b);
+            return ((A < B) ? -1 :
+                    (A > B) ? +1 : 0) * [-1, 1][+!!reverse];
+        };
+    }
+
+    Array.prototype.sortBy = function (field, reverse, primer) {
+        return this.sort(sortBy(field, reverse, primer));
+    };
+})();
+//@ sourceURL=/Common/Infrastructure/sortBy
 
 (function () {
     var utils = TC.Utils;
@@ -704,35 +843,33 @@ TC.grid = TC.grid || {};
     };
 
     TC.renderTooltips = function (tooltips, topic, parentPane, show) {
-        if (!Configuration.mobile()) {
-            if ($.isArray(tooltips))
-                for (var i = 0; i < tooltips.length; i++)
-                    renderTooltip(tooltips[i], true);
-            else
-                for (var property in tooltips)
-                    if (tooltips.hasOwnProperty(property)) {
-                        renderTooltip(tooltips[property], show !== false && Store(tipShownKey(property)) !== true);
-                        if (show !== false)
-                            Store(tipShownKey(property), true);
-                    }
-
-            function renderTooltip(tooltip, autoShow) {
-                var target = $(parentPane.element).find(tooltip.selector);
-                if (target.length > 0) {
-                    if (parentPane.element)
-                        TC.insertNodeAfter(target, { path: '/Common/tooltip', data: extend(tooltip, autoShow) });
-                } else {
-                    TC.logger.warn("Tooltip for selector " + tooltip.selector + " not rendered - element not found");
+        if ($.isArray(tooltips))
+            for (var i = 0; i < tooltips.length; i++)
+                renderTooltip(tooltips[i], true);
+        else
+            for (var property in tooltips)
+                if (tooltips.hasOwnProperty(property)) {
+                    renderTooltip(tooltips[property], show !== false);// && Store(tipShownKey(property)) !== true);
+                    //if (show !== false)
+                    //    Store(tipShownKey(property), true);
                 }
-            }
 
-            function extend(tooltip, autoShow) {
-                return $.extend({ timeout: TC.tooltipTimeout, topic: topic, autoShow: autoShow && !tooltip.hover, target: $(parentPane.element).find(tooltip.selector) }, tooltip);
+        function renderTooltip(tooltip, autoShow) {
+            var target = $(parentPane.element).find(tooltip.selector);
+            if (target.length > 0) {
+                if (parentPane.element)
+                    TC.insertNodeAfter(target, { path: '/Common/tooltip', data: extend(tooltip, autoShow) });
+            } else {
+                TC.logger.warn("Tooltip for selector " + tooltip.selector + " not rendered - element not found");
             }
+        }
 
-            function tipShownKey(property) {
-                return "tooltip.shown: " + parentPane.path + '.' + property;
-            }
+        function extend(tooltip, autoShow) {
+            return $.extend({ timeout: TC.tooltipTimeout, topic: topic, autoShow: autoShow && !tooltip.hover, target: $(parentPane.element).find(tooltip.selector) }, tooltip);
+        }
+
+        function tipShownKey(property) {
+            return "tooltip.shown: " + parentPane.path + '.' + property;
         }
     };
 

@@ -8,7 +8,7 @@
         var options = data.options ? data.options : {};
 
         this.pane = data.pane;
-        this.id = options.id ? options.id : uuid.v4();
+        this.id = options.id ? options.id : T.getUniqueId();
         this.showCloseButton = options.showCloseButton !== false;
 
         var dialogSelector = '#' + this.id;
@@ -108,7 +108,7 @@ TC.dialog = function (pane, options) {
     options = options || {};
     var element = options.element ? $(options.element) : 'body';
     pane = typeof (pane) == 'string' ? { path: pane } : pane;
-    options.id = options.id ? options.id : uuid.v4();
+    options.id = options.id ? options.id : T.getUniqueId();
     var title = ko.observable(options.title);
     options.title = options.title && title;
 

@@ -9,7 +9,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/dialog' };
         var options = data.options ? data.options : {};
 
         this.pane = data.pane;
-        this.id = options.id ? options.id : uuid.v4();
+        this.id = options.id ? options.id : T.getUniqueId();
         this.showCloseButton = options.showCloseButton !== false;
 
         var dialogSelector = '#' + this.id;
@@ -109,7 +109,7 @@ TC.dialog = function (pane, options) {
     options = options || {};
     var element = options.element ? $(options.element) : 'body';
     pane = typeof (pane) == 'string' ? { path: pane } : pane;
-    options.id = options.id ? options.id : uuid.v4();
+    options.id = options.id ? options.id : T.getUniqueId();
     var title = ko.observable(options.title);
     options.title = options.title && title;
 
@@ -360,7 +360,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
 
         var setPropertiesFor = {
             left: function () {
-                if (elementIsFixed($target)) {
+                if (T.elementIsFixed($target)) {
                     $(pane.element).children('.tooltip').css('position', 'fixed');
                     $arrow.addClass('arrowRight').offset({
                         left: $target.offset().left - $arrow.outerWidth(),
@@ -422,7 +422,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
         }
 
         function setHorizontalPosition() {
-            if (elementIsRightAligned($target)) {
+            if (T.elementIsRightAligned($target)) {
                 $content.css('right', 0);
                 $arrow.css('right', elementRight($target) + $target.width() / 2 - $arrow.outerWidth() / 2);
             } else {
@@ -438,7 +438,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
                 return 20 - left;
 
             var right = left + $content.outerWidth();
-            var $viewport = $(viewportElementFor($target));
+            var $viewport = $(T.viewportElementFor($target));
             if (right > $viewport.width() - 5)
                 return $viewport.width() - right - 5;
 
@@ -446,7 +446,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
         }
 
         function elementRight(element) {
-            return $(containingElementFor(element)).width() - $(element).position().left - $(element).width();
+            return $(T.containingElementFor(element)).width() - $(element).position().left - $(element).width();
         }
 
     });
@@ -461,7 +461,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
 
         this.gradientClass = data.gradientClass ? data.gradientClass : 'gradientGreen';
         this.text = data.text;
-        this.buttons = $.map(data.buttons || [], function (button) {
+        this.buttons = T.map(data.buttons || [], function (button) {
             return {
                 click: button.click ? button.click : null,
                 text: button.text ? button.text : null,
@@ -804,7 +804,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
         var $legend;
         var $plot;
 
-        this.id = data.id ? data.id : uuid.v4();
+        this.id = data.id ? data.id : T.getUniqueId();
         
         this.selectedSeries = ko.observableArray();
         this.availableSeries = extractPlayers(data.series);
@@ -851,7 +851,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
             if (filter && filter.length > 0)
                 source = filterProperties(source, filter);
 
-            return _.map(source, function (item, key) {
+            return T.map(source, function (item, key) {
                 return { data: data.modifier ? applyModifier(item, data.modifier) : item, label: key };
             });
         }
@@ -859,7 +859,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
         function extractPlayers(source) {
             if ($.isArray(source))
                 return [];
-            return _.map(source, function (item, key) { return key; });
+            return T.map(source, function (item, key) { return key; });
         }
 
         function filterProperties(source, propertyList) {
@@ -926,7 +926,7 @@ TC.grid = TC.grid || {};
         this.columnList = columnList;
         this.groupings = ko.observableArray(extractGroupingList());
         this.headings = ko.observableArray(generateHeadings());
-        this.filters = $.map(data.filters, function (filter) {
+        this.filters = T.map(data.filters, function (filter) {
             return new grid.Filter(filter, id, pubsub);
         });
 
@@ -965,7 +965,7 @@ TC.grid = TC.grid || {};
         function generateRows(sort) {
             if (source) {
                 var rows = grid.applyFilters(source, self.filters);
-                rows = $.map(rows, generateRow);
+                rows = T.map(rows, generateRow);
                 if (sort !== null && sort !== undefined)
                     rows = sortRows(rows, sort);
                 return rows;
@@ -981,7 +981,7 @@ TC.grid = TC.grid || {};
         function generateRow(item) {
             var row;
             if (data.columns)
-                row = $.map(columnList, function (column) { return generateCell(item, column); });
+                row = T.map(columnList, function (column) { return generateCell(item, column); });
             else
                 row = cellValues(item);
 
@@ -1034,7 +1034,7 @@ TC.grid = TC.grid || {};
 
         function generateHeadings() {
             if (data.columns)
-                return $.map(columnList, function (column) { return column.heading; });
+                return T.map(columnList, function (column) { return column.heading; });
             else
                 return source && propertyNames(source[0]);
         }
@@ -1117,10 +1117,10 @@ TC.grid = TC.grid || {};
     grid.applyFilters = function (source, filters) {
         // funky use of ternaries here is so if there are no filters defined, we don't copy the source array
         var filtered;
-        $.each(filters, function (index, filter) {
+        T.each(filters, function (filter) {
             var value = filter.value();
             if (filter.filterFunction && value !== null && value !== undefined)
-                filtered = $.filter(filtered ? filtered : source, executeFilterFunction);
+                filtered = T.filter(filtered ? filtered : source, executeFilterFunction);
 
             function executeFilterFunction(item) {
                 return filter.filterFunction(item, filter.value());
@@ -1130,6 +1130,145 @@ TC.grid = TC.grid || {};
     };
 })();
 //@ sourceURL=/Common/Panes/grid
+TC.scriptEnvironment = { resourcePath: '/Common/tabs' };
+TC.registerModel(function (pane) {
+    var self = this;
+
+    this.content = ko.observable();
+    this.tabs = T.map(pane.data.tabs, mapTab);
+
+    this.renderComplete = function() {
+        self.select(self.tabs[0]);
+    };
+
+    this.select = function (tab) {
+        self.content(tab.content);
+        setActive(tab);
+        if (pane.data.tabSelected)
+            pane.data.tabSelected(tab);
+    };
+
+    function mapTab(tab) {
+        return {
+            header: tab.header,
+            content: tab.content,
+            active: ko.observable(false)
+        };
+    }
+    
+    function setActive(activeTab) {
+        T.each(self.tabs, function(tab) {
+            tab.active(tab === activeTab);
+        });
+    }
+});
+//@ sourceURL=/Common/Panes/tabs
+
+ko.bindingHandlers.colspan = {
+    update: function (element, valueAccessor) {
+        $(element).attr('colspan', valueAccessor());
+    }
+};
+//@ sourceURL=/Common/Infrastructure/colspanBindingHandler
+
+(function(utils) {
+    utils.checkHorizontalPosition = function(element, margin) {
+        var offset = element.offset();
+        if (!margin) margin = 5;
+
+        if (offset.left < margin)
+            element.css({ 'margin-left': margin - offset.left });
+
+        var right = offset.left + element.outerWidth();
+
+        if (right > screen.width - margin)
+            element.css({ 'margin-left': screen.width - right - margin });
+    };
+
+    utils.checkVerticalPosition = function(target) {
+        var $target = $(target);
+        var maxHeight = $(window).height();
+        var targetHeight = $target.outerHeight();
+
+        if ($target.offset().top + targetHeight > maxHeight) {
+            var newTop = maxHeight - targetHeight;
+            var $parent = $target.offsetParent();
+            var adjustment = $parent.offset().top - $parent.position().top;
+            target.css('top', newTop - adjustment);
+        }
+    };
+
+    function findParentElement(element, filter) {
+        if (filter(element))
+            return element;
+
+        var parents = $(element).parents().filter(function() {
+            return filter(this);
+        });
+
+        if (parents.length > 0)
+            return parents[0];
+
+        return null;
+    };
+
+    utils.viewportElementFor = function(element) {
+        var viewport = findParentElement(element, function(target) {
+            return $(target).css('overflow') === 'hidden' || $(target).css('overflow') === 'auto';
+        });
+
+        return viewport ? viewport : $('body');
+    };
+
+    utils.containingElementFor = function(element) {
+        var viewport = findParentElement(element, function(target) {
+            return $(target).css('position') === 'relative';
+        });
+
+        return viewport ? viewport : $('body');
+    };
+
+    utils.elementIsRightAligned = function(element) {
+        return findParentElement(element, function(target) {
+            if ($(target).css('right') !== 'auto' && $(target).css('left') === 'auto') {
+                TC.logger.debug("Element is aligned right by position (" + $(target).css('right') + "): " + $(element).attr('class'));
+                return target;
+            }
+            if ($(target).css('float') === 'right') {
+                TC.logger.debug("Element is aligned right by float: " + $(element).attr('class'));
+                return target;
+            }
+            return false;
+        }) !== null;
+    };
+
+    utils.elementIsFixed = function(element) {
+        return findParentElement(element, function(target) {
+            if ($(target).css('position') === 'fixed')
+                return target;
+        });
+    };
+})(TC.Utils);
+
+//@ sourceURL=/Common/Infrastructure/elements
+
+(function() {
+    // based on http://stackoverflow.com/questions/979256/how-to-sort-an-array-of-javascript-objects
+    function sortBy(field, reverse, primer) {
+        function key(x) { return primer ? primer(x[field]) : x[field]; };
+
+        return function (a, b) {
+            var A = key(a), B = key(b);
+            return ((A < B) ? -1 :
+                    (A > B) ? +1 : 0) * [-1, 1][+!!reverse];
+        };
+    }
+
+    Array.prototype.sortBy = function (field, reverse, primer) {
+        return this.sort(sortBy(field, reverse, primer));
+    };
+})();
+//@ sourceURL=/Common/Infrastructure/sortBy
 
 (function () {
     var utils = TC.Utils;
@@ -1154,42 +1293,40 @@ TC.grid = TC.grid || {};
     };
 
     TC.renderTooltips = function (tooltips, topic, parentPane, show) {
-        if (!Configuration.mobile()) {
-            if ($.isArray(tooltips))
-                for (var i = 0; i < tooltips.length; i++)
-                    renderTooltip(tooltips[i], true);
-            else
-                for (var property in tooltips)
-                    if (tooltips.hasOwnProperty(property)) {
-                        renderTooltip(tooltips[property], show !== false && Store(tipShownKey(property)) !== true);
-                        if (show !== false)
-                            Store(tipShownKey(property), true);
-                    }
-
-            function renderTooltip(tooltip, autoShow) {
-                var target = $(parentPane.element).find(tooltip.selector);
-                if (target.length > 0) {
-                    if (parentPane.element)
-                        TC.insertNodeAfter(target, { path: '/Common/tooltip', data: extend(tooltip, autoShow) });
-                } else {
-                    TC.logger.warn("Tooltip for selector " + tooltip.selector + " not rendered - element not found");
+        if ($.isArray(tooltips))
+            for (var i = 0; i < tooltips.length; i++)
+                renderTooltip(tooltips[i], true);
+        else
+            for (var property in tooltips)
+                if (tooltips.hasOwnProperty(property)) {
+                    renderTooltip(tooltips[property], show !== false);// && Store(tipShownKey(property)) !== true);
+                    //if (show !== false)
+                    //    Store(tipShownKey(property), true);
                 }
-            }
 
-            function extend(tooltip, autoShow) {
-                return $.extend({ timeout: TC.tooltipTimeout, topic: topic, autoShow: autoShow && !tooltip.hover, target: $(parentPane.element).find(tooltip.selector) }, tooltip);
+        function renderTooltip(tooltip, autoShow) {
+            var target = $(parentPane.element).find(tooltip.selector);
+            if (target.length > 0) {
+                if (parentPane.element)
+                    TC.insertNodeAfter(target, { path: '/Common/tooltip', data: extend(tooltip, autoShow) });
+            } else {
+                TC.logger.warn("Tooltip for selector " + tooltip.selector + " not rendered - element not found");
             }
+        }
 
-            function tipShownKey(property) {
-                return "tooltip.shown: " + parentPane.path + '.' + property;
-            }
+        function extend(tooltip, autoShow) {
+            return $.extend({ timeout: TC.tooltipTimeout, topic: topic, autoShow: autoShow && !tooltip.hover, target: $(parentPane.element).find(tooltip.selector) }, tooltip);
+        }
+
+        function tipShownKey(property) {
+            return "tooltip.shown: " + parentPane.path + '.' + property;
         }
     };
 
 })();
 //@ sourceURL=/Common/Infrastructure/tooltipBindingHandler
-$('head').append('<script type="text/template" id="template--Common-dialog"><div class="dialog borderBlack rounded shadowLarge" data-bind="attr: { id: id }">\n    <div class="closeButton" data-bind="click: closeDialog, visible: showCloseButton"></div>\n    <div class="dialogContent">\n        <div class="dialogHeader"></div>        \n        <div class="dialogPane" data-bind="pane: pane"></div>\n    </div>\n</div>\n<div class="dialog loadingDialog rounded shadow">\n    <h2>Loading...</h2>\n</div>\n<div class="dialogBackgroundFilter"></div></script>\n<script type="text/template" id="template--Common-tabPanel"><div class="tabPanel">\n    <div class="tabButtonContainer">\n        <ul data-bind="foreach: tabs">\n            <!-- ko if: ($parent.loggedOn() ? $data.authenticated !== false : $data.anonymous !== false)  && (!$data.visible || $data.visible()) -->\n            <li class="tabButton" data-bind="cssClass: $data.cssClass, click: $parent.click, tooltip: $data.tooltip ? $data.tooltip : \'\', position: $parent.tooltipPosition">\n                <div class="tabButtonIcon" data-bind="cssClass: $data.icon" />\n                <div class="tabButtonText" data-bind="html: text"></div>   \n            </li>\n            <!-- /ko -->\n        </ul>\n    </div>\n</div>\n</script>\n<script type="text/template" id="template--Common-tooltip"><div class="tooltip">\n    <div class="tooltipArrow"></div>\n    <div class="tooltipContent rounded shadow gradientBlack gradient" data-bind="html: html"></div>\n</div></script>\n<script type="text/template" id="template--Common-contentHeader"><div class="contentHeader roundedTop gradient" data-bind="cssClass: gradientClass">\n    <ul>\n        <li class="heading"><span data-bind="text: text"></span></li>\n        <div data-bind="foreach: buttons">\n            <li class="right button" data-bind="click: click, visible: visible"><a data-bind="text: text"></a></li>\n        </div>\n    </ul>\n</div>\n</script>\n<script type="text/template" id="template--Common-dropDown"><div class="dropDownTrigger roundedSmall borderDark" data-bind="visible: showTrigger">\n    <span data-bind="text: selectedText"></span>\n    <div class="dropDownIcon smallArrowDown"></div>\n</div>\n\n<div class="dropDownPanel rounded subpanel">\n    <!-- ko if: allowCreate -->\n        <div><span>Create new:</span></div>\n        <div class="dropDownNewItem"><input type="text" /></div>\n    <!-- /ko -->\n        \n    <!-- ko if: items() && items().length > 0 -->\n        <div style="clear: left"><span>Select:</span></div>\n        <div style="clear: left" data-bind="foreach: items">\n            <div class="listItem" data-bind="click: $parent.selectItem, css: { selected: $parent.isItemSelected($data) }">\n                <span style="white-space: nowrap" data-bind="html: $parent.displayText($data)"></span>\n                <div style="float: right" />\n            </div>\n        </div>\n    <!-- /ko -->\n</div>\n</script>\n<script type="text/template" id="template--Common-expander"><div class="expander rounded borderLight" data-bind="css: { expanded: expanded }">\n    <div class="expanderHeader gradientGreen roundedTop roundedBottom" data-bind="click: click">        \n        <div class="arrow smallArrowDown"></div>\n        <div class="icon" />\n        <span class="headerText" data-bind="text: headerText"></span>\n        <!--<div class="iconPrint" data-bind="click: print"></div>-->\n    </div>\n    <div class="expanderContent roundedBottom">\n    </div>\n</div></script>\n<script type="text/template" id="template--Common-expanderList"><div class="expanderList" data-bind="foreach: expanders">\n    <div class="expanderContainer" data-bind="pane: \'/Common/expander\', data: $data"></div>\n</div></script>\n<script type="text/template" id="template--Common-graph"><div class="graphSeriesSelect" data-bind="visible: showSeriesSelect, displayText: seriesSelectText, selectField: selectedSeries, items: availableSeries, multipleSelect: true"></div>\n<div class="graphContainer" style="overflow: hidden; clear: left">\n    <div class="graph" style="float: left"></div>\n    <div class="legend" style="float: left"></div>\n</div></script>\n<script type="text/template" id="template--Common-grid"><!-- ko if: filters -->\n<div data-bind="foreach: filters" class="grid-filters">\n    <div data-bind="field: $data" class="grid-filter"></div>\n</div>\n<!-- /ko -->\n<div style="clear: left"></div>\n<div class="gridContainer">\n    <table class="grid" data-bind="if: $data.rows().length > 0">\n        <thead data-bind="visible: showHeader">\n            <!-- ko if: groupings().length > 0 -->\n            <tr class="grid-grouping" data-bind="foreach: groupings">\n                <!-- ko if: grouping == \'\' -->\n                <th data-bind="colspan: columnCount"></th>\n                <!-- /ko -->\n                <!-- ko if: grouping != \'\' -->\n                <th class="grid-grouping-item" data-bind="html: grouping, colspan: columnCount"></th>\n                <!-- /ko -->\n            </tr>\n            <!-- /ko -->\n\n            <tr class="grid-column-list grid-header" data-bind="foreach: headings">\n                <th class="grid-header-item" data-bind="html: $data, click: function (data, event) { $parent.sort($(event.currentTarget).index()); }"></th> \n            </tr>\n        </thead>\n\n        <tbody data-bind="foreach: rows">\n            <tr class="grid-column-list grid-row" data-bind="foreach: $data, click: function () { $parent.rowClick($data); }">\n                <td class="grid-row-item" data-bind="cssClass: cssClass">\n                    <span data-bind="html: $data.display"></span>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>\n');
+$('head').append('<script type="text/template" id="template--Common-dialog"><div class="dialog borderBlack rounded shadowLarge" data-bind="attr: { id: id }">\n    <div class="closeButton" data-bind="click: closeDialog, visible: showCloseButton"></div>\n    <div class="dialogContent">\n        <div class="dialogHeader"></div>        \n        <div class="dialogPane" data-bind="pane: pane"></div>\n    </div>\n</div>\n<div class="dialog loadingDialog rounded shadow">\n    <h2>Loading...</h2>\n</div>\n<div class="dialogBackgroundFilter"></div></script>\n<script type="text/template" id="template--Common-tabPanel"><div class="tabPanel">\n    <div class="tabButtonContainer">\n        <ul data-bind="foreach: tabs">\n            <!-- ko if: ($parent.loggedOn() ? $data.authenticated !== false : $data.anonymous !== false)  && (!$data.visible || $data.visible()) -->\n            <li class="tabButton" data-bind="cssClass: $data.cssClass, click: $parent.click, tooltip: $data.tooltip ? $data.tooltip : \'\', position: $parent.tooltipPosition">\n                <div class="tabButtonIcon" data-bind="cssClass: $data.icon" />\n                <div class="tabButtonText" data-bind="html: text"></div>   \n            </li>\n            <!-- /ko -->\n        </ul>\n    </div>\n</div>\n</script>\n<script type="text/template" id="template--Common-tooltip"><div class="tooltip">\n    <div class="tooltipArrow"></div>\n    <div class="tooltipContent rounded shadow gradientBlack gradient" data-bind="html: html"></div>\n</div></script>\n<script type="text/template" id="template--Common-contentHeader"><div class="contentHeader roundedTop gradient" data-bind="cssClass: gradientClass">\n    <ul>\n        <li class="heading"><span data-bind="text: text"></span></li>\n        <div data-bind="foreach: buttons">\n            <li class="right button" data-bind="click: click, visible: visible"><a data-bind="text: text"></a></li>\n        </div>\n    </ul>\n</div>\n</script>\n<script type="text/template" id="template--Common-dropDown"><div class="dropDownTrigger roundedSmall borderDark" data-bind="visible: showTrigger">\n    <span data-bind="text: selectedText"></span>\n    <div class="dropDownIcon smallArrowDown"></div>\n</div>\n\n<div class="dropDownPanel rounded subpanel">\n    <!-- ko if: allowCreate -->\n        <div><span>Create new:</span></div>\n        <div class="dropDownNewItem"><input type="text" /></div>\n    <!-- /ko -->\n        \n    <!-- ko if: items() && items().length > 0 -->\n        <div style="clear: left"><span>Select:</span></div>\n        <div style="clear: left" data-bind="foreach: items">\n            <div class="listItem" data-bind="click: $parent.selectItem, css: { selected: $parent.isItemSelected($data) }">\n                <span style="white-space: nowrap" data-bind="html: $parent.displayText($data)"></span>\n                <div style="float: right" />\n            </div>\n        </div>\n    <!-- /ko -->\n</div>\n</script>\n<script type="text/template" id="template--Common-expander"><div class="expander rounded borderLight" data-bind="css: { expanded: expanded }">\n    <div class="expanderHeader gradientGreen roundedTop roundedBottom" data-bind="click: click">        \n        <div class="arrow smallArrowDown"></div>\n        <div class="icon" />\n        <span class="headerText" data-bind="text: headerText"></span>\n        <!--<div class="iconPrint" data-bind="click: print"></div>-->\n    </div>\n    <div class="expanderContent roundedBottom">\n    </div>\n</div></script>\n<script type="text/template" id="template--Common-expanderList"><div class="expanderList" data-bind="foreach: expanders">\n    <div class="expanderContainer" data-bind="pane: \'/Common/expander\', data: $data"></div>\n</div></script>\n<script type="text/template" id="template--Common-graph"><div class="graphSeriesSelect" data-bind="visible: showSeriesSelect, displayText: seriesSelectText, selectField: selectedSeries, items: availableSeries, multipleSelect: true"></div>\n<div class="graphContainer" style="overflow: hidden; clear: left">\n    <div class="graph" style="float: left"></div>\n    <div class="legend" style="float: left"></div>\n</div></script>\n<script type="text/template" id="template--Common-grid"><!-- ko if: filters -->\n<div data-bind="foreach: filters" class="grid-filters">\n    <div data-bind="field: $data" class="grid-filter"></div>\n</div>\n<!-- /ko -->\n<div style="clear: left"></div>\n<div class="gridContainer">\n    <table class="grid" data-bind="if: $data.rows().length > 0">\n        <thead data-bind="visible: showHeader">\n            <!-- ko if: groupings().length > 0 -->\n            <tr class="grid-grouping" data-bind="foreach: groupings">\n                <!-- ko if: grouping == \'\' -->\n                <th data-bind="colspan: columnCount"></th>\n                <!-- /ko -->\n                <!-- ko if: grouping != \'\' -->\n                <th class="grid-grouping-item" data-bind="html: grouping, colspan: columnCount"></th>\n                <!-- /ko -->\n            </tr>\n            <!-- /ko -->\n\n            <tr class="grid-column-list grid-header" data-bind="foreach: headings">\n                <th class="grid-header-item" data-bind="html: $data, click: function (data, event) { $parent.sort($(event.currentTarget).index()); }"></th> \n            </tr>\n        </thead>\n\n        <tbody data-bind="foreach: rows">\n            <tr class="grid-column-list grid-row" data-bind="foreach: $data, click: function () { $parent.rowClick($data); }">\n                <td class="grid-row-item" data-bind="cssClass: cssClass">\n                    <span data-bind="html: $data.display"></span>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>\n<script type="text/template" id="template--Common-tabs"><div class="tabs">\n    <div class="tabList" data-bind="foreach: tabs">\n        <div class="tab gradientGreen" data-bind="text: header, click: $root.select, css: { active: active }"></div>\n    </div>\n    <div class="tabContent" data-bind="html: content"></div>\n</div></script>\n');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.dialog{position:fixed;background-color:#fff;z-index:100;overflow:visible}.dialogHeader{margin-top:1px}.dialogContent{position:relative;overflow:visible;z-index:1}.closeButton{position:absolute;right:3px;top:0;width:47px;height:18px;background-image:url(images/close.png);z-index:10}.closeButton:hover{background-image:url(images/close.active.png);-webkit-border-bottom-right-radius:3px;-webkit-border-bottom-left-radius:3px;-moz-border-radius-bottomright:3px;-moz-border-radius-bottomleft:3px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;box-shadow:0 0 8px #f55;-moz-box-shadow:0 0 8px #f55;-webkit-box-shadow:0 0 8px #f55}.loadingDialog{padding:20px 80px 20px 80px}.dialogBackgroundFilter{position:fixed;top:0;bottom:0;left:0;right:0;overflow:hidden;padding:0;margin:0;background-color:gray;filter:alpha(opacity=60);opacity:.6;z-index:99;display:none}.tabPanel{position:fixed;z-index:10}.tabPanel ul{margin:0;padding:0;list-style-type:none}.tabContent{display:none;overflow:visible}.tabButtonContainer{}.tabButton{display:block;font-size:16px;font-weight:bold;text-align:center;cursor:pointer;color:#000;z-index:11}.tabButton .tabButtonIcon{width:0;height:0}.tabSelected{}.tabButtonText{white-space:nowrap}.rightTabPanel{top:100px;right:0;-webkit-border-top-left-radius:6px;-webkit-border-bottom-left-radius:6px;-moz-border-radius-topleft:6px;-moz-border-radius-bottomleft:6px;border-top-left-radius:6px;border-bottom-left-radius:6px}.rightTabPanel .tabButtonContainer{position:absolute;right:-63px;top:50px;z-index:100;-webkit-border-top-left-radius:6px;-webkit-border-bottom-left-radius:6px;-moz-border-radius-topleft:6px;-moz-border-radius-bottomleft:6px;border-top-left-radius:6px;border-bottom-left-radius:6px}.rightTabPanel .tabButton{width:85px;height:25px;padding:5px;background:#f0f5e1;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2YwZjVlMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiNWJhYjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(1%,rgba(240,245,225,1)),color-stop(100%,rgba(181,186,178,1)));background:-webkit-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-o-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-ms-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#f0f5e1\',endColorstr=\'#b5bab2\',GradientType=0);border:1px solid #ccc;box-shadow:3px 3px 3px rgba(0,0,0,.3);-moz-box-shadow:3px 3px 3px rgba(0,0,0,.3);-webkit-box-shadow:3px 3px 3px rgba(0,0,0,.3);-webkit-border-top-left-radius:6px;-webkit-border-bottom-left-radius:6px;-moz-border-radius-topleft:6px;-moz-border-radius-bottomleft:6px;border-top-left-radius:6px;border-bottom-left-radius:6px;margin-bottom:10px}.rightTabPanel ul{margin-bottom:-5px}.rightTabPanel .tabSelected{}.rightTabPanel .tabButton:hover{color:#cfa700}.rightTabPanel .tabButtonText{margin-top:2px;padding-left:2px;margin-right:-2px;float:left}.rightTabPanel .tabContent{position:absolute;right:0;padding:20px;padding-right:50px;-webkit-border-bottom-left-radius:12px;-moz-border-radius-bottomleft:12px;border-bottom-left-radius:12px;-webkit-border-top-left-radius:12px;-moz-border-radius-topleft:12px;border-top-left-radius:12px}.rightTabPanel .tabButtonIcon{float:left;width:16px;height:16px;margin:5px}.topTabPanel{top:0;right:45px;margin-top:-1px;z-index:11}.desktop .topTabPanel{-webkit-border-bottom-right-radius:6px;-webkit-border-bottom-left-radius:6px;-moz-border-radius-bottomright:6px;-moz-border-radius-bottomleft:6px;border-bottom-right-radius:6px;border-bottom-left-radius:6px;box-shadow:3px 3px 3px rgba(0,0,0,.3);-moz-box-shadow:3px 3px 3px rgba(0,0,0,.3);-webkit-box-shadow:3px 3px 3px rgba(0,0,0,.3)}.desktop .topTabPanel .tabButtonContainer li:last-child{-webkit-border-bottom-left-radius:6px;-moz-border-radius-bottomleft:6px;border-bottom-left-radius:6px}.desktop .topTabPanel .tabButtonContainer li:first-child{-webkit-border-bottom-right-radius:6px;-moz-border-radius-bottomright:6px;border-bottom-right-radius:6px}.topTabPanel .tabButton{float:right;height:21px;width:75px;padding:10px 15px;padding-top:7px;border-left:1px solid #ccc;border-right:1px solid #ccc;margin-left:-1px;background:#eef1f1}.desktop .topTabPanel .tabButton{background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VlZjFmMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkMGRjZGMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(238,241,241,1)),color-stop(100%,rgba(208,220,220,1)));background:-webkit-linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);background:-o-linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);background:-ms-linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);background:linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#eef1f1\',endColorstr=\'#d0dcdc\',GradientType=0)}.mobile .topTabPanel .tabButton{border-bottom:1px solid #ccc}.topTabPanel .tabButton:hover{}.topTabPanel .tabContent{position:absolute;top:0;right:0;z-index:-1;margin-left:1px;padding-top:33px;border:1px solid #ccc}.desktop .topTabPanel .tabContent{-webkit-border-bottom-left-radius:6px;-moz-border-radius-bottomleft:6px;border-bottom-left-radius:6px;-webkit-border-bottom-right-radius:6px;-moz-border-radius-bottomright:6px;border-bottom-right-radius:6px;box-shadow:3px 3px 3px rgba(0,0,0,.3);-moz-box-shadow:3px 3px 3px rgba(0,0,0,.3);-webkit-box-shadow:3px 3px 3px rgba(0,0,0,.3)}.tooltip{font-family:\'Segoe UI\',"Trebuchet MS",Arial,Helvetica,Verdana,sans-serif;font-weight:normal;font-size:16px;display:none}.tooltipArrow{position:absolute;z-index:100}.tooltipContent{color:#fff;position:absolute;font-size:15px;border:#000 1px solid;padding:4px 8px 6px 8px;z-index:100}@media print{.tooltip{display:none}}.contentHeader{overflow:hidden;font-size:13px;margin-bottom:5px}.contentHeader ul{margin:0;padding:0;list-style-type:none;-webkit-border-top-right-radius:6px;-moz-border-radius-topright:6px;border-top-right-radius:6px;-webkit-border-top-left-radius:6px;-moz-border-radius-topleft:6px;border-top-left-radius:6px}.contentHeader ul li{float:left;display:block;padding:10px 15px}.contentHeader ul li.heading{padding-top:7px;font-size:1.2em;font-weight:bold}.desktop .contentHeader ul li.heading{text-shadow:0 1px 0 white}.contentHeader ul li.right{float:right}.contentHeader ul li.button{cursor:pointer}.contentHeader ul li.right.button{border-left:1px solid #ccc}.contentHeader ul li a{text-decoration:underline;color:#111}.contentHeader ul li a:hover{text-decoration:underline;color:blue}.dropDownTrigger{position:relative;font-family:Arial;font-size:13px;margin:0;padding-top:2px;padding-left:3px;height:18px;width:150px;overflow:hidden;cursor:pointer}.dropDownTrigger span{white-space:nowrap}.dropDownIcon{position:absolute;right:0;top:2px;background-color:#fff;margin-top:6px;margin-right:6px}.dropDownPanel{position:absolute;padding:3px;overflow:auto;display:none;z-index:1}.dropDownPanel input{margin:5px 3px}.dropDownNewItem{float:left}.listItem{width:auto;background-color:#ccc;margin-bottom:5px;height:31px;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;cursor:pointer;overflow:hidden}.listItem span{display:block;overflow:hidden;padding:5px 10px;color:#000}.listItem input{width:auto;font-family:\'Segoe UI\',"Trebuchet MS",Arial,Helvetica,Verdana,sans-serif;height:29px;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;border:1px solid #999;padding:0 0 0 5px;font-size:inherit;outline:none}.listItem:hover{background-color:#a9a9a9;color:#fff}.listItem.selected{background-color:#bce}.expander{position:relative}.expanderHeader{height:25px;padding:5px;cursor:pointer;-webkit-transform:translateZ(0);-webkit-backface-visibility:hidden;-webkit-perspective:1000}.expanderContent{padding:0 10px 10px 10px;display:none;background:#fff;-webkit-transform:translateZ(0);-webkit-backface-visibility:hidden;-webkit-perspective:1000}.expanderHeader .headerText{margin-left:6px}.expanderHeader .arrow{float:left;width:0;height:0;margin-left:5px;margin-right:5px}.expanderHeader .icon{float:left;margin-top:4px;margin-left:4px;width:16px;height:16px}.expanderHeader .iconGraph{background-image:url(images/icon.graph.png)}.expanderHeader .iconGrid{background-image:url(images/icon.grid.png)}.expanderHeader .iconList{background-image:url(images/icon.list.png)}.expanderHeader .smallArrowDown{margin-top:10px;margin-left:6px}.expanderHeader .smallArrowUp{margin-top:5px;margin-left:6px}.expander .iconPrint{display:none;float:right;margin-top:4px;margin-right:4px}.expander.expanded .iconPrint{display:block}.expanderList{padding:10px}.expanderContainer:nth-child(n+2) .expander{margin-top:10px}.graphContainer{margin-top:5px}.graph{width:800px;height:450px}.embedded .graph{width:500px;height:350px}.main .graph{width:272px;height:100px}.desktop .gridContainer{overflow:auto}.mobile .gridContainer{overflow:hidden}.grid{font-size:.85em;clear:left}.grid-filter{float:left;padding-right:20px}.grid-filter .label{width:auto;margin-right:10px}.grid-grouping{}.grid-grouping-item{font-weight:bold;background-color:#ddd;text-align:center}.grid-header{}.grid-header-item{font-weight:bold;background-color:#ddd;cursor:pointer}.grid-header-item:hover{background-color:#bbb;color:#000}.grid-row{cursor:pointer}.grid-row:hover .grid-row-item{background-color:#ccc;color:#000}.grid-row-item{background-color:#eee;text-align:right;background-repeat:no-repeat;background-position:center}.grid-row-selected .grid-row-item{background-color:#333;color:#fff}.grid-row-item.icon{font-size:0}.smallArrowUp{border:4px solid transparent;border-bottom-color:#999;height:0;width:0}.smallArrowDown{border:4px solid transparent;border-top-color:#999;height:0;width:0}.smallArrowLeft{border:4px solid transparent;border-right-color:#999;height:0;width:0}.smallArrowRight{border:4px solid transparent;border-left-color:#999;height:0;width:0}.arrowUp{border:6px solid transparent;border-bottom-color:#000;height:0;width:0}.arrowDown{border:6px solid transparent;border-top-color:#000;height:0;width:0}.arrowLeft{border:6px solid transparent;border-right-color:#000;height:0;width:0}.arrowRight{border:6px solid transparent;border-left-color:#000;height:0;width:0}button{-moz-box-shadow:inset 0 1px 0 0 #fff;-webkit-box-shadow:inset 0 1px 0 0 #fff;box-shadow:inset 0 1px 0 0 #fff;background:-webkit-gradient(linear,left top,left bottom,color-stop(.05,#ededed),color-stop(1,#dfdfdf));background:-moz-linear-gradient(center top,#ededed 5%,#dfdfdf 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#ededed\',endColorstr=\'#dfdfdf\');background-color:#ededed;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px;border:1px solid #dcdcdc;display:inline-block;color:#777;font-size:15px;font-weight:bold;font-family:\'Segoe UI\',Arial,"Trebuchet MS",Helvetica,Verdana,sans-serif;padding:6px 24px;margin:2px;text-decoration:none;text-shadow:1px 1px 0 #fff;vertical-align:top}button:hover{background:-webkit-gradient(linear,left top,left bottom,color-stop(.05,#dfdfdf),color-stop(1,#ededed));background:-moz-linear-gradient(center top,#dfdfdf 5%,#ededed 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#dfdfdf\',endColorstr=\'#ededed\');background-color:#dfdfdf}button:active{-moz-box-shadow:inset 1px 1px 0 0 #ededed;-webkit-box-shadow:inset 1px 1px 0 0 #ededed;box-shadow:inset 1px 1px 0 0 #ededed;padding:7px 23px 5px 25px}button::-moz-focus-inner,input[type="reset"]::-moz-focus-inner,input[type="button"]::-moz-focus-inner,input[type="submit"]::-moz-focus-inner,input[type="file"]>input[type="button"]::-moz-focus-inner{padding:0;margin:0;border:0}button:disabled{background:#ededed;padding-top:4px;text-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;color:#999}button:disabled:hover{background:#ededed}button:disabled:active{margin-top:0}button div{display:inline-block;margin-left:15px}.gradientGreen{background:#f0f5e1;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2YwZjVlMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiNWJhYjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(1%,rgba(240,245,225,1)),color-stop(100%,rgba(181,186,178,1)));background:-webkit-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-o-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-ms-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#f0f5e1\',endColorstr=\'#b5bab2\',GradientType=0)}.gradientYellow{background:#ffe4a0;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2ZmZTRhMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhZmFmYWYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(1%,rgba(255,228,160,1)),color-stop(100%,rgba(175,175,175,1)));background:-webkit-linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);background:-o-linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);background:-ms-linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);background:linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#ffe4a0\',endColorstr=\'#afafaf\',GradientType=0)}.gradientBlue{background:#add8e6;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FkZDhlNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhZmFmYWYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(173,216,230,1)),color-stop(100%,rgba(175,175,175,1)));background:-webkit-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);background:-o-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);background:-ms-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);background:linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#add8e6\',endColorstr=\'#afafaf\',GradientType=0)}.gradientReverseBlue{background:#add8e6;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FkZDhlNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkN2UyZTUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(173,216,230,1)),color-stop(100%,rgba(215,226,229,1)));background:-webkit-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);background:-o-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);background:-ms-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);background:linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#add8e6\',endColorstr=\'#d7e2e5\',GradientType=0)}.gradientBlack{background:#45484d;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQ1NDg0ZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(69,72,77,1)),color-stop(100%,rgba(0,0,0,1)));background:-webkit-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:-o-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:-ms-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#45484d\',endColorstr=\'#000000\',GradientType=0)}.iconLoading{background-image:url(images/loading16.gif)!important;width:16px;height:16px}.iconCheckboxNo{background-image:url(images/checkbox_no.png)!important;width:16px;height:16px}.iconCheckboxYes{background-image:url(images/checkbox_yes.png)!important;width:16px;height:16px}.iconTick{background-image:url(images/tick_circle.png)!important;width:16px;height:16px}.iconSettings{background-image:url(images/icon.cog.png)!important;width:16px;height:16px}.iconHelp{background-image:url(images/icon.help.png)!important;width:16px;height:16px}.iconPrint{background-image:url(images/icon.print.png)!important;width:16px;height:16px}.iconDownload{background-image:url(images/icon.download.png)!important;width:16px;height:16px}.iconTips{background-image:url(images/icon.tips.png)!important;width:22px;height:22px}')
+    .text('.dialog{position:fixed;background-color:#fff;z-index:100;overflow:visible}.dialogHeader{margin-top:1px}.dialogContent{position:relative;overflow:visible;z-index:1}.closeButton{position:absolute;right:3px;top:0;width:47px;height:18px;background-image:url(images/close.png);z-index:10}.closeButton:hover{background-image:url(images/close.active.png);-webkit-border-bottom-right-radius:3px;-webkit-border-bottom-left-radius:3px;-moz-border-radius-bottomright:3px;-moz-border-radius-bottomleft:3px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;box-shadow:0 0 8px #f55;-moz-box-shadow:0 0 8px #f55;-webkit-box-shadow:0 0 8px #f55}.loadingDialog{padding:20px 80px 20px 80px}.dialogBackgroundFilter{position:fixed;top:0;bottom:0;left:0;right:0;overflow:hidden;padding:0;margin:0;background-color:gray;filter:alpha(opacity=60);opacity:.6;z-index:99;display:none}.tabPanel{position:fixed;z-index:10}.tabPanel ul{margin:0;padding:0;list-style-type:none}.tabPanel .tabContent{display:none;overflow:visible}.tabPanel .tabButtonContainer{}.tabPanel .tabButton{display:block;font-size:16px;font-weight:bold;text-align:center;cursor:pointer;color:#000;z-index:11}.tabPanel .tabButton .tabButtonIcon{width:0;height:0}.tabPanel .tabSelected{}.tabPanel .tabButtonText{white-space:nowrap}.rightTabPanel{top:100px;right:0;-webkit-border-top-left-radius:6px;-webkit-border-bottom-left-radius:6px;-moz-border-radius-topleft:6px;-moz-border-radius-bottomleft:6px;border-top-left-radius:6px;border-bottom-left-radius:6px}.rightTabPanel .tabButtonContainer{position:absolute;right:-63px;top:50px;z-index:100;-webkit-border-top-left-radius:6px;-webkit-border-bottom-left-radius:6px;-moz-border-radius-topleft:6px;-moz-border-radius-bottomleft:6px;border-top-left-radius:6px;border-bottom-left-radius:6px}.rightTabPanel .tabButton{width:85px;height:25px;padding:5px;background:#f0f5e1;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2YwZjVlMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiNWJhYjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(1%,rgba(240,245,225,1)),color-stop(100%,rgba(181,186,178,1)));background:-webkit-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-o-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-ms-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#f0f5e1\',endColorstr=\'#b5bab2\',GradientType=0);border:1px solid #ccc;box-shadow:3px 3px 3px rgba(0,0,0,.3);-moz-box-shadow:3px 3px 3px rgba(0,0,0,.3);-webkit-box-shadow:3px 3px 3px rgba(0,0,0,.3);-webkit-border-top-left-radius:6px;-webkit-border-bottom-left-radius:6px;-moz-border-radius-topleft:6px;-moz-border-radius-bottomleft:6px;border-top-left-radius:6px;border-bottom-left-radius:6px;margin-bottom:10px}.rightTabPanel ul{margin-bottom:-5px}.rightTabPanel .tabSelected{}.rightTabPanel .tabButton:hover{color:#cfa700}.rightTabPanel .tabButtonText{margin-top:2px;padding-left:2px;margin-right:-2px;float:left}.rightTabPanel .tabContent{position:absolute;right:0;padding:20px;padding-right:50px;-webkit-border-bottom-left-radius:12px;-moz-border-radius-bottomleft:12px;border-bottom-left-radius:12px;-webkit-border-top-left-radius:12px;-moz-border-radius-topleft:12px;border-top-left-radius:12px}.rightTabPanel .tabButtonIcon{float:left;width:16px;height:16px;margin:5px}.topTabPanel{top:0;right:45px;margin-top:-1px;z-index:11}.desktop .topTabPanel{-webkit-border-bottom-right-radius:6px;-webkit-border-bottom-left-radius:6px;-moz-border-radius-bottomright:6px;-moz-border-radius-bottomleft:6px;border-bottom-right-radius:6px;border-bottom-left-radius:6px;box-shadow:3px 3px 3px rgba(0,0,0,.3);-moz-box-shadow:3px 3px 3px rgba(0,0,0,.3);-webkit-box-shadow:3px 3px 3px rgba(0,0,0,.3)}.desktop .topTabPanel .tabButtonContainer li:last-child{-webkit-border-bottom-left-radius:6px;-moz-border-radius-bottomleft:6px;border-bottom-left-radius:6px}.desktop .topTabPanel .tabButtonContainer li:first-child{-webkit-border-bottom-right-radius:6px;-moz-border-radius-bottomright:6px;border-bottom-right-radius:6px}.topTabPanel .tabButton{float:right;height:21px;width:75px;padding:10px 15px;padding-top:7px;border-left:1px solid #ccc;border-right:1px solid #ccc;margin-left:-1px;background:#eef1f1}.desktop .topTabPanel .tabButton{background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VlZjFmMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkMGRjZGMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(238,241,241,1)),color-stop(100%,rgba(208,220,220,1)));background:-webkit-linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);background:-o-linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);background:-ms-linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);background:linear-gradient(top,rgba(238,241,241,1) 0%,rgba(208,220,220,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#eef1f1\',endColorstr=\'#d0dcdc\',GradientType=0)}.mobile .topTabPanel .tabButton{border-bottom:1px solid #ccc}.topTabPanel .tabButton:hover{}.topTabPanel .tabContent{position:absolute;top:0;right:0;z-index:-1;margin-left:1px;padding-top:33px;border:1px solid #ccc}.desktop .topTabPanel .tabContent{-webkit-border-bottom-left-radius:6px;-moz-border-radius-bottomleft:6px;border-bottom-left-radius:6px;-webkit-border-bottom-right-radius:6px;-moz-border-radius-bottomright:6px;border-bottom-right-radius:6px;box-shadow:3px 3px 3px rgba(0,0,0,.3);-moz-box-shadow:3px 3px 3px rgba(0,0,0,.3);-webkit-box-shadow:3px 3px 3px rgba(0,0,0,.3)}.tooltip{font-family:\'Segoe UI\',"Trebuchet MS",Arial,Helvetica,Verdana,sans-serif;font-weight:normal;font-size:16px;display:none}.tooltipArrow{position:absolute;z-index:100}.tooltipContent{color:#fff;position:absolute;font-size:15px;border:#000 1px solid;padding:4px 8px 6px 8px;z-index:100}@media print{.tooltip{display:none}}.contentHeader{overflow:hidden;font-size:13px;margin-bottom:5px}.contentHeader ul{margin:0;padding:0;list-style-type:none;-webkit-border-top-right-radius:6px;-moz-border-radius-topright:6px;border-top-right-radius:6px;-webkit-border-top-left-radius:6px;-moz-border-radius-topleft:6px;border-top-left-radius:6px}.contentHeader ul li{float:left;display:block;padding:10px 15px}.contentHeader ul li.heading{padding-top:7px;font-size:1.2em;font-weight:bold}.desktop .contentHeader ul li.heading{text-shadow:0 1px 0 white}.contentHeader ul li.right{float:right}.contentHeader ul li.button{cursor:pointer}.contentHeader ul li.right.button{border-left:1px solid #ccc}.contentHeader ul li a{text-decoration:underline;color:#111}.contentHeader ul li a:hover{text-decoration:underline;color:blue}.dropDownTrigger{position:relative;font-family:Arial;font-size:13px;margin:0;padding-top:2px;padding-left:3px;height:18px;width:150px;overflow:hidden;cursor:pointer}.dropDownTrigger span{white-space:nowrap}.dropDownIcon{position:absolute;right:0;top:2px;background-color:#fff;margin-top:6px;margin-right:6px}.dropDownPanel{position:absolute;padding:3px;overflow:auto;display:none;z-index:1}.dropDownPanel input{margin:5px 3px}.dropDownNewItem{float:left}.listItem{width:auto;background-color:#ccc;margin-bottom:5px;height:31px;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;cursor:pointer;overflow:hidden}.listItem span{display:block;overflow:hidden;padding:5px 10px;color:#000}.listItem input{width:auto;font-family:\'Segoe UI\',"Trebuchet MS",Arial,Helvetica,Verdana,sans-serif;height:29px;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;border:1px solid #999;padding:0 0 0 5px;font-size:inherit;outline:none}.listItem:hover{background-color:#a9a9a9;color:#fff}.listItem.selected{background-color:#bce}.expander{position:relative}.expanderHeader{height:25px;padding:5px;cursor:pointer;-webkit-transform:translateZ(0);-webkit-backface-visibility:hidden;-webkit-perspective:1000}.expanderContent{padding:0 10px 10px 10px;display:none;background:#fff;-webkit-transform:translateZ(0);-webkit-backface-visibility:hidden;-webkit-perspective:1000}.expanderHeader .headerText{margin-left:6px}.expanderHeader .arrow{float:left;width:0;height:0;margin-left:5px;margin-right:5px}.expanderHeader .icon{float:left;margin-top:4px;margin-left:4px;width:16px;height:16px}.expanderHeader .iconGraph{background-image:url(images/icon.graph.png)}.expanderHeader .iconGrid{background-image:url(images/icon.grid.png)}.expanderHeader .iconList{background-image:url(images/icon.list.png)}.expanderHeader .smallArrowDown{margin-top:10px;margin-left:6px}.expanderHeader .smallArrowUp{margin-top:5px;margin-left:6px}.expander .iconPrint{display:none;float:right;margin-top:4px;margin-right:4px}.expander.expanded .iconPrint{display:block}.expanderList{padding:10px}.expanderContainer:nth-child(n+2) .expander{margin-top:10px}.graphContainer{margin-top:5px}.graph{width:800px;height:450px}.embedded .graph{width:500px;height:350px}.main .graph{width:272px;height:100px}.desktop .gridContainer{overflow:auto}.mobile .gridContainer{overflow:hidden}.grid{font-size:.85em;clear:left}.grid-filter{float:left;padding-right:20px}.grid-filter .label{width:auto;margin-right:10px}.grid-grouping{}.grid-grouping-item{font-weight:bold;background-color:#ddd;text-align:center}.grid-header{}.grid-header-item{font-weight:bold;background-color:#ddd;cursor:pointer}.grid-header-item:hover{background-color:#bbb;color:#000}.grid-row{cursor:pointer}.grid-row:hover .grid-row-item{background-color:#ccc;color:#000}.grid-row-item{background-color:#eee;text-align:right;background-repeat:no-repeat;background-position:center}.grid-row-selected .grid-row-item{background-color:#333;color:#fff}.grid-row-item.icon{font-size:0}.tabList .tab{float:left;padding:10px 20px;border:1px solid grey;border-top-left-radius:6px;border-top-right-radius:6px;margin:0 5px -1px 5px}.tabList .tab.active{background:#fff;border-bottom:1px solid #fff}.tabContent{clear:both;padding:10px;border:1px solid grey}.smallArrowUp{border:4px solid transparent;border-bottom-color:#999;height:0;width:0}.smallArrowDown{border:4px solid transparent;border-top-color:#999;height:0;width:0}.smallArrowLeft{border:4px solid transparent;border-right-color:#999;height:0;width:0}.smallArrowRight{border:4px solid transparent;border-left-color:#999;height:0;width:0}.arrowUp{border:6px solid transparent;border-bottom-color:#000;height:0;width:0}.arrowDown{border:6px solid transparent;border-top-color:#000;height:0;width:0}.arrowLeft{border:6px solid transparent;border-right-color:#000;height:0;width:0}.arrowRight{border:6px solid transparent;border-left-color:#000;height:0;width:0}button{-moz-box-shadow:inset 0 1px 0 0 #fff;-webkit-box-shadow:inset 0 1px 0 0 #fff;box-shadow:inset 0 1px 0 0 #fff;background:-webkit-gradient(linear,left top,left bottom,color-stop(.05,#ededed),color-stop(1,#dfdfdf));background:-moz-linear-gradient(center top,#ededed 5%,#dfdfdf 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#ededed\',endColorstr=\'#dfdfdf\');background-color:#ededed;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px;border:1px solid #dcdcdc;display:inline-block;color:#777;font-size:15px;font-weight:bold;font-family:\'Segoe UI\',Arial,"Trebuchet MS",Helvetica,Verdana,sans-serif;padding:6px 24px;margin:2px;text-decoration:none;text-shadow:1px 1px 0 #fff;vertical-align:top}button:hover{background:-webkit-gradient(linear,left top,left bottom,color-stop(.05,#dfdfdf),color-stop(1,#ededed));background:-moz-linear-gradient(center top,#dfdfdf 5%,#ededed 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#dfdfdf\',endColorstr=\'#ededed\');background-color:#dfdfdf}button:active{-moz-box-shadow:inset 1px 1px 0 0 #ededed;-webkit-box-shadow:inset 1px 1px 0 0 #ededed;box-shadow:inset 1px 1px 0 0 #ededed;padding:7px 23px 5px 25px}button::-moz-focus-inner,input[type="reset"]::-moz-focus-inner,input[type="button"]::-moz-focus-inner,input[type="submit"]::-moz-focus-inner,input[type="file"]>input[type="button"]::-moz-focus-inner{padding:0;margin:0;border:0}button:disabled{background:#ededed;padding-top:4px;text-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;color:#999}button:disabled:hover{background:#ededed}button:disabled:active{margin-top:0}button div{display:inline-block;margin-left:15px}.gradientGreen{background:#f0f5e1;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2YwZjVlMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiNWJhYjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(1%,rgba(240,245,225,1)),color-stop(100%,rgba(181,186,178,1)));background:-webkit-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-o-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:-ms-linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);background:linear-gradient(top,rgba(240,245,225,1) 1%,rgba(181,186,178,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#f0f5e1\',endColorstr=\'#b5bab2\',GradientType=0)}.gradientYellow{background:#ffe4a0;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2ZmZTRhMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhZmFmYWYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(1%,rgba(255,228,160,1)),color-stop(100%,rgba(175,175,175,1)));background:-webkit-linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);background:-o-linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);background:-ms-linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);background:linear-gradient(top,rgba(255,228,160,1) 1%,rgba(175,175,175,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#ffe4a0\',endColorstr=\'#afafaf\',GradientType=0)}.gradientBlue{background:#add8e6;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FkZDhlNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhZmFmYWYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(173,216,230,1)),color-stop(100%,rgba(175,175,175,1)));background:-webkit-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);background:-o-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);background:-ms-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);background:linear-gradient(top,rgba(173,216,230,1) 0%,rgba(175,175,175,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#add8e6\',endColorstr=\'#afafaf\',GradientType=0)}.gradientReverseBlue{background:#add8e6;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FkZDhlNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkN2UyZTUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(173,216,230,1)),color-stop(100%,rgba(215,226,229,1)));background:-webkit-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);background:-o-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);background:-ms-linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);background:linear-gradient(top,rgba(173,216,230,1) 0%,rgba(215,226,229,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#add8e6\',endColorstr=\'#d7e2e5\',GradientType=0)}.gradientBlack{background:#45484d;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQ1NDg0ZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(69,72,77,1)),color-stop(100%,rgba(0,0,0,1)));background:-webkit-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:-o-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:-ms-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#45484d\',endColorstr=\'#000000\',GradientType=0)}.iconLoading{background-image:url(images/loading16.gif)!important;width:16px;height:16px}.iconCheckboxNo{background-image:url(images/checkbox_no.png)!important;width:16px;height:16px}.iconCheckboxYes{background-image:url(images/checkbox_yes.png)!important;width:16px;height:16px}.iconTick{background-image:url(images/tick_circle.png)!important;width:16px;height:16px}.iconSettings{background-image:url(images/icon.cog.png)!important;width:16px;height:16px}.iconHelp{background-image:url(images/icon.help.png)!important;width:16px;height:16px}.iconPrint{background-image:url(images/icon.print.png)!important;width:16px;height:16px}.iconDownload{background-image:url(images/icon.download.png)!important;width:16px;height:16px}.iconTips{background-image:url(images/icon.tips.png)!important;width:22px;height:22px}')
     .appendTo('head');

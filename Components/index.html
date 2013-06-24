@@ -1,34 +1,36 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Components Samples</title>
-    <script type="text/javascript" src="../Libraries/jquery.js"></script>
-    <script type="text/javascript" src="../Libraries/knockout.js"></script>
-    <script type="text/javascript" src="../Tribe.js"></script>
-    <script type="text/javascript" src="Build/Tribe.Components.desktop.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            var model = {
-                gridSource: [
-                    { string: 'Hello', first: 1, second: 2 },
-                    { string: 'World', first: 2, second: 3 }
-                ],
-                gridColumns: [
-                    { property: 'string', heading: 'String' },
-                    { grouping: 'Grouping', columns: [
-                        { property: 'first', heading: 'First' },
-                        { property: 'second', heading: 'Second' }
-                    ]}
-                ]
-            };
+    <head>
+        <title>Components Samples</title>
+        <!-- syntax highlighter requires an older version of jQuery -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript" src="http://balupton.github.com/jquery-syntaxhighlighter/scripts/jquery.syntaxhighlighter.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/flot/0.8/jquery.flot.min.js"></script>
 
-            TC.options.basePath = 'Sample/';
-            ko.applyBindings(model);
-        });
-    </script>
-</head>
-<body>
-    <div data-bind="pane: 'sample', data: { panePath: '/Common/contentHeader', paneData: { text: 'test' } }"></div>
-    <div data-bind="pane: 'sample', data: { panePath: '/Common/grid', paneData: { source: gridSource, columns: gridColumns } }"></div>
-</body>
+        <script type="text/javascript" src="../Libraries/knockout.js"></script>
+        <script type="text/javascript" src="../Tribe.js"></script>
+        <script type="text/javascript" src="Build/Tribe.Components.desktop.js"></script>
+        <script type="text/javascript" src="samples.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                TC.options.basePath = 'Samples/';
+                TC.options.handleExceptions = false;
+
+                $.SyntaxHighlighter.init();
+                ko.applyBindings();
+            });
+        </script>
+        <style>
+            body {
+                font-family: 'Segoe UI', 'Trebuchet MS', Arial, Helvetica, Verdana, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div data-bind="pane: 'sample', data: { pane: 'graph' }"></div>        
+        <div data-bind="pane: 'sample', data: { pane: 'grid' }"></div>        
+        <div data-bind="pane: 'sample', data: { pane: 'tabs' }"></div>        
+        <div data-bind="pane: 'sample', data: { pane: 'contentHeader' }"></div>        
+        <div data-bind="pane: 'sample', data: { pane: 'dialog' }"></div>        
+    </body>
 </html>

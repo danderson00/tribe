@@ -307,23 +307,28 @@ TC.options = TC.defaultOptions();(function () {
     }
 
 })();(function (utils) {    
-    utils.map = function(collection, iterator) {
-        return $.map(collection, iterator);
+    utils.each = function (collection, iterator) {
+        return $.each(collection || [], function (index, value) {
+            return iterator(value, index);
+        });
     };
 
-    utils.filter = function(array, iterator) {
+    // jQuery map flattens returned arrays - we don't want this for grids
+    utils.map = function (collection, iterator) {
         var result = [];
-        $.each(array, function(index, value) {
-            if (iterator(value, index))
-                result.push(value);
+        utils.each(collection || [], function(value, index) {
+            result.push(iterator(value, index));
         });
         return result;
     };
 
-    utils.each = function(collection, iterator) {
-        return $.each(collection, function(index, value) {
-            return iterator(value, index);
+    utils.filter = function(array, iterator) {
+        var result = [];
+        $.each(array || [], function(index, value) {
+            if (iterator(value, index))
+                result.push(value);
         });
+        return result;
     };
 })(TC.Utils);TC.Utils.elementDestroyed = function (element) {
     if (element.constructor === jQuery)

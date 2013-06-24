@@ -72,7 +72,7 @@
 
         var setPropertiesFor = {
             left: function () {
-                if (elementIsFixed($target)) {
+                if (T.elementIsFixed($target)) {
                     $(pane.element).children('.tooltip').css('position', 'fixed');
                     $arrow.addClass('arrowRight').offset({
                         left: $target.offset().left - $arrow.outerWidth(),
@@ -134,7 +134,7 @@
         }
 
         function setHorizontalPosition() {
-            if (elementIsRightAligned($target)) {
+            if (T.elementIsRightAligned($target)) {
                 $content.css('right', 0);
                 $arrow.css('right', elementRight($target) + $target.width() / 2 - $arrow.outerWidth() / 2);
             } else {
@@ -150,7 +150,7 @@
                 return 20 - left;
 
             var right = left + $content.outerWidth();
-            var $viewport = $(viewportElementFor($target));
+            var $viewport = $(T.viewportElementFor($target));
             if (right > $viewport.width() - 5)
                 return $viewport.width() - right - 5;
 
@@ -158,7 +158,7 @@
         }
 
         function elementRight(element) {
-            return $(containingElementFor(element)).width() - $(element).position().left - $(element).width();
+            return $(T.containingElementFor(element)).width() - $(element).position().left - $(element).width();
         }
 
     });
