@@ -23,5 +23,5 @@ function build(platform) {
 pack({
     to: 'samples.js',
     include: 'Samples/*.*',
-    template: 'sampleContent'
+    template: 'sampleTabContent'
 });

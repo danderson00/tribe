@@ -79,7 +79,7 @@
     <Content Include="Infrastructure\sortBy.js" />
     <Content Include="Infrastructure\tooltipBindingHandler.js" />
     <Content Include="pack.js" />
-    <Content Include="Pack\sampleContent.template.js" />
+    <Content Include="Pack\sampleTabContent.template.js" />
     <Content Include="Panes\Common\contentHeader.css" />
     <Content Include="Panes\Common\contentHeader.htm" />
     <Content Include="Panes\Common\contentHeader.js" />

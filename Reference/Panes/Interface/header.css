@@ -1,13 +1,5 @@
 ﻿.header {
-    height: 70px;
-}
-
-.logo {
-    float: left;
-    padding: 10px;
-    color: white;
-    font-size: 36px;
-    font-family: 'Arial Black';
+    height: 55px;
 }
 
 .sections {

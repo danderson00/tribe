@@ -4,4 +4,8 @@
             pane.pubsub.publish('article.show', { section: section, topic: 'index' });
         };
     };
+
+    this.source = function() {
+
+    };
 });
