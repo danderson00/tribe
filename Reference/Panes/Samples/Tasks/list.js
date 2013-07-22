@@ -5,7 +5,6 @@
 
     // Using messages decouples your components.
     // Tribe cleans up subscriptions automatically.
-    
     pane.pubsub.subscribe('task.create', function(task) {
         self.tasks.push(task);
     });

@@ -1,6 +1,9 @@
 ﻿TC.registerModel(function(pane) {
     var self = this;
 
+    TMH.initialise(pane.pubsub, 'signalr');
+    TMH.joinChannel('chat', { serverEvents: ['*'] });
+
     this.name = ko.observable('Anonymous');
     this.message = ko.observable();
     this.messages = ko.observableArray();
@@ -12,7 +15,8 @@
         });
     };
 
-    pane.pubsub.subscribe('chat.message', function(message) {
-        self.messages.push(message);
-    });
+    pane.pubsub.subscribe('chat.message',
+        function (message) {
+            self.messages.push(message);
+        });
 });

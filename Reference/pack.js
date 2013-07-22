@@ -1,6 +1,7 @@
 ﻿pack({
-    to: 'Build/sampleContent.js',
+    to: 'Build/site.js',
     include: [
+        'Infrastructure/*.js',
         sample('Tasks'),
         sample('Chat')
     ]

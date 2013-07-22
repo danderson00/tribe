@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33A1C3EC-81D6-4DEB-B05F-322D52389001}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Reference</RootNamespace>
+    <AssemblyName>Reference</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Build\sampleContent.js" />
+    <Content Include="Images\icon.html.png" />
+    <Content Include="Images\icon.css.png" />
+    <Content Include="Images\icon.htm.png" />
+    <Content Include="Images\icon.js.png" />
+    <Content Include="Images\ko-bindings.png" />
+    <Content Include="Images\ko-dependencies.png" />
+    <Content Include="Images\ko-refresh.png" />
+    <Content Include="Images\ko-templating.png" />
+    <Content Include="Panes\Content\About\index.css" />
+    <Content Include="Panes\Interface\sample.js" />
+    <Content Include="Panes\Interface\sample.css" />
+    <Content Include="Panes\Samples\Chat\chat.css" />
+    <Content Include="Panes\Samples\Chat\chat.htm" />
+    <Content Include="Panes\Samples\Chat\chat.js" />
+    <Content Include="Panes\Samples\Tasks\index.html" />
+    <Content Include="Panes\Samples\Tasks\list.css" />
+    <Content Include="samples.html" />
+    <Content Include="Images\b5.jpg" />
+    <Content Include="Images\b6.jpg" />
+    <Content Include="Images\ko-logo.png" />
+    <Content Include="Libraries\jquery-1.8.3.js" />
+    <Content Include="Libraries\jquery.flot.min.js" />
+    <Content Include="Libraries\knockout.js" />
+    <Content Include="Libraries\Tribe.js" />
+    <Content Include="Pack\TR.sampleContent.template.js" />
+    <Content Include="Panes\Content\Components\Composite\navigation.htm" />
+    <Content Include="Panes\Content\Components\Composite\sagas.htm" />
+    <Content Include="Panes\Content\Components\Composite\transitions.htm" />
+    <Content Include="Panes\Content\Components\Composite\testing.htm" />
+    <Content Include="Panes\Content\Components\Composite\lifecycle.htm" />
+    <Content Include="Panes\Interface\main.js" />
+    <Content Include="Panes\Interface\sample.htm" />
+    <Content Include="pack.js" />
+    <Content Include="Panes\Samples\Tasks\create.htm" />
+    <Content Include="Panes\Samples\Tasks\create.js" />
+    <Content Include="Panes\Samples\Tasks\layout.htm" />
+    <Content Include="Panes\Samples\Tasks\list.htm" />
+    <Content Include="Panes\Samples\Tasks\list.js" />
+    <Content Include="Panes\Samples\Tasks\task.htm" />
+    <Content Include="Panes\Samples\Tasks\task.js" />
+    <None Include="CNAME" />
+    <Content Include="index.html" />
+    <Content Include="Infrastructure\navigation.js" />
+    <Content Include="Panes\Interface\content.htm" />
+    <Content Include="Panes\Interface\content.js" />
+    <Content Include="Panes\Content\Components\Composite\panes.htm" />
+    <Content Include="Panes\Content\Guides\index.htm" />
+    <Content Include="Panes\Interface\main.css" />
+    <Content Include="Panes\Interface\main.htm" />
+    <Content Include="Panes\Content\Components\Components\index.htm" />
+    <Content Include="Panes\Content\Components\Composite\index.htm" />
+    <Content Include="Panes\Content\Components\Forms\index.htm" />
+    <Content Include="Panes\Content\Components\index.htm" />
+    <Content Include="Panes\Content\Components\MessageHub\index.htm" />
+    <Content Include="Panes\Content\Components\Mobile\index.htm" />
+    <Content Include="Panes\Content\Components\PubSub\index.htm" />
+    <Content Include="Panes\Content\About\index.htm" />
+    <Content Include="Panes\Content\Reference\Components\index.htm" />
+    <Content Include="Panes\Content\Reference\Composite\index.htm" />
+    <Content Include="Panes\Content\Reference\Forms\index.htm" />
+    <Content Include="Panes\Content\Reference\index.htm" />
+    <Content Include="Panes\Content\Reference\MessageHub\index.htm" />
+    <Content Include="Panes\Content\Reference\Mobile\index.htm" />
+    <Content Include="Panes\Content\Reference\PubSub\index.htm" />
+    <Content Include="Panes\Interface\footer.css" />
+    <Content Include="Panes\Interface\footer.htm" />
+    <Content Include="Panes\Interface\header.css" />
+    <Content Include="Panes\Interface\header.htm" />
+    <Content Include="Panes\Interface\header.js" />
+    <Content Include="Panes\Interface\layout.css" />
+    <Content Include="Panes\Interface\layout.htm" />
+    <Content Include="Panes\Interface\navigation.css" />
+    <Content Include="Panes\Interface\navigation.htm" />
+    <Content Include="Panes\Interface\navigation.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

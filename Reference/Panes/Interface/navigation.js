@@ -1,7 +1,7 @@
 ﻿TC.registerModel(function (pane) {
     var self = this;
     var currentSection;
-    
+
     this.selectedParent = ko.observable();
     this.selectedItem = ko.observable();
     this.items = ko.observableArray();

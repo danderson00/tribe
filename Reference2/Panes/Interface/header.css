@@ -1,0 +1,21 @@
+﻿.header {
+    height: 55px;
+}
+
+.sections {
+    float: right;
+    margin: 15px;
+}
+
+.sections span {
+    color: #EEE;
+    padding: 3px 20px 5px 20px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    font-size: 1.2em;
+}
+
+.sections span:hover {
+    background: rgba(255, 255, 255, 0.5);
+}

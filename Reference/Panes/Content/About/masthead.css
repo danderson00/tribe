@@ -1,0 +1,18 @@
+﻿.masthead {
+    color: white;
+    text-shadow: 3px 3px 0 black, 5px 5px 5px rgba(0, 0, 0, 0.5);
+    background: #103070;
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px #333 solid;    
+}
+
+.masthead h1 {
+    height: 60px;
+    font: bold 96pt 'Cambria';
+    padding: 0;
+}
+
+.masthead h2 {
+    font-size: 18px;
+}

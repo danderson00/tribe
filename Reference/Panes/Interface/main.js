@@ -2,7 +2,9 @@
     var self = this;
     self.showLeftPanel = ko.observable(false);
 
-    pane.pubsub.subscribe('ui.showLeftPanel', function(data) {
+    Topic.createHelpers(pane.pubsub);
+
+    pane.pubsub.subscribe('ui.showLeftPanel', function (data) {
         self.showLeftPanel(data.show);
     });
 });

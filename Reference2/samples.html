@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Sample</title>
+        <script type="text/javascript" src="Libraries/jquery-1.8.3.js"></script>
+<!--        <script type="text/javascript" src="Libraries/jquery.flot.min.js"></script>-->
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autoload=false"></script>
+        <script type="text/javascript" src="Libraries/knockout.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.js"></script>
+
+        <script type="text/javascript" src="Build/sampleContent.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                TC.options.basePath = 'Panes/';
+                TC.options.handleExceptions = false;
+
+                ko.applyBindings();
+            });
+        </script>
+        <style>
+            body {
+                font-family: 'Segoe UI', 'Trebuchet MS', Arial, Helvetica, Verdana, sans-serif;
+            }
+        </style>
+    </head>
+    <body data-bind="pane: 'Interface/sample', data: { name: 'Chat', rootPane: 'chat', initialFile: 'chat.js' }">
+    </body>
+</html>

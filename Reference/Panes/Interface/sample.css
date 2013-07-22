@@ -1,20 +1,26 @@
 ﻿.sample {
-    width: 946px;
+    width: 918px;
+    margin: 0 auto;
 }
 
 .sample > * {
-    float: left;
+    display: inline-block;
+    vertical-align: top;
+    height: 305px;
     border: 1px solid black;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+}
+
+.sample .fileList, .sample .fileContent {
+    float: left;
     height: 300px;
     box-sizing: border-box;
 }
 
-.sample > div {
-    border-left: 0;
-}
-
 .sample ul.fileList {
-    width: 180px;
+    width: 150px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -38,14 +44,31 @@
 .sample .fileContent {
     padding: 5px;
     width: 490px;
-    overflow: hidden;
+    overflow: auto;
+    height: 272px; /* HACK */
+}
+
+.sample .result {
+    margin-left: 5px;
+    margin-bottom: 5px;
+    width: 255px;
+}
+
+.sample .title {
+    background: #ccc;
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .sample .samplePane {
-    padding: 5px;
-    width: 250px;
     overflow: auto; 
+    padding: 5px;
+    height: 262px; /* HACK */
 }
+
 
 .sample pre {
     margin: 0;

@@ -21,7 +21,7 @@ Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
     filename: 'layout.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;!--Panes can consist of a model, template and stylesheet.\n    Simply create the files and refer to them by name, \n    Tribe does the rest from load through to disposal -->\n\n&lt;h1>Todos&lt;/h1>\n&lt;div data-bind="pane: \'create\'">&lt;/div>\n&lt;div data-bind="pane: \'list\'">&lt;/div></pre>'
+    content: '<pre class="prettyprint">&lt;!--Panes can consist of a model, template and stylesheet.\n    Simply create the files and refer to them by name, \n    Tribe does the rest, from load through to disposal -->\n\n&lt;h1>Todos&lt;/h1>\n&lt;div data-bind="pane: \'create\'">&lt;/div>\n&lt;div data-bind="pane: \'list\'">&lt;/div></pre>'
 });Samples = window.Samples || {};
 Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
@@ -39,7 +39,7 @@ Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
     filename: 'list.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n\n    this.tasks = ko.observableArray([\'Sample task\']);\n\n    // Using messages decouples your components.\n    // Tribe cleans up subscriptions automatically.\n    \n    pane.pubsub.subscribe(\'task.create\', function(task) {\n        self.tasks.push(task);\n    });\n\n    pane.pubsub.subscribe(\'task.delete\', function (task) {\n        var index = self.tasks.indexOf(task);\n        self.tasks.splice(index, 1);\n    });\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n\n    this.tasks = ko.observableArray([\'Sample task\']);\n\n    // Using messages decouples your components.\n    // Tribe cleans up subscriptions automatically.\n    pane.pubsub.subscribe(\'task.create\', function(task) {\n        self.tasks.push(task);\n    });\n\n    pane.pubsub.subscribe(\'task.delete\', function (task) {\n        var index = self.tasks.indexOf(task);\n        self.tasks.splice(index, 1);\n    });\n});</pre>'
 });Samples = window.Samples || {};
 Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({

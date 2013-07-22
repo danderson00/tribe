@@ -4,37 +4,263 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{33A1C3EC-81D6-4DEB-B05F-322D52389001}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4589880D-8B80-4150-B014-E005F1ECA26F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Reference</RootNamespace>
     <AssemblyName>Reference</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Reference Include="EntityFramework">
+      <HintPath>packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>packages\Microsoft.AspNet.SignalR.Core.1.1.2\lib\net40\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Owin">
+      <HintPath>packages\Microsoft.AspNet.SignalR.Owin.1.1.2\lib\net45\Microsoft.AspNet.SignalR.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>packages\Microsoft.AspNet.SignalR.SystemWeb.1.1.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>packages\Microsoft.Owin.Host.SystemWeb.1.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Tribe.MessageHub.Buses.NServiceBus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\MessageHub\Tribe.MessageHub.Buses.NServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Tribe.MessageHub.ChannelPersisters.SqlServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\MessageHub\Tribe.MessageHub.ChannelPersisters.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Tribe.MessageHub.Containers.Unity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\MessageHub\Tribe.MessageHub.Containers.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Tribe.MessageHub.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\MessageHub\Tribe.MessageHub.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Tribe.MessageHub.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\MessageHub\Tribe.MessageHub.Interfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Content Include="Build\sampleContent.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\b5.jpg" />
+    <Content Include="Images\b6.jpg" />
+    <Content Include="Images\b7.jpg" />
+    <Content Include="Images\Features\base.png" />
+    <Content Include="Images\icon.css.png" />
+    <Content Include="Images\icon.htm.png" />
+    <Content Include="Images\icon.html.png" />
+    <Content Include="Images\icon.js.png" />
+    <Content Include="Images\Icons\HTMLOrXMLSourceView_5946.png" />
+    <Content Include="Images\Icons\HTMLPage%28HTM%29_825_16x.png" />
+    <Content Include="Images\Icons\HTMLPage%28HTM%29_825_16x_color.png" />
+    <Content Include="Images\Icons\HTMLPage%28HTM%29_825_24x.png" />
+    <Content Include="Images\Icons\HTMLPage%28HTM%29_825_32x.png" />
+    <Content Include="Images\Icons\HTMLtag_5808.png" />
+    <Content Include="Images\Icons\HTMLtag_5808_12x.png" />
+    <Content Include="Images\Icons\HyperLink_733.png" />
+    <Content Include="Images\Icons\ScriptFile_452.png" />
+    <Content Include="Images\Icons\ScriptFile_452_12x.png" />
+    <Content Include="Images\Icons\StyleSheet%28css%29_7483_16x.png" />
+    <Content Include="Images\Icons\StyleSheet%28css%29_7483_16x_color.png" />
+    <Content Include="Images\Icons\StyleSheet%28css%29_7483_24x.png" />
+    <Content Include="Images\Icons\StyleSheet%28css%29_7483_32x.png" />
+    <Content Include="Images\knockout\automatic-refreshing.png" />
+    <Content Include="Images\knockout\declarative-bindings.png" />
+    <Content Include="Images\knockout\dependency-tracking.png" />
+    <Content Include="Images\knockout\ko-logo.png" />
+    <Content Include="Images\knockout\templating.png" />
+    <Content Include="Images\ko-bindings.png" />
+    <Content Include="Images\ko-dependencies.png" />
+    <Content Include="Images\ko-logo.png" />
+    <Content Include="Images\ko-refresh.png" />
+    <Content Include="Images\ko-templating.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="index.html" />
+    <Content Include="Infrastructure\navigation.js" />
+    <Content Include="Libraries\jquery-1.8.3.js" />
+    <Content Include="Libraries\jquery.flot.min.js" />
+    <Content Include="Libraries\knockout.js" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.Buses.NServiceBus.dll" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.Buses.NServiceBus.pdb" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.ChannelPersisters.SqlServer.dll" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.ChannelPersisters.SqlServer.pdb" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.Containers.Unity.dll" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.Containers.Unity.pdb" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.Core.dll" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.Core.pdb" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.Interfaces.dll" />
+    <Content Include="Libraries\MessageHub\Tribe.MessageHub.Interfaces.pdb" />
+    <Content Include="Libraries\Tribe.js" />
+    <Content Include="pack.js" />
+    <Content Include="Pack\TR.sampleContent.template.js" />
+    <Content Include="Panes\Content\About\index.css" />
+    <Content Include="Panes\Content\About\index.htm" />
+    <Content Include="Panes\Content\Components\Components\index.htm" />
+    <Content Include="Panes\Content\Components\Composite\index.htm" />
+    <Content Include="Panes\Content\Components\Composite\lifecycle.htm" />
+    <Content Include="Panes\Content\Components\Composite\navigation.htm" />
+    <Content Include="Panes\Content\Components\Composite\panes.htm" />
+    <Content Include="Panes\Content\Components\Composite\sagas.htm" />
+    <Content Include="Panes\Content\Components\Composite\testing.htm" />
+    <Content Include="Panes\Content\Components\Composite\transitions.htm" />
+    <Content Include="Panes\Content\Components\Forms\index.htm" />
+    <Content Include="Panes\Content\Components\index.htm" />
+    <Content Include="Panes\Content\Components\MessageHub\index.htm" />
+    <Content Include="Panes\Content\Components\Mobile\index.htm" />
+    <Content Include="Panes\Content\Components\PubSub\index.htm" />
+    <Content Include="Panes\Content\Guides\index.htm" />
+    <Content Include="Panes\Content\Reference\Components\index.htm" />
+    <Content Include="Panes\Content\Reference\Composite\index.htm" />
+    <Content Include="Panes\Content\Reference\Forms\index.htm" />
+    <Content Include="Panes\Content\Reference\index.htm" />
+    <Content Include="Panes\Content\Reference\MessageHub\index.htm" />
+    <Content Include="Panes\Content\Reference\Mobile\index.htm" />
+    <Content Include="Panes\Content\Reference\PubSub\index.htm" />
+    <Content Include="Panes\Interface\content.htm" />
+    <Content Include="Panes\Interface\content.js" />
+    <Content Include="Panes\Interface\footer.css" />
+    <Content Include="Panes\Interface\footer.htm" />
+    <Content Include="Panes\Interface\header.css" />
+    <Content Include="Panes\Interface\header.htm" />
+    <Content Include="Panes\Interface\header.js" />
+    <Content Include="Panes\Interface\layout.css" />
+    <Content Include="Panes\Interface\layout.htm" />
+    <Content Include="Panes\Interface\main.css" />
+    <Content Include="Panes\Interface\main.htm" />
+    <Content Include="Panes\Interface\main.js" />
+    <Content Include="Panes\Interface\navigation.css" />
+    <Content Include="Panes\Interface\navigation.htm" />
+    <Content Include="Panes\Interface\navigation.js" />
+    <Content Include="Panes\Interface\sample.css" />
+    <Content Include="Panes\Interface\sample.htm" />
+    <Content Include="Panes\Interface\sample.js" />
+    <Content Include="Panes\Samples\Chat\chat.css" />
+    <Content Include="Panes\Samples\Chat\chat.htm" />
+    <Content Include="Panes\Samples\Chat\chat.js" />
+    <Content Include="Panes\Samples\Tasks\create.htm" />
+    <Content Include="Panes\Samples\Tasks\create.js" />
+    <Content Include="Panes\Samples\Tasks\index.html" />
+    <Content Include="Panes\Samples\Tasks\layout.htm" />
+    <Content Include="Panes\Samples\Tasks\list.css" />
+    <Content Include="Panes\Samples\Tasks\list.htm" />
+    <Content Include="Panes\Samples\Tasks\list.js" />
+    <Content Include="Panes\Samples\Tasks\task.htm" />
+    <Content Include="Panes\Samples\Tasks\task.js" />
+    <Content Include="samples.html" />
+    <Content Include="packages.config" />
+    <Content Include="Libraries\jquery.signalR-1.1.2.js" />
+    <Content Include="Libraries\jquery.signalR-1.1.2.min.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CNAME" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:54833/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

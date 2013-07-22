@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Tribe</title>
+        <!-- syntax highlighter requires an older version of jQuery -->
+        <script type="text/javascript" src="Libraries/jquery-1.8.3.js"></script>
+        <script type="text/javascript" src="Libraries/jquery.flot.min.js"></script>
+        <script type="text/javascript" src="Libraries/knockout.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.js"></script>
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autoload=false"></script>
+
+        <script type="text/javascript" src="Infrastructure/navigation.js"></script>
+        <script type="text/javascript" src="Build/sampleContent.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                TC.options.basePath = 'Panes/';
+                TC.options.handleExceptions = false;
+
+                ko.applyBindings();
+            });
+        </script>
+    </head>
+    <body data-bind="pane: 'Interface/layout'">
+    </body>
+</html>

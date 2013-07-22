@@ -1,0 +1,28 @@
+﻿.main {
+    margin: 0 10px;
+    padding: 10px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid black;
+}
+
+.leftPanel {
+    display: none;
+    width: 200px;
+    float: left;
+}
+
+.showLeftPanel .leftPanel {
+    display: block;
+}
+
+.showLeftPanel .mainPanel {
+    margin-left: 200px;
+    display: block;
+}
+
+.clear {
+    clear: both;
+}
+

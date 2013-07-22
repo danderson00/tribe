@@ -1,0 +1,8 @@
+﻿.chat ul {
+    list-style: none;
+    padding: 0;
+}
+
+.chat li {
+    padding: 5px;
+}

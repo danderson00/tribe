@@ -1,0 +1,19 @@
+﻿.knockout {
+    text-align: center;
+    background: center url('Images/knockout/background.png');
+}
+
+.knockout .features {
+    display: inline-block;
+    margin-left: 50px;
+    background-clip: padding-box;
+    color: #B64838;
+}
+
+.knockout .logo {
+    color: white;
+    vertical-align: top;
+    margin-top: 20px;
+    display: inline-block;
+    width: 250px;
+}

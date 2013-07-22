@@ -1,19 +1,64 @@
 ﻿body {
-    /*background: #111;*/
-    background: url(Images/b7.jpg);
-    background-size: cover;
+    background: #CCC;
     font-family: 'Segoe UI', 'Trebuchet MS', Arial, Helvetica, Verdana, sans-serif;
     padding: 0;
     margin: 0;
+    overflow-y: scroll;
 }
 
-.page {
-    position: absolute;
+.content {
     width: 980px;
+    position: relative;
     left: 50%;
     margin-left: -490px;
 }
 
+.block {
+    background: white;
+    border: 1px solid #AAA;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.blockHeader {
+    color: white;
+    font-weight: bold;
+    height: 20px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 10px;
+    text-shadow: 3px 3px 0 black, 5px 5px 5px rgba(0, 0, 0, 0.5);
+
+    background: #103070; /* Old browsers */
+    background: -moz-linear-gradient(top,  #103070 0%, #457ae4 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#103070), color-stop(100%,#457ae4)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #103070 0%,#457ae4 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #103070 0%,#457ae4 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #103070 0%,#457ae4 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #103070 0%,#457ae4 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103070', endColorstr='#457ae4',GradientType=0 ); /* IE6-9 */
+
+}
+
 h1, h2, h3 {
     margin-top: 0;
+}
+
+.padded {
+    padding: 10px;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+a, a:active, a:visited, a:link {
+    text-decoration: none;
+    cursor: pointer;
+    color: #103070;
+}
+
+a:hover {
+    text-decoration: underline;
 }
