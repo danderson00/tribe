@@ -18,7 +18,7 @@
 });
 
 TC.overlay = function (paneOptions, transition) {
-    var node = TC.appendNode('body', { path: '/Mobile/overlay', data: { pane: paneOptions, transition: transition } });
+    var node = TC.appendNode('.TM', { path: '/Mobile/overlay', data: { pane: paneOptions, transition: transition } });
     return {
         node: node,
         close: function () {

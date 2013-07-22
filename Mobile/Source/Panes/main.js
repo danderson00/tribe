@@ -10,8 +10,8 @@
 
     function setPadding(visible) {
         if (visible) {
-            var height = $('.main .toolbar').outerHeight();
-            $('<style id="__tribe_toolbar">.main .screenContainer > * { margin-top: ' + height + 'px; padding-bottom: ' + height + 'px }</style>').appendTo('head');
+            var height = $('.TM .toolbar').outerHeight();
+            $('<style id="__tribe_toolbar">.TM .screenContainer > * { padding-top: ' + height + 'px; }</style>').appendTo('head');
         } else
             $('#__tribe_toolbar').remove();
     };

@@ -3,7 +3,8 @@
     include: [
         'Infrastructure/*.js',
         sample('Tasks'),
-        sample('Chat')
+        sample('Chat'),
+        sample('Mobile')
     ]
 });
 

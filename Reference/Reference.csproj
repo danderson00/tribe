@@ -109,7 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Build\sampleContent.js" />
+    <Content Include="Build\site.js" />
     <Content Include="Global.asax" />
     <Content Include="Images\b5.jpg" />
     <Content Include="Images\b6.jpg" />
@@ -146,6 +146,7 @@
     <Content Include="Images\logo.png" />
     <Content Include="index.html" />
     <Content Include="Infrastructure\navigation.js" />
+    <Content Include="Infrastructure\Topic.js" />
     <Content Include="Libraries\jquery-1.8.3.js" />
     <Content Include="Libraries\jquery.flot.min.js" />
     <Content Include="Libraries\knockout.js" />
@@ -162,8 +163,16 @@
     <Content Include="Libraries\Tribe.js" />
     <Content Include="pack.js" />
     <Content Include="Pack\TR.sampleContent.template.js" />
-    <Content Include="Panes\Content\About\index.css" />
+    <Content Include="Panes\Content\About\example2.htm" />
+    <Content Include="Panes\Content\About\example3.htm" />
+    <Content Include="Panes\Content\About\example1.htm" />
+    <Content Include="Panes\Content\About\features.htm" />
+    <Content Include="Panes\Content\About\features.css" />
     <Content Include="Panes\Content\About\index.htm" />
+    <Content Include="Panes\Content\About\knockout.css" />
+    <Content Include="Panes\Content\About\knockout.htm" />
+    <Content Include="Panes\Content\About\masthead.css" />
+    <Content Include="Panes\Content\About\masthead.htm" />
     <Content Include="Panes\Content\Components\Components\index.htm" />
     <Content Include="Panes\Content\Components\Composite\index.htm" />
     <Content Include="Panes\Content\Components\Composite\lifecycle.htm" />
@@ -177,6 +186,7 @@
     <Content Include="Panes\Content\Components\MessageHub\index.htm" />
     <Content Include="Panes\Content\Components\Mobile\index.htm" />
     <Content Include="Panes\Content\Components\PubSub\index.htm" />
+    <Content Include="Panes\Content\Guides\features.htm" />
     <Content Include="Panes\Content\Guides\index.htm" />
     <Content Include="Panes\Content\Reference\Components\index.htm" />
     <Content Include="Panes\Content\Reference\Composite\index.htm" />
@@ -206,6 +216,8 @@
     <Content Include="Panes\Samples\Chat\chat.css" />
     <Content Include="Panes\Samples\Chat\chat.htm" />
     <Content Include="Panes\Samples\Chat\chat.js" />
+    <Content Include="Panes\Samples\Mobile\index.html" />
+    <Content Include="Panes\Samples\Mobile\welcome.htm" />
     <Content Include="Panes\Samples\Tasks\create.htm" />
     <Content Include="Panes\Samples\Tasks\create.js" />
     <Content Include="Panes\Samples\Tasks\index.html" />
@@ -236,6 +248,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
