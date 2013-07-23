@@ -1,29 +1,39 @@
-﻿(function () {
-    var history;
-    var pushState;
-    var replaceState;
+﻿//(function () {
+//    var history;
+//    var pushState;
+//    var replaceState;
 
-    module('Unit.Types.History', {
-        setup: function () {
-            pushState = sinon.spy();
-            replaceState = sinon.spy();
-            history = new TC.Types.History({ pushState: pushState, replaceState: replaceState });
-        },
-        teardown: function () { history.dispose(); }
-    });
+//    module('Unit.Types.History', {
+//        setup: function () {
+//            pushState = sinon.spy();
+//            replaceState = sinon.spy();
+//            history = new TC.Types.History({ pushState: pushState, replaceState: replaceState });
+//        },
+//        teardown: function () { history.dispose(); }
+//    });
 
-    test("History pushes state onto stack when navigating event raised", function () {
-        $(document).trigger('navigating', { options: 'test' });
-        ok(pushState.calledOnce);
-        equal(pushState.firstCall.args[0].options, '\"test\"');
-        equal(pushState.firstCall.args[0].id, 0);
-    });
+//    test("registering a node creates a stack and loads initial state", function () {
+//        var node = nodeStub('test');
+//        history.registerNode(node);
+//        equal(stackOptions(node, 0).path, 'test');
+//    });
 
-    test("History transitions last node when popstate event raised", function () {
-        var node = { transitionTo: sinon.spy(), pane: {} };
-        $(document).trigger('navigating', { options: 'test', node: node });
-        Test.raiseDocumentEvent('popstate', { state: { id: 0, options: '\"test2\"' } });
-        ok(node.transitionTo.calledOnce);
-        equal(node.transitionTo.firstCall.args[0], 'test2');
-    });
-})();
+//    test("navigating a node pushes state on to relevant stack", function() {
+//        var node = nodeStub('test');
+//        history.registerNode(node);
+//        $(document).trigger('navigating', { node: node, options: { path: 'test2' } });
+//        equal(stackOptions(node, 1).path, 'test2');
+//    });
+
+//    function nodeStub(path) {
+//        return {
+//            id: 1,
+//            pane: { path: path },
+//            transitionTo: sinon.spy()
+//        };
+//    }
+    
+//    function stackOptions(node, index) {
+//        return JSON.parse(history.stacks[node.id][index].options);
+//    }
+//})();

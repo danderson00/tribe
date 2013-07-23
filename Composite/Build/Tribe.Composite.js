@@ -602,44 +602,7 @@ TC.Utils.evaluateProperty = function(target, property) {
         }
     };
 })();
-TC.Types.History = function (history) {
-    var ids = TC.Utils.idGenerator();
-    var node;
-    var currentState;
-
-    $(document).on('navigating', documentNavigating);
-    window.onpopstate = popState;
-    
-    function documentNavigating(e, data) {
-        if (node !== data.node) {
-            node = data.node;
-            pushState({ path: node.pane.path, data: node.pane.data }, true);
-        }
-        pushState(data.options);
-    }
-    
-    function pushState(options, replace) {
-        var state = {
-            id: ids.next(),
-            options: JSON.stringify(options)
-        };
-        currentState = state;
-        replace ? history.replaceState(state, '') : history.pushState(state, '');
-    }
-    
-    function popState(e) {
-        currentState = e.state;
-        //var reverse = state.id < currentState.id;
-        if (currentState) {
-            node.transitionTo(JSON.parse(currentState.options), null, true);
-        }
-    }
-
-    this.dispose = function() {
-        $(document).off('navigating', documentNavigating);
-        $(document).off('popstate', popState);
-    };
-};// Ensures URLs are only loaded once. 
+// Ensures URLs are only loaded once. 
 // Concurrent requests return the same promise.
 // Delegates actual loading and handling of resources to LoadHandlers
 TC.Types.Loader = function () {
@@ -729,10 +692,20 @@ TC.Types.Models.prototype.register = function (resourcePath, constructor, option
         options: options || {}
     };
     TC.logger.debug("Model loaded for " + resourcePath);
+};TC.Types.Navigation = function (node) {
+    var self = this;
+
+    var defaultOptions = { path: node.pane.path, data: node.pane.data };
+    var stack = [];
+
+    this.navigate = function(paneOptions) {
+
+    };
 };TC.Types.Node = function (parent, pane) {
     this.parent = parent;
     this.children = [];
     this.root = parent ? parent.root : this;
+    this.id = TC.Utils.getUniqueId();
 
     if (parent) parent.children.push(this);
     if (pane) this.setPane(pane);
@@ -748,7 +721,6 @@ TC.Types.Node.prototype.navigate = function (pathOrPane, data) {
         this.defaultNavigationNode.navigate(paneOptions);
     
     else if (this.handlesNavigation || !this.parent) {
-        $(document).trigger('navigating', { node: this, options: paneOptions });
         this.transitionTo(paneOptions, this.handlesNavigation);
         
     } else
@@ -770,9 +742,8 @@ TC.Types.Node.prototype.setPane = function (pane) {
     if (pane.handlesNavigation) {
         this.handlesNavigation = pane.handlesNavigation;
         
-        // this sets this pane as the "default", accessible from everywhere. 
-        // It's not appropriate for multiple navigation panes, but we haven't tested for that anyway.
-        this.root.defaultNavigationNode = this;
+        // this sets this pane as the "default", accessible from everywhere. First in best dressed.
+        this.root.defaultNavigationNode = this.root.defaultNavigationNode || this;
     }
 
     pane.inheritPathFrom(this.parent);

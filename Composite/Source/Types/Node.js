@@ -2,6 +2,7 @@
     this.parent = parent;
     this.children = [];
     this.root = parent ? parent.root : this;
+    this.id = TC.Utils.getUniqueId();
 
     if (parent) parent.children.push(this);
     if (pane) this.setPane(pane);
@@ -17,7 +18,6 @@ TC.Types.Node.prototype.navigate = function (pathOrPane, data) {
         this.defaultNavigationNode.navigate(paneOptions);
     
     else if (this.handlesNavigation || !this.parent) {
-        $(document).trigger('navigating', { node: this, options: paneOptions });
         this.transitionTo(paneOptions, this.handlesNavigation);
         
     } else
@@ -39,9 +39,8 @@ TC.Types.Node.prototype.setPane = function (pane) {
     if (pane.handlesNavigation) {
         this.handlesNavigation = pane.handlesNavigation;
         
-        // this sets this pane as the "default", accessible from everywhere. 
-        // It's not appropriate for multiple navigation panes, but we haven't tested for that anyway.
-        this.root.defaultNavigationNode = this;
+        // this sets this pane as the "default", accessible from everywhere. First in best dressed.
+        this.root.defaultNavigationNode = this.root.defaultNavigationNode || this;
     }
 
     pane.inheritPathFrom(this.parent);
