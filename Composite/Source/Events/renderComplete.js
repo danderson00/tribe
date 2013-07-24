@@ -1,5 +1,5 @@
 ﻿TC.Events.renderComplete = function (pane, context) {
-    $.when(TC.transition(pane, null, pane.reverseTransitionIn).in()).done(executeRenderComplete);
+    $.when(TC.transition(pane, pane.transition, pane.reverseTransitionIn).in()).done(executeRenderComplete);
     setTimeout(function() {
         pane.endRender();
     });

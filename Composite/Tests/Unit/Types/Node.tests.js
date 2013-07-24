@@ -29,10 +29,10 @@
         equal(existingPane.node, null);
     });
 
-    test("setPane sets node.handlesNavigation from pane", function() {
+    test("setPane sets node.navigation when pane.handlesNavigation", function() {
         var node = new TC.Types.Node();
         node.setPane(pane('', 'test'));
-        equal(node.handlesNavigation, 'test');
+        ok(node.navigation.constructor, TC.Types.Navigation);
     });
 
     test("node root is set correctly", function() {

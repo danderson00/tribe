@@ -16,3 +16,12 @@ test("navigating root pane transitions node marked with handlesNavigation", func
     equal($('.child2').length, 1);
     equal($('.content1').length, 0);
 });
+
+test("navigating back returns to previous pane", function() {
+    TC.createNode('.test', { path: 'Navigate/layout' });
+    var node = TC.Utils.nodeFor('.layout');
+    node.navigate('content2');
+    equal($('.content1').length, 0);
+    node.navigateBack();
+    equal($('.content1').length, 1);
+});

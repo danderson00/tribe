@@ -24,3 +24,5 @@ QUnit.testDone(function () {
     TC.options = Test.defaultOptions();
     ko.applyBindings.reset();
 });
+
+TC.history.dispose();

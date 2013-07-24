@@ -6,6 +6,9 @@
     this.renderComplete = function() {
         setPadding(TC.toolbar.visible());
         TC.toolbar.visible.subscribe(setPadding);
+        
+        // this is a bit of a hack to make navigation from the toolbar occur against the child navigation pane in embedded scenarios
+        pane.node.navigation = pane.node.children[1].navigation;
     };
 
     function setPadding(visible) {

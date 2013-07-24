@@ -13,19 +13,31 @@ TC.Types.Node.prototype.navigate = function (pathOrPane, data) {
     if (!TC.Path(paneOptions.path).isAbsolute())
         // this is duplicated in Pane.inheritPathFrom - the concept (relative paths inherit existing paths) needs to be clearer
         paneOptions.path = TC.Path(this.pane.path).withoutFilename().combine(paneOptions.path).toString();
-
-    if (this.defaultNavigationNode && this.defaultNavigationNode.handlesNavigation)
-        this.defaultNavigationNode.navigate(paneOptions);
     
-    else if (this.handlesNavigation || !this.parent) {
-        this.transitionTo(paneOptions, this.handlesNavigation);
+    this.findNavigation().navigate(paneOptions);
+};
+
+TC.Types.Node.prototype.navigateBack = function () {
+    this.findNavigation().go(-1);
+};
+
+TC.Types.Node.prototype.findNavigation = function() {
+    if (this.defaultNavigation)
+        return this.defaultNavigation;
+
+    else if (this.navigation)
+        return this.navigation;
         
-    } else
-        this.parent.navigate(paneOptions);
+    if (!this.parent) {
+        this.navigation = new TC.Types.Navigation(this);
+        return this.navigation;
+    }
+
+    return this.parent.findNavigation();
 };
 
 TC.Types.Node.prototype.transitionTo = function(paneOptions, transition, reverse) {
-    TC.transition(this, transition || this.handlesNavigation, reverse).to(paneOptions);
+    TC.transition(this, transition, reverse).to(paneOptions);
 };
 
 TC.Types.Node.prototype.setPane = function (pane) {
@@ -37,10 +49,10 @@ TC.Types.Node.prototype.setPane = function (pane) {
     this.skipPath = pane.skipPath;
 
     if (pane.handlesNavigation) {
-        this.handlesNavigation = pane.handlesNavigation;
+        this.navigation = new TC.Types.Navigation(this, pane.handlesNavigation);
         
-        // this sets this pane as the "default", accessible from everywhere. First in best dressed.
-        this.root.defaultNavigationNode = this.root.defaultNavigationNode || this;
+        // this sets this pane as the "default", accessible from panes outside the tree. First in best dressed.
+        this.root.defaultNavigation = this.root.defaultNavigation || this.navigation;
     }
 
     pane.inheritPathFrom(this.parent);
@@ -51,8 +63,12 @@ TC.Types.Node.prototype.nodeForPath = function() {
 };
 
 TC.Types.Node.prototype.dispose = function() {
+    if (this.root.defaultNavigation === this.navigation)
+        this.root.defaultNavigation = null;
+
     if (this.parent)
         TC.Utils.removeItem(this.parent.children, this);
+
     if (this.pane && this.pane.dispose)
         this.pane.dispose();
 };

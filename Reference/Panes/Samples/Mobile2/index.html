@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tribe Mobile</title>
+    <meta name="viewport" 
+      content="minimum-scale=1.0, width=device-width, 
+               maximum-scale=1.0, user-scalable=no" />
+
+    <script src="jquery.js"></script>
+    <script src="knockout.js"></script>
+    <script src="Tribe.js"></script>
+    <script src="Tribe.Mobile.js"></script>
+        
+    <script type="text/javascript">
+      $(ko.applyBindings);
+    </script>
+  </head>
+  <body data-bind="pane: '/Mobile/main',
+                   data: { pane: 'welcome' }">
+  </body>
+</html>

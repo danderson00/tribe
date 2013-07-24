@@ -25,4 +25,8 @@
     this.toolbar = function () {
         TC.toolbar.visible(!TC.toolbar.visible());
     };
+
+    this.navigate = function() {
+        pane.navigate('navigate');
+    };
 });

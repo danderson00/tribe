@@ -19,14 +19,10 @@
     };
 
     this.overlay = function() {
-        TC.overlay('/overlay');
+        TC.overlay('/Samples/Mobile/overlay');
     };
 
     this.toolbar = function () {
         TC.toolbar.visible(!TC.toolbar.visible());
-    };
-
-    this.navigate = function() {
-        pane.navigate('navigate');
     };
 });

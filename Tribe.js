@@ -386,13 +386,30 @@ TC.options = TC.defaultOptions();(function () {
         return target && target['__' + key];
     }
 })();
-TC.Utils.raiseDocumentEvent = function(name, data) {
-    var event = document.createEvent("Event");
-    event.initEvent(name, true, false);
-    event.data = data;
-    document.dispatchEvent(event);
-};
-TC.Utils.try = function(func, args, handleExceptions, message) {
+(function () {
+    TC.Utils.raiseDocumentEvent = function (name, data) {
+        var event = document.createEvent("Event");
+        event.initEvent(name, true, false);
+        event.data = data;
+        document.dispatchEvent(event);
+    };
+
+    TC.Utils.handleDocumentEvent = function (name, handler) {
+        document.addEventListener(name, internalHandler);
+
+        return {
+            dispose: dispose
+        };
+
+        function internalHandler(e) {
+            handler(e.data, e);
+        }
+
+        function dispose() {
+            document.removeEventListener(name, internalHandler);
+        }
+    };    
+})();TC.Utils.try = function(func, args, handleExceptions, message) {
     if (handleExceptions)
         try {
             func.apply(func, args);
@@ -602,7 +619,48 @@ TC.Utils.evaluateProperty = function(target, property) {
         }
     };
 })();
-// Ensures URLs are only loaded once. 
+TC.Types.History = function (history) {
+    var currentState = 0;
+    history.replaceState(currentState);
+
+    var popActions = {
+        raiseEvent: function (e) {
+            TC.Utils.raiseDocumentEvent('browser.go', { count: (e.state - currentState) });
+            currentState = e.state;
+        },
+        updateStack: function(e) {
+            currentState = e.state;
+            currentAction = popActions.raiseEvent;
+        }
+    };
+    var currentAction = popActions.raiseEvent;
+
+    window.addEventListener('popstate', executeCurrentAction);
+
+    function executeCurrentAction(e) {
+        if (e.state !== null) currentAction(e);
+    }
+
+    this.navigate = function (options, urlProvider) {
+        var urlData = (urlProvider && urlProvider.constructor === Function)
+            ? urlProvider(options) : {};
+        history.pushState(++currentState, urlData.title, urlData.url);
+    };
+
+    this.go = function(frameCount) {
+        history.go(frameCount);
+    };
+
+    this.update = function(frameCount) {
+        currentAction = popActions.updateStack;
+        history.go(frameCount);
+    };
+
+    this.dispose = function () {
+        window.removeEventListener('popstate', executeCurrentAction);
+    };
+};
+TC.history = new TC.Types.History(window.history);// Ensures URLs are only loaded once. 
 // Concurrent requests return the same promise.
 // Delegates actual loading and handling of resources to LoadHandlers
 TC.Types.Loader = function () {
@@ -692,14 +750,59 @@ TC.Types.Models.prototype.register = function (resourcePath, constructor, option
         options: options || {}
     };
     TC.logger.debug("Model loaded for " + resourcePath);
-};TC.Types.Navigation = function (node) {
-    var self = this;
+};TC.Types.Navigation = function (node, options) {
+    options = options || {};
+    if (options.constructor === String)
+        options = { transition: options };
 
-    var defaultOptions = { path: node.pane.path, data: node.pane.data };
-    var stack = [];
+    var stack = [{ path: node.pane.path, data: node.pane.data }];
+    var currentFrame = 0;
 
-    this.navigate = function(paneOptions) {
+    this.node = node;
 
+    this.navigate = function (paneOptions) {
+        if (options.browser)
+            TC.history.navigate(paneOptions, options.browser);
+
+        trimStack();
+        stack.push(paneOptions);
+        currentFrame++;
+
+        navigateTo(paneOptions);
+    };
+
+    this.go = function(frameCount) {
+        go(frameCount);
+        if (options.browser) TC.history.update(frameCount);
+    };
+    
+    if(options.browser) document.addEventListener('browser.go', onBrowserGo);
+    function onBrowserGo(e) {
+        go(e.data.count);
+    }
+
+    function go(frameCount) {
+        var newFrame = currentFrame + frameCount;
+        if (newFrame < 0) newFrame = 0;
+        if (newFrame >= stack.length) newFrame = stack.length - 1;
+
+        if (newFrame != currentFrame)
+            navigateTo(stack[newFrame], frameCount < 0);
+
+        currentFrame = newFrame;
+    }
+
+    function navigateTo(paneOptions, reverse) {
+        TC.Utils.raiseDocumentEvent('navigating', { node: node, options: paneOptions, browserData: options.browserData });
+        node.transitionTo(paneOptions, options.transition, reverse);
+    }
+
+    function trimStack() {
+        stack.splice(currentFrame + 1, stack.length);
+    }
+
+    this.dispose = function() {
+        document.removeEventListener('browser.go', onBrowserGo);
     };
 };TC.Types.Node = function (parent, pane) {
     this.parent = parent;
@@ -716,19 +819,31 @@ TC.Types.Node.prototype.navigate = function (pathOrPane, data) {
     if (!TC.Path(paneOptions.path).isAbsolute())
         // this is duplicated in Pane.inheritPathFrom - the concept (relative paths inherit existing paths) needs to be clearer
         paneOptions.path = TC.Path(this.pane.path).withoutFilename().combine(paneOptions.path).toString();
-
-    if (this.defaultNavigationNode && this.defaultNavigationNode.handlesNavigation)
-        this.defaultNavigationNode.navigate(paneOptions);
     
-    else if (this.handlesNavigation || !this.parent) {
-        this.transitionTo(paneOptions, this.handlesNavigation);
+    this.findNavigation().navigate(paneOptions);
+};
+
+TC.Types.Node.prototype.navigateBack = function () {
+    this.findNavigation().go(-1);
+};
+
+TC.Types.Node.prototype.findNavigation = function() {
+    if (this.defaultNavigation)
+        return this.defaultNavigation;
+
+    else if (this.navigation)
+        return this.navigation;
         
-    } else
-        this.parent.navigate(paneOptions);
+    if (!this.parent) {
+        this.navigation = new TC.Types.Navigation(this);
+        return this.navigation;
+    }
+
+    return this.parent.findNavigation();
 };
 
 TC.Types.Node.prototype.transitionTo = function(paneOptions, transition, reverse) {
-    TC.transition(this, transition || this.handlesNavigation, reverse).to(paneOptions);
+    TC.transition(this, transition, reverse).to(paneOptions);
 };
 
 TC.Types.Node.prototype.setPane = function (pane) {
@@ -740,10 +855,10 @@ TC.Types.Node.prototype.setPane = function (pane) {
     this.skipPath = pane.skipPath;
 
     if (pane.handlesNavigation) {
-        this.handlesNavigation = pane.handlesNavigation;
+        this.navigation = new TC.Types.Navigation(this, pane.handlesNavigation);
         
-        // this sets this pane as the "default", accessible from everywhere. First in best dressed.
-        this.root.defaultNavigationNode = this.root.defaultNavigationNode || this;
+        // this sets this pane as the "default", accessible from panes outside the tree. First in best dressed.
+        this.root.defaultNavigation = this.root.defaultNavigation || this.navigation;
     }
 
     pane.inheritPathFrom(this.parent);
@@ -754,8 +869,12 @@ TC.Types.Node.prototype.nodeForPath = function() {
 };
 
 TC.Types.Node.prototype.dispose = function() {
+    if (this.root.defaultNavigation === this.navigation)
+        this.root.defaultNavigation = null;
+
     if (this.parent)
         TC.Utils.removeItem(this.parent.children, this);
+
     if (this.pane && this.pane.dispose)
         this.pane.dispose();
 };// Encapsulates an operation involving several child operations, keyed by an id
@@ -967,7 +1086,7 @@ TC.Events.initialiseModel = function (pane, context) {
 
     return strategy(pane, context);
 };TC.Events.renderComplete = function (pane, context) {
-    $.when(TC.transition(pane, null, pane.reverseTransitionIn).in()).done(executeRenderComplete);
+    $.when(TC.transition(pane, pane.transition, pane.reverseTransitionIn).in()).done(executeRenderComplete);
     setTimeout(function() {
         pane.endRender();
     });

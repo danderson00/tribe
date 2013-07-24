@@ -146,7 +146,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Mobile-list"><ul data-bind="cssClass: cssClass">\n    <li data-bind="visible: headerText, text: headerText" class="listHeader"></li>\n    <!-- ko foreach: items -->\n    <li data-bind="click: $root.click, text: $root.displayText($data)"></li>\n    <!-- /ko -->\n</ul></script>');
 $('head')
-    .append('<script type="text/template" id="template--Mobile-main"><div class="TM">\n    <div data-bind="pane: \'toolbar\', data: TC.toolbar"></div>\n    <div class="screenContainer">\n        <div data-bind="pane: { path: pane, handlesNavigation: \'slideLeft\' }"></div>\n    </div>\n</div>\n</script>');
+    .append('<script type="text/template" id="template--Mobile-main"><div class="TM">\n    <div data-bind="pane: \'toolbar\', data: TC.toolbar"></div>\n    <div class="screenContainer">\n        <div data-bind="pane: { path: pane, handlesNavigation: { transition: \'slideLeft\', browser: true } }"></div>\n    </div>\n</div>\n</script>');
 $('head')
     .append('<script type="text/template" id="template--Mobile-options"><div class="options">\n    <div class="optionsList in" data-bind="pane: \'list\', data: { items: options, itemText: \'text\', itemClick: itemClick, cssClass: \'edgetoedge\' }">\n        \n    </div>    \n    <div class="modalBackground" data-bind="click: hide"><div></div></div>\n</div></script>');
 $('head')
@@ -213,6 +213,9 @@ TC.registerModel(function (pane) {
     this.renderComplete = function() {
         setPadding(TC.toolbar.visible());
         TC.toolbar.visible.subscribe(setPadding);
+        
+        // this is a bit of a hack to make navigation from the toolbar occur against the child navigation pane in embedded scenarios
+        pane.node.navigation = pane.node.children[1].navigation;
     };
 
     function setPadding(visible) {
@@ -269,7 +272,7 @@ TC.registerModel(function (pane) {
 });
 
 TC.overlay = function (paneOptions, transition) {
-    var node = TC.appendNode('.TM', { path: '/Mobile/overlay', data: { pane: paneOptions, transition: transition } });
+    var node = TC.appendNode('.TM', { path: '/Mobile/overlay', data: { pane: paneOptions }});
     return {
         node: node,
         close: function () {
@@ -298,14 +301,17 @@ TC.toolbar = {
 TC.registerModel(function (pane) {
     this.back = function () {
         var back = ko.utils.unwrapObservable(pane.data.back || TC.toolbar.back);
-        back && back();
+        if (back === true)
+            pane.node.navigateBack();
+        else if (back.constructor === Function)
+            back();
     };
 
     this.showOptions = function() {
         TC.appendNode(pane.element, { path: 'options', data: { options: pane.data.options || TC.toolbar.options() } });
     };
 
-    $(document).on('navigating', function() {
+    document.addEventListener('navigating', function() {
         var defaults = TC.toolbar.defaults;
         TC.toolbar.title(defaults.title);
         TC.toolbar.options(defaults.options);

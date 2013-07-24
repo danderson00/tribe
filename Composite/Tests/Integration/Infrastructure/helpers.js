@@ -28,23 +28,4 @@
         events.push('spy');
         return events;
     };
-
-    Test.raiseDocumentEvent = function(eventName, properties) {
-        var event;
-        if (document.createEvent) {
-            event = document.createEvent("Event");
-            event.initEvent(eventName, true, false);
-        } else {
-            event = document.createEventObject();
-            event.eventType = eventName;
-        }
-
-        event.eventName = eventName;
-        $.extend(event, properties);
-
-        if (document.createEvent)
-            document.dispatchEvent(event);
-        else
-            document.fireEvent("on" + eventName, event);
-    };
 })();
