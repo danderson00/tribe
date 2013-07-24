@@ -17,13 +17,19 @@
         pane.pubsub.publish('article.show', { section: currentSection, topic: item.topic });
     };
 
-    pane.pubsub.subscribe('article.show', function (article) {
-        if (currentSection !== article.section) {
-            currentSection = article.section;
-            self.items(mapNavigation(article.section));
+    window.addEventListener('navigating', navigating);
+    function navigating(e) {
+        var section = e.data.options.data && e.data.options.data.section;
+        if (currentSection !== section) {
+            currentSection = section;
+            self.items(mapNavigation(section));
             pane.pubsub.publish('ui.showLeftPanel', { show: self.items().length > 0 });
         }
-    });
+    }
+
+    this.dispose = function() {
+        window.removeEventListener('navigating', navigating);
+    };
     
     // maps the cleaner API navigation structure into a structure suitable for data bindings. could be refactored out.
     function mapNavigation(section) {

@@ -1,22 +1,10 @@
-﻿TC.registerModel(function(pane) {
-    var self = this;
-
+﻿TC.registerModel(function (pane) {
     TMH.initialise(pane.pubsub, 'signalr');
-    TMH.joinChannel('chat', { serverEvents: ['*'] });
-
-    this.name = ko.observable('Anonymous');
-    this.message = ko.observable();
-    this.messages = ko.observableArray();
-
-    this.send = function() {
-        pane.pubsub.publish('chat.message', {
-            name: self.name(),
-            message: self.message()
-        });
-    };
-
-    pane.pubsub.subscribe('chat.message',
-        function (message) {
-            self.messages.push(message);
-        });
+    TMH.joinChannel('chat', {
+         serverEvents: ['chat.*']
+    });
+    
+    // Any message topics starting with "chat."
+    // are now seamlessly broadcast to any other
+    // client that has also joined the channel.
 });

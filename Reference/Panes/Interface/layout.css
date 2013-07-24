@@ -10,13 +10,13 @@
     width: 980px;
     position: relative;
     left: 50%;
-    margin-left: -490px;
+    margin-left: -490px !important;
 }
 
 .block {
     background: white;
     border: 1px solid #AAA;
-    margin: 10px 0;
+    margin-bottom: 10px;
     border-radius: 8px;
     box-sizing: border-box;
 }
@@ -47,6 +47,11 @@ h1, h2, h3 {
 
 .padded {
     padding: 10px;
+}
+
+.paddedVertical {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .underline {

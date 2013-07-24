@@ -1,5 +1,5 @@
 ﻿TC.registerModel(function (pane) {
-    TC.transition.mode = "normal";
+    //TC.transition.mode = "normal";
     
     this.pane = (pane.data && pane.data.pane) || 'blank';
 

@@ -1,16 +1,16 @@
 ﻿(function () {
     createCssTransition('fade');
-    createCssTransition('pop');
+    //createCssTransition('pop');
     createCssTransition('slideLeft', 'slideRight');
     createCssTransition('slideRight', 'slideLeft');
     createCssTransition('slideUp', 'slideDown');
     createCssTransition('slideDown', 'slideUp');
-    createCssTransition('flipLeft', 'flipRight');
-    createCssTransition('flipRight', 'flipLeft');
-    createCssTransition('swapLeft', 'swapRight');
-    createCssTransition('swapRight', 'swapLeft');
-    createCssTransition('cubeLeft', 'cubeRight');
-    createCssTransition('cubeRight', 'cubeLeft');
+    //createCssTransition('flipLeft', 'flipRight');
+    //createCssTransition('flipRight', 'flipLeft');
+    //createCssTransition('swapLeft', 'swapRight');
+    //createCssTransition('swapRight', 'swapLeft');
+    //createCssTransition('cubeLeft', 'cubeRight');
+    //createCssTransition('cubeRight', 'cubeLeft');
 
     function createCssTransition(name, reverse) {
         TC.Transitions[name] = {

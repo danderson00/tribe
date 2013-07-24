@@ -1,4 +1,12 @@
-Navigation = {
+function articleUrlProvider(options) {
+    return {
+        url: isHome() ? '/' : '?section=' + encodeURI(options.data.section) + '&topic=' + encodeURI(options.data.topic)
+    };
+    
+    function isHome() {
+        return options.data.section === 'About' && options.data.topic === 'index';
+    }
+}Navigation = {
     Components: {
         'Composite': {
             'Panes': 'panes',
@@ -75,7 +83,7 @@ Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
     filename: 'layout.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;!--Panes can consist of a model, template and stylesheet.\n    Simply create the files and refer to them by name, \n    Tribe does the rest, from load through to disposal -->\n\n&lt;h1>Todos&lt;/h1>\n&lt;div data-bind="pane: \'create\'">&lt;/div>\n&lt;div data-bind="pane: \'list\'">&lt;/div></pre>'
+    content: '<pre class="prettyprint">&lt;h1>Todos&lt;/h1>\n&lt;div data-bind="pane: \'create\'">&lt;/div>\n&lt;div data-bind="pane: \'list\'">&lt;/div>\n\n&lt;!--Panes can consist of a model, template and stylesheet.\n    Simply create the files and refer to them by name, \n    Tribe loads them, data binds them and cleans up. --></pre>'
 });Samples = window.Samples || {};
 Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
@@ -109,21 +117,45 @@ Samples['Tasks'].push({
 });Samples = window.Samples || {};
 Samples['Chat'] = Samples['Chat'] || [];
 Samples['Chat'].push({
-    filename: 'chat.css',
-    icon: 'Images/icon.css.png',
-    content: '<pre class="prettyprint">.chat ul {\n    list-style: none;\n    padding: 0;\n}\n\n.chat li {\n    padding: 5px;\n}</pre>'
-});Samples = window.Samples || {};
-Samples['Chat'] = Samples['Chat'] || [];
-Samples['Chat'].push({
     filename: 'chat.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;div class="chat">\n    &lt;div>\n        Name: &lt;input data-bind="value: name" />    \n    &lt;/div>\n\n    &lt;div>\n        &lt;input data-bind="value: message" />\n        &lt;button data-bind="click: send">Send&lt;/button>\n    &lt;/div>\n\n    &lt;ul data-bind="foreach: messages">\n        &lt;li>\n            &lt;span data-bind="text: name">&lt;/span>:\n            &lt;span data-bind="text: message">&lt;/span>\n        &lt;/li>\n    &lt;/ul>\n&lt;/div></pre>'
+    content: '<pre class="prettyprint">&lt;div data-bind="pane: \'sender\'">&lt;/div>\n&lt;div data-bind="pane: \'messages\'">&lt;/div></pre>'
 });Samples = window.Samples || {};
 Samples['Chat'] = Samples['Chat'] || [];
 Samples['Chat'].push({
     filename: 'chat.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n\n    TMH.initialise(pane.pubsub, \'signalr\');\n    TMH.joinChannel(\'chat\', { serverEvents: [\'*\'] });\n\n    this.name = ko.observable(\'Anonymous\');\n    this.message = ko.observable();\n    this.messages = ko.observableArray();\n\n    this.send = function() {\n        pane.pubsub.publish(\'chat.message\', {\n            name: self.name(),\n            message: self.message()\n        });\n    };\n\n    pane.pubsub.subscribe(\'chat.message\',\n        function (message) {\n            self.messages.push(message);\n        });\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    TMH.initialise(pane.pubsub, \'signalr\');\n    TMH.joinChannel(\'chat\', {\n         serverEvents: [\'chat.*\']\n    });\n    \n    // Any message topics starting with "chat."\n    // are now seamlessly broadcast to any other\n    // client that has also joined the channel.\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Chat'] = Samples['Chat'] || [];
+Samples['Chat'].push({
+    filename: 'messages.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">.messages {\n    list-style: none;\n    padding: 0;\n}\n\n.messages li {\n    padding: 5px;\n}</pre>'
+});Samples = window.Samples || {};
+Samples['Chat'] = Samples['Chat'] || [];
+Samples['Chat'].push({
+    filename: 'messages.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;ul class="messages" data-bind="foreach: messages">\n    &lt;li>\n        &lt;span data-bind="text: name">&lt;/span>:\n        &lt;span data-bind="text: message">&lt;/span>\n    &lt;/li>\n&lt;/ul>\n</pre>'
+});Samples = window.Samples || {};
+Samples['Chat'] = Samples['Chat'] || [];
+Samples['Chat'].push({
+    filename: 'messages.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n\n    this.messages = ko.observableArray();\n\n    pane.pubsub.subscribe(\'chat.message\',\n        function (message) {\n            self.messages.push(message);\n        });\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Chat'] = Samples['Chat'] || [];
+Samples['Chat'].push({
+    filename: 'sender.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div class="chat">\n    &lt;div>\n        Name: &lt;input data-bind="value: name" />    \n    &lt;/div>\n\n    &lt;div>\n        &lt;input data-bind="value: message" />\n        &lt;button data-bind="click: send">Send&lt;/button>\n    &lt;/div>\n&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['Chat'] = Samples['Chat'] || [];
+Samples['Chat'].push({
+    filename: 'sender.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n\n    this.name = ko.observable(\'Anonymous\');\n    this.message = ko.observable();\n\n    this.send = function() {\n        pane.pubsub.publish(\'chat.message\', {\n            name: self.name(),\n            message: self.message()\n        });\n        self.message(\'\');\n    };\n});</pre>'
 });Samples = window.Samples || {};
 Samples['Mobile'] = Samples['Mobile'] || [];
 Samples['Mobile'].push({

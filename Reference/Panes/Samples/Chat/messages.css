@@ -1,8 +1,8 @@
-﻿.chat ul {
+﻿.messages {
     list-style: none;
     padding: 0;
 }
 
-.chat li {
+.messages li {
     padding: 5px;
 }

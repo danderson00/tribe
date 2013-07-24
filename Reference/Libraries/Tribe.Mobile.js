@@ -206,7 +206,7 @@ TC.registerModel(function (pane) {
 //@ sourceURL=/Mobile/Panes/list
 TC.scriptEnvironment = { resourcePath: '/Mobile/main' };
 TC.registerModel(function (pane) {
-    TC.transition.mode = "normal";
+    //TC.transition.mode = "normal";
     
     this.pane = (pane.data && pane.data.pane) || 'blank';
 
@@ -272,7 +272,7 @@ TC.registerModel(function (pane) {
 });
 
 TC.overlay = function (paneOptions, transition) {
-    var node = TC.appendNode('.TM', { path: '/Mobile/overlay', data: { pane: paneOptions, transition: transition } });
+    var node = TC.appendNode('.TM', { path: '/Mobile/overlay', data: { pane: paneOptions }});
     return {
         node: node,
         close: function () {
@@ -284,7 +284,7 @@ TC.overlay = function (paneOptions, transition) {
 // HACK
 TC.dialog = function(paneOptions) {
     return TC.overlay(paneOptions, 'slideLeft');
-} 
+};
 TC.Types.Pane.prototype.dialog = TC.dialog;
 //@ sourceURL=/Mobile/Panes/overlay
 TC.scriptEnvironment = { resourcePath: '/Mobile/toolbar' };

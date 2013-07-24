@@ -30,5 +30,5 @@ TC.overlay = function (paneOptions, transition) {
 // HACK
 TC.dialog = function(paneOptions) {
     return TC.overlay(paneOptions, 'slideLeft');
-} 
+};
 TC.Types.Pane.prototype.dialog = TC.dialog;

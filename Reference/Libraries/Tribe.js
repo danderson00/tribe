@@ -621,7 +621,7 @@ TC.Utils.evaluateProperty = function(target, property) {
 })();
 TC.Types.History = function (history) {
     var currentState = 0;
-    history.replaceState(currentState);
+    history.replaceState(currentState, window.title);
 
     var popActions = {
         raiseEvent: function (e) {
@@ -1086,7 +1086,7 @@ TC.Events.initialiseModel = function (pane, context) {
 
     return strategy(pane, context);
 };TC.Events.renderComplete = function (pane, context) {
-    $.when(TC.transition(pane, null, pane.reverseTransitionIn).in()).done(executeRenderComplete);
+    $.when(TC.transition(pane, pane.transition, pane.reverseTransitionIn).in()).done(executeRenderComplete);
     setTimeout(function() {
         pane.endRender();
     });
@@ -1247,8 +1247,7 @@ TC.LoadStrategies.adhoc = function (pane, context) {
         },
         
         out: function (remove) {
-            if (TC.transition.mode === 'fixed')
-                setFixedPosition();
+            setTransitionMode();
             
             var promise = implementation && implementation.out(element);
             $.when(promise).done(removeElement);
@@ -1270,13 +1269,21 @@ TC.LoadStrategies.adhoc = function (pane, context) {
         }
     };
     
-    function setFixedPosition() {
+    function setTransitionMode() {
         var $element = $(element);
-        $element.css({
-            position: 'fixed',
-            left: $element.offset().left,
-            top: $element.offset().top
-        });
+        if (TC.transition.mode === 'fixed')
+            $element.css({
+                position: 'fixed',
+                left: $element.offset().left,
+                top: $element.offset().top
+            });
+        if (TC.transition.mode === 'absolute')
+            $element.css({
+                position: 'absolute',
+                width: '100%',
+                left: $element.position().left,
+                top: $element.position().top
+            });
     }
 
     function setState() {
@@ -1296,17 +1303,17 @@ TC.LoadStrategies.adhoc = function (pane, context) {
     }    
 };(function () {
     createCssTransition('fade');
-    createCssTransition('pop');
+    //createCssTransition('pop');
     createCssTransition('slideLeft', 'slideRight');
     createCssTransition('slideRight', 'slideLeft');
     createCssTransition('slideUp', 'slideDown');
     createCssTransition('slideDown', 'slideUp');
-    createCssTransition('flipLeft', 'flipRight');
-    createCssTransition('flipRight', 'flipLeft');
-    createCssTransition('swapLeft', 'swapRight');
-    createCssTransition('swapRight', 'swapLeft');
-    createCssTransition('cubeLeft', 'cubeRight');
-    createCssTransition('cubeRight', 'cubeLeft');
+    //createCssTransition('flipLeft', 'flipRight');
+    //createCssTransition('flipRight', 'flipLeft');
+    //createCssTransition('swapLeft', 'swapRight');
+    //createCssTransition('swapRight', 'swapLeft');
+    //createCssTransition('cubeLeft', 'cubeRight');
+    //createCssTransition('cubeRight', 'cubeLeft');
 
     function createCssTransition(name, reverse) {
         TC.Transitions[name] = {
@@ -1346,7 +1353,7 @@ TC.LoadStrategies.adhoc = function (pane, context) {
 })();
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.in,.out{-webkit-animation-duration:250ms;-webkit-animation-fill-mode:both;-webkit-animation-timing-function:ease-in-out}.in:after{content:"";position:absolute;display:block;top:0;left:0;bottom:0;right:0}.cubeLeft.in,.cubeLeft.out,.cubeRight.in,.cubeRight.out{-webkit-animation-duration:.6s;-webkit-transform:perspective(800)}.cubeLeft.in{-webkit-transform-origin:0% 50%;-webkit-animation-name:cubeLeftIn}.cubeLeft.out{-webkit-transform-origin:100% 50%;-webkit-animation-name:cubeLeftOut}@-webkit-keyframes cubeLeftIn{0%{-webkit-transform:rotateY(90deg) translateZ(320px);opacity:.5}100%{-webkit-transform:rotateY(0) translateZ(0) translateX(0);opacity:1}}@-webkit-keyframes cubeLeftOut{0%{-webkit-transform:rotateY(0) translateZ(0) translateX(0);opacity:1}100%{-webkit-transform:rotateY(-90deg) translateZ(320px);opacity:.5}}.cubeRight.in{-webkit-transform-origin:100% 50%;-webkit-animation-name:cubeRightIn}.cubeRight.out{-webkit-transform-origin:0% 50%;-webkit-animation-name:cubeRightOut}@-webkit-keyframes cubeRightIn{0%{-webkit-transform:rotateY(-90deg) translateZ(320px);opacity:.5}100%{-webkit-transform:rotateY(0) translateZ(0) translateX(0);opacity:1}}@-webkit-keyframes cubeRightOut{0%{-webkit-transform:rotateY(0) translateZ(0) translateX(0);opacity:1}100%{-webkit-transform:rotateY(90deg) translateZ(320px);opacity:.5}}.fade.in{-webkit-animation-name:fadeIn}.fade.out{z-index:10;-webkit-animation-name:fadeOut}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}100%{opacity:0}}.flipLeft{-webkit-backface-visibility:hidden}.flipLeft.in{-webkit-animation-name:flipLeftIn}.flipLeft.out{-webkit-animation-name:flipLeftOut}@-webkit-keyframes flipLeftIn{0%{-webkit-transform:rotateY(180deg) scale(.8)}100%{-webkit-transform:rotateY(0) scale(1)}}@-webkit-keyframes flipLeftOut{0%{-webkit-transform:rotateY(0) scale(1)}100%{-webkit-transform:rotateY(-180deg) scale(.8)}}.flipRight{-webkit-backface-visibility:hidden}.flipRight.in{-webkit-animation-name:flipRightIn}.flipRight.out{-webkit-animation-name:flipRightOut}@-webkit-keyframes flipRightIn{0%{-webkit-transform:rotateY(-180deg) scale(.8)}100%{-webkit-transform:rotateY(0) scale(1)}}@-webkit-keyframes flipRightOut{0%{-webkit-transform:rotateY(0) scale(1)}100%{-webkit-transform:rotateY(180deg) scale(.8)}}.pop.in{-webkit-animation-name:popIn}.pop.out{-webkit-animation-name:popOut}@-webkit-keyframes popIn{0%{-webkit-transform:scale(.2);opacity:0}100%{-webkit-transform:scale(1);opacity:1}}@-webkit-keyframes popOut{0%{-webkit-transform:scale(1);opacity:1}100%{-webkit-transform:scale(.2);opacity:0}}.slideLeft.in{-webkit-animation-name:slideLeftIn}.slideLeft.out{-webkit-animation-name:slideLeftOut}@-webkit-keyframes slideLeftIn{0%{-webkit-transform:translateX(100%)}100%{-webkit-transform:translateX(0)}}@-webkit-keyframes slideLeftOut{0%{-webkit-transform:translateX(0)}100%{-webkit-transform:translateX(-100%)}}.slideRight.in{-webkit-animation-name:slideRightIn}.slideRight.out{-webkit-animation-name:slideRightOut}@-webkit-keyframes slideRightIn{0%{-webkit-transform:translateX(-100%)}100%{-webkit-transform:translateX(0)}}@-webkit-keyframes slideRightOut{0%{-webkit-transform:translateX(0)}100%{-webkit-transform:translateX(100%)}}.slideUp.in{-webkit-animation-name:slideUpIn}.slideUp.out{-webkit-animation-name:slideUpOut}@-webkit-keyframes slideUpIn{0%{-webkit-transform:translateY(100%)}100%{-webkit-transform:translateY(0)}}@-webkit-keyframes slideUpOut{0%{-webkit-transform:translateY(0)}100%{-webkit-transform:translateY(-100%)}}.slideDown.in{-webkit-animation-name:slideDownIn}.slideDown.out{-webkit-animation-name:slideDownOut}@-webkit-keyframes slideDownIn{0%{-webkit-transform:translateY(-100%)}100%{-webkit-transform:translateY(0)}}@-webkit-keyframes slideDownOut{0%{-webkit-transform:translateY(0)}100%{-webkit-transform:translateY(100%)}}.swapLeft{-webkit-animation-duration:.7s;-webkit-transform:perspective(800);-webkit-animation-timing-function:ease-out}.swapLeft.in{-webkit-animation-name:swapLeftIn}.swapLeft.out{-webkit-animation-name:swapLeftOut}@-webkit-keyframes swapLeftIn{0%{-webkit-transform:translate3d(0,0,-800px) rotateY(-70deg);opacity:0}35%{-webkit-transform:translate3d(180px,0,-400px) rotateY(-20deg);opacity:1}100%{opacity:1;-webkit-transform:translate3d(0,0,0) rotateY(0)}}@-webkit-keyframes swapLeftOut{0%{-webkit-transform:translate3d(0,0,0) rotateY(0);opacity:1}35%{-webkit-transform:translate3d(-180px,0,-400px) rotateY(20deg);opacity:.5}100%{-webkit-transform:translate3d(0,0,-800px) rotateY(70deg);opacity:0}}.swapRight{-webkit-animation-duration:.7s;-webkit-transform:perspective(800);-webkit-animation-timing-function:ease-out}.swapRight.in{-webkit-animation-name:swapRightIn}.swapRight.out{-webkit-animation-name:swapRightOut}@-webkit-keyframes swapRightIn{0%{-webkit-transform:translate3d(0,0,-800px) rotateY(70deg);opacity:0}35%{-webkit-transform:translate3d(-180px,0,-400px) rotateY(20deg);opacity:1}100%{-webkit-transform:translate3d(0,0,0) rotateY(0);opacity:1}}@-webkit-keyframes swapRightOut{0%{-webkit-transform:translate3d(0,0,0) rotateY(0);opacity:1}35%{-webkit-transform:translate3d(180px,0,-400px) rotateY(-20deg);opacity:.5}100%{-webkit-transform:translate3d(0,0,-800px) rotateY(-70deg);opacity:0}}')
+    .text('.in,.out{-webkit-animation-duration:250ms;-webkit-animation-fill-mode:both;-webkit-animation-timing-function:ease-in-out}.in:after{content:"";position:absolute;display:block;top:0;left:0;bottom:0;right:0}.fade.in{-webkit-animation-name:fadeIn}.fade.out{z-index:10;-webkit-animation-name:fadeOut}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}100%{opacity:0}}.slideLeft.in{-webkit-animation-name:slideLeftIn}.slideLeft.out{-webkit-animation-name:slideLeftOut}@-webkit-keyframes slideLeftIn{0%{-webkit-transform:translateX(100%)}100%{-webkit-transform:translateX(0)}}@-webkit-keyframes slideLeftOut{0%{-webkit-transform:translateX(0)}100%{-webkit-transform:translateX(-100%)}}.slideRight.in{-webkit-animation-name:slideRightIn}.slideRight.out{-webkit-animation-name:slideRightOut}@-webkit-keyframes slideRightIn{0%{-webkit-transform:translateX(-100%)}100%{-webkit-transform:translateX(0)}}@-webkit-keyframes slideRightOut{0%{-webkit-transform:translateX(0)}100%{-webkit-transform:translateX(100%)}}.slideUp.in{-webkit-animation-name:slideUpIn}.slideUp.out{-webkit-animation-name:slideUpOut}@-webkit-keyframes slideUpIn{0%{-webkit-transform:translateY(100%)}100%{-webkit-transform:translateY(0)}}@-webkit-keyframes slideUpOut{0%{-webkit-transform:translateY(0)}100%{-webkit-transform:translateY(-100%)}}.slideDown.in{-webkit-animation-name:slideDownIn}.slideDown.out{-webkit-animation-name:slideDownOut}@-webkit-keyframes slideDownIn{0%{-webkit-transform:translateY(-100%)}100%{-webkit-transform:translateY(0)}}@-webkit-keyframes slideDownOut{0%{-webkit-transform:translateY(0)}100%{-webkit-transform:translateY(100%)}}')
     .appendTo('head');
 (function () {
     TC.registerModel = function () {

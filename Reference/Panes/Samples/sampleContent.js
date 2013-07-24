@@ -21,7 +21,7 @@ Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
     filename: 'layout.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;!--Panes can consist of a model, template and stylesheet.\n    Simply create the files and refer to them by name, \n    Tribe does the rest, from load through to disposal -->\n\n&lt;h1>Todos&lt;/h1>\n&lt;div data-bind="pane: \'create\'">&lt;/div>\n&lt;div data-bind="pane: \'list\'">&lt;/div></pre>'
+    content: '<pre class="prettyprint">&lt;h1>Todos&lt;/h1>\n&lt;div data-bind="pane: \'create\'">&lt;/div>\n&lt;div data-bind="pane: \'list\'">&lt;/div>\n\n&lt;!--Panes can consist of a model, template and stylesheet.\n    Simply create the files and refer to them by name, \n    Tribe loads them, data binds them and cleans up. --></pre>'
 });Samples = window.Samples || {};
 Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({

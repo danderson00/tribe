@@ -1,6 +1,6 @@
 ﻿TC.Types.History = function (history) {
     var currentState = 0;
-    history.replaceState(currentState);
+    history.replaceState(currentState, window.title);
 
     var popActions = {
         raiseEvent: function (e) {

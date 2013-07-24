@@ -16,8 +16,7 @@
         },
         
         out: function (remove) {
-            if (TC.transition.mode === 'fixed')
-                setFixedPosition();
+            setTransitionMode();
             
             var promise = implementation && implementation.out(element);
             $.when(promise).done(removeElement);
@@ -39,13 +38,21 @@
         }
     };
     
-    function setFixedPosition() {
+    function setTransitionMode() {
         var $element = $(element);
-        $element.css({
-            position: 'fixed',
-            left: $element.offset().left,
-            top: $element.offset().top
-        });
+        if (TC.transition.mode === 'fixed')
+            $element.css({
+                position: 'fixed',
+                left: $element.offset().left,
+                top: $element.offset().top
+            });
+        if (TC.transition.mode === 'absolute')
+            $element.css({
+                position: 'absolute',
+                width: '100%',
+                left: $element.position().left,
+                top: $element.position().top
+            });
     }
 
     function setState() {
