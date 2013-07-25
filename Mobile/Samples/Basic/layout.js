@@ -19,7 +19,7 @@
     };
 
     this.overlay = function() {
-        TC.overlay('/overlay');
+        TC.overlay('overlay');
     };
 
     this.toolbar = function () {

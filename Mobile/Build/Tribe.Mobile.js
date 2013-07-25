@@ -155,7 +155,7 @@ $('head')
     .append('<script type="text/template" id="template--Mobile-toolbar"><div class="toolbar" data-bind="visible: TC.toolbar.visible">\n    <h1 data-bind="text: TC.toolbar.title"></h1>\n    <a data-bind="visible: TC.toolbar.options().length, click: showOptions" class="button">Options</a>\n    <a data-bind="visible: TC.toolbar.back, click: back" class="back">Back</a>\n</div>\n</script>');
 TC.scriptEnvironment = { resourcePath: '/Mobile/blank' };
 TC.registerModel(function(pane) {});
-//@ sourceURL=/Mobile/Panes/blank
+//@ sourceURL=tribe://Tribe.Mobile/Panes/blank.js
 TC.scriptEnvironment = { resourcePath: '/Mobile/editable' };
 TC.registerModel(function (pane) {
     var self = this;
@@ -180,7 +180,7 @@ TC.registerModel(function (pane) {
         self.editing(false);
     };
 });
-//@ sourceURL=/Mobile/Panes/editable
+//@ sourceURL=tribe://Tribe.Mobile/Panes/editable.js
 TC.scriptEnvironment = { resourcePath: '/Mobile/list' };
 TC.registerModel(function (pane) {
     var data = pane.data;
@@ -203,7 +203,7 @@ TC.registerModel(function (pane) {
         }
     };
 });
-//@ sourceURL=/Mobile/Panes/list
+//@ sourceURL=tribe://Tribe.Mobile/Panes/list.js
 TC.scriptEnvironment = { resourcePath: '/Mobile/main' };
 TC.registerModel(function (pane) {
     //TC.transition.mode = "normal";
@@ -226,7 +226,7 @@ TC.registerModel(function (pane) {
             $('#__tribe_toolbar').remove();
     };
 });
-//@ sourceURL=/Mobile/Panes/main
+//@ sourceURL=tribe://Tribe.Mobile/Panes/main.js
 TC.scriptEnvironment = { resourcePath: '/Mobile/options' };
 TC.registerModel(function (pane) {
     var self = this;
@@ -250,15 +250,18 @@ TC.registerModel(function (pane) {
         ).done(pane.remove);
     };
 });
-//@ sourceURL=/Mobile/Panes/options
+//@ sourceURL=tribe://Tribe.Mobile/Panes/options.js
 TC.scriptEnvironment = { resourcePath: '/Mobile/overlay' };
 TC.registerModel(function (pane) {
     var data = pane.data || {};
     var element;
 
-    pane.node.skipPath = true;
     this.pane = data.pane;
 
+    pane.node.nodeForPath = function() {
+        return TC.Utils.nodeFor('.TM').children[1];
+    };
+    
     this.renderComplete = function () {
         element = $(pane.element).find('.overlay').show();
         TC.transition(element, data.transition || 'slideDown').in();
@@ -286,11 +289,11 @@ TC.dialog = function(paneOptions) {
     return TC.overlay(paneOptions, 'slideLeft');
 };
 TC.Types.Pane.prototype.dialog = TC.dialog;
-//@ sourceURL=/Mobile/Panes/overlay
+//@ sourceURL=tribe://Tribe.Mobile/Panes/overlay.js
 TC.scriptEnvironment = { resourcePath: '/Mobile/toolbar' };
 TC.toolbar = {
     title: ko.observable(),
-    back: ko.observable(),
+    back: ko.observable(false),
     options: ko.observableArray([]),
     visible: ko.observable(true),
     defaults: {
@@ -311,12 +314,12 @@ TC.registerModel(function (pane) {
         TC.appendNode(pane.element, { path: 'options', data: { options: pane.data.options || TC.toolbar.options() } });
     };
 
-    document.addEventListener('navigating', function() {
+    document.addEventListener('renderComplete', function() {
         var defaults = TC.toolbar.defaults;
         TC.toolbar.title(defaults.title);
         TC.toolbar.options(defaults.options);
-        TC.toolbar.back(defaults.back);
+        TC.toolbar.back(defaults.back && !pane.node.findNavigation().isAtStart());
         TC.toolbar.visible(defaults.visible);
     });
 });
-//@ sourceURL=/Mobile/Panes/toolbar
+//@ sourceURL=tribe://Tribe.Mobile/Panes/toolbar.js

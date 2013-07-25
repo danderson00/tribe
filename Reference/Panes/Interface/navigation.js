@@ -22,11 +22,25 @@
         var section = e.data.options.data && e.data.options.data.section;
         if (currentSection !== section) {
             currentSection = section;
-            self.items(mapNavigation(section));
-            pane.pubsub.publish('ui.showLeftPanel', { show: self.items().length > 0 });
+            var items = mapNavigation(section);
+            if (items.length > 0) {
+                self.items(items);
+                show();
+            } else 
+                hide();
         }
     }
-
+    
+    function show() {
+        if (!$('.navigation').is(':visible'))
+            TC.transition('.navigation', 'slideRight').in();
+    }
+    
+    function hide() {
+        if ($('.navigation').is(':visible'))
+            TC.transition('.navigation', 'slideLeft').out(false);
+    }
+    
     this.dispose = function() {
         window.removeEventListener('navigating', navigating);
     };

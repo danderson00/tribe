@@ -1,10 +1,13 @@
 ﻿TC.registerModel(function (pane) {
+    // Hook up our message hub and join a channel
     TMH.initialise(pane.pubsub, 'signalr');
     TMH.joinChannel('chat', {
          serverEvents: ['chat.*']
     });
-    
-    // Any message topics starting with "chat."
-    // are now seamlessly broadcast to any other
-    // client that has also joined the channel.
+
+    // The dispose function is called automatically
+    // when the pane is removed from the DOM.
+    this.dispose = function() {
+        TMH.leaveChannel('chat');
+    };
 });

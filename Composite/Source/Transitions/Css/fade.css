@@ -1,17 +1,12 @@
-﻿/* Fade */
-.fade.in {
-  -webkit-animation-name: fadeIn;
+﻿.fade.in.prepare {
+    opacity: 0;
 }
-.fade.out {
-  z-index: 10;
-  -webkit-animation-name: fadeOut;
+.fade.in.trigger {
+    opacity: 1;
 }
-
-@-webkit-keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+.fade.out.prepare {
+    opacity: 1;
 }
-@-webkit-keyframes fadeOut {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+.fade.out.trigger {
+    opacity: 0;
 }

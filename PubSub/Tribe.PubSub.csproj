@@ -35,9 +35,13 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Build\Tribe.PubSub.chrome.js" />
+    <Content Include="Build\Tribe.PubSub.js" />
+    <Content Include="Build\Tribe.PubSub.min.js" />
     <Content Include="Source\options.js" />
     <Content Include="Source\Lifetime.js" />
     <Content Include="Source\core.js" />
+    <Content Include="Source\pack.js" />
     <Content Include="Source\subscribeOnce.js" />
     <Content Include="Source\SubscriberList.js" />
     <Content Include="Source\utils.js" />
@@ -45,11 +49,11 @@
     <Content Include="Tests\core.subscribe.tests.js" />
     <Content Include="Tests\core.publish.tests.js" />
     <Content Include="Tests\Lifetime.tests.js" />
-    <Content Include="pack.js" />
+    <Content Include="Tests\pack.js" />
     <Content Include="Tests\Resources\debug.pack.js" />
     <Content Include="Tests\Resources\debug.template.js" />
     <Content Include="Tests\subscribeOnce.tests.js" />
-    <Content Include="Tests\default.htm" />
+    <Content Include="Tests\index.html" />
     <Content Include="Tests\core.unsubscribe.tests.js" />
     <Content Include="Tests\Resources\qunit.css" />
     <Content Include="Tests\Resources\qunit.js" />
@@ -57,9 +61,7 @@
     <Content Include="Tests\SubscriberList.tests.js" />
     <Content Include="Tests\utils.tests.js" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Build\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="README.md" />
   </ItemGroup>

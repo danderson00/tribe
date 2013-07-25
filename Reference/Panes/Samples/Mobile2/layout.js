@@ -19,7 +19,7 @@
     };
 
     this.overlay = function() {
-        TC.overlay('/Samples/Mobile/overlay');
+        TC.overlay('overlay');
     };
 
     this.toolbar = function () {

@@ -1,2 +1,2 @@
 ﻿$('head')
-    .append('<script type="text/template" id="template-<%=modelPath(component, pathRelativeToInclude).asMarkupIdentifier()%>"><%=embedString(content)%></script>');
+    .append('<script type="text/template" id="<%=T.templateIdentifier(pathRelativeToInclude, data.prefix)%>"><%=T.embedString(content)%></script>');

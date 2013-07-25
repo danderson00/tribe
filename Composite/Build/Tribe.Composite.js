@@ -759,6 +759,7 @@ TC.Types.Models.prototype.register = function (resourcePath, constructor, option
     var currentFrame = 0;
 
     this.node = node;
+    this.stack = stack;
 
     this.navigate = function (paneOptions) {
         if (options.browser)
@@ -769,6 +770,10 @@ TC.Types.Models.prototype.register = function (resourcePath, constructor, option
         currentFrame++;
 
         navigateTo(paneOptions);
+    };
+
+    this.isAtStart = function() {
+        return currentFrame === 0;
     };
 
     this.go = function(frameCount) {
@@ -1254,7 +1259,10 @@ TC.LoadStrategies.adhoc = function (pane, context) {
             return promise;
             
             function removeElement() {
-                remove === false ? $(element).hide() : $(element).remove();
+                if (remove === false) {
+                    $(element).hide().attr('style', '');
+                } else
+                    $(element).remove();
             }
         },
         
@@ -1303,57 +1311,91 @@ TC.LoadStrategies.adhoc = function (pane, context) {
     }    
 };(function () {
     createCssTransition('fade');
-    //createCssTransition('pop');
     createCssTransition('slideLeft', 'slideRight');
     createCssTransition('slideRight', 'slideLeft');
     createCssTransition('slideUp', 'slideDown');
     createCssTransition('slideDown', 'slideUp');
-    //createCssTransition('flipLeft', 'flipRight');
-    //createCssTransition('flipRight', 'flipLeft');
-    //createCssTransition('swapLeft', 'swapRight');
-    //createCssTransition('swapRight', 'swapLeft');
-    //createCssTransition('cubeLeft', 'cubeRight');
-    //createCssTransition('cubeRight', 'cubeLeft');
 
-    function createCssTransition(name, reverse) {
-        TC.Transitions[name] = {
-            in: function(element) {
-                var $element = $(element);
-                $element.bind('webkitAnimationEnd', animationEnd)
-                        .addClass(name + ' in');
+    var transitionEndEvents = 'webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd';
 
+    function createCssTransition(transition, reverse) {
+        TC.Transitions[transition] = {
+            in: function (element) {
                 var promise = $.Deferred();
+                $(element).bind(transitionEndEvents, transitionEnded(element, promise))
+                    .addClass('prepare in ' + transition);
+                    //.show();
+
+                trigger(element);
                 return promise;
-
-                function animationEnd() {
-                    $element.unbind('webkitAnimationEnd', animationEnd)
-                            .removeClass(name + ' in');
-                    promise.resolve();
-                }
             },
-            
-            out: function(element) {
-                var $element = $(element);
-                $element.bind('webkitAnimationEnd', animationEnd)
-                        .addClass(name + ' out');
 
+            out: function (element) {
                 var promise = $.Deferred();
-                return promise;
 
-                function animationEnd() {
-                    $element.unbind('webkitAnimationEnd', animationEnd)
-                            .removeClass(name + ' out')
-                            .remove();
-                    promise.resolve();
-                }
+                $(element).addClass('prepare out ' + transition)
+                    .on(transitionEndEvents, transitionEnded(element, promise, true));
+
+                trigger(element);
+                return promise;
             },
-            reverse: reverse || name
+            reverse: reverse || transition
         };
+
+        function trigger(element) {
+            setTimeout(function () {
+                $(element).addClass('trigger');
+            }, 30);
+        }
+
+        function transitionEnded(element, promise, hide) {
+            return function() {
+                $(element).unbind(transitionEndEvents)
+                    .removeClass(transition + ' in out prepare trigger');
+                if (hide) $(element).hide();
+                promise.resolve();
+            };
+        }
     }
+
+    //function createCssTransition(name, reverse) {
+    //    TC.Transitions[name] = {
+    //        in: function(element) {
+    //            var $element = $(element);
+    //            $element.bind('webkitTransitionEnd', animationEnd)
+    //                    .addClass(name + ' in');
+
+    //            var promise = $.Deferred();
+    //            return promise;
+
+    //            function animationEnd() {
+    //                $element.unbind('webkitTransitionEnd', animationEnd)
+    //                        .removeClass(name + ' in');
+    //                promise.resolve();
+    //            }
+    //        },
+
+    //        out: function(element) {
+    //            var $element = $(element);
+    //            $element.bind('webkitTransitionEnd', animationEnd)
+    //                    .addClass(name + ' out');
+
+    //            var promise = $.Deferred();
+    //            return promise;
+
+    //            function animationEnd() {
+    //                $element.unbind('webkitTransitionEnd', animationEnd)
+    //                        .removeClass(name + ' out');
+    //                promise.resolve();
+    //            }
+    //        },
+    //        reverse: reverse || name
+    //    };
+    //}
 })();
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.in,.out{-webkit-animation-duration:250ms;-webkit-animation-fill-mode:both;-webkit-animation-timing-function:ease-in-out}.in:after{content:"";position:absolute;display:block;top:0;left:0;bottom:0;right:0}.fade.in{-webkit-animation-name:fadeIn}.fade.out{z-index:10;-webkit-animation-name:fadeOut}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes fadeOut{0%{opacity:1}100%{opacity:0}}.slideLeft.in{-webkit-animation-name:slideLeftIn}.slideLeft.out{-webkit-animation-name:slideLeftOut}@-webkit-keyframes slideLeftIn{0%{-webkit-transform:translateX(100%)}100%{-webkit-transform:translateX(0)}}@-webkit-keyframes slideLeftOut{0%{-webkit-transform:translateX(0)}100%{-webkit-transform:translateX(-100%)}}.slideRight.in{-webkit-animation-name:slideRightIn}.slideRight.out{-webkit-animation-name:slideRightOut}@-webkit-keyframes slideRightIn{0%{-webkit-transform:translateX(-100%)}100%{-webkit-transform:translateX(0)}}@-webkit-keyframes slideRightOut{0%{-webkit-transform:translateX(0)}100%{-webkit-transform:translateX(100%)}}.slideUp.in{-webkit-animation-name:slideUpIn}.slideUp.out{-webkit-animation-name:slideUpOut}@-webkit-keyframes slideUpIn{0%{-webkit-transform:translateY(100%)}100%{-webkit-transform:translateY(0)}}@-webkit-keyframes slideUpOut{0%{-webkit-transform:translateY(0)}100%{-webkit-transform:translateY(-100%)}}.slideDown.in{-webkit-animation-name:slideDownIn}.slideDown.out{-webkit-animation-name:slideDownOut}@-webkit-keyframes slideDownIn{0%{-webkit-transform:translateY(-100%)}100%{-webkit-transform:translateY(0)}}@-webkit-keyframes slideDownOut{0%{-webkit-transform:translateY(0)}100%{-webkit-transform:translateY(100%)}}')
+    .text('.trigger{-webkit-transition:all 250ms ease-in-out;transition:all 250ms ease-in-out}.fade.in.prepare{opacity:0}.fade.in.trigger{opacity:1}.fade.out.prepare{opacity:1}.fade.out.trigger{opacity:0}.slideRight.in.prepare{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideRight.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideRight.out.trigger{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.prepare{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideLeft.out.trigger{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideDown.in.prepare{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.slideDown.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideDown.out.trigger{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.prepare{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideUp.out.trigger{-webkit-transform:translateY(-100%);transform:translateY(-100%)}')
     .appendTo('head');
 (function () {
     TC.registerModel = function () {

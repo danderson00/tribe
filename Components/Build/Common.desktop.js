@@ -128,7 +128,7 @@ TC.overlay = TC.dialog;
 TC.Types.Pane.prototype.dialog = function (pane, options) {
     return TC.dialog(pane, $.extend({ node: this.node }, options));
 };
-//@ sourceURL=/Common/Panes/dialog
+//@ sourceURL=tribe:///Common/Panes/dialog
 TC.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
 // needs a big ol' refactor
 (function () {
@@ -284,7 +284,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
 
     });
 })();
-//@ sourceURL=/Common/Panes/tabPanel
+//@ sourceURL=tribe:///Common/Panes/tabPanel
 TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
 (function () {
     TC.registerModel(function (pane) {
@@ -452,7 +452,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
     });
 })();
 
-//@ sourceURL=/Common/Panes/tooltip
+//@ sourceURL=tribe:///Common/Panes/tooltip
 TC.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
 (function () {
     TC.registerModel(function (pane) {
@@ -470,7 +470,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
         });
     });
 })();
-//@ sourceURL=/Common/Panes/contentHeader
+//@ sourceURL=tribe:///Common/Panes/contentHeader
 TC.scriptEnvironment = { resourcePath: '/Common/dropDown' };
 (function () {
     // TODO: Refactor - the trigger and panel should be in separate panes. The rest is starting to get nasty now too...
@@ -639,7 +639,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/dropDown' };
         };
     });
 })();
-//@ sourceURL=/Common/Panes/dropDown
+//@ sourceURL=tribe:///Common/Panes/dropDown
 TC.scriptEnvironment = { resourcePath: '/Common/expander' };
 (function () {
     TC.registerModel(function (pane) {
@@ -764,7 +764,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/expander' };
         //        };
     });
 })();
-//@ sourceURL=/Common/Panes/expander
+//@ sourceURL=tribe:///Common/Panes/expander
 TC.scriptEnvironment = { resourcePath: '/Common/expanderList' };
 (function () {
     TC.registerModel(function (pane) {
@@ -790,7 +790,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/expanderList' };
         };
     });
 })();
-//@ sourceURL=/Common/Panes/expanderList
+//@ sourceURL=tribe:///Common/Panes/expanderList
 TC.scriptEnvironment = { resourcePath: '/Common/graph' };
 (function () {
     TC.registerModel(function (pane) {
@@ -905,7 +905,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
         };
     });
 })();
-//@ sourceURL=/Common/Panes/graph
+//@ sourceURL=tribe:///Common/Panes/graph
 TC.scriptEnvironment = { resourcePath: '/Common/grid' };
 TC = window.TC || {};
 TC.grid = TC.grid || {};
@@ -1129,7 +1129,7 @@ TC.grid = TC.grid || {};
         return filtered ? filtered : source;
     };
 })();
-//@ sourceURL=/Common/Panes/grid
+//@ sourceURL=tribe:///Common/Panes/grid
 TC.scriptEnvironment = { resourcePath: '/Common/tabs' };
 TC.registerModel(function (pane) {
     var self = this;
@@ -1162,14 +1162,14 @@ TC.registerModel(function (pane) {
         });
     }
 });
-//@ sourceURL=/Common/Panes/tabs
+//@ sourceURL=tribe:///Common/Panes/tabs
 
 ko.bindingHandlers.colspan = {
     update: function (element, valueAccessor) {
         $(element).attr('colspan', valueAccessor());
     }
 };
-//@ sourceURL=/Common/Infrastructure/colspanBindingHandler
+//@ sourceURL=tribe:///Common/Infrastructure/colspanBindingHandler
 
 (function(utils) {
     utils.checkHorizontalPosition = function(element, margin) {
@@ -1250,7 +1250,7 @@ ko.bindingHandlers.colspan = {
     };
 })(TC.Utils);
 
-//@ sourceURL=/Common/Infrastructure/elements
+//@ sourceURL=tribe:///Common/Infrastructure/elements
 
 (function() {
     // based on http://stackoverflow.com/questions/979256/how-to-sort-an-array-of-javascript-objects
@@ -1268,7 +1268,7 @@ ko.bindingHandlers.colspan = {
         return this.sort(sortBy(field, reverse, primer));
     };
 })();
-//@ sourceURL=/Common/Infrastructure/sortBy
+//@ sourceURL=tribe:///Common/Infrastructure/sortBy
 
 (function () {
     var utils = TC.Utils;
@@ -1324,4 +1324,4 @@ ko.bindingHandlers.colspan = {
     };
 
 })();
-//@ sourceURL=/Common/Infrastructure/tooltipBindingHandler
+//@ sourceURL=tribe:///Common/Infrastructure/tooltipBindingHandler

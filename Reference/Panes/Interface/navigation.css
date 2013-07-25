@@ -1,37 +1,16 @@
 ﻿.navigation {
-    margin: 20px 0;
+    display: none;
     background: #EEE;
     border: 1px solid black;
-    border-left: 0;
     box-sizing: border-box;
-    box-shadow: 3px 3px 4px -1px rgba(0, 0, 0, 0.3);
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
 }
 
-.navigation > ul {
+.navigation ul {
     list-style: none;
-    padding: 0;
-    margin: 10px;
-    font-weight: bold;
 }
 
-.navigation ul ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
-}
-
-.navigation > ul li {
-    padding: 2px 10px;
-    cursor: pointer;
-}
-
-.navigation ul ul li {
-    margin: 0;
-    padding: 2px 0 2px 30px;
-    box-sizing: border-box;   
+.navigation li {
+    cursor: pointer;    
 }
 
 .navigation ul li:hover {
@@ -41,4 +20,69 @@
 
 .navigation li.selectedItem {
     background: #CCC;
+}
+
+.navigation > ul li {
+    padding: 2px 10px;
+    font-weight: bold;
+}
+
+.navigation ul ul li {
+    margin: 0;
+    padding: 2px 0 2px 20px;
+    box-sizing: border-box;
+    font-weight: normal;
+}
+
+@media (max-width: 1300px) {
+    .navigation {
+        width: 980px;
+        position: relative;
+        left: 50%;
+        margin-left: -490px !important;
+        border-radius: 8px;
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    .navigation ul {
+        margin: 0;
+        padding: 0;
+        width: 33%;
+    }
+
+    .navigation ul ul {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 66%;
+    }
+
+    .navigation ul ul li {
+        width: 50%;
+        float: left;
+    }
+}
+
+@media (min-width: 1300px) {
+    .navigation {
+        width: 170px !important;
+        position: fixed;
+        left: 0;
+        top: 56px;
+        border-left: 0;
+        box-shadow: 3px 3px 4px -1px rgba(0, 0, 0, 0.3);
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    .navigation > ul {
+        padding: 0;
+        margin: 10px;
+    }
+
+    .navigation ul ul {
+        margin: 0;
+        padding: 0;
+    }
 }

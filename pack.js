@@ -1,15 +1,22 @@
 pack({
     to: 'Tribe.js',
-    include: [
-        'Composite/Build/Tribe.Composite.js',
-        'MessageHub/Client/Build/Tribe.MessageHub.js'
-    ]
+    include: includes()
+
 }); 
+
 pack({
     to: 'Tribe.min.js',
-    include: [
-        'Composite/Build/Tribe.Composite.js',
-        'MessageHub/Client/Build/Tribe.MessageHub.js'
-    ],
-    minify: true
-}); 
+    include: includes('.min')
+});
+
+pack({
+    to: 'Tribe.chrome.js',
+    include: includes('.chrome')
+});
+
+function includes(type) {
+    return [
+        'Composite/Build/Tribe.Composite' + (type || '') + '.js',
+        'MessageHub/Client/Build/Tribe.MessageHub' + (type || '') + '.js'
+    ];
+}

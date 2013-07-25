@@ -1,5 +1,5 @@
 ﻿.sample {
-    width: 918px;
+    width: 935px;
     margin: 0 auto;
 }
 
@@ -43,7 +43,7 @@
 
 .sample .fileContent {
     padding: 5px;
-    width: 490px;
+    width: 515px;
     overflow: auto;
     height: 272px; /* HACK */
 }

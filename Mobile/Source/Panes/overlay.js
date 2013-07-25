@@ -2,9 +2,12 @@
     var data = pane.data || {};
     var element;
 
-    pane.node.skipPath = true;
     this.pane = data.pane;
 
+    pane.node.nodeForPath = function() {
+        return TC.Utils.nodeFor('.TM').children[1];
+    };
+    
     this.renderComplete = function () {
         element = $(pane.element).find('.overlay').show();
         TC.transition(element, data.transition || 'slideDown').in();

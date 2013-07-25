@@ -1,6 +1,6 @@
 ﻿TC.toolbar = {
     title: ko.observable(),
-    back: ko.observable(),
+    back: ko.observable(false),
     options: ko.observableArray([]),
     visible: ko.observable(true),
     defaults: {
@@ -21,11 +21,11 @@ TC.registerModel(function (pane) {
         TC.appendNode(pane.element, { path: 'options', data: { options: pane.data.options || TC.toolbar.options() } });
     };
 
-    document.addEventListener('navigating', function() {
+    document.addEventListener('renderComplete', function() {
         var defaults = TC.toolbar.defaults;
         TC.toolbar.title(defaults.title);
         TC.toolbar.options(defaults.options);
-        TC.toolbar.back(defaults.back);
+        TC.toolbar.back(defaults.back && !pane.node.findNavigation().isAtStart());
         TC.toolbar.visible(defaults.visible);
     });
 });

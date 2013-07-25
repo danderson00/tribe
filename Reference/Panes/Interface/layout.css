@@ -17,8 +17,19 @@
     background: white;
     border: 1px solid #AAA;
     margin-bottom: 10px;
+    margin-top: 10px;
     border-radius: 8px;
     box-sizing: border-box;
+}
+
+.block p {
+    margin: 10px 20px;
+    font-size: 14pt;
+}
+
+/* Without this, stuff flops around on transitioning. I don't get it either... */
+.out .content.block {
+    margin-top: 0;
 }
 
 .blockHeader {
@@ -56,6 +67,10 @@ h1, h2, h3 {
 
 .underline {
     text-decoration: underline;
+}
+
+.clear {
+    clear: both;
 }
 
 a, a:active, a:visited, a:link {

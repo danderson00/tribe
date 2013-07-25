@@ -1,0 +1,5 @@
+﻿.in, .out {
+    -webkit-animation-duration: 250ms;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+}

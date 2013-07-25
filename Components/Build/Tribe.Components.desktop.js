@@ -128,7 +128,7 @@ TC.overlay = TC.dialog;
 TC.Types.Pane.prototype.dialog = function (pane, options) {
     return TC.dialog(pane, $.extend({ node: this.node }, options));
 };
-//@ sourceURL=/Common/Panes/dialog
+//@ sourceURL=tribe:///Common/Panes/dialog
 TC.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
 // needs a big ol' refactor
 (function () {
@@ -284,7 +284,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
 
     });
 })();
-//@ sourceURL=/Common/Panes/tabPanel
+//@ sourceURL=tribe:///Common/Panes/tabPanel
 TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
 (function () {
     TC.registerModel(function (pane) {
@@ -452,7 +452,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
     });
 })();
 
-//@ sourceURL=/Common/Panes/tooltip
+//@ sourceURL=tribe:///Common/Panes/tooltip
 TC.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
 (function () {
     TC.registerModel(function (pane) {
@@ -470,7 +470,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
         });
     });
 })();
-//@ sourceURL=/Common/Panes/contentHeader
+//@ sourceURL=tribe:///Common/Panes/contentHeader
 TC.scriptEnvironment = { resourcePath: '/Common/dropDown' };
 (function () {
     // TODO: Refactor - the trigger and panel should be in separate panes. The rest is starting to get nasty now too...
@@ -639,7 +639,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/dropDown' };
         };
     });
 })();
-//@ sourceURL=/Common/Panes/dropDown
+//@ sourceURL=tribe:///Common/Panes/dropDown
 TC.scriptEnvironment = { resourcePath: '/Common/expander' };
 (function () {
     TC.registerModel(function (pane) {
@@ -764,7 +764,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/expander' };
         //        };
     });
 })();
-//@ sourceURL=/Common/Panes/expander
+//@ sourceURL=tribe:///Common/Panes/expander
 TC.scriptEnvironment = { resourcePath: '/Common/expanderList' };
 (function () {
     TC.registerModel(function (pane) {
@@ -790,7 +790,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/expanderList' };
         };
     });
 })();
-//@ sourceURL=/Common/Panes/expanderList
+//@ sourceURL=tribe:///Common/Panes/expanderList
 TC.scriptEnvironment = { resourcePath: '/Common/graph' };
 (function () {
     TC.registerModel(function (pane) {
@@ -905,7 +905,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
         };
     });
 })();
-//@ sourceURL=/Common/Panes/graph
+//@ sourceURL=tribe:///Common/Panes/graph
 TC.scriptEnvironment = { resourcePath: '/Common/grid' };
 TC = window.TC || {};
 TC.grid = TC.grid || {};
@@ -1129,7 +1129,7 @@ TC.grid = TC.grid || {};
         return filtered ? filtered : source;
     };
 })();
-//@ sourceURL=/Common/Panes/grid
+//@ sourceURL=tribe:///Common/Panes/grid
 TC.scriptEnvironment = { resourcePath: '/Common/tabs' };
 TC.registerModel(function (pane) {
     var self = this;
@@ -1162,14 +1162,14 @@ TC.registerModel(function (pane) {
         });
     }
 });
-//@ sourceURL=/Common/Panes/tabs
+//@ sourceURL=tribe:///Common/Panes/tabs
 
 ko.bindingHandlers.colspan = {
     update: function (element, valueAccessor) {
         $(element).attr('colspan', valueAccessor());
     }
 };
-//@ sourceURL=/Common/Infrastructure/colspanBindingHandler
+//@ sourceURL=tribe:///Common/Infrastructure/colspanBindingHandler
 
 (function(utils) {
     utils.checkHorizontalPosition = function(element, margin) {
@@ -1250,7 +1250,7 @@ ko.bindingHandlers.colspan = {
     };
 })(TC.Utils);
 
-//@ sourceURL=/Common/Infrastructure/elements
+//@ sourceURL=tribe:///Common/Infrastructure/elements
 
 (function() {
     // based on http://stackoverflow.com/questions/979256/how-to-sort-an-array-of-javascript-objects
@@ -1268,7 +1268,7 @@ ko.bindingHandlers.colspan = {
         return this.sort(sortBy(field, reverse, primer));
     };
 })();
-//@ sourceURL=/Common/Infrastructure/sortBy
+//@ sourceURL=tribe:///Common/Infrastructure/sortBy
 
 (function () {
     var utils = TC.Utils;
@@ -1324,7 +1324,7 @@ ko.bindingHandlers.colspan = {
     };
 
 })();
-//@ sourceURL=/Common/Infrastructure/tooltipBindingHandler
+//@ sourceURL=tribe:///Common/Infrastructure/tooltipBindingHandler
 $('head').append('<script type="text/template" id="template--Common-dialog"><div class="dialog borderBlack rounded shadowLarge" data-bind="attr: { id: id }">\n    <div class="closeButton" data-bind="click: closeDialog, visible: showCloseButton"></div>\n    <div class="dialogContent">\n        <div class="dialogHeader"></div>        \n        <div class="dialogPane" data-bind="pane: pane"></div>\n    </div>\n</div>\n<div class="dialog loadingDialog rounded shadow">\n    <h2>Loading...</h2>\n</div>\n<div class="dialogBackgroundFilter"></div></script>\n<script type="text/template" id="template--Common-tabPanel"><div class="tabPanel">\n    <div class="tabButtonContainer">\n        <ul data-bind="foreach: tabs">\n            <!-- ko if: ($parent.loggedOn() ? $data.authenticated !== false : $data.anonymous !== false)  && (!$data.visible || $data.visible()) -->\n            <li class="tabButton" data-bind="cssClass: $data.cssClass, click: $parent.click, tooltip: $data.tooltip ? $data.tooltip : \'\', position: $parent.tooltipPosition">\n                <div class="tabButtonIcon" data-bind="cssClass: $data.icon" />\n                <div class="tabButtonText" data-bind="html: text"></div>   \n            </li>\n            <!-- /ko -->\n        </ul>\n    </div>\n</div>\n</script>\n<script type="text/template" id="template--Common-tooltip"><div class="tooltip">\n    <div class="tooltipArrow"></div>\n    <div class="tooltipContent rounded shadow gradientBlack gradient" data-bind="html: html"></div>\n</div></script>\n<script type="text/template" id="template--Common-contentHeader"><div class="contentHeader roundedTop gradient" data-bind="cssClass: gradientClass">\n    <ul>\n        <li class="heading"><span data-bind="text: text"></span></li>\n        <div data-bind="foreach: buttons">\n            <li class="right button" data-bind="click: click, visible: visible"><a data-bind="text: text"></a></li>\n        </div>\n    </ul>\n</div>\n</script>\n<script type="text/template" id="template--Common-dropDown"><div class="dropDownTrigger roundedSmall borderDark" data-bind="visible: showTrigger">\n    <span data-bind="text: selectedText"></span>\n    <div class="dropDownIcon smallArrowDown"></div>\n</div>\n\n<div class="dropDownPanel rounded subpanel">\n    <!-- ko if: allowCreate -->\n        <div><span>Create new:</span></div>\n        <div class="dropDownNewItem"><input type="text" /></div>\n    <!-- /ko -->\n        \n    <!-- ko if: items() && items().length > 0 -->\n        <div style="clear: left"><span>Select:</span></div>\n        <div style="clear: left" data-bind="foreach: items">\n            <div class="listItem" data-bind="click: $parent.selectItem, css: { selected: $parent.isItemSelected($data) }">\n                <span style="white-space: nowrap" data-bind="html: $parent.displayText($data)"></span>\n                <div style="float: right" />\n            </div>\n        </div>\n    <!-- /ko -->\n</div>\n</script>\n<script type="text/template" id="template--Common-expander"><div class="expander rounded borderLight" data-bind="css: { expanded: expanded }">\n    <div class="expanderHeader gradientGreen roundedTop roundedBottom" data-bind="click: click">        \n        <div class="arrow smallArrowDown"></div>\n        <div class="icon" />\n        <span class="headerText" data-bind="text: headerText"></span>\n        <!--<div class="iconPrint" data-bind="click: print"></div>-->\n    </div>\n    <div class="expanderContent roundedBottom">\n    </div>\n</div></script>\n<script type="text/template" id="template--Common-expanderList"><div class="expanderList" data-bind="foreach: expanders">\n    <div class="expanderContainer" data-bind="pane: \'/Common/expander\', data: $data"></div>\n</div></script>\n<script type="text/template" id="template--Common-graph"><div class="graphSeriesSelect" data-bind="visible: showSeriesSelect, displayText: seriesSelectText, selectField: selectedSeries, items: availableSeries, multipleSelect: true"></div>\n<div class="graphContainer" style="overflow: hidden; clear: left">\n    <div class="graph" style="float: left"></div>\n    <div class="legend" style="float: left"></div>\n</div></script>\n<script type="text/template" id="template--Common-grid"><!-- ko if: filters -->\n<div data-bind="foreach: filters" class="grid-filters">\n    <div data-bind="field: $data" class="grid-filter"></div>\n</div>\n<!-- /ko -->\n<div style="clear: left"></div>\n<div class="gridContainer">\n    <table class="grid" data-bind="if: $data.rows().length > 0">\n        <thead data-bind="visible: showHeader">\n            <!-- ko if: groupings().length > 0 -->\n            <tr class="grid-grouping" data-bind="foreach: groupings">\n                <!-- ko if: grouping == \'\' -->\n                <th data-bind="colspan: columnCount"></th>\n                <!-- /ko -->\n                <!-- ko if: grouping != \'\' -->\n                <th class="grid-grouping-item" data-bind="html: grouping, colspan: columnCount"></th>\n                <!-- /ko -->\n            </tr>\n            <!-- /ko -->\n\n            <tr class="grid-column-list grid-header" data-bind="foreach: headings">\n                <th class="grid-header-item" data-bind="html: $data, click: function (data, event) { $parent.sort($(event.currentTarget).index()); }"></th> \n            </tr>\n        </thead>\n\n        <tbody data-bind="foreach: rows">\n            <tr class="grid-column-list grid-row" data-bind="foreach: $data, click: function () { $parent.rowClick($data); }">\n                <td class="grid-row-item" data-bind="cssClass: cssClass">\n                    <span data-bind="html: $data.display"></span>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>\n<script type="text/template" id="template--Common-tabs"><div class="tabs">\n    <div class="tabList" data-bind="foreach: tabs">\n        <div class="tab gradientGreen" data-bind="text: header, click: $root.select, css: { active: active }"></div>\n    </div>\n    <div class="tabContent" data-bind="html: content"></div>\n</div></script>\n');
 $('<style/>')
     .attr('class', '__tribe')

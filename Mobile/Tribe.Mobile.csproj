@@ -35,14 +35,16 @@
     <Content Include="..\Tribe.js">
       <Link>Dependencies\Tribe.js</Link>
     </Content>
+    <Content Include="Build\Tribe.Mobile.chrome.js" />
     <Content Include="Build\Tribe.Mobile.js" />
     <Content Include="Build\Tribe.Mobile.min.js" />
-    <Content Include="Source\Css\elements.css" />
+    <Content Include="Samples\Basic\navigate.js" />
+    <Content Include="Samples\Basic\navigate.htm" />
     <Content Include="Source\Css\core.css" />
     <Content Include="Source\Css\buttons.css" />
     <Content Include="Source\Css\forms.css" />
     <Content Include="Documentation.txt" />
-    <Content Include="pack.js" />
+    <Content Include="Source\pack.js" />
     <Content Include="Source\Infrastructure\screen.js" />
     <Content Include="Source\Panes\blank.js" />
     <Content Include="Source\Panes\editable.css" />
@@ -70,9 +72,18 @@
     <Content Include="Samples\Basic\layout.js" />
     <Content Include="Samples\Basic\overlay.htm" />
     <Content Include="Source\Infrastructure\click.js" />
+    <Content Include="Source\Transitions\base.css" />
+    <Content Include="Source\Transitions\css.js" />
+    <Content Include="Source\Transitions\slide.css" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Source\Transitions\cube.css" />
+    <Content Include="Source\Transitions\flip.css" />
+    <Content Include="Source\Transitions\pop.css" />
+    <Content Include="Source\Transitions\swap.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

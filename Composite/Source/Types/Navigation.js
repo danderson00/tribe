@@ -7,6 +7,7 @@
     var currentFrame = 0;
 
     this.node = node;
+    this.stack = stack;
 
     this.navigate = function (paneOptions) {
         if (options.browser)
@@ -17,6 +18,10 @@
         currentFrame++;
 
         navigateTo(paneOptions);
+    };
+
+    this.isAtStart = function() {
+        return currentFrame === 0;
     };
 
     this.go = function(frameCount) {

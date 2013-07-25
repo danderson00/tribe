@@ -23,7 +23,10 @@
             return promise;
             
             function removeElement() {
-                remove === false ? $(element).hide() : $(element).remove();
+                if (remove === false) {
+                    $(element).hide().attr('style', '');
+                } else
+                    $(element).remove();
             }
         },
         

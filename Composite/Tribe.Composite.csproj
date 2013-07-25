@@ -35,15 +35,18 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Build\Tribe.Composite.debug.js" />
+    <Content Include="Build\Tribe.Composite.chrome.js" />
     <Content Include="Build\Tribe.Composite.js" />
     <Content Include="Build\Tribe.Composite.min.js" />
+    <Content Include="Libraries\Tribe.PubSub.chrome.js" />
     <Content Include="Libraries\Tribe.PubSub.js" />
+    <Content Include="Libraries\Tribe.PubSub.min.js" />
     <Content Include="Samples\Transitions\index.html" />
     <Content Include="Samples\Transitions\layout.css" />
     <Content Include="Samples\Transitions\layout.htm" />
     <Content Include="Samples\Transitions\target2.htm" />
     <Content Include="Samples\Transitions\target3.htm" />
+    <Content Include="Source\Transitions\Css\slide.css" />
     <Content Include="Source\Types\History.js" />
     <Content Include="Source\Types\Navigation.js" />
     <Content Include="Source\Types\Saga.js" />
@@ -53,11 +56,11 @@
     <Content Include="Source\Utilities\events.js" />
     <Content Include="Source\Utilities\idGenerator.js" />
     <Content Include="Source\Utilities\panes.js" />
-    <Content Include="tests.pack.js" />
+    <Content Include="Tests\pack.js" />
     <Content Include="Libraries\jquery-1.9.1.js" />
     <Content Include="Libraries\knockout-2.2.1.debug.js" />
     <Content Include="Libraries\knockout-2.2.1.js" />
-    <Content Include="source.pack.js" />
+    <Content Include="Source\pack.js" />
     <Content Include="Samples\Transitions\controls.htm" />
     <Content Include="Samples\Transitions\controls.js" />
     <Content Include="Samples\FileBrowser\index.html" />
@@ -76,11 +79,6 @@
     <Content Include="Source\Api\context.js" />
     <Content Include="Source\Transitions\Css\css.js" />
     <Content Include="Source\Transitions\Css\fade.css" />
-    <Content Include="Source\Transitions\Css\cube.css" />
-    <Content Include="Source\Transitions\Css\swap.css" />
-    <Content Include="Source\Transitions\Css\flip.css" />
-    <Content Include="Source\Transitions\Css\slide.css" />
-    <Content Include="Source\Transitions\Css\pop.css" />
     <Content Include="Source\Transitions\Css\pack.js" />
     <Content Include="Source\Transitions\Css\base.css" />
     <Content Include="Source\Transitions\Css\style.css.js" />
@@ -132,7 +130,7 @@
     <Content Include="Tests\Integration\Panes\PubSub\subscriber.js" />
     <Content Include="Tests\Integration\Panes\Tree\12.htm" />
     <Content Include="Tests\Integration\PubSub.tests.js" />
-    <Content Include="Tests\unit.htm" />
+    <Content Include="Tests\unit.html" />
     <Content Include="Tests\Integration\Panes\Events\data.htm" />
     <Content Include="Tests\Integration\Panes\Events\data.js" />
     <Content Include="Tests\Integration\Panes\Transition\pane2.htm" />
@@ -182,6 +180,7 @@
     <Content Include="Tests\Unit\LoadStrategies\adhoc.tests.js" />
     <Content Include="Tests\Unit\Events\renderPane.tests.js" />
     <Content Include="Tests\Unit\LoadStrategies\preloaded.tests.js" />
+    <Content Include="Tests\Unit\Types\History.tests.js" />
     <Content Include="Tests\Unit\Types\Node.findNavigation.tests.js" />
     <Content Include="Tests\Unit\Types\Navigation.tests.js" />
     <Content Include="Tests\Unit\Types\Node.tests.js" />
@@ -192,7 +191,7 @@
     <Content Include="Tests\Unit\LoadHandlers\templates.tests.js" />
     <Content Include="Tests\Unit\LoadHandlers\stylesheets.tests.js" />
     <Content Include="Tests\Unit\LoadHandlers\scripts.tests.js" />
-    <Content Include="Tests\index.htm" />
+    <Content Include="Tests\index.html" />
     <Content Include="Tests\Unit\Types\Models.tests.js" />
     <Content Include="Tests\Unit\Infrastructure\context.js" />
     <Content Include="Tests\Unit\Types\Saga.tests.js" />

@@ -1,7 +1,7 @@
 ﻿Samples = window.Samples || {};
-Samples['<%=name%>'] = Samples['<%=name%>'] || [];
-Samples['<%=name%>'].push({
+Samples['<%=data.name%>'] = Samples['<%=data.name%>'] || [];
+Samples['<%=data.name%>'].push({
     filename: '<%=pathRelativeToInclude%>',
     icon: 'Images/icon.<%=pathRelativeToInclude.extension()%>.png',
-    content: '<pre class="prettyprint"><%=embedString(content).replace(/\</g, "&lt;")%></pre>'
+    content: '<pre class="prettyprint"><%=T.embedString(content).replace(/\</g, "&lt;")%></pre>'
 });

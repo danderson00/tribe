@@ -1,8 +1,2 @@
-﻿<div class="main" data-bind="css: { showLeftPanel: showLeftPanel }">
-    <div class="mainPanel">
-        <div data-bind="pane: { path: 'content', data: { section: 'About', topic: 'index' }, handlesNavigation: { transition: 'fade', browser: articleUrlProvider } }"></div>
-    </div>
-    <div class="leftPanel">
-        <div data-bind="pane: 'navigation'"></div>
-    </div>
-</div>
+﻿<div data-bind="pane: 'navigation'"></div>
+<div data-bind="pane: { path: 'content', data: { section: 'About', topic: 'index' }, handlesNavigation: { transition: 'fade', browser: articleUrlProvider } }"></div>

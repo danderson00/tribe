@@ -56,7 +56,10 @@ Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
         }
     };
 
-    this.leaveChannel = function(id) {
-        hub.server.leaveChannel(id);
+    this.leaveChannel = function (id) {
+        if (startConnection)
+            $.when(startConnection).done(function() {
+                hub.server.leaveChannel(id);
+            });
     };
 };

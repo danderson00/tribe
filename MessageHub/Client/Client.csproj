@@ -35,16 +35,19 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Build\Tribe.MessageHub.chrome.js" />
     <Content Include="Build\Tribe.MessageHub.js" />
+    <Content Include="Build\Tribe.MessageHub.min.js" />
     <Content Include="Source\Client.js" />
     <Content Include="Source\initialise.js" />
-    <Content Include="pack.js" />
+    <Content Include="Source\pack.js" />
     <Content Include="Source\Publisher.js" />
     <Content Include="Source\PubSub.extensions.js" />
     <Content Include="Tests\Client.tests.js" />
+    <Content Include="Tests\pack.js" />
     <Content Include="Tests\Publisher.tests.js" />
     <Content Include="Tests\Resources\helpers.js" />
-    <Content Include="Tests\index.htm" />
+    <Content Include="Tests\index.html" />
     <Content Include="Tests\Resources\jquery.js" />
     <Content Include="Tests\Resources\qunit.css" />
     <Content Include="Tests\Resources\qunit.js" />
