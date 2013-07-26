@@ -17,9 +17,9 @@
         }
 
         function resolve() {
-            promise.resolve();
             $(element).off('destroyed', resolve);
             $(document).off('DOMNodeRemoved', matchElement);
+            promise.resolve();
         }
 
         return promise;

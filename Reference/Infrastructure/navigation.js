@@ -5,15 +5,15 @@
     Guides: {
         'Guides': {
             'Features': 'features',
-            'Getting Started': 'gettingStarted'
+            'Getting Started': 'gettingStarted',
+            'Webmail Tutorial': 'webmail'
         }
     },
     Reference: {
-        'API': {
+        'Core': {
             'Panes': 'panes',
             'Global Options': 'options',
-            'Core': 'core',
-            'Utilities': 'utilities'
+            'API': 'api'
         },
         'Types': {
             'History': 'History',
@@ -26,6 +26,15 @@
             'Pipeline': 'Pipeline',
             'Saga': 'Saga',
             'Templates': 'Templates'
+        },
+        'Utilities': {
+            'Panes': 'panes',
+            'Paths': 'paths',
+            'Events': 'events',
+            'Embedded State': 'embeddedState',
+            'Objects': 'objects',
+            'Collections': 'collections',
+            'Miscellaneous': 'misc'
         },
         'PubSub': {
             'Core': 'core',

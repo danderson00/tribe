@@ -377,9 +377,9 @@ TC.options = TC.defaultOptions();(function () {
         }
 
         function resolve() {
-            promise.resolve();
             $(element).off('destroyed', resolve);
             $(document).off('DOMNodeRemoved', matchElement);
+            promise.resolve();
         }
 
         return promise;
@@ -896,8 +896,10 @@ TC.Types.Node.prototype.dispose = function() {
     if (this.parent)
         TC.Utils.removeItem(this.parent.children, this);
 
-    if (this.pane && this.pane.dispose)
+    if (this.pane && this.pane.dispose) {
+        delete this.pane.node;
         this.pane.dispose();
+    }
 };// Encapsulates an operation involving several child operations, keyed by an id
 // Child operations can be added cumulatively
 // Promise resolves when the all child operations complete
@@ -940,9 +942,8 @@ TC.Types.Pane.prototype.dispose = function () {
         this.model.dispose();
 
     if (this.node) {
-        var node = this.node;
-        delete this.node;
-        node.dispose();
+        delete this.node.pane;
+        this.node.dispose();
     }
 
     if (this.element)
@@ -1427,7 +1428,7 @@ $('<style/>')
         context.models.register(path, constructor, options);
     };
 
-    TC.initialise = function(preload, model) {
+    TC.run = function(preload, model) {
         if (preload) {
             var promises = [];
             var context = TC.context();

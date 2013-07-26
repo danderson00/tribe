@@ -2,21 +2,22 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Tribe</title>
-        <script type="text/javascript" src="Libraries/jquery-1.9.1.min.js"></script>
-        <script type="text/javascript" src="Libraries/jquery.signalR-1.1.2.min.js"></script>
-        <script type="text/javascript" src="Libraries/knockout-2.3.0.js"></script>
-        <script type="text/javascript" src="Libraries/Tribe.min.js"></script>
-        <script type="text/javascript" src="Libraries/Tribe.Mobile.min.js"></script>
+        <script type="text/javascript" src="Libraries/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="Libraries/jquery.signalR-1.1.2.js"></script>
+        <script type="text/javascript" src="Libraries/knockout-2.3.0.debug.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.chrome.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.Mobile.chrome.js"></script>
         
-        <script type="text/javascript" src="Libraries/prettify.min.js"></script>
-        <link rel="stylesheet" href="Libraries/prettify.min.css" />
+        <script type="text/javascript" src="Libraries/prettify.js"></script>
+        <link rel="stylesheet" href="Libraries/prettify.css" />
         
-        <script type="text/javascript" src="Build/site.min.js"></script>
+        <script type="text/javascript" src="Build/site.chrome.js"></script>
 
         <script type="text/javascript">
             $(function () {
+                TC.options.handleExceptions = false;
                 TC.transition.mode = 'absolute';
-                TC.initialise();
+                TC.run();
             });
         </script>
     </head>

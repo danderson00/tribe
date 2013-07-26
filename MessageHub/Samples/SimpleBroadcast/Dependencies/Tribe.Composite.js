@@ -1137,7 +1137,7 @@ $('<style/>')
         context.models.register(path, constructor, options);
     };
 
-    TC.initialise = function(preload, model) {
+    TC.run = function(preload, model) {
         if (preload) {
             var promises = [];
             var context = TC.context();

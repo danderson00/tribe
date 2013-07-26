@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Tribe</title>
+        <script type="text/javascript" src="Libraries/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="Libraries/jquery.signalR-1.1.2.min.js"></script>
+        <script type="text/javascript" src="Libraries/knockout-2.3.0.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.min.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.Mobile.min.js"></script>
+        
+        <script type="text/javascript" src="Libraries/prettify.min.js"></script>
+        <link rel="stylesheet" href="Libraries/prettify.min.css" />
+        
+        <script type="text/javascript" src="Build/site.min.js"></script>
+
+        <script type="text/javascript">
+            $(function () {
+                TC.transition.mode = 'absolute';
+                TC.run();
+            });
+        </script>
+    </head>
+    <body data-bind="pane: 'Interface/layout'">
+    </body>
+</html>

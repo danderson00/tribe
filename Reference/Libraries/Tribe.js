@@ -330,31 +330,7 @@ TC.options = TC.defaultOptions();(function () {
         });
         return result;
     };
-})(TC.Utils);TC.Utils.elementDestroyed = function (element) {
-    if (element.constructor === jQuery)
-        element = element[0];
-    
-    var promise = $.Deferred();
-
-    // Resolve when an element is removed using jQuery. This is a fallback for browsers not supporting DOMNodeRemoved and also executes synchronously.
-    $(element).on('destroyed', resolve);
-
-    // Resolve using the DOMNodeRemoved event. Not all browsers support this.
-    $(document).on("DOMNodeRemoved", matchElement);
-
-    function matchElement(event) {
-        if (event.target === element)
-            resolve();
-    }
-
-    function resolve() {
-        promise.resolve();
-        $(element).off('destroyed', resolve);
-        $(document).off('DOMNodeRemoved', matchElement);
-    }
-
-    return promise;
-};(function() {
+})(TC.Utils);(function() {
     TC.Utils.embedState = function (model, context, node) {
         embedProperty(model, 'context', context);
         embedProperty(model, 'node', node);
@@ -383,6 +359,32 @@ TC.options = TC.defaultOptions();(function () {
     }
 })();
 (function () {
+    TC.Utils.elementDestroyed = function (element) {
+        if (element.constructor === jQuery)
+            element = element[0];
+
+        var promise = $.Deferred();
+
+        // Resolve when an element is removed using jQuery. This is a fallback for browsers not supporting DOMNodeRemoved and also executes synchronously.
+        $(element).on('destroyed', resolve);
+
+        // Resolve using the DOMNodeRemoved event. Not all browsers support this.
+        $(document).on("DOMNodeRemoved", matchElement);
+
+        function matchElement(event) {
+            if (event.target === element)
+                resolve();
+        }
+
+        function resolve() {
+            $(element).off('destroyed', resolve);
+            $(document).off('DOMNodeRemoved', matchElement);
+            promise.resolve();
+        }
+
+        return promise;
+    };
+
     TC.Utils.raiseDocumentEvent = function (name, data) {
         var event = document.createEvent("Event");
         event.initEvent(name, true, false);
@@ -894,8 +896,10 @@ TC.Types.Node.prototype.dispose = function() {
     if (this.parent)
         TC.Utils.removeItem(this.parent.children, this);
 
-    if (this.pane && this.pane.dispose)
+    if (this.pane && this.pane.dispose) {
+        delete this.pane.node;
         this.pane.dispose();
+    }
 };// Encapsulates an operation involving several child operations, keyed by an id
 // Child operations can be added cumulatively
 // Promise resolves when the all child operations complete
@@ -938,9 +942,8 @@ TC.Types.Pane.prototype.dispose = function () {
         this.model.dispose();
 
     if (this.node) {
-        var node = this.node;
-        delete this.node;
-        node.dispose();
+        delete this.node.pane;
+        this.node.dispose();
     }
 
     if (this.element)
@@ -1425,7 +1428,7 @@ $('<style/>')
         context.models.register(path, constructor, options);
     };
 
-    TC.initialise = function(preload, model) {
+    TC.run = function(preload, model) {
         if (preload) {
             var promises = [];
             var context = TC.context();

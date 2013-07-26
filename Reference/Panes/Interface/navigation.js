@@ -21,6 +21,8 @@
         pane.pubsub.publish('article.show', { section: currentSection, topic: item.topic });
     };
 
+    // it would be nice to use the article.show message for this,
+    // but that won't work with browser back and forward buttons
     window.addEventListener('navigating', navigating);
     function navigating(e) {
         var data = e.data.options.data || {};

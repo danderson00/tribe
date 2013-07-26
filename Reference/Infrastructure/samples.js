@@ -93,7 +93,7 @@ Samples['Chat'] = Samples['Chat'] || [];
 Samples['Chat'].push({
     filename: 'sender.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;div class="chat">\n    &lt;div>\n        Name: &lt;input data-bind="value: name" />    \n    &lt;/div>\n\n    &lt;div>\n        &lt;input data-bind="value: message" />\n        &lt;button data-bind="click: send">Send&lt;/button>\n    &lt;/div>\n&lt;/div></pre>'
+    content: '<pre class="prettyprint">&lt;div class="chat">\n    &lt;div>\n        Name: &lt;input data-bind="value: name" />    \n    &lt;/div>\n\n    &lt;div>\n        Message: &lt;input data-bind="value: message" />\n        &lt;button data-bind="click: send">Send&lt;/button>\n    &lt;/div>\n&lt;/div></pre>'
 });Samples = window.Samples || {};
 Samples['Chat'] = Samples['Chat'] || [];
 Samples['Chat'].push({
@@ -105,7 +105,7 @@ Samples['Mobile'] = Samples['Mobile'] || [];
 Samples['Mobile'].push({
     filename: 'chat.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;!-- Remember our chat pane from the previous example? -->\n&lt;ul class="rounded" data-bind="pane: \'../Chat/chat\'">\n&lt;/ul></pre>'
+    content: '<pre class="prettyprint">&lt;!-- Let\'s reuse our panes from the previous example -->\n&lt;ul class="rounded">\n    &lt;li data-bind="pane: \'../Chat/sender\'">&lt;/li>\n    &lt;li data-bind="pane: \'../Chat/messages\'">&lt;/li>\n&lt;/ul></pre>'
 });Samples = window.Samples || {};
 Samples['Mobile'] = Samples['Mobile'] || [];
 Samples['Mobile'].push({

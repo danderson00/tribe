@@ -21,9 +21,8 @@ TC.Types.Pane.prototype.dispose = function () {
         this.model.dispose();
 
     if (this.node) {
-        var node = this.node;
-        delete this.node;
-        node.dispose();
+        delete this.node.pane;
+        this.node.dispose();
     }
 
     if (this.element)

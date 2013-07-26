@@ -69,6 +69,8 @@ TC.Types.Node.prototype.dispose = function() {
     if (this.parent)
         TC.Utils.removeItem(this.parent.children, this);
 
-    if (this.pane && this.pane.dispose)
+    if (this.pane && this.pane.dispose) {
+        delete this.pane.node;
         this.pane.dispose();
+    }
 };

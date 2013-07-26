@@ -114,7 +114,7 @@
     <Content Include="Build\site.js" />
     <Content Include="Build\site.min.js" />
     <Content Include="m.html" />
-    <Content Include="debug.html" />
+    <Content Include="index.html" />
     <Content Include="Global.asax" />
     <Content Include="Images\device.mobile.png" />
     <Content Include="Images\Features\communication.png" />
@@ -133,7 +133,7 @@
     <Content Include="Images\knockout\refresh.png" />
     <Content Include="Images\knockout\templating.png" />
     <Content Include="Images\logo.png" />
-    <Content Include="index.html" />
+    <Content Include="release.html" />
     <Content Include="Infrastructure\articleUrlProvider.js" />
     <Content Include="Infrastructure\Navigation.js" />
     <Content Include="Infrastructure\Article.js" />
@@ -176,20 +176,15 @@
     <Content Include="Panes\Content\About\knockout.htm" />
     <Content Include="Panes\Content\About\masthead.css" />
     <Content Include="Panes\Content\About\masthead.htm" />
-    <Content Include="Panes\Content\Guides\getStarted.htm" />
-    <Content Include="Panes\Content\Guides\features.htm" />
-    <Content Include="Panes\Content\Guides\index.htm" />
-    <Content Include="Panes\Content\Reference\API\bindingHandlers.htm" />
+    <Content Include="Panes\Content\Guides\Guides\getStarted.htm" />
+    <Content Include="Panes\Content\Guides\Guides\features.htm" />
+    <Content Include="Panes\Content\Guides\Guides\index.htm" />
+    <Content Include="Panes\Content\Reference\API\options.htm" />
+    <Content Include="Panes\Content\Reference\API\panes.htm" />
     <Content Include="Panes\Content\Reference\API\utilities.htm" />
     <Content Include="Panes\Content\Reference\API\core.htm" />
-    <Content Include="Panes\Content\Reference\Components\index.htm" />
-    <Content Include="Panes\Content\Reference\Types\index.htm" />
     <Content Include="Panes\Content\Reference\API\index.htm" />
-    <Content Include="Panes\Content\Reference\Forms\index.htm" />
-    <Content Include="Panes\Content\Reference\index.htm" />
-    <Content Include="Panes\Content\Reference\MessageHub\index.htm" />
-    <Content Include="Panes\Content\Reference\Mobile\index.htm" />
-    <Content Include="Panes\Content\Reference\PubSub\index.htm" />
+    <Content Include="Panes\Interface\content.css" />
     <Content Include="Panes\Interface\content.htm" />
     <Content Include="Panes\Interface\content.js" />
     <Content Include="Panes\Interface\footer.css" />
@@ -208,6 +203,7 @@
     <Content Include="Panes\Interface\sample.htm" />
     <Content Include="Panes\Interface\sample.js" />
     <Content Include="Panes\Samples\Chat\chat.js" />
+    <Content Include="Panes\Samples\Chat\index.html" />
     <Content Include="Panes\Samples\Chat\sender.htm" />
     <Content Include="Panes\Samples\Chat\sender.js" />
     <Content Include="Panes\Samples\Chat\chat.htm" />
@@ -252,7 +248,14 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Panes\Content\Reference\Components\" />
+    <Folder Include="Panes\Content\Reference\Forms\" />
+    <Folder Include="Panes\Content\Reference\MessageHub\" />
+    <Folder Include="Panes\Content\Reference\Mobile\" />
+    <Folder Include="Panes\Content\Reference\PubSub\" />
+    <Folder Include="Panes\Content\Reference\Types\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
