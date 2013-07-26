@@ -2,22 +2,23 @@
     <div class="blockHeader">Show Me!</div>
     
     <p>
-        Tribe allows you to easily break your UI down into "panes" 
-        and communicate between these panes using a publish / subscribe message bus.
+        Tribe allows you to easily break your UI down into "panes" that can consist 
+        of a JavaScript model, a HTML template and CSS stylesheet. 
     </p>
     <p>
-        Each pane can consist of a JavaScript model, a HTML template and CSS stylesheet. 
-        Simply create these files and refer to the pane by name. 
-    </p>
-    <p>
-        Tribe does the rest - loads
-        the resources, renders the template and binds an instance of the model to it.
+        Simply create these files and refer to the pane by name. Tribe does the rest - loads
+        the resources, renders the template and binds an instance of the model to it. 
+        No complex configuration required.
     </p>
 
     <div data-bind="pane: '/Interface/sample', data: { name: 'Tasks', initialFile: 'layout.htm' }"></div>
     
     <p>
-        This is, of course, pretty trivial. Check out the samples or the source to
-        this site
+        This is pretty trivial example. You can check out the <a href="" target="_blank">source</a> 
+        to this site or the <a href="" target="_blank">samples</a>. 
+    </p>
+    <p>
+        If you're using Chrome, head over to the <a href="debug.html">debug version</a> of the site 
+        and look at the source in the developer tools.
     </p>
 </div>

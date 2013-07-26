@@ -30,18 +30,18 @@
     });
 
     test("pane changes when node is transitioned", function () {
-        TC.transition(TC.Utils.nodeFor('.11')).to('12');
+        TC.transition(TC.nodeFor('.11')).to('12');
         equal(root.children[0].pane.path, '/Tree/12');
     });
 
     test("child nodes are removed when transitioned", function () {
-        TC.transition(TC.Utils.nodeFor('.11')).to('12');
+        TC.transition(TC.nodeFor('.11')).to('12');
         equal(root.children[0].children.length, 0);
     });
 
     test("node is not replaced when transitioned", function() {
         var node = root.children[0];
-        TC.transition(TC.Utils.nodeFor('.11')).to('12');
+        TC.transition(TC.nodeFor('.11')).to('12');
         equal(root.children[0], node);
     });
 

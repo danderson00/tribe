@@ -16,4 +16,5 @@
     margin-top: 20px;
     display: inline-block;
     width: 250px;
+    font: inherit;
 }

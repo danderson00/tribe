@@ -2,12 +2,13 @@
     <div class="background"></div>
     
     <div class="content">
+        <div class="logo" data-bind="click: Article.show('About', 'index')">tribe</div>
         <div class="buttons">
-            <span data-bind="click: showSection('About')">About</span>
-            <span data-bind="click: showSection('Guides')">Guides</span>
-            <span data-bind="click: showSection('Reference')">Reference</span>
+            <span data-bind="click: Article.show('Guides', 'getStarted')">Get Started</span>
+            <span data-bind="click: Article.show('Guides', 'index')">Guides</span>
+            <span data-bind="click: Article.show('Reference', 'index')">Reference</span>
+            <span data-bind="click: Article.show('About', 'index')">Tests</span>
             <span data-bind="click: source">Source</span>
-            <span>Fork Us!</span>
         </div>
     </div>
 </div>

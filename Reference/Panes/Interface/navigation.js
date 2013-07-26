@@ -6,10 +6,9 @@
     this.selectedItem = ko.observable();
     this.items = ko.observableArray();
 
-    this.showArticleIndex = function (item) {
+    this.showSection = function (item) {
         self.selectedParent(item);
         self.selectedItem(item);
-        pane.pubsub.publish('article.show', { section: currentSection, topic: item.topic });
     };
 
     this.showArticle = function(item) {

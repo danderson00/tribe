@@ -214,7 +214,7 @@ TC.registerModel(function (pane) {
         element = $(pane.element).find('.overlay').show();
         TC.transition(element, data.transition || 'slideDown').in();
 
-        TC.Utils.nodeFor(element.children()).pane.remove = close;
+        TC.nodeFor(element.children()).pane.remove = close;
     };
 
     function close() {

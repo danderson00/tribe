@@ -6,7 +6,7 @@
     test("transitioning node replaces pane with specified pane", function () {
         TC.createNode('.test', { path: 'Transition/pane1' });
         equal($('.pane1').length, 1);
-        TC.transition(TC.Utils.nodeFor('.pane1')).to('Transition/pane2');
+        TC.transition(TC.nodeFor('.pane1')).to('Transition/pane2');
         equal($('.pane1').length, 0);
         equal($('.pane2').length, 1);
     });
@@ -26,7 +26,7 @@
 
     test("specifying reverse argument applies reverse transition", function () {
         TC.createNode('.test', { path: 'Transition/pane1', transition: 'slideLeft', reverseTransitionIn: true });
-        TC.transition(TC.Utils.nodeFor('.pane1'), null, true).to('Transition/pane2');
+        TC.transition(TC.nodeFor('.pane1'), null, true).to('Transition/pane2');
         ok($('.pane1').parent().hasClass('slideRight'));
         ok($('.pane2').parent().hasClass('slideRight'));
     });

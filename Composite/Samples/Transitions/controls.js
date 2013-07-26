@@ -5,6 +5,6 @@
 
     this.execute = function () {
         target = target % 3 + 1;
-        TC.transition(TC.Utils.nodeFor('.target'), self.transition()).to('target' + target);
+        TC.transition(TC.nodeFor('.target'), self.transition()).to('target' + target);
     };
 });

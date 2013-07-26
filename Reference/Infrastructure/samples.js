@@ -97,6 +97,12 @@ Samples['Chat'].push({
 });Samples = window.Samples || {};
 Samples['Mobile'] = Samples['Mobile'] || [];
 Samples['Mobile'].push({
+    filename: 'chat.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;!-- Remember our chat pane from the previous example? -->\n&lt;ul class="rounded" data-bind="pane: \'../Chat/chat\'">\n&lt;/ul></pre>'
+});Samples = window.Samples || {};
+Samples['Mobile'] = Samples['Mobile'] || [];
+Samples['Mobile'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
     content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n  &lt;head>\n    &lt;title>Tribe Mobile&lt;/title>\n    &lt;meta name="viewport" \n      content="minimum-scale=1.0, width=device-width, \n               maximum-scale=1.0, user-scalable=no" />\n\n    &lt;script src="jquery.js">&lt;/script>\n    &lt;script src="knockout.js">&lt;/script>\n    &lt;script src="Tribe.js">&lt;/script>\n    &lt;script src="Tribe.Mobile.js">&lt;/script>\n        \n    &lt;script type="text/javascript">\n      $(ko.applyBindings);\n    &lt;/script>\n  &lt;/head>\n  &lt;body data-bind="pane: \'/Mobile/main\',\n                   data: { pane: \'welcome\' }">\n  &lt;/body>\n&lt;/html></pre>'
@@ -115,19 +121,25 @@ Samples['Mobile'].push({
 });Samples = window.Samples || {};
 Samples['Mobile'] = Samples['Mobile'] || [];
 Samples['Mobile'].push({
-    filename: 'navigate.htm',
-    icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;ul class="rounded">This is the pane you navigated to&lt;/ul></pre>'
-});Samples = window.Samples || {};
-Samples['Mobile'] = Samples['Mobile'] || [];
-Samples['Mobile'].push({
-    filename: 'navigate.js',
-    icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    TC.toolbar.title(\'Navigate!\');\n    TC.toolbar.back(true);\n});</pre>'
-});Samples = window.Samples || {};
-Samples['Mobile'] = Samples['Mobile'] || [];
-Samples['Mobile'].push({
     filename: 'overlay.htm',
     icon: 'Images/icon.htm.png',
     content: '<pre class="prettyprint">&lt;ul>\n    &lt;li>One&lt;/li>\n    &lt;li>Two&lt;/li>\n    &lt;li>Three&lt;/li>\n    &lt;li>Four&lt;/li>\n&lt;/ul>\n\n&lt;button class="white" data-bind="click: function() { pane.remove(); }">Close&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['Mobile'] = Samples['Mobile'] || [];
+Samples['Mobile'].push({
+    filename: 'welcome.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">ul.welcome li {\n    background: #103070;\n    color: white;\n    text-align: center;\n    text-shadow: 3px 3px 0 black, 5px 5px 5px rgba(0, 0, 0, 0.5);\n    font: bold 64pt \'Cambria\';\n}</pre>'
+});Samples = window.Samples || {};
+Samples['Mobile'] = Samples['Mobile'] || [];
+Samples['Mobile'].push({
+    filename: 'welcome.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;ul class="rounded welcome">\n    &lt;li>tribe&lt;/li>\n&lt;/ul>\n&lt;ul class="rounded">\n    &lt;li data-bind="click: samples">Samples&lt;/li>\n&lt;/ul>\n&lt;ul class="rounded">\n    &lt;li data-bind="click: chat">Chat&lt;/li>\n&lt;/ul></pre>'
+});Samples = window.Samples || {};
+Samples['Mobile'] = Samples['Mobile'] || [];
+Samples['Mobile'].push({
+    filename: 'welcome.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    TC.toolbar.defaults.back = true;\n\n    this.samples = function() {\n        pane.navigate(\'layout\');\n    };\n\n    this.chat = function () {\n        pane.navigate(\'chat\');\n    };\n});</pre>'
 });

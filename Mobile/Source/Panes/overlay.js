@@ -5,14 +5,14 @@
     this.pane = data.pane;
 
     pane.node.nodeForPath = function() {
-        return TC.Utils.nodeFor('.TM').children[1];
+        return TC.nodeFor('.TM').children[1];
     };
     
     this.renderComplete = function () {
         element = $(pane.element).find('.overlay').show();
         TC.transition(element, data.transition || 'slideDown').in();
 
-        TC.Utils.nodeFor(element.children()).pane.remove = close;
+        TC.nodeFor(element.children()).pane.remove = close;
     };
 
     function close() {

@@ -259,14 +259,14 @@ TC.registerModel(function (pane) {
     this.pane = data.pane;
 
     pane.node.nodeForPath = function() {
-        return TC.Utils.nodeFor('.TM').children[1];
+        return TC.nodeFor('.TM').children[1];
     };
     
     this.renderComplete = function () {
         element = $(pane.element).find('.overlay').show();
         TC.transition(element, data.transition || 'slideDown').in();
 
-        TC.Utils.nodeFor(element.children()).pane.remove = close;
+        TC.nodeFor(element.children()).pane.remove = close;
     };
 
     function close() {
@@ -314,12 +314,17 @@ TC.registerModel(function (pane) {
         TC.appendNode(pane.element, { path: 'options', data: { options: pane.data.options || TC.toolbar.options() } });
     };
 
-    document.addEventListener('renderComplete', function() {
+    function renderComplete() {
         var defaults = TC.toolbar.defaults;
         TC.toolbar.title(defaults.title);
         TC.toolbar.options(defaults.options);
         TC.toolbar.back(defaults.back && !pane.node.findNavigation().isAtStart());
         TC.toolbar.visible(defaults.visible);
-    });
+    }
+    
+    document.addEventListener('renderComplete', renderComplete);
+    this.dispose = function() {
+        document.removeEventListener('renderComplete', renderComplete);
+    };
 });
 //@ sourceURL=tribe://Tribe.Mobile/Panes/toolbar.js

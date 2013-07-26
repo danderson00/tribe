@@ -1,13 +1,17 @@
 ﻿.features {
     text-align: center;
-    font-family: Arial;
     color: #081735;
+    font-size: 18px;
+}
+
+.features.small {
+    font-size: inherit;
 }
 
 .features > * {
     vertical-align: top;
     display: inline-block;
-    width: 188px;
+    width: 180px;
 }
 
 .features.small > * {
@@ -15,8 +19,10 @@
 }
 
 .features strong {
+    font-size: 1.1em;
     height: 50px;
     color: #701010;
+    padding-bottom: 10px;
 }
 
 .features > * * {

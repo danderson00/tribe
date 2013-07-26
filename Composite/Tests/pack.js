@@ -18,15 +18,23 @@ var infrastructureIncludes = [
 
 pack({
     to: 'tests.js',
-    include: ['setup.js'].concat(infrastructureIncludes, unitTestIncludes, integrationTestIncludes),
+    include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes],// T.panes.chrome('Integration/Panes')],
     recursive: true,
     prioritise: 'setup.js',
     template: T.chromeScript('Tests')
 });
 
 pack({
+    to: 'tests.min.js',
+    include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes], //T.panes('Integration/Panes')],
+    recursive: true,
+    prioritise: 'setup.js',
+    minify: true
+});
+
+pack({
     to: 'tests.unit.js',
-    include: ['setup.js'].concat(infrastructureIncludes, unitTestIncludes),
+    include: ['setup.js', infrastructureIncludes, unitTestIncludes],
     recursive: true,
     prioritise: 'setup.js',
     template: T.chromeScript('Tests')

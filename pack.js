@@ -1,16 +1,15 @@
 pack({
-    to: 'Tribe.js',
+    to: 'Build/Tribe.js',
     include: includes()
-
 }); 
 
 pack({
-    to: 'Tribe.min.js',
+    to: 'Build/Tribe.min.js',
     include: includes('.min')
 });
 
 pack({
-    to: 'Tribe.chrome.js',
+    to: 'Build/Tribe.chrome.js',
     include: includes('.chrome')
 });
 

@@ -13,7 +13,7 @@
 
 //    test("History sets window state when navigating", function () {
 //        TC.createNode('.test', { path: 'History/layout' });
-//        TC.Utils.nodeFor('.content1').navigate('content2');
+//        TC.nodeFor('.content1').navigate('content2');
 //        var options = JSON.parse(window.history.state.options);
 //        equal(options.path, '/History/content2');
 //    });
@@ -22,7 +22,7 @@
 //    asyncTest("History transitions navigation node to previous state when back is called", function () {
 //        expect(2);
 //        TC.createNode('.test', { path: '/History/layout' });
-//        TC.Utils.nodeFor('.content1').navigate('content2');
+//        TC.nodeFor('.content1').navigate('content2');
 //        window.history.back();
 //        setTimeout(function() {
 //            equal($('.content2').length, 0);
@@ -34,7 +34,7 @@
 //    asyncTest("History transitions navigation node to next state when forward is called", function () {
 //        expect(2);
 //        TC.createNode('.test', { path: '/History/layout' });
-//        TC.Utils.nodeFor('.content1').navigate('content2');
+//        TC.nodeFor('.content1').navigate('content2');
 //        window.history.back();
 //        setTimeout(function () {
 //            window.history.forward();
@@ -53,7 +53,7 @@
 //            equal(data.options.data, 'test');
 //        });
 //        TC.createNode('.test', { path: 'Navigate/layout' });
-//        TC.Utils.nodeFor('.content1').navigate({ path: 'content2', data: 'test' });
+//        TC.nodeFor('.content1').navigate({ path: 'content2', data: 'test' });
 //        $(document).off('navigating');
 //    });
 //})();

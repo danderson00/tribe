@@ -12,10 +12,6 @@
         return koBindingContext && embeddedProperty(koBindingContext.$root, 'context');
     };
 
-    TC.Utils.nodeFor = function (element) {
-        return element && TC.Utils.extractNode(ko.contextFor($(element)[0]));
-    };
-
     TC.Utils.extractNode = function (koBindingContext) {
         return koBindingContext && embeddedProperty(koBindingContext.$root, 'node');
     };

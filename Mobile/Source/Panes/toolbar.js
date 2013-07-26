@@ -21,11 +21,16 @@ TC.registerModel(function (pane) {
         TC.appendNode(pane.element, { path: 'options', data: { options: pane.data.options || TC.toolbar.options() } });
     };
 
-    document.addEventListener('renderComplete', function() {
+    function renderComplete() {
         var defaults = TC.toolbar.defaults;
         TC.toolbar.title(defaults.title);
         TC.toolbar.options(defaults.options);
         TC.toolbar.back(defaults.back && !pane.node.findNavigation().isAtStart());
         TC.toolbar.visible(defaults.visible);
-    });
+    }
+    
+    document.addEventListener('renderComplete', renderComplete);
+    this.dispose = function() {
+        document.removeEventListener('renderComplete', renderComplete);
+    };
 });

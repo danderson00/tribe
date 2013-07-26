@@ -13,6 +13,11 @@
     margin-left: -490px !important;
 }
 
+.logo {
+    font-weight: bold;
+    font-family: 'Cambria';
+}
+
 .block {
     background: white;
     border: 1px solid #AAA;
@@ -24,7 +29,7 @@
 
 .block p {
     margin: 10px 20px;
-    font-size: 14pt;
+    font-size: 18px;
 }
 
 /* Without this, stuff flops around on transitioning. I don't get it either... */
@@ -60,11 +65,6 @@ h1, h2, h3 {
     padding: 10px;
 }
 
-.paddedVertical {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
 .underline {
     text-decoration: underline;
 }
@@ -76,7 +76,7 @@ h1, h2, h3 {
 a, a:active, a:visited, a:link {
     text-decoration: none;
     cursor: pointer;
-    color: #103070;
+    color: #1b50ba;
 }
 
 a:hover {

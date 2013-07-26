@@ -35,6 +35,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="Build\Tribe.Composite.chrome.js" />
     <Content Include="Build\Tribe.Composite.js" />
     <Content Include="Build\Tribe.Composite.min.js" />
@@ -130,6 +131,9 @@
     <Content Include="Tests\Integration\Panes\PubSub\subscriber.js" />
     <Content Include="Tests\Integration\Panes\Tree\12.htm" />
     <Content Include="Tests\Integration\PubSub.tests.js" />
+    <Content Include="Tests\tests.js" />
+    <Content Include="Tests\tests.min.js" />
+    <Content Include="Tests\tests.unit.js" />
     <Content Include="Tests\unit.html" />
     <Content Include="Tests\Integration\Panes\Events\data.htm" />
     <Content Include="Tests\Integration\Panes\Events\data.js" />
@@ -220,7 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <Content Include="Tests\Integration\Panes\Paths.tests.js" />
+    <Content Include="Tests\Integration\Paths.tests.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

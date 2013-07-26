@@ -1,4 +1,7 @@
 ﻿Navigation = {
+    isHome: function(article) {
+        return article && article.section === 'About' && article.topic === 'index';
+    },
     Components: {
         'Composite': {
             'Panes': 'panes',
@@ -16,8 +19,8 @@
     },
     Reference: {
         'API': {
+            'Binding Handler': 'bindingHandler',
             'Core': 'core',
-            'Binding Handlers': 'bindingHandlers',
             'Utilities': 'utilities'
         },
         'Types': {

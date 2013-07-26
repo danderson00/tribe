@@ -1,6 +1,6 @@
 ﻿<div class="navigation">
     <ul data-bind="foreach: items">
-        <li data-bind="click: $root.showArticleIndex, css: { selectedItem: $data === $root.selectedItem() }">
+        <li data-bind="click: $root.showSection, css: { selectedItem: $data === $root.selectedItem() }">
             <span data-bind="text: $data.displayText"></span>
         </li>
         <ul data-bind="visible: $data === $root.selectedParent(), foreach: $data.items">
