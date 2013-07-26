@@ -2,24 +2,16 @@
     isHome: function(article) {
         return article && article.section === 'About' && article.topic === 'index';
     },
-    Components: {
-        'Composite': {
-            'Panes': 'panes',
-            'Navigation': 'navigation',
-            'Transitions': 'transitions',
-            'Lifecycle': 'lifecycle',
-            'Sagas': 'sagas',
-            'Testing': 'testing'
-        },
-        'PubSub': {},
-        'MessageHub': {},
-        'Mobile': {},
-        'Forms': {},
-        'Components': {},
+    Guides: {
+        'Guides': {
+            'Features': 'features',
+            'Getting Started': 'gettingStarted'
+        }
     },
     Reference: {
         'API': {
-            'Binding Handler': 'bindingHandler',
+            'Panes': 'panes',
+            'Global Options': 'options',
             'Core': 'core',
             'Utilities': 'utilities'
         },

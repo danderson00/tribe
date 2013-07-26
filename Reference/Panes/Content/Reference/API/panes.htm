@@ -1,0 +1,23 @@
+﻿<div class="api content block">
+    <div class="blockHeader">Creating Panes</div>
+    <p>Panes can be created using the pane binding handler or with JavaScript using the core API functions.</p>
+    <pre>&lt;div data-bind="pane: paneOptions">&lt;/div></pre>
+    <p>paneOptions can either be a string representing the path to the pane, or an object with the following properties</p>
+    <pre>
+{
+    path: string,
+    data: any,
+    transition: string,
+    reverseTransitionIn: boolean,
+    handlesNavigation: string | navigationOptions,
+    id: any,
+    skipPath: boolean
+}
+    </pre>
+</div>
+
+<div class="api content block">
+    <div class="blockHeader">Models</div>
+    <p>Models must be declared with the following function:</p>
+    <pre>TC.registerModel(</pre>
+</div>

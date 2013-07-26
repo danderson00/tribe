@@ -1,0 +1,22 @@
+﻿<div class="api content block">
+    <div class="blockHeader">Global Options</div>
+    <pre>
+TC.options = {
+    basePath: '',
+    synchronous: false,
+    splitScripts: false,
+    handleExceptions: true,
+    loadStrategy: 'adhoc',
+    events: ['loadResources', 'createPubSub', 'createModel', 'initialiseModel', 
+        'renderPane', 'renderComplete', 'active', 'dispose']
+}
+    </pre>
+    <ul>
+        <li>basePath - root path to load panes from</li>
+        <li>synchronous - perform load operations synchronously</li>
+        <li>splitScripts - split any loaded scripts on sourceURL tags and load individually</li>
+        <li>handleExceptions - handle exceptions raised - set to false in debug mode</li>
+        <li>loadStrategy - string containing the name of the registered load strategy to use</li>
+        <li>events - array of ordered event names to execute in the pane rendering pipeline</li>
+    </ul>
+</div>

@@ -14,24 +14,16 @@ window.Article = {
     isHome: function(article) {
         return article && article.section === 'About' && article.topic === 'index';
     },
-    Components: {
-        'Composite': {
-            'Panes': 'panes',
-            'Navigation': 'navigation',
-            'Transitions': 'transitions',
-            'Lifecycle': 'lifecycle',
-            'Sagas': 'sagas',
-            'Testing': 'testing'
-        },
-        'PubSub': {},
-        'MessageHub': {},
-        'Mobile': {},
-        'Forms': {},
-        'Components': {},
+    Guides: {
+        'Guides': {
+            'Features': 'features',
+            'Getting Started': 'gettingStarted'
+        }
     },
     Reference: {
         'API': {
-            'Binding Handler': 'bindingHandler',
+            'Panes': 'panes',
+            'Global Options': 'options',
             'Core': 'core',
             'Utilities': 'utilities'
         },
@@ -64,7 +56,7 @@ Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
     filename: 'create.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;input data-bind="value: task" />\n&lt;button data-bind="click: create">Create&lt;/button></pre>'
+    content: '<pre class="prettyprint">&lt;!-- Familiar knockout bindings. Any properties or functions\n     declared in the JS model are available for use -->\n\n&lt;input data-bind="value: task" />\n&lt;button data-bind="click: create">Create&lt;/button></pre>'
 });Samples = window.Samples || {};
 Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
@@ -76,7 +68,7 @@ Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n    &lt;head>\n        &lt;title>Todos&lt;/title>\n        &lt;script src="jquery.js">&lt;/script>\n        &lt;script src="knockout.js">&lt;/script>\n        &lt;script src="Tribe.js">&lt;/script>\n        \n        &lt;script type="text/javascript">\n            $(ko.applyBindings);\n        &lt;/script>\n    &lt;/head>\n    &lt;body data-bind="pane: \'layout\'">&lt;/body>\n&lt;/html></pre>'
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n    &lt;head>\n        &lt;title>Todos&lt;/title>\n        &lt;script src="jquery.js">&lt;/script>\n        &lt;script src="knockout.js">&lt;/script>\n        &lt;script src="Tribe.js">&lt;/script>\n        \n        &lt;script type="text/javascript">\n            // all the configuration you need!\n            $(TC.run);\n        &lt;/script>\n    &lt;/head>\n    &lt;body data-bind="pane: \'layout\'">&lt;/body>\n&lt;/html></pre>'
 });Samples = window.Samples || {};
 Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
@@ -106,7 +98,7 @@ Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
     filename: 'task.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;button data-bind="click: deleteTask">x&lt;/button>\n&lt;span data-bind="text: task">&lt;/span></pre>'
+    content: '<pre class="prettyprint">&lt;!-- Familiar knockout bindings. Any properties or functions\n     declared in the JS model are available for use -->\n\n&lt;button data-bind="click: deleteTask">x&lt;/button>\n&lt;span data-bind="text: task">&lt;/span></pre>'
 });Samples = window.Samples || {};
 Samples['Tasks'] = Samples['Tasks'] || [];
 Samples['Tasks'].push({
@@ -125,6 +117,12 @@ Samples['Chat'].push({
     filename: 'chat.js',
     icon: 'Images/icon.js.png',
     content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    // Hook up our message hub and join a channel\n    TMH.initialise(pane.pubsub, \'signalr\');\n    TMH.joinChannel(\'chat\', {\n         serverEvents: [\'chat.*\']\n    });\n\n    // The dispose function is called automatically\n    // when the pane is removed from the DOM.\n    this.dispose = function() {\n        TMH.leaveChannel(\'chat\');\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Chat'] = Samples['Chat'] || [];
+Samples['Chat'].push({
+    filename: 'index.html',
+    icon: 'Images/icon.html.png',
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n    &lt;head>\n        &lt;title>Todos&lt;/title>\n        &lt;script src="jquery.js">&lt;/script>\n        &lt;script src="knockout.js">&lt;/script>\n        &lt;script src="Tribe.js">&lt;/script>\n        \n        &lt;script type="text/javascript">\n            $(TC.run);\n        &lt;/script>\n    &lt;/head>\n    &lt;body data-bind="pane: \'chat\'">&lt;/body>\n&lt;/html></pre>'
 });Samples = window.Samples || {};
 Samples['Chat'] = Samples['Chat'] || [];
 Samples['Chat'].push({
@@ -166,7 +164,7 @@ Samples['Mobile'] = Samples['Mobile'] || [];
 Samples['Mobile'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n  &lt;head>\n    &lt;title>Tribe Mobile&lt;/title>\n    &lt;meta name="viewport" \n      content="minimum-scale=1.0, width=device-width, \n               maximum-scale=1.0, user-scalable=no" />\n\n    &lt;script src="jquery.js">&lt;/script>\n    &lt;script src="knockout.js">&lt;/script>\n    &lt;script src="Tribe.js">&lt;/script>\n    &lt;script src="Tribe.Mobile.js">&lt;/script>\n        \n    &lt;script type="text/javascript">\n      $(ko.applyBindings);\n    &lt;/script>\n  &lt;/head>\n  &lt;body data-bind="pane: \'/Mobile/main\',\n                   data: { pane: \'welcome\' }">\n  &lt;/body>\n&lt;/html></pre>'
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n  &lt;head>\n    &lt;title>Tribe Mobile&lt;/title>\n    &lt;meta name="viewport" \n      content="minimum-scale=1.0, width=device-width, \n               maximum-scale=1.0, user-scalable=no" />\n\n    &lt;script src="jquery.js">&lt;/script>\n    &lt;script src="knockout.js">&lt;/script>\n    &lt;script src="Tribe.js">&lt;/script>\n    &lt;script src="Tribe.Mobile.js">&lt;/script>\n        \n    &lt;script type="text/javascript">\n      $(TC.run);\n    &lt;/script>\n  &lt;/head>\n  &lt;body data-bind="pane: \'/Mobile/main\',\n                   data: { pane: \'welcome\' }">\n  &lt;/body>\n&lt;/html></pre>'
 });Samples = window.Samples || {};
 Samples['Mobile'] = Samples['Mobile'] || [];
 Samples['Mobile'].push({
@@ -221,6 +219,10 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
+    .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}.block{background:#fff;border:1px solid #aaa;margin-bottom:10px;margin-top:10px;border-radius:8px;box-sizing:border-box}.block p{margin:10px 20px;font-size:18px}.out .content.block{margin-top:0}.blockHeader{color:#fff;font-weight:bold;height:20px;border-top-left-radius:8px;border-top-right-radius:8px;padding:10px;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;background:-moz-linear-gradient(top,#103070 0%,#457ae4 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#103070),color-stop(100%,#457ae4));background:-webkit-linear-gradient(top,#103070 0%,#457ae4 100%);background:-o-linear-gradient(top,#103070 0%,#457ae4 100%);background:-ms-linear-gradient(top,#103070 0%,#457ae4 100%);background:linear-gradient(to bottom,#103070 0%,#457ae4 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#103070\',endColorstr=\'#457ae4\',GradientType=0)}.api.content pre{padding:0 50px}.api.content ul{list-style:none}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
     .text('.footer{text-align:right;font-size:10pt;color:#888;text-shadow:1px 1px rgba(255,255,255,.2)}.footer a,.footer a:active,.footer a:visited,.footer a:link{text-decoration:none;color:#66f}.footer a:hover{color:#fff}')
     .appendTo('head');
 $('<style/>')
@@ -229,7 +231,7 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('body{background:#ccc;font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif;padding:0;margin:0;overflow-y:scroll}.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}.block{background:#fff;border:1px solid #aaa;margin-bottom:10px;margin-top:10px;border-radius:8px;box-sizing:border-box}.block p{margin:10px 20px;font-size:18px}.out .content.block{margin-top:0}.blockHeader{color:#fff;font-weight:bold;height:20px;border-top-left-radius:8px;border-top-right-radius:8px;padding:10px;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;background:-moz-linear-gradient(top,#103070 0%,#457ae4 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#103070),color-stop(100%,#457ae4));background:-webkit-linear-gradient(top,#103070 0%,#457ae4 100%);background:-o-linear-gradient(top,#103070 0%,#457ae4 100%);background:-ms-linear-gradient(top,#103070 0%,#457ae4 100%);background:linear-gradient(to bottom,#103070 0%,#457ae4 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#103070\',endColorstr=\'#457ae4\',GradientType=0)}h1,h2,h3{margin-top:0}.padded{padding:10px}.underline{text-decoration:underline}.clear{clear:both}a,a:active,a:visited,a:link{text-decoration:none;cursor:pointer;color:#1b50ba}a:hover{text-decoration:underline}')
+    .text('body{background:#ccc;font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif;padding:0;margin:0;overflow-y:scroll}h1,h2,h3{margin-top:0}.padded{padding:10px}.underline{text-decoration:underline}.clear{clear:both}a,a:active,a:visited,a:link{text-decoration:none;cursor:pointer;color:#1b50ba}a:hover{text-decoration:underline}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
@@ -268,45 +270,33 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-About-masthead"><div class="masthead">\n    <h1 class="logo">tribe</h1>            \n    <h2>Easy to build, fast, integrated web and mobile <span class="underline">systems</span>.</h2>\n</div>\n</script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Guides-features"><div class="content block">\n    <div class="blockHeader">Features</div>\n    <p>Under construction</p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Guides-Guides-features"><div class="content block">\n    <div class="blockHeader">Features</div>\n    <p>Under construction</p>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Guides-getStarted"><div class="content block">\n    <div class="blockHeader">Get Started</div>\n    <p>Under construction</p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Guides-Guides-getStarted"><div class="content block">\n    <div class="blockHeader">Get Started</div>\n    <p>Under construction</p>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Guides-index"><div class="content block">\n    <div class="blockHeader">Guides</div>\n    <p>Under construction</p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Guides-Guides-index"><div class="content block">\n    <div class="blockHeader">Guides</div>\n    <p>Under construction</p>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-index"><div class="content block">\n    <div class="blockHeader">Reference</div>\n    <p>Under construction</p>\n</div>\n</script>');
+    .append('<script type="text/template" id="template--Content-Reference-API-core"><div class="api content block">\n    <div class="blockHeader">Core API</div>\n\n    <pre>TC.run = function (resourcesToPreload, initialModel)</pre>\n    <p>\n        Start Tribe.Composite, ensuring the specified resources are loaded first.\n    </p>\n    <ul class="parameters">\n        <li>resourcesToPreload - array of strings containing URLs to required HTML, CSS or JS resources</li>\n        <li>initialModel - object to pass as the model to the initial ko.applyBindings call</li>\n    </ul>\n\n    <pre>TC.createNode = function (element, paneOptions, parentNode, context)</pre>\n    <p>\n        createNode creates a new Pane object and binds it to the specified element\n        with the specified pane options.\n    </p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n        <li>paneOptions - object containing pane options</li>\n        <li>parentNode - Node to be used as the parent node</li>\n        <li>context - Context object to be used</li>\n    </ul>\n\n    <pre>TC.appendNode = function (target, paneOptions, parentNode, context)</pre>\n    <p></p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n        <li>paneOptions - object containing pane options</li>\n        <li>parentNode - Node to be used as the parent node</li>\n        <li>context - Context object to be used</li>\n    </ul>\n\n    <pre>TC.insertNodeAfter = function (target, paneOptions, parentNode, context)</pre>\n    <p></p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n        <li>paneOptions - object containing pane options</li>\n        <li>parentNode - Node to be used as the parent node</li>\n        <li>context - Context object to be used</li>\n    </ul>\n\n    <pre>TC.nodeFor = function (element)</pre>\n    <p></p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n    </ul>\n\n    <pre>TC.registerModel = function (modelConstructor, options, resourcePath)</pre>\n    <p>\n        Registers a model in the repository. Either the TC.scriptEnvironment must be set first\n        or a resourcePath must be specified.\n    </p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n        <li>options - object</li>\n        <li>resourcePath - string</li>\n    </ul>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-API-bindingHandler"><div class="content block">\n    <div class="blockHeader">Binding Handler</div>\n    <p>Under construction</p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-API-index"><div class="content block">\n    <div class="blockHeader">Reference</div>\n    <p>Under construction</p>\n</div>\n</script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-API-core"><div class="content block">\n    <div class="blockHeader">Core API</div>\n    <p>Under construction</p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-API-options"><div class="api content block">\n    <div class="blockHeader">Global Options</div>\n    <pre>\nTC.options = {\n    basePath: \'\',\n    synchronous: false,\n    splitScripts: false,\n    handleExceptions: true,\n    loadStrategy: \'adhoc\',\n    events: [\'loadResources\', \'createPubSub\', \'createModel\', \'initialiseModel\', \n        \'renderPane\', \'renderComplete\', \'active\', \'dispose\']\n}\n    </pre>\n    <ul>\n        <li>basePath - root path to load panes from</li>\n        <li>synchronous - perform load operations synchronously</li>\n        <li>splitScripts - split any loaded scripts on sourceURL tags and load individually</li>\n        <li>handleExceptions - handle exceptions raised - set to false in debug mode</li>\n        <li>loadStrategy - string containing the name of the registered load strategy to use</li>\n        <li>events - array of ordered event names to execute in the pane rendering pipeline</li>\n    </ul>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-API-index"><div class="content block">\n    <div class="blockHeader">API Reference</div>\n    <p>The API reference covers the Tribe.Composite API is broken up into three sections:</p>\n    <ul>\n        <li><a click="Article.show(\'Reference\', \'API/core\')">Core API</a></li>\n        <li><a click="Article.show(\'Reference\', \'API/bindingHandlers\')">Binding Handlers</a></li>\n        <li><a click="Article.show(\'Reference\', \'API/utilities\')">Utilites</a></li>\n    </ul>\n</div>\n</script>');
+    .append('<script type="text/template" id="template--Content-Reference-API-panes"><div class="api content block">\n    <div class="blockHeader">Creating Panes</div>\n    <p>Panes can be created using the pane binding handler or with JavaScript using the core API functions.</p>\n    <pre>&lt;div data-bind="pane: paneOptions">&lt;/div></pre>\n    <p>paneOptions can either be a string representing the path to the pane, or an object with the following properties</p>\n    <pre>\n{\n    path: string,\n    data: any,\n    transition: string,\n    reverseTransitionIn: boolean,\n    handlesNavigation: string | navigationOptions,\n    id: any,\n    skipPath: boolean\n}\n    </pre>\n</div>\n\n<div class="api content block">\n    <div class="blockHeader">Models</div>\n    <p>Models must be declared with the following function:</p>\n    <pre>TC.registerModel(</pre>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-API-utilities"><div class="content block">\n    <div class="blockHeader">Utility Functions</div>\n    <p>Under construction</p>\n</div></script>');
-$('head')
-    .append('<script type="text/template" id="template--Content-Reference-Components-index"><div>\n    Index\n</div></script>');
-$('head')
-    .append('<script type="text/template" id="template--Content-Reference-Forms-index"><div>\n    Index\n</div></script>');
-$('head')
-    .append('<script type="text/template" id="template--Content-Reference-MessageHub-index"><div>\n    Index\n</div></script>');
-$('head')
-    .append('<script type="text/template" id="template--Content-Reference-Mobile-index"><div>\n    Index\n</div></script>');
-$('head')
-    .append('<script type="text/template" id="template--Content-Reference-PubSub-index"><div>\n    Index\n</div></script>');
-$('head')
-    .append('<script type="text/template" id="template--Content-Reference-Types-index"><div>\n    Index\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-API-utilities"><div class="api content block">\n    <div class="blockHeader">Panes</div>\n    <div>\n        <pre>TC.Utils.getPaneOptions = function(value, otherOptions)</pre>\n        <p>Normalise the passed value and merge the other options.</p>\n\n        <pre>TC.Utils.bindPane = function (node, element, paneOptions, context)</pre>\n        <p>Load and bind the pane specified in paneOptions to the specified element and link it to the specified node.</p>\n\n        <pre>TC.Utils.insertPaneAfter = function (node, target, paneOptions, context)</pre>\n        <p>As bindPane, but create a new DIV element and insert it after the specified target.</p>\n    </div>\n</div>\n\n<div class="api content block">\n    <div class="blockHeader">Miscellaneous</div>\n    <pre>TC.Utils.try = function(func, args, handleExceptions, message)</pre>\n    <pre>TC.Utils.idGenerator = function () { return { next: function() }</pre>\n    <pre>TC.Utils.getUniqueId = function ()</pre>\n    <pre>TC.Utils.cleanElement = function (element)</pre>\n</div>\n\n<div class="api content block">\n    <div class="blockHeader">Objects</div>\n    <pre>TC.Utils.arguments = function (args)</pre>\n    <pre>TC.Utils.removeItem = function (array, item)</pre>\n    <pre>TC.Utils.inheritOptions = function(from, to, options)</pre>\n    <pre>TC.Utils.evaluateProperty = function(target, property)</pre>\n</div>\n\n<div class="api content block">\n    <div class="blockHeader">Embedded State</div>\n    <pre>TC.Utils.embedState = function (model, context, node)</pre>\n    <pre>TC.Utils.contextFor = function (element)</pre>\n    <pre>TC.Utils.extractContext = function (koBindingContext)</pre>\n    <pre>TC.Utils.extractNode = function (koBindingContext)</pre>\n</div>\n\n<div class="api content block">\n    <div class="blockHeader">Events</div>\n    <pre>TC.Utils.elementDestroyed = function (element) { return $.Deferred(); }</pre>\n    <pre>TC.Utils.raiseDocumentEvent = function (name, data)</pre>\n    <pre>TC.Utils.handleDocumentEvent = function (name, handler)</pre>\n    <pre>jQuery.Event("destroyed")</pre>\n</div>\n\n<div class="api content block">\n    <div class="blockHeader">Collections</div>\n    <pre>TC.Utils.each = function (collection, iterator)</pre>\n    <pre>TC.Utils.map = function (collection, iterator)</pre>\n    <pre>TC.Utils.filter = function(array, iterator)</pre>\n    <pre>$.complete = function (deferreds)</pre>\n</div>\n\n<div class="api content block">\n    <div class="blockHeader">Paths</div>\n    <pre>\n                Path = function(path) { return {\n                    withoutFilename: function() {\n                    filename: function() {\n                    extension: function() {\n                    withoutExtension: function() {\n                    combine: function (additionalPath) {\n                    isAbsolute: function() {\n                    makeAbsolute: function() {\n                    makeRelative: function() {\n                    asMarkupIdentifier: function() {\n                    setExtension: function(extension) {\n                    toString: function()\n                }\n            </pre>\n</div>\n</script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-content"><div data-bind="pane: panePath">\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-footer"><div class="footer content">\n    The Tribe platform and all resources on this website are licensed under the <a target="_blank" href="http://opensource.org/licenses/mit-license.php">MIT license</a>.\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Interface-header"><div class="header">\n    <div class="background"></div>\n    \n    <div class="content">\n        <div class="logo" data-bind="click: Article.show(\'About\', \'index\')">tribe</div>\n        <div class="buttons">\n            <span data-bind="click: Article.show(\'Guides\', \'getStarted\')">Get Started</span>\n            <span data-bind="click: Article.show(\'Guides\', \'index\')">Guides</span>\n            <span data-bind="click: Article.show(\'Reference\', \'index\')">Reference</span>\n            <span data-bind="click: Article.show(\'About\', \'index\')">Tests</span>\n            <span data-bind="click: source">Source</span>\n        </div>\n    </div>\n</div></script>');
+    .append('<script type="text/template" id="template--Interface-header"><div class="header">\n    <div class="background"></div>\n    \n    <div class="content">\n        <div class="logo" data-bind="click: Article.show(\'About\', \'index\')">tribe</div>\n        <div class="buttons">\n            <span data-bind="click: Article.show(\'Guides\', \'getStarted\')">Get Started</span>\n            <span data-bind="click: Article.show(\'Guides\', \'Guides/index\')">Guides</span>\n            <span data-bind="click: Article.show(\'Reference\', \'API/index\')">Reference</span>\n            <span data-bind="click: Article.show(\'About\', \'index\')">Tests</span>\n            <span data-bind="click: source">Source</span>\n        </div>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-layout"><div data-bind="pane: \'header\'"></div>\n<div data-bind="pane: \'main\'"></div>\n<div data-bind="pane: \'footer\'"></div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-main"><div data-bind="pane: \'navigation\'"></div>\n<div data-bind="pane: { path: \'content\', data: { section: \'About\', topic: \'index\' }, handlesNavigation: { transition: \'fade\', browser: articleUrlProvider } }"></div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Interface-navigation"><div class="navigation">\n    <ul data-bind="foreach: items">\n        <li data-bind="click: $root.showSection, css: { selectedItem: $data === $root.selectedItem() }">\n            <span data-bind="text: $data.displayText"></span>\n        </li>\n        <ul data-bind="visible: $data === $root.selectedParent(), foreach: $data.items">\n            <li data-bind="click: $root.showArticle, text: $data.displayText, css: { selectedItem: $data === $root.selectedItem() }"></li>\n        </ul>\n    </ul>\n    <div class="clear"></div>\n</div></script>');
+    .append('<script type="text/template" id="template--Interface-navigation"><div class="navigation">\n    <ul data-bind="foreach: items">\n        <li data-bind="click: $root.showSection, css: { selectedItem: $data.topic === $root.selectedTopic() }">\n            <span data-bind="text: $data.displayText"></span>\n        </li>\n        <ul data-bind="visible: $data.key === $root.selectedParent(), foreach: $data.items">\n            <li data-bind="click: $root.showArticle, text: $data.displayText, css: { selectedItem: $data.topic === $root.selectedTopic() }"></li>\n        </ul>\n    </ul>\n    <div class="clear"></div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-sample"><div class="sample">\n    <div class="source">\n        <div class="title">Source</div>\n\n        <ul class="fileList" data-bind="foreach: files">\n            <li data-bind="click: $root.selectFile, css: { selectedFile: $root.selectedFile() === $data }">\n                <img data-bind="attr: { src: icon }" />\n                <span data-bind="text: filename"></span>\n            </li>\n        </ul>\n\n        <div class="fileContent" data-bind="html: selectedFile().content"></div>\n    </div>\n\n    <div class="result">\n        <div class="title">Result</div>\n        <div class="samplePane" data-bind="pane: samplePane"></div>\n    </div>\n</div>\n</script>');
 $('head')
@@ -324,13 +314,13 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Samples-Mobile-welcome"><ul class="rounded welcome">\n    <li>tribe</li>\n</ul>\n<ul class="rounded">\n    <li data-bind="click: samples">Samples</li>\n</ul>\n<ul class="rounded">\n    <li data-bind="click: chat">Chat</li>\n</ul></script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-Tasks-create"><input data-bind="value: task" />\n<button data-bind="click: create">Create</button></script>');
+    .append('<script type="text/template" id="template--Samples-Tasks-create"><!-- Familiar knockout bindings. Any properties or functions\n     declared in the JS model are available for use -->\n\n<input data-bind="value: task" />\n<button data-bind="click: create">Create</button></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-Tasks-layout"><h1>Todos</h1>\n\n<!-- Creating panes is simple -->\n<div data-bind="pane: \'create\'"></div>\n<div data-bind="pane: \'list\'"></div></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-Tasks-list"><!--Decompose your UI in a way that makes sense.\n    Panes can be nested as deep as you need. -->\n\n<ul class="taskList" data-bind="foreach: tasks">\n    <li data-bind="pane: \'task\', data: $data"></li>\n</ul></script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-Tasks-task"><button data-bind="click: deleteTask">x</button>\n<span data-bind="text: task"></span></script>');
+    .append('<script type="text/template" id="template--Samples-Tasks-task"><!-- Familiar knockout bindings. Any properties or functions\n     declared in the JS model are available for use -->\n\n<button data-bind="click: deleteTask">x</button>\n<span data-bind="text: task"></span></script>');
 TC.scriptEnvironment = { resourcePath: '/Interface/content' };
 TC.registerModel(function (pane) {
     this.panePath = panePath(pane.data);
@@ -384,59 +374,68 @@ TC.registerModel(function (pane) {
     var self = this;
     var currentSection;
 
-    this.selectedParent = ko.observable();
-    this.selectedItem = ko.observable();
     this.items = ko.observableArray();
+    this.selectedTopic = ko.observable();
+    this.selectedParent = ko.computed(function () {
+        var topic = self.selectedTopic();
+        if (!topic) return null;
+        var index = topic.indexOf('/');
+        return index == -1 ? topic :
+            topic.substr(0, index);
+    });
 
     this.showSection = function (item) {
-        self.selectedParent(item);
-        self.selectedItem(item);
+        self.selectedTopic(item.topic);
     };
 
-    this.showArticle = function(item) {
-        self.selectedItem(item);
+    this.showArticle = function (item) {
+        self.selectedTopic(item.topic);
         pane.pubsub.publish('article.show', { section: currentSection, topic: item.topic });
     };
 
     window.addEventListener('navigating', navigating);
     function navigating(e) {
-        var section = e.data.options.data && e.data.options.data.section;
-        if (currentSection !== section) {
-            currentSection = section;
-            var items = mapNavigation(section);
+        var data = e.data.options.data || {};
+        self.selectedTopic(data.topic);
+        
+        if (currentSection !== data.section) {
+            currentSection = data.section;
+            var items = mapNavigation(data.section);
             if (items.length > 0) {
                 self.items(items);
                 show();
-            } else 
+            } else
                 hide();
         }
     }
-    
+
     function show() {
         if (!$('.navigation').is(':visible'))
             TC.transition('.navigation', 'slideRight').in();
     }
-    
+
     function hide() {
         if ($('.navigation').is(':visible'))
             TC.transition('.navigation', 'slideLeft').out(false);
     }
-    
-    this.dispose = function() {
+
+    this.dispose = function () {
         window.removeEventListener('navigating', navigating);
     };
-    
+
     // maps the cleaner API navigation structure into a structure suitable for data bindings. could be refactored out.
     function mapNavigation(section) {
-        return TC.Utils.map(Navigation[section], function(item, key) {
+        return TC.Utils.map(Navigation[section], function (item, key) {
             return {
                 displayText: key,
+                section: section,
+                key: key,
                 topic: key + '/index',
                 items: mapChildItems(key, item)
             };
-        });        
+        });
     }
-    
+
     function mapChildItems(parentKey, container) {
         return TC.Utils.map(container, function (item, key) {
             return {

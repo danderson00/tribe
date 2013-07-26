@@ -330,31 +330,7 @@ TC.options = TC.defaultOptions();(function () {
         });
         return result;
     };
-})(TC.Utils);TC.Utils.elementDestroyed = function (element) {
-    if (element.constructor === jQuery)
-        element = element[0];
-    
-    var promise = $.Deferred();
-
-    // Resolve when an element is removed using jQuery. This is a fallback for browsers not supporting DOMNodeRemoved and also executes synchronously.
-    $(element).on('destroyed', resolve);
-
-    // Resolve using the DOMNodeRemoved event. Not all browsers support this.
-    $(document).on("DOMNodeRemoved", matchElement);
-
-    function matchElement(event) {
-        if (event.target === element)
-            resolve();
-    }
-
-    function resolve() {
-        promise.resolve();
-        $(element).off('destroyed', resolve);
-        $(document).off('DOMNodeRemoved', matchElement);
-    }
-
-    return promise;
-};(function() {
+})(TC.Utils);(function() {
     TC.Utils.embedState = function (model, context, node) {
         embedProperty(model, 'context', context);
         embedProperty(model, 'node', node);
@@ -383,6 +359,32 @@ TC.options = TC.defaultOptions();(function () {
     }
 })();
 (function () {
+    TC.Utils.elementDestroyed = function (element) {
+        if (element.constructor === jQuery)
+            element = element[0];
+
+        var promise = $.Deferred();
+
+        // Resolve when an element is removed using jQuery. This is a fallback for browsers not supporting DOMNodeRemoved and also executes synchronously.
+        $(element).on('destroyed', resolve);
+
+        // Resolve using the DOMNodeRemoved event. Not all browsers support this.
+        $(document).on("DOMNodeRemoved", matchElement);
+
+        function matchElement(event) {
+            if (event.target === element)
+                resolve();
+        }
+
+        function resolve() {
+            promise.resolve();
+            $(element).off('destroyed', resolve);
+            $(document).off('DOMNodeRemoved', matchElement);
+        }
+
+        return promise;
+    };
+
     TC.Utils.raiseDocumentEvent = function (name, data) {
         var event = document.createEvent("Event");
         event.initEvent(name, true, false);
@@ -534,6 +536,24 @@ TC.Utils.evaluateProperty = function(target, property) {
     utils.getPaneOptions = function(value, otherOptions) {
         var options = value.constructor === String ? { path: value } : value;
         return $.extend({}, otherOptions, options);
+    };
+
+    utils.bindPane = function (node, element, paneOptions, context) {
+        context = context || utils.contextFor(element) || TC.context();
+        var pane = new TC.Types.Pane($.extend({ element: $(element)[0] }, paneOptions));
+        node.setPane(pane);
+
+        context.renderOperation.add(pane);
+
+        var pipeline = new TC.Types.Pipeline(TC.Events, context);
+        pipeline.execute(context.options.events, pane);
+
+        return pane;
+    };
+
+    utils.insertPaneAfter = function (node, target, paneOptions, context) {
+        var element = $('<div/>').insertAfter(target);
+        return utils.bindPane(node, element, paneOptions, context);
     };
 })();
 (function() {
@@ -1265,7 +1285,7 @@ TC.LoadStrategies.adhoc = function (pane, context) {
         to: function (paneOptions, remove) {
             var context = TC.context();
             if (node)
-                TC.insertPaneAfter(node, element, TC.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), context);
+                TC.Utils.insertPaneAfter(node, element, TC.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), context);
             else
                 TC.insertNodeAfter(element, TC.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), null, context);
             this.out(remove);
@@ -1462,35 +1482,12 @@ $('<style/>')
 (function () {
     var utils = TC.Utils;
 
-    TC.bindPane = function(node, element, paneOptions, context) {
-        context = context || utils.contextFor(element) || TC.context();
-        var pane = new TC.Types.Pane($.extend({ element: $(element)[0] }, paneOptions));
-        node.setPane(pane);
-
-        context.renderOperation.add(pane);
-
-        var pipeline = new TC.Types.Pipeline(TC.Events, context);
-        pipeline.execute(context.options.events, pane);
-
-        return pane;
-    };
-
-    TC.appendPane = function(node, target, paneOptions, context) {
-        var element = $('<div/>').appendTo(target);
-        return TC.bindPane(node, element, paneOptions, context);
-    };
-
-    TC.insertPaneAfter = function(node, target, paneOptions, context) {
-        var element = $('<div/>').insertAfter(target);
-        return TC.bindPane(node, element, paneOptions, context);
-    };
-
     TC.createNode = function (element, paneOptions, parentNode, context) {
         parentNode = parentNode || TC.nodeFor(element);
         context = context || utils.contextFor(element) || TC.context();
 
         var node = new TC.Types.Node(parentNode);
-        TC.bindPane(node, element, paneOptions, context);
+        utils.bindPane(node, element, paneOptions, context);
 
         return node;
     };
