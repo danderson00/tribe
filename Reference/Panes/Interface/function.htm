@@ -1,0 +1,11 @@
+﻿<div class="function">
+    <pre><span data-bind="text: f.name"></span>(<span data-bind="text: argumentNames"></span>)</pre>
+    <p data-bind="html: f.description"></p>
+    <table class="arguments" data-bind="foreach: f.arguments">
+        <tr>
+            <td data-bind="text: $data.name"></td>
+            <td data-bind="text: $data.type"></td>
+            <td data-bind="text: $data.description"></td>
+        </tr>
+    </table>
+</div>

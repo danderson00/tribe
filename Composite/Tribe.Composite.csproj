@@ -53,7 +53,6 @@
     <Content Include="Source\Types\Saga.js" />
     <Content Include="Source\Utilities\bindingHandlers.js" />
     <Content Include="Source\Utilities\collections.js" />
-    <Content Include="Source\Utilities\elementDestroyed.js" />
     <Content Include="Source\Utilities\events.js" />
     <Content Include="Source\Utilities\idGenerator.js" />
     <Content Include="Source\Utilities\panes.js" />

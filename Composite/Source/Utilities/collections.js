@@ -22,4 +22,10 @@
         });
         return result;
     };
+
+    utils.pluck = function(array, property) {
+        return utils.map(array, function(value) {
+            return value && value[property];
+        });
+    };
 })(TC.Utils);

@@ -287,15 +287,15 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-webmail"><div class="content block">\n    <div class="blockHeader">Webmail Tutorial</div>\n    <p>Under construction</p>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-api"><div class="api content block">\n    <div class="blockHeader">Core API</div>\n\n    <pre>TC.run = function (resourcesToPreload, initialModel)</pre>\n    <p>\n        Start Tribe.Composite, ensuring the specified resources are loaded first.\n    </p>\n    <ul class="parameters">\n        <li>resourcesToPreload - array of strings containing URLs to required HTML, CSS or JS resources</li>\n        <li>initialModel - object to pass as the model to the initial ko.applyBindings call</li>\n    </ul>\n\n    <pre>TC.createNode = function (element, paneOptions, parentNode, context)</pre>\n    <p>\n        createNode creates a new Pane object and binds it to the specified element\n        with the specified pane options.\n    </p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n        <li>paneOptions - object containing pane options</li>\n        <li>parentNode - Node to be used as the parent node</li>\n        <li>context - Context object to be used</li>\n    </ul>\n\n    <pre>TC.appendNode = function (target, paneOptions, parentNode, context)</pre>\n    <p></p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n        <li>paneOptions - object containing pane options</li>\n        <li>parentNode - Node to be used as the parent node</li>\n        <li>context - Context object to be used</li>\n    </ul>\n\n    <pre>TC.insertNodeAfter = function (target, paneOptions, parentNode, context)</pre>\n    <p></p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n        <li>paneOptions - object containing pane options</li>\n        <li>parentNode - Node to be used as the parent node</li>\n        <li>context - Context object to be used</li>\n    </ul>\n\n    <pre>TC.nodeFor = function (element)</pre>\n    <p></p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n    </ul>\n\n    <pre>TC.registerModel = function (modelConstructor, options, resourcePath)</pre>\n    <p>\n        Registers a model in the repository. Either the TC.scriptEnvironment must be set first\n        or a resourcePath must be specified.\n    </p>\n    <ul class="parameters">\n        <li>element - selector | HTMLElement | Node | Pane</li>\n        <li>options - object</li>\n        <li>resourcePath - string</li>\n    </ul>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-api"><div class="api content block">\n    <div class="blockHeader">Core API</div>\n\n    <div data-bind="pane: \'/Interface/functionList\', data: { functions: Functions.API }"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-index"><div class="content block">\n    <div class="blockHeader">Reference</div>\n    <p>Under construction</p>\n</div>\n</script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-index"><div class="content block">\n    <div class="blockHeader">Reference</div>\n    <p>Under construction</p>\n    \n\n</div>\n</script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="api content block">\n    <div class="blockHeader">Global Options</div>\n    <pre>\nTC.options = {\n    basePath: \'\',\n    synchronous: false,\n    splitScripts: false,\n    handleExceptions: true,\n    loadStrategy: \'adhoc\',\n    events: [\'loadResources\', \'createPubSub\', \'createModel\', \'initialiseModel\', \n        \'renderPane\', \'renderComplete\', \'active\', \'dispose\']\n}\n    </pre>\n    <ul>\n        <li>basePath - root path to load panes from</li>\n        <li>synchronous - perform load operations synchronously</li>\n        <li>splitScripts - split any loaded scripts on sourceURL tags and load individually</li>\n        <li>handleExceptions - handle exceptions raised - set to false in debug mode</li>\n        <li>loadStrategy - string containing the name of the registered load strategy to use</li>\n        <li>events - array of ordered event names to execute in the pane rendering pipeline</li>\n    </ul>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="api content block">\n    <div class="blockHeader">Creating Panes</div>\n    <p>Panes can be created using the pane binding handler or with JavaScript using the core API functions.</p>\n    <pre>&lt;div data-bind="pane: paneOptions">&lt;/div></pre>\n    <p>paneOptions can either be a string representing the path to the pane, or an object with the following properties</p>\n    <pre>\n{\n    path: string,\n    data: any,\n    transition: string,\n    reverseTransitionIn: boolean,\n    handlesNavigation: string | navigationOptions,\n    id: any,\n    skipPath: boolean\n}\n    </pre>\n</div>\n\n<div class="api content block">\n    <div class="blockHeader">Models</div>\n    <p>Models must be declared with the following function:</p>\n    <pre>TC.registerModel(</pre>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Utilities-collections"><div class="api content block">\n    <div class="blockHeader">Collections</div>\n    <pre>TC.Utils.each = function (collection, iterator)</pre>\n    <pre>TC.Utils.map = function (collection, iterator)</pre>\n    <pre>TC.Utils.filter = function(array, iterator)</pre>\n    <pre>$.complete = function (deferreds)</pre>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-Utilities-collections"><div class="api content block">\n    <div class="blockHeader">Collections</div>\n    <pre>TC.Utils.each = function (collection, iterator)</pre>\n    <pre>TC.Utils.map = function (collection, iterator)</pre>\n    <pre>TC.Utils.filter = function(array, iterator)</pre>\n    <pre>TC.Utils.pluck = function(array, iterator)</pre>\n    <pre>$.complete = function (deferreds)</pre>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Utilities-embeddedState"><div class="api content block">\n    <div class="blockHeader">Embedded State</div>\n    <pre>TC.Utils.embedState = function (model, context, node)</pre>\n    <pre>TC.Utils.contextFor = function (element)</pre>\n    <pre>TC.Utils.extractContext = function (koBindingContext)</pre>\n    <pre>TC.Utils.extractNode = function (koBindingContext)</pre>\n</div>\n</script>');
 $('head')
@@ -312,6 +312,10 @@ $('head')
     .append('<script type="text/template" id="template--Interface-content"><div data-bind="pane: panePath">\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-footer"><div class="footer content">\n    The Tribe platform and all resources on this website are licensed under the <a target="_blank" href="http://opensource.org/licenses/mit-license.php">MIT license</a>.\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Interface-function"><div class="function">\n    <pre><span data-bind="text: f.name"></span>(<span data-bind="text: argumentNames"></span>)</pre>\n    <p data-bind="html: f.description"></p>\n    <table class="arguments" data-bind="foreach: f.arguments">\n        <tr>\n            <td data-bind="text: $data.name"></td>\n            <td data-bind="text: $data.type"></td>\n            <td data-bind="text: $data.description"></td>\n        </tr>\n    </table>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Interface-functionList"><div data-bind="foreach: pane.data.functions">\n    <div data-bind="pane: \'function\', data: $data"></div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-header"><div class="header">\n    <div class="background"></div>\n    \n    <div class="content">\n        <div class="logo" data-bind="click: Article.show(\'About\', \'index\')">tribe</div>\n        <div class="buttons">\n            <span data-bind="click: Article.show(\'Guides\', \'Guides/getStarted\')">Get Started</span>\n            <span data-bind="click: Article.show(\'Guides\', \'Guides/index\')">Guides</span>\n            <span data-bind="click: Article.show(\'Reference\', \'Core/index\')">Reference</span>\n            <span data-bind="click: Article.show(\'About\', \'index\')">Tests</span>\n            <span data-bind="click: source">Source</span>\n        </div>\n    </div>\n</div></script>');
 $('head')
@@ -346,6 +350,69 @@ $('head')
     .append('<script type="text/template" id="template--Samples-Tasks-list"><!--Decompose your UI in a way that makes sense.\n    Panes can be nested as deep as you need. -->\n\n<ul class="taskList" data-bind="foreach: tasks">\n    <li data-bind="pane: \'task\', data: $data"></li>\n</ul></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-Tasks-task"><!-- Familiar knockout bindings. Any properties or functions\n     declared in the JS model are available for use -->\n\n<button data-bind="click: deleteTask">x</button>\n<span data-bind="text: task"></span></script>');
+TC.scriptEnvironment = { resourcePath: '/Content/Functions' };
+Functions = {
+    API: [
+        {
+            name: 'TC.run',
+            description: 'Start Tribe.Composite, ensuring the specified resources are loaded first.',
+            arguments: [
+                { name: 'resourcesToPreload', type: 'array of string', description: 'URLs to required HTML, CSS or JS resources' },
+                { name: 'initialModel', type: 'any', description: 'The model supplied to the initial ko.applyBindings call' }
+            ]
+        },
+        {
+            name: 'TC.createNode',
+            description: 'Creates a new Pane object and binds it to the specified element with the specified pane options.',
+            arguments: [
+                { name: 'element', type: 'selector | HTMLElement | Node | Pane' },
+                { name: 'paneOptions', type: 'object' },
+                { name: 'parentNode', type: 'TC.Types.Node' },
+                { name: 'context', type: 'TC.Types.Context' }
+            ]
+        },
+        {
+            name: 'TC.appendNode',
+            description: '',
+            arguments: [
+                { name: 'element', type: 'selector | HTMLElement | Node | Pane' },
+                { name: 'paneOptions', type: 'object' },
+                { name: 'parentNode', type: 'TC.Types.Node' },
+                { name: 'context', type: 'TC.Types.Context' }
+            ]
+        },
+        {
+            name: 'TC.insertNodeAfter',
+            description: '',
+            arguments: [
+                { name: 'element', type: 'selector | HTMLElement | Node | Pane' },
+                { name: 'paneOptions', type: 'object' },
+                { name: 'parentNode', type: 'TC.Types.Node' },
+                { name: 'context', type: 'TC.Types.Context' }
+            ]
+        },
+        {
+            name: 'TC.nodeFor',
+            description: '',
+            arguments: [
+                { name: 'element', type: 'selector | HTMLElement | Node | Pane' }
+            ]
+        },
+        {
+            name: 'TC.registerModel',
+            description: 'Registers a model in the repository. Either the TC.scriptEnvironment must be set first or a resourcePath must be specified.',
+            arguments: [
+                { name: 'modelConstructor', type: 'function' },
+                { name: 'options', type: 'object' },
+                { name: 'resourcePath', type: 'string' }
+            ]
+        }
+    ],
+    Utils: {
+
+    }
+};
+//@ sourceURL=tribe://Panes/Content/Functions.js
 TC.scriptEnvironment = { resourcePath: '/Interface/content' };
 TC.registerModel(function (pane) {
     this.panePath = panePath(pane.data);
@@ -360,6 +427,13 @@ TC.registerModel(function (pane) {
     }
 });
 //@ sourceURL=tribe://Panes/Interface/content.js
+TC.scriptEnvironment = { resourcePath: '/Interface/function' };
+TC.registerModel(function(pane) {
+    this.f = pane.data;
+
+    this.argumentNames = TC.Utils.pluck(pane.data.arguments, 'name').join(', ');
+});
+//@ sourceURL=tribe://Panes/Interface/function.js
 TC.scriptEnvironment = { resourcePath: '/Interface/header' };
 TC.registerModel(function (pane) {
     this.source = function() {

@@ -330,6 +330,12 @@ TC.options = TC.defaultOptions();(function () {
         });
         return result;
     };
+
+    utils.pluck = function(array, property) {
+        return utils.map(array, function(value) {
+            return value && value[property];
+        });
+    };
 })(TC.Utils);(function() {
     TC.Utils.embedState = function (model, context, node) {
         embedProperty(model, 'context', context);

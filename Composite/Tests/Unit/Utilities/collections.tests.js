@@ -84,3 +84,13 @@ test("filter returns empty array for undefined input", function () {
     deepEqual(T.filter(undefined, spy), []);
     ok(spy.notCalled);
 });
+
+test("pluck returns property value from each object in array", function() {
+    var result = T.pluck([
+        { one: 'a', two: 'b' },
+        { one: 'c', two: 'd' },
+        { one: 'e', two: 'f' }
+    ], 'one');
+    equal(result.length, 3);
+    equal(result.join(''), 'ace');
+});
