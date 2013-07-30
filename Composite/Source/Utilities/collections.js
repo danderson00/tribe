@@ -28,4 +28,11 @@
             return value && value[property];
         });
     };
+
+    utils.reduce = function (array, initialValue, reduceFunction) {
+        utils.each(array, function(value, index) {
+            initialValue = reduceFunction(initialValue, value, index, array);
+        });
+        return initialValue;
+    };
 })(TC.Utils);

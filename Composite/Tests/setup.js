@@ -11,7 +11,8 @@ Test.defaultOptions = function() {
         handleExceptions: false,
         basePath: 'Integration/Panes/',
         loadStrategy: 'adhoc',
-        events: TC.defaultOptions().events
+        events: TC.defaultOptions().events,
+        defaultUrlProvider: TC.options.defaultUrlProvider
     };
 };
 TC.options = Test.defaultOptions();

@@ -1,8 +1,4 @@
 ﻿TC.registerModel(function (pane) {
-    this.source = function() {
-
-    };
-    
     window.addEventListener('navigating', navigating);
     function navigating(e) {
         if (Navigation.isHome(e.data.options.data))
@@ -10,6 +6,11 @@
         else
             show();
     }
+
+    this.renderComplete = function() {
+        if (!Navigation.isHome(pane.node.findNavigation().node.pane.data))
+            show();
+    };
 
     function show() {
         if (!$('.header .logo').is(':visible'))

@@ -20,10 +20,9 @@
         if (e.state !== null) currentAction(e);
     }
 
-    this.navigate = function (options, urlProvider) {
-        var urlData = (urlProvider && urlProvider.constructor === Function)
-            ? urlProvider(options) : {};
-        history.pushState(++currentState, urlData.title, urlData.url);
+    this.navigate = function (urlOptions) {
+        urlOptions = urlOptions || {};
+        history.pushState(++currentState, urlOptions.title, urlOptions.url);
     };
 
     this.go = function(frameCount) {

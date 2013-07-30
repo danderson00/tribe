@@ -6,11 +6,25 @@ window.Article = {
             };
         };
     }
-};function articleUrlProvider(options) {
-    return {
-        url: Navigation.isHome(options.data) ? '/' : '?section=' + encodeURI(options.data.section) + '&topic=' + encodeURI(options.data.topic)
-    };
-}Navigation = {
+};var articleUrlProvider = {
+    urlDataFrom: function(options) {
+        return {
+            url: Navigation.isHome(options.data) ? '/' : '?section=' + encodeURI(options.data.section) + '&topic=' + encodeURI(options.data.topic)
+        };
+    },
+    paneOptionsFrom: function (querystring) {
+        if (querystring) {
+            var options = TC.Utils.Querystring.parse(querystring);
+            return {
+                path: '/Interface/content',
+                data: {
+                    section: options.section,
+                    topic: options.topic
+                }
+            };
+        }
+    }
+};Navigation = {
     isHome: function(article) {
         return article && article.section === 'About' && article.topic === 'index';
     },
@@ -18,6 +32,7 @@ window.Article = {
         'Guides': {
             'Features': 'features',
             'Getting Started': 'gettingStarted',
+            'Configuring MessageBus': 'messageBus',
             'Webmail Tutorial': 'webmail'
         }
     },
@@ -228,11 +243,15 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}.block{background:#fff;border:1px solid #aaa;margin-bottom:10px;margin-top:10px;border-radius:8px;box-sizing:border-box}.block p{margin:10px 20px;font-size:18px}.out .content.block{margin-top:0}.blockHeader{color:#fff;font-weight:bold;height:20px;border-top-left-radius:8px;border-top-right-radius:8px;padding:10px;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;background:-moz-linear-gradient(top,#103070 0%,#457ae4 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#103070),color-stop(100%,#457ae4));background:-webkit-linear-gradient(top,#103070 0%,#457ae4 100%);background:-o-linear-gradient(top,#103070 0%,#457ae4 100%);background:-ms-linear-gradient(top,#103070 0%,#457ae4 100%);background:linear-gradient(to bottom,#103070 0%,#457ae4 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#103070\',endColorstr=\'#457ae4\',GradientType=0)}.api.content pre{padding:0 50px}.api.content ul{list-style:none}')
+    .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}.block{background:#fff;border:1px solid #aaa;margin-bottom:10px;margin-top:10px;border-radius:8px;box-sizing:border-box}.block p{margin:10px 20px;font-size:18px}.out .content.block{margin-top:0}.blockHeader{color:#fff;font-weight:bold;height:20px;border-top-left-radius:8px;border-top-right-radius:8px;padding:10px;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;background:-moz-linear-gradient(top,#103070 0%,#457ae4 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#103070),color-stop(100%,#457ae4));background:-webkit-linear-gradient(top,#103070 0%,#457ae4 100%);background:-o-linear-gradient(top,#103070 0%,#457ae4 100%);background:-ms-linear-gradient(top,#103070 0%,#457ae4 100%);background:linear-gradient(to bottom,#103070 0%,#457ae4 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#103070\',endColorstr=\'#457ae4\',GradientType=0)}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
     .text('.footer{text-align:right;font-size:10pt;color:#888;text-shadow:1px 1px rgba(255,255,255,.2)}.footer a,.footer a:active,.footer a:visited,.footer a:link{text-decoration:none;color:#66f}.footer a:hover{color:#fff}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.function{margin:10px;padding:15px;border:2px solid #000}.function p{margin:10px 0}.function pre{margin:0}.function .name{font-size:1.2em}.function .arguments{list-style:none}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
@@ -279,17 +298,19 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-About-masthead"><div class="masthead">\n    <h1 class="logo">tribe</h1>            \n    <h2>Easy to build, fast, integrated web and mobile <span class="underline">systems</span>.</h2>\n</div>\n</script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Guides-Guides-features"><div class="content block">\n    <div class="blockHeader">Features</div>\n    <p>Under construction</p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Guides-Guides-features"><div class="content block">\n    <div class="blockHeader">Features</div>\n    <p>Under construction</p>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">Composite</div>\n    <ul>\n        <li>Full resource lifecycle management</li>\n        <li>Extensible</li>\n    </ul>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">MessageBus</div>\n    <ul>\n        <li>Transparent message broadcast</li>\n        <li>Automatic translation to server-side message buses</li>\n        <li>Extensible authorisation</li>\n    </ul>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">Mobile</div>\n    <ul>\n        <li></li>\n    </ul>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">PackScript</div>\n    <ul>\n        <li></li>\n    </ul>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">Forms</div>\n    <ul>\n        <li></li>\n    </ul>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">Components</div>\n    <ul>\n        <li></li>\n    </ul>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">PubSub</div>\n    <ul>\n        <li></li>\n    </ul>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Guides-Guides-getStarted"><div class="content block">\n    <div class="blockHeader">Get Started</div>\n    <p>Under construction</p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Guides-Guides-getStarted"><div class="content block">\n    <div class="blockHeader">Get Started</div>\n    <p>There are three easy ways to get started with the Tribe platform:</p>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">Online Resources</div>\n    <p>Use the following HTML for your bootstrapper:</p>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">NuGet Package</div>\n    <p>If you\'re a Visual Studio user, the easiest way to get started is to install the Tribe.Template <a href="http://nuget.org" target="_blank">NuGet package</a>.</p>\n</div>\n\n<div class="content block">\n    <div class="blockHeader">Download</div>\n    <p>Download a ZIP file containing \n        <ul>\n            <li>The production, debug and special Chrome version of Tribe</li>\n            <li>Forms, Mobile and Components</li>\n            <li>A starter template</li>\n        </ul>\n    </p>\n    <p>\n        or download the production source.\n    </p>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-index"><div class="content block">\n    <div class="blockHeader">Guides</div>\n    <p>Under construction</p>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Guides-Guides-messageBus"><div class="content block">\n    <div class="blockHeader">Configuring Tribe.MessageBus</div>\n    <p>Under construction</p>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-webmail"><div class="content block">\n    <div class="blockHeader">Webmail Tutorial</div>\n    <p>Under construction</p>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-api"><div class="api content block">\n    <div class="blockHeader">Core API</div>\n\n    <div data-bind="pane: \'/Interface/functionList\', data: { functions: Functions.API }"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-index"><div class="content block">\n    <div class="blockHeader">Reference</div>\n    <p>Under construction</p>\n    \n\n</div>\n</script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-index"><div class="content block">\n    <div class="blockHeader">Reference</div>\n    <p>Under construction</p>\n    \n    <h3>Naming Guidelines</h3>\n</div>\n</script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="api content block">\n    <div class="blockHeader">Global Options</div>\n    <pre>\nTC.options = {\n    basePath: \'\',\n    synchronous: false,\n    splitScripts: false,\n    handleExceptions: true,\n    loadStrategy: \'adhoc\',\n    events: [\'loadResources\', \'createPubSub\', \'createModel\', \'initialiseModel\', \n        \'renderPane\', \'renderComplete\', \'active\', \'dispose\']\n}\n    </pre>\n    <ul>\n        <li>basePath - root path to load panes from</li>\n        <li>synchronous - perform load operations synchronously</li>\n        <li>splitScripts - split any loaded scripts on sourceURL tags and load individually</li>\n        <li>handleExceptions - handle exceptions raised - set to false in debug mode</li>\n        <li>loadStrategy - string containing the name of the registered load strategy to use</li>\n        <li>events - array of ordered event names to execute in the pane rendering pipeline</li>\n    </ul>\n</div></script>');
 $('head')
@@ -311,13 +332,13 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Interface-content"><div data-bind="pane: panePath">\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Interface-footer"><div class="footer content">\n    The Tribe platform and all resources on this website are licensed under the <a target="_blank" href="http://opensource.org/licenses/mit-license.php">MIT license</a>.\n</div></script>');
+    .append('<script type="text/template" id="template--Interface-footer"><div class="footer content">\n    The Tribe platform and all resources on this website are licensed under the <a target="_blank" href="http://opensource.org/licenses/mit-license.php">MIT license</a>, except portions\n    copyright <a href="knockoutjs.com" target="_blank">knockoutjs.com</a>.\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Interface-function"><div class="function">\n    <pre><span data-bind="text: f.name"></span>(<span data-bind="text: argumentNames"></span>)</pre>\n    <p data-bind="html: f.description"></p>\n    <table class="arguments" data-bind="foreach: f.arguments">\n        <tr>\n            <td data-bind="text: $data.name"></td>\n            <td data-bind="text: $data.type"></td>\n            <td data-bind="text: $data.description"></td>\n        </tr>\n    </table>\n</div></script>');
+    .append('<script type="text/template" id="template--Interface-function"><div class="function">\n    <pre class="name">function <span data-bind="text: f.name"></span>(<span data-bind="text: argumentNames"></span>)</pre>\n    <p data-bind="html: f.description"></p>\n    <table class="arguments" data-bind="foreach: f.arguments">\n        <tr>\n            <td data-bind="text: $data.name"></td>\n            <td data-bind="text: $data.type"></td>\n            <td data-bind="text: $data.description"></td>\n        </tr>\n    </table>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-functionList"><div data-bind="foreach: pane.data.functions">\n    <div data-bind="pane: \'function\', data: $data"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Interface-header"><div class="header">\n    <div class="background"></div>\n    \n    <div class="content">\n        <div class="logo" data-bind="click: Article.show(\'About\', \'index\')">tribe</div>\n        <div class="buttons">\n            <span data-bind="click: Article.show(\'Guides\', \'Guides/getStarted\')">Get Started</span>\n            <span data-bind="click: Article.show(\'Guides\', \'Guides/index\')">Guides</span>\n            <span data-bind="click: Article.show(\'Reference\', \'Core/index\')">Reference</span>\n            <span data-bind="click: Article.show(\'About\', \'index\')">Tests</span>\n            <span data-bind="click: source">Source</span>\n        </div>\n    </div>\n</div></script>');
+    .append('<script type="text/template" id="template--Interface-header"><div class="header">\n    <div class="background"></div>\n    \n    <div class="content">\n        <div class="logo" data-bind="click: Article.show(\'About\', \'index\')">tribe</div>\n        <div class="buttons">\n            <span data-bind="click: Article.show(\'Guides\', \'Guides/getStarted\')">Get Started</span>\n            <span data-bind="click: Article.show(\'Guides\', \'Guides/index\')">Guides</span>\n            <span data-bind="click: Article.show(\'Reference\', \'Core/index\')">Reference</span>\n            <span data-bind="click: Article.show(\'About\', \'index\')">Tests</span>\n            <a href="https://github.com/danderson00/Tribe" target="_blank"><span>Source</span></a>\n        </div>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-layout"><div data-bind="pane: \'header\'"></div>\n<div data-bind="pane: \'main\'"></div>\n<div data-bind="pane: \'footer\'"></div></script>');
 $('head')
@@ -432,14 +453,16 @@ TC.registerModel(function(pane) {
     this.f = pane.data;
 
     this.argumentNames = TC.Utils.pluck(pane.data.arguments, 'name').join(', ');
+
+    this.paneRendered = function() {
+        $(pane.element).find('pre').each(function() {
+            $(this).html(PR.prettyPrintOne($(this).text()));
+        });
+    };
 });
 //@ sourceURL=tribe://Panes/Interface/function.js
 TC.scriptEnvironment = { resourcePath: '/Interface/header' };
 TC.registerModel(function (pane) {
-    this.source = function() {
-
-    };
-    
     window.addEventListener('navigating', navigating);
     function navigating(e) {
         if (Navigation.isHome(e.data.options.data))
@@ -447,6 +470,11 @@ TC.registerModel(function (pane) {
         else
             show();
     }
+
+    this.renderComplete = function() {
+        if (!Navigation.isHome(pane.node.findNavigation().node.pane.data))
+            show();
+    };
 
     function show() {
         if (!$('.header .logo').is(':visible'))
@@ -497,8 +525,18 @@ TC.registerModel(function (pane) {
     window.addEventListener('navigating', navigating);
     function navigating(e) {
         var data = e.data.options.data || {};
+        updateCurrentArticle(data);
+    }
+    
+    // this is to handle bookmarks / refresh
+    // need to come up with a better way of doing this
+    this.renderComplete = function() {
+        updateCurrentArticle(pane.node.findNavigation().node.pane.data);
+    };
+
+    function updateCurrentArticle(data) {
         self.selectedTopic(data.topic);
-        
+
         if (currentSection !== data.section) {
             currentSection = data.section;
             var items = mapNavigation(data.section);

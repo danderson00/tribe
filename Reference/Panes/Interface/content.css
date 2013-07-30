@@ -47,11 +47,3 @@
     background: linear-gradient(to bottom,  #103070 0%,#457ae4 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103070', endColorstr='#457ae4',GradientType=0 ); /* IE6-9 */
 }
-
-.api.content pre {
-    padding: 0 50px;
-}
-
-.api.content ul {
-    list-style: none;
-}

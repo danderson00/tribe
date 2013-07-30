@@ -336,6 +336,13 @@ TC.options = TC.defaultOptions();(function () {
             return value && value[property];
         });
     };
+
+    utils.reduce = function (array, initialValue, reduceFunction) {
+        utils.each(array, function(value, index) {
+            initialValue = reduceFunction(initialValue, value, index, array);
+        });
+        return initialValue;
+    };
 })(TC.Utils);(function() {
     TC.Utils.embedState = function (model, context, node) {
         embedProperty(model, 'context', context);
@@ -641,6 +648,175 @@ TC.Utils.evaluateProperty = function(target, property) {
         }
     };
 })();
+(function () {
+    // This is a modified version of modules from the YUI Library - 
+    // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-parse.js.html
+    // Either it should be rewritten or attribution and licensing be available here and on the website like in http://yuilibrary.com/license/
+
+    TC.Utils.Querystring = TC.Utils.Querystring || {};
+
+    TC.Utils.Querystring.parse = function (source, seperator, eqSymbol) {
+        stripLeadIn();
+        
+        return TC.Utils.reduce(
+            TC.Utils.map(
+                source.split(seperator || "&"),
+                pieceParser(eqSymbol || "=")
+            ),
+            {},
+            mergeParams
+        );
+
+        function stripLeadIn() {
+            if(source.length > 0 && source[0] === '?')
+                source = source.substring(1);
+        }
+    };
+    
+    function unescape(s) {
+        return decodeURIComponent(s.replace(/\+/g, ' '));
+    };
+
+    function pieceParser(eq) {
+        return function parsePiece(key, val) {
+
+            var sliced, numVal, head, tail, ret;
+
+            if (arguments.length === 2) {
+                // key=val, called from the map/reduce
+                key = key.split(eq);
+                return parsePiece(
+                    unescape(key.shift()),
+                    unescape(key.join(eq)),
+                    true
+                );
+            }
+            
+            key = key.replace(/^\s+|\s+$/g, '');
+            if (val.constructor === String) {
+                val = val.replace(/^\s+|\s+$/g, '');
+                // convert numerals to numbers
+                if (!isNaN(val)) {
+                    numVal = +val;
+                    if (val === numVal.toString(10)) {
+                        val = numVal;
+                    }
+                }
+            }
+            
+            sliced = /(.*)\[([^\]]*)\]$/.exec(key);
+            if (!sliced) {
+                ret = {};
+                if (key)
+                    ret[key] = val;
+                return ret;
+            }
+            
+            // ["foo[][bar][][baz]", "foo[][bar][]", "baz"]
+            tail = sliced[2];
+            head = sliced[1];
+
+            // array: key[]=val
+            if (!tail)
+                return parsePiece(head, [val], true);
+
+            // object: key[subkey]=val
+            ret = {};
+            ret[tail] = val;
+            return parsePiece(head, ret, true);
+        };
+    }
+
+    // the reducer function that merges each query piece together into one set of params
+    function mergeParams(params, addition) {
+        return (
+            // if it's uncontested, then just return the addition.
+            (!params) ? addition
+            // if the existing value is an array, then concat it.
+            : ($.isArray(params)) ? params.concat(addition)
+            // if the existing value is not an array, and either are not objects, arrayify it.
+            : (!$.isPlainObject(params) || !$.isPlainObject(addition)) ? [params].concat(addition)
+            // else merge them as objects, which is a little more complex
+            : mergeObjects(params, addition)
+        );
+    }
+
+    // Merge two *objects* together. If this is called, we've already ruled
+    // out the simple cases, and need to do the for-in business.
+    function mergeObjects(params, addition) {
+        for (var i in addition)
+            if (i && addition.hasOwnProperty(i))
+                params[i] = mergeParams(params[i], addition[i]);
+
+        return params;
+    }
+})();
+(function () {
+    // This is a modified version of modules from the YUI Library - 
+    // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-stringify.js.html
+    // Either it should be rewritten or attribution and licensing be available here and on the website like in http://yuilibrary.com/license/
+
+    TC.Utils.Querystring = TC.Utils.Querystring || {};
+
+    var escape = encodeURIComponent;
+
+    TC.Utils.Querystring.stringify = function (source, options) {
+        return stringify(source, options);
+    };
+
+    function stringify(source, options, name, stack) {
+        options = options || {};
+        stack = stack || [];
+        var begin, end, i, l, n, s;
+        var sep = options.seperator || "&";
+        var eq = options.eqSymbol || "=";
+        var arrayKey = options.arrayKey !== false;
+
+        if (source === null || source === undefined || source.constructor === Function)
+            return name ? escape(name) + eq : '';
+
+        if (source.constructor === Boolean || Object.prototype.toString.call(source) === '[object Boolean]')
+            source = +source;
+
+        if (!isNaN(source) || source.constructor === String)
+            return escape(name) + eq + escape(source);
+
+        if ($.isArray(source)) {
+            s = [];
+            name = arrayKey ? name + '[]' : name;
+            l = source.length;
+            for (i = 0; i < l; i++) {
+                s.push(stringify(source[i], options, name, stack));
+            }
+
+            return s.join(sep);
+        }
+        
+        // now we know it's an object.
+        // Check for cyclical references in nested objects
+        for (i = stack.length - 1; i >= 0; --i)
+            if (stack[i] === source)
+                throw new Error("TC.Utils.Querystring.stringify: cyclical reference");
+
+        stack.push(source);
+        s = [];
+        begin = name ? name + '[' : '';
+        end = name ? ']' : '';
+        for (i in source) {
+            if (source.hasOwnProperty(i)) {
+                n = begin + i + end;
+                s.push(stringify(source[i], options, n, stack));
+            }
+        }
+
+        stack.pop();
+        s = s.join(sep);
+        if (!s && name)
+            return name + "=";
+
+        return s;
+    };
+})();
 TC.Types.History = function (history) {
     var currentState = 0;
     history.replaceState(currentState, window.title);
@@ -663,10 +839,9 @@ TC.Types.History = function (history) {
         if (e.state !== null) currentAction(e);
     }
 
-    this.navigate = function (options, urlProvider) {
-        var urlData = (urlProvider && urlProvider.constructor === Function)
-            ? urlProvider(options) : {};
-        history.pushState(++currentState, urlData.title, urlData.url);
+    this.navigate = function (urlOptions) {
+        urlOptions = urlOptions || {};
+        history.pushState(++currentState, urlOptions.title, urlOptions.url);
     };
 
     this.go = function(frameCount) {
@@ -773,11 +948,10 @@ TC.Types.Models.prototype.register = function (resourcePath, constructor, option
     };
     TC.logger.debug("Model loaded for " + resourcePath);
 };TC.Types.Navigation = function (node, options) {
-    options = options || {};
-    if (options.constructor === String)
-        options = { transition: options };
+    normaliseOptions();
+    setInitialPaneState();
 
-    var stack = [{ path: node.pane.path, data: node.pane.data }];
+    var stack = [initialStackItem()];
     var currentFrame = 0;
 
     this.node = node;
@@ -785,7 +959,7 @@ TC.Types.Models.prototype.register = function (resourcePath, constructor, option
 
     this.navigate = function (paneOptions) {
         if (options.browser)
-            TC.history.navigate(paneOptions, options.browser);
+            TC.history.navigate(options.browser && options.browser.urlDataFrom(paneOptions));
 
         trimStack();
         stack.push(paneOptions);
@@ -831,6 +1005,26 @@ TC.Types.Models.prototype.register = function (resourcePath, constructor, option
     this.dispose = function() {
         document.removeEventListener('browser.go', onBrowserGo);
     };
+    
+    function normaliseOptions() {
+        options = options || {};
+        if (options.constructor === String)
+            options = { transition: options };
+        if (options.browser === true)
+            options.browser = TC.options.defaultUrlProvider;
+    }
+    
+    function setInitialPaneState() {
+        var urlState = options.browser && options.browser.paneOptionsFrom(window.location.search);
+        if (urlState) {
+            node.pane.path = urlState.path;
+            node.pane.data = urlState.data;
+        }
+    }
+    
+    function initialStackItem() {
+        return { path: node.pane.path, data: node.pane.data };
+    }
 };TC.Types.Node = function (parent, pane) {
     this.parent = parent;
     this.children = [];
@@ -1486,7 +1680,14 @@ $('<style/>')
         return $.extend({}, staticState, perContextState, source);
     };
 })();
-(function () {
+TC.options.defaultUrlProvider = {
+    urlDataFrom: function(paneOptions) {
+        return null;
+    },
+    paneOptionsFrom: function(url) {
+        return null;
+    }
+};(function () {
     var utils = TC.Utils;
 
     TC.createNode = function (element, paneOptions, parentNode, context) {

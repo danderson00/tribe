@@ -48,9 +48,7 @@
     });
 
     test("window.history.pushState is called with url and title if urlProvider is passed", function() {
-        history.navigate(null, function() {
-            return { url: 'url1', title: 'title1' };
-        });
+        history.navigate({ url: 'url1', title: 'title1' });
         equal(api.pushState.firstCall.args[1], 'title1');
         equal(api.pushState.firstCall.args[2], 'url1');
     });

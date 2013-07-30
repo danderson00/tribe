@@ -6,6 +6,7 @@
         'Guides': {
             'Features': 'features',
             'Getting Started': 'gettingStarted',
+            'Configuring MessageBus': 'messageBus',
             'Webmail Tutorial': 'webmail'
         }
     },

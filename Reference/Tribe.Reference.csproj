@@ -19,6 +19,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -113,6 +115,7 @@
     <Content Include="Build\site.chrome.js" />
     <Content Include="Build\site.js" />
     <Content Include="Build\site.min.js" />
+    <Content Include="Images\knockout\background.jpg" />
     <Content Include="m.html" />
     <Content Include="index.html" />
     <Content Include="Global.asax" />
@@ -126,7 +129,6 @@
     <Content Include="Images\icon.htm.png" />
     <Content Include="Images\icon.html.png" />
     <Content Include="Images\icon.js.png" />
-    <Content Include="Images\knockout\background.png" />
     <Content Include="Images\knockout\bindings.png" />
     <Content Include="Images\knockout\dependencies.png" />
     <Content Include="Images\knockout\logo.png" />
@@ -134,6 +136,7 @@
     <Content Include="Images\knockout\templating.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Panes\Content\Functions.js" />
+    <Content Include="Panes\Content\Guides\Guides\messageBus.htm" />
     <Content Include="Panes\Content\Guides\Guides\webmail.htm" />
     <Content Include="Panes\Content\Reference\Utilities\panes.htm" />
     <Content Include="Panes\Content\Reference\Utilities\paths.htm" />
@@ -141,6 +144,7 @@
     <Content Include="Panes\Content\Reference\Utilities\events.htm" />
     <Content Include="Panes\Content\Reference\Utilities\embeddedState.htm" />
     <Content Include="Panes\Content\Reference\Utilities\misc.htm" />
+    <Content Include="Panes\Interface\function.css" />
     <Content Include="Panes\Interface\function.htm" />
     <Content Include="Panes\Interface\function.js" />
     <Content Include="Panes\Interface\functionList.htm" />
@@ -294,6 +298,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

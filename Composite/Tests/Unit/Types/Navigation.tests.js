@@ -97,7 +97,58 @@
         TC.Utils.raiseDocumentEvent('browser.go', { count: -1 });
         equal(node.transitionTo.secondCall.args[0].path, 'test');
     });
-    
+
+    test("initial state is set from urlProvider if paneOptionsFrom returns paneOptions object", function () {
+        var provider = {
+            paneOptionsFrom: function() {
+                return {
+                    path: 'test',
+                    data: { test: 'test' }
+                };
+            }
+        };
+        nav = new TC.Types.Navigation(node, { browser: provider });
+        deepEqual(nav.stack[0], provider.paneOptionsFrom());
+    });
+
+    test("initial state is not set from urlProvider if paneOptionsFrom returns null", function() {
+        var provider = {
+            paneOptionsFrom: function () { return null; }
+        };
+        nav = new TC.Types.Navigation(node, { browser: provider });
+        deepEqual(nav.stack[0].path, 'test');
+    });
+
+    test("history url and title are set from urlProvider when navigating", function () {
+        var provider = {
+            paneOptionsFrom: function () { return null; },
+            urlDataFrom: function() {
+                return {
+                    url: 'test',
+                    title: 'test'
+                };
+            }
+        };
+        nav = new TC.Types.Navigation(node, { browser: provider });
+        nav.navigate({ path: 'test2' });
+        deepEqual(TC.history.navigate.firstCall.args[0], provider.urlDataFrom());
+    });
+
+    Test.urlProvider = {
+        urlDataFrom: function() {
+            return {
+                url: 'test',
+                title: 'test'
+            };
+        },
+        paneOptionsFrom: function() {
+            return {
+                path: 'test',
+                data: { test: 'test' }
+            };
+        }
+    };
+
     function nodeStub(path) {
         return {
             id: 1,

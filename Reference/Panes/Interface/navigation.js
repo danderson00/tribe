@@ -26,8 +26,18 @@
     window.addEventListener('navigating', navigating);
     function navigating(e) {
         var data = e.data.options.data || {};
+        updateCurrentArticle(data);
+    }
+    
+    // this is to handle bookmarks / refresh
+    // need to come up with a better way of doing this
+    this.renderComplete = function() {
+        updateCurrentArticle(pane.node.findNavigation().node.pane.data);
+    };
+
+    function updateCurrentArticle(data) {
         self.selectedTopic(data.topic);
-        
+
         if (currentSection !== data.section) {
             currentSection = data.section;
             var items = mapNavigation(data.section);

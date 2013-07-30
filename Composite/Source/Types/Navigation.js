@@ -1,9 +1,8 @@
 ﻿TC.Types.Navigation = function (node, options) {
-    options = options || {};
-    if (options.constructor === String)
-        options = { transition: options };
+    normaliseOptions();
+    setInitialPaneState();
 
-    var stack = [{ path: node.pane.path, data: node.pane.data }];
+    var stack = [initialStackItem()];
     var currentFrame = 0;
 
     this.node = node;
@@ -11,7 +10,7 @@
 
     this.navigate = function (paneOptions) {
         if (options.browser)
-            TC.history.navigate(paneOptions, options.browser);
+            TC.history.navigate(options.browser && options.browser.urlDataFrom(paneOptions));
 
         trimStack();
         stack.push(paneOptions);
@@ -57,4 +56,24 @@
     this.dispose = function() {
         document.removeEventListener('browser.go', onBrowserGo);
     };
+    
+    function normaliseOptions() {
+        options = options || {};
+        if (options.constructor === String)
+            options = { transition: options };
+        if (options.browser === true)
+            options.browser = TC.options.defaultUrlProvider;
+    }
+    
+    function setInitialPaneState() {
+        var urlState = options.browser && options.browser.paneOptionsFrom(window.location.search);
+        if (urlState) {
+            node.pane.path = urlState.path;
+            node.pane.data = urlState.data;
+        }
+    }
+    
+    function initialStackItem() {
+        return { path: node.pane.path, data: node.pane.data };
+    }
 };

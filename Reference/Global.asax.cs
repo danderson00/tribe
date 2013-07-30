@@ -12,7 +12,6 @@ namespace Reference
         {
             ConfigureHub.With()
                         .Unity()
-                        .SqlServerPersistence("Channels")
                         .StartHub();
         }
     }

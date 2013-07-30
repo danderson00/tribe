@@ -47,12 +47,14 @@
     <Content Include="Samples\Transitions\layout.htm" />
     <Content Include="Samples\Transitions\target2.htm" />
     <Content Include="Samples\Transitions\target3.htm" />
+    <Content Include="Source\Api\defaultUrlProvider.js" />
     <Content Include="Source\Transitions\Css\slide.css" />
     <Content Include="Source\Types\History.js" />
     <Content Include="Source\Types\Navigation.js" />
     <Content Include="Source\Types\Saga.js" />
     <Content Include="Source\Utilities\bindingHandlers.js" />
     <Content Include="Source\Utilities\collections.js" />
+    <Content Include="Source\Utilities\querystring.parse.js" />
     <Content Include="Source\Utilities\events.js" />
     <Content Include="Source\Utilities\idGenerator.js" />
     <Content Include="Source\Utilities\panes.js" />
@@ -180,6 +182,7 @@
     <Content Include="Tests\Unit\Infrastructure\node.js" />
     <Content Include="Tests\setup.js" />
     <Content Include="Tests\Unit\Infrastructure\pane.js" />
+    <Content Include="Tests\Unit\Infrastructure\testUrlProvider.js" />
     <Content Include="Tests\Unit\LoadStrategies\adhoc.tests.js" />
     <Content Include="Tests\Unit\Events\renderPane.tests.js" />
     <Content Include="Tests\Unit\LoadStrategies\preloaded.tests.js" />
@@ -214,6 +217,8 @@
     <Content Include="Tests\Resources\sinon.js" />
     <Content Include="Tests\Unit\Types\Templates.tests.js" />
     <Content Include="Tests\Unit\Transitions\transition.tests.js" />
+    <Content Include="Source\Utilities\querystring.stringify.js" />
+    <Content Include="Tests\Unit\Utilities\querystring.tests.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documentation\" />

@@ -94,3 +94,20 @@ test("pluck returns property value from each object in array", function() {
     equal(result.length, 3);
     equal(result.join(''), 'ace');
 });
+
+test("reduce executes reduceFunction with expected arguments", function() {
+    var spy = sinon.spy();
+    var list = [1, 2];
+    T.reduce(list, 'initial', spy);
+
+    equal(spy.callCount, 2);
+    deepEqual(spy.firstCall.args, ['initial', 1, 0, list]);
+    deepEqual(spy.secondCall.args, [undefined, 2, 1, list]);
+});
+
+test("reduce returns expected result", function() {
+    var result = T.reduce([1, 2, 3, 4], 10, function(memo, value) {
+        return memo + value;
+    });
+    equal(result, 20);
+});
