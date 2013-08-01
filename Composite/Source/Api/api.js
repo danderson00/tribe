@@ -33,4 +33,4 @@
         } else
             ko.applyBindings(model);
     };
-})();
+})(); 

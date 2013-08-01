@@ -1650,7 +1650,7 @@ $('<style/>')
         } else
             ko.applyBindings(model);
     };
-})();(function() {
+})(); (function() {
     ko.bindingHandlers.pane = { init: updateBinding };
 
     function updateBinding(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
