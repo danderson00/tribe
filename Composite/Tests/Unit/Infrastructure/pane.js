@@ -1,4 +1,4 @@
-﻿Test.pane = function() {
+﻿Test.pane = function () {
     return {
         path: 'test',
         element: '#qunit-fixture',
@@ -10,4 +10,4 @@
         endRender: function () { },
         dispose: function () { }
     };
-}
+};

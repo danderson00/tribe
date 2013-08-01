@@ -18,7 +18,7 @@ var infrastructureIncludes = [
 
 pack({
     to: 'tests.js',
-    include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes],// T.panes.chrome('Integration/Panes')],
+    include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes],
     recursive: true,
     prioritise: 'setup.js',
     template: T.chromeScript('Tests')
@@ -26,7 +26,7 @@ pack({
 
 pack({
     to: 'tests.min.js',
-    include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes], //T.panes('Integration/Panes')],
+    include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes],
     recursive: true,
     prioritise: 'setup.js',
     minify: true
@@ -40,3 +40,13 @@ pack({
     template: T.chromeScript('Tests')
 });
 
+pack({
+    to: 'tests.mockjax.js',
+    include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes,
+        {
+            files: 'Integration/Panes/*.*',
+            template: 'T.mockjax'
+        }],
+    recursive: true,
+    prioritise: 'setup.js'
+})
