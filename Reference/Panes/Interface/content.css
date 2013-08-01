@@ -57,6 +57,11 @@
     margin-top: -30px;
 }
 
+img.topRight {
+    position: static !important;
+    float: right;
+    margin: 0 !important;
+}
 /* Without this, stuff flops around on transitioning. I don't get it either... */
 .out .content.block {
     margin-top: 0;

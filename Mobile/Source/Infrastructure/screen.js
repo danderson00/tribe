@@ -38,7 +38,7 @@
         }
         // Scroll after a timeout, since iOS will scroll to the top of the page
         // after it fires the onload event
-        setTimeout(scrollTo, 0, 0, 1);
+        setTimeout(scrollTo, 0, 0, 0);
     };
     (window.onresize = function () {
         var pageWidth = page.offsetWidth;

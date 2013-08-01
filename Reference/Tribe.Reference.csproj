@@ -115,6 +115,12 @@
     <Content Include="Build\site.chrome.js" />
     <Content Include="Build\site.js" />
     <Content Include="Build\site.min.js" />
+    <Content Include="Images\Features\communication.jpg" />
+    <Content Include="Images\Features\composite.jpg" />
+    <Content Include="Images\Features\mobile.jpg" />
+    <Content Include="Images\Features\nuget.jpg" />
+    <Content Include="Images\Features\resources.jpg" />
+    <Content Include="Images\Features\simple.jpg" />
     <Content Include="Images\knockout\background.jpg" />
     <Content Include="Infrastructure\Reference.js" />
     <Content Include="Infrastructure\syntaxHighlightEvent.js" />
@@ -122,11 +128,6 @@
     <Content Include="index.html" />
     <Content Include="Global.asax" />
     <Content Include="Images\device.mobile.png" />
-    <Content Include="Images\Features\communication.png" />
-    <Content Include="Images\Features\composite.png" />
-    <Content Include="Images\Features\mobile.png" />
-    <Content Include="Images\Features\resources.png" />
-    <Content Include="Images\Features\simple.png" />
     <Content Include="Images\icon.css.png" />
     <Content Include="Images\icon.htm.png" />
     <Content Include="Images\icon.html.png" />
@@ -137,6 +138,8 @@
     <Content Include="Images\knockout\refresh.png" />
     <Content Include="Images\knockout\templating.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Panes\Content\About\masthead.js" />
+    <Content Include="Panes\Content\Guides\Guides\getStarted.css" />
     <Content Include="Panes\Content\Reference\Core\api.js" />
     <Content Include="Panes\Content\Guides\Guides\messageBus.htm" />
     <Content Include="Panes\Content\Guides\Guides\webmail.htm" />
