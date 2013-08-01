@@ -20,7 +20,7 @@
             if ($.isArray(preload))
                 for (var i = 0; i < preload.length; i++)
                     addPromise(preload[i]);
-            else
+            else if(preload.constructor === String)
                 addPromise(preload);
             
             function addPromise(path) {

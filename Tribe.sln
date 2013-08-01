@@ -34,6 +34,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{03E4F0F7-BD17-49F4-AC62-05FF5974251E}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		index.html = index.html
 		pack.js = pack.js
 		README.md = README.md
 		tests.html = tests.html

@@ -35,6 +35,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="T.document.pack.config.js" />
+    <Content Include="T.document.template.js" />
     <Content Include="T.testModule.pack.config.js" />
     <Content Include="T.scriptUrl.pack.config.js" />
     <Content Include="T.scriptUrl.template.js" />
@@ -50,6 +52,13 @@
     <Content Include="T.model.template.js" />
     <Content Include="T.template.template.htm" />
     <Content Include="1.pack.config.js" />
+    <Content Include="Tests\index.html" />
+    <Content Include="Tests\jquery-1.9.1.js" />
+    <Content Include="Tests\qunit.css" />
+    <Content Include="Tests\qunit.js" />
+    <Content Include="Tests\sinon.js" />
+    <Content Include="Tests\source.js" />
+    <Content Include="Tests\T.document.tests.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
