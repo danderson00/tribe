@@ -123,6 +123,7 @@
     <Content Include="Images\Features\simple.jpg" />
     <Content Include="Images\knockout\background.jpg" />
     <Content Include="Infrastructure\Reference.js" />
+    <Content Include="Infrastructure\samples.js" />
     <Content Include="Infrastructure\syntaxHighlightEvent.js" />
     <Content Include="m.html" />
     <Content Include="index.html" />
@@ -139,7 +140,6 @@
     <Content Include="Images\knockout\templating.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Panes\Content\About\masthead.js" />
-    <Content Include="Panes\Content\Guides\Guides\getStarted.css" />
     <Content Include="Panes\Content\Reference\Core\api.js" />
     <Content Include="Panes\Content\Guides\Guides\messageBus.htm" />
     <Content Include="Panes\Content\Guides\Guides\webmail.htm" />
