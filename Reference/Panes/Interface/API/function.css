@@ -1,21 +1,4 @@
-﻿.function {
-    margin: 10px;
-    padding: 15px;
-    border: 2px solid #222;
-    border-radius: 6px;
-}
-
-.function h1 {
-    color: white;
-    background: #222;
-    font-weight: bold;
-    font-size: inherit;
-    height: 20px;
-    margin: -15px -15px 0 -15px;
-    padding: 7px 10px 10px 10px;
-}
-
-.function h1 .returns {
+﻿.function h1 .returns {
     float: right;
     font-weight: normal;
 }
@@ -25,20 +8,12 @@
     font-style: italic;
 }
 
-.function p {
-    margin: 10px 0;
-}
-
-.function pre {
-    margin: 0;
-}
-
 .function .name {
     font-size: 1.2em;
 }
 
-.function .example {
+.example {
     background: #EED;
-    padding: 0 10px 10px 10px;
-    margin-top: 10px;
+    padding: 0 10px;
+    margin: 20px;
 }

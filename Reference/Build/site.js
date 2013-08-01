@@ -228,7 +228,9 @@ Samples['Mobile'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
     content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    TC.toolbar.defaults.back = true;\n\n    this.samples = function() {\n        pane.navigate(\'layout\');\n    };\n\n    this.chat = function () {\n        pane.navigate(\'chat\');\n    };\n});</pre>'
-});$('<style/>')
+});TC.Events.syntaxHighlight = function(pane) {
+    pane.find();
+};$('<style/>')
     .attr('class', '__tribe')
     .text('.example3 .sample .samplePane{padding:0;width:320px;height:480px;left:22px;top:136px}.example3 .sample>*{height:711px}.example3 .sample .source{width:548px}.example3 .sample .result{width:365px;height:721px;border:none;background:url(\'../Images/device.mobile.png\');margin-left:15px}.example3 .sample .fileList{width:548px;height:auto}.example3 .sample .fileContent{width:548px;height:auto}.example3 .result .title{display:none}')
     .appendTo('head');
@@ -246,7 +248,7 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}.block{background:#fff;border:1px solid #aaa;margin-bottom:10px;margin-top:10px;border-radius:8px;box-sizing:border-box}.block p{margin:10px 20px;font-size:18px}.out .content.block{margin-top:0}.block>h1{color:#fff;font-weight:bold;font-size:inherit;height:20px;border-top-left-radius:8px;border-top-right-radius:8px;padding:10px;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;background:-moz-linear-gradient(top,#103070 0%,#457ae4 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#103070),color-stop(100%,#457ae4));background:-webkit-linear-gradient(top,#103070 0%,#457ae4 100%);background:-o-linear-gradient(top,#103070 0%,#457ae4 100%);background:-ms-linear-gradient(top,#103070 0%,#457ae4 100%);background:linear-gradient(to bottom,#103070 0%,#457ae4 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#103070\',endColorstr=\'#457ae4\',GradientType=0)}')
+    .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}.block{background:#fff;border:1px solid #aaa;margin-bottom:10px;margin-top:10px;border-radius:8px;box-sizing:border-box}.block p{margin:10px 20px;font-size:18px}.block .child{margin:10px;padding:15px;border:2px solid #222;border-radius:6px}.block .child h1{color:#fff;background:#222;font-weight:bold;font-size:inherit;height:20px;margin:-15px -15px 0 -15px;padding:7px 10px 10px 10px}.block .child p{margin:10px 0}.block .child pre{margin:0}.out .content.block{margin-top:0}.block>h1{color:#fff;font-weight:bold;font-size:inherit;height:20px;border-top-left-radius:8px;border-top-right-radius:8px;padding:10px;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;background:-moz-linear-gradient(top,#103070 0%,#457ae4 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#103070),color-stop(100%,#457ae4));background:-webkit-linear-gradient(top,#103070 0%,#457ae4 100%);background:-o-linear-gradient(top,#103070 0%,#457ae4 100%);background:-ms-linear-gradient(top,#103070 0%,#457ae4 100%);background:linear-gradient(to bottom,#103070 0%,#457ae4 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#103070\',endColorstr=\'#457ae4\',GradientType=0)}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
@@ -270,7 +272,7 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.function{margin:10px;padding:15px;border:2px solid #222;border-radius:6px}.function h1{color:#fff;background:#222;font-weight:bold;font-size:inherit;height:20px;margin:-15px -15px 0 -15px;padding:7px 10px 10px 10px}.function h1 .returns{float:right;font-weight:normal}.function h1 .returns .type{font-weight:bold;font-style:italic}.function p{margin:10px 0}.function pre{margin:0}.function .name{font-size:1.2em}.function .example{background:#eed;padding:0 10px 10px 10px;margin-top:10px}')
+    .text('.function h1 .returns{float:right;font-weight:normal}.function h1 .returns .type{font-weight:bold;font-style:italic}.function .name{font-size:1.2em}.example{background:#eed;padding:0 10px;margin:20px}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
@@ -307,7 +309,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-features"><div class="content block">\n    <h1>Features</h1>\n    <p>Under construction</p>\n</div>\n\n<div class="content block">\n    <h1>Composite</h1>\n    <ul>\n        <li>Full resource lifecycle management</li>\n        <li>Extensible</li>\n    </ul>\n</div>\n\n<div class="content block">\n    <h1>MessageBus</h1>\n    <ul>\n        <li>Transparent message broadcast</li>\n        <li>Automatic translation to server-side message buses</li>\n        <li>Extensible authorisation</li>\n    </ul>\n</div>\n\n<div class="content block">\n    <h1>Mobile</h1>\n    <ul>\n        <li></li>\n    </ul>\n</div>\n\n<div class="content block">\n    <h1>PackScript</h1>\n    <ul>\n        <li></li>\n    </ul>\n</div>\n\n<div class="content block">\n    <h1>Forms</h1>\n    <ul>\n        <li></li>\n    </ul>\n</div>\n\n<div class="content block">\n    <h1>Components</h1>\n    <ul>\n        <li></li>\n    </ul>\n</div>\n\n<div class="content block">\n    <h1>PubSub</h1>\n    <ul>\n        <li></li>\n    </ul>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Guides-Guides-getStarted"><div class="content block">\n    <h1>Get Started</h1>\n    <p>There are three easy ways to get started with the Tribe platform:</p>\n</div>\n\n<div class="content block">\n    <h1>Online Resources</h1>\n    <p>Use the following HTML for your bootstrapper:</p>\n    <div class="example">\n        <pre>\n\n</pre>\n    </div>\n</div>\n\n<div class="content block">\n    <h1>NuGet Package</h1>\n    <p>If you\'re a Visual Studio user, the easiest way to get started is to install the Tribe.Template <a href="http://nuget.org" target="_blank">NuGet package</a>.</p>\n</div>\n\n<div class="content block">\n    <h1>Download</h1>\n    <p>Download a ZIP file containing \n        <ul>\n            <li>The production, debug and special Chrome version of Tribe</li>\n            <li>Forms, Mobile and Components</li>\n            <li>A starter template</li>\n        </ul>\n    </p>\n    <p>\n        or download the production source.\n    </p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Guides-Guides-getStarted"><div class="content block">\n    <h1>Get Started</h1>\n    <p>There are three easy ways to get started with the Tribe platform.</p>\n\n    <div class="child">\n        <h1>Online Resources</h1>\n        <p>Use the following HTML for your bootstrapper:</p>\n        <div class="example">\n            <pre>\n&lt;!DOCTYPE HTML>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">&lt;/script>        \n        &lt;script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js">&lt;/script>\n        &lt;script src="http://danderson00.github.io/Tribe/Build/Tribe.chrome.js">&lt;/script>\n        &lt;script>$(TC.run)&lt;/script>\n    &lt;/head>\n    &lt;body data-bind="pane: \'layout\'">&lt;/body>\n&lt;/html></pre>\n        </div>\n        <p>Replace \'layout\' with the path to your starting pane.</p>\n        <p>For MessageHub functionality, use one of the following methods.</p>\n    </div>\n\n    <div class="child">\n        <h1>NuGet Packages</h1>\n        <p>If you\'re a Visual Studio user, the easiest way to get started is to install one of the Tribe NuGet packages.</p>\n        <ul>\n            <li>Tribe - Everything you need for complete Composite and MessageHub functionality.</li>\n            <li>Tribe.Template - Everything in the Tribe package plus a basic starter template.</li>\n            <li>Tribe.Composite - Tribe.Composite, Mobile, Forms and Components.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Download</h1>\n        <p>Download a ZIP file containing </p>\n        <ul>\n            <li>The production, debug and special Chrome version of Tribe.Composite</li>\n            <li>Tribe.MessageHub binaries</li>\n            <li>Forms, Mobile and Components</li>\n            <li>A starter template</li>\n        </ul>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-index"><div class="content block">\n    <h1>Guides</h1>\n    <p>Under construction</p>\n</div></script>');
 $('head')
@@ -377,7 +379,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Interface-API-constructor"><div data-bind="pane: \'function\', data: func">\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Interface-API-function"><div class="function">\n    <h1>\n        <span data-bind="text: f.name"></span>(<span data-bind="text: argumentNames"></span>)\n        <span class="returns" data-bind="visible: f.returns">Returns: <span class="type" data-bind="text: f.returns"></span></span>\n    </h1>\n    <p data-bind="html: f.description"></p>\n\n    <table data-bind="visible: f.arguments && f.arguments.length > 0">\n        <thead>\n            <tr>\n                <th>Argument</th>\n                <th>Type</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody data-bind="foreach: f.arguments">\n            <tr>\n                <td data-bind="text: $data.name"></td>\n                <td data-bind="text: $data.type"></td>\n                <td data-bind="text: $data.description"></td>\n            </tr>\n        </tbody>\n    </table>\n    \n    <div data-bind="foreach: f.examples">\n        <div class="example">\n            <p data-bind="text: description"></p>\n            <pre data-bind="text: code"></pre>\n            <p>Result:</p>\n            <pre data-bind="text: result"></pre>\n        </div>\n    </div>\n</div></script>');
+    .append('<script type="text/template" id="template--Interface-API-function"><div class="function child">\n    <h1>\n        <span data-bind="text: f.name"></span>(<span data-bind="text: argumentNames"></span>)\n        <span class="returns" data-bind="visible: f.returns">Returns: <span class="type" data-bind="text: f.returns"></span></span>\n    </h1>\n    <p data-bind="html: f.description"></p>\n\n    <table data-bind="visible: f.arguments && f.arguments.length > 0">\n        <thead>\n            <tr>\n                <th>Argument</th>\n                <th>Type</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody data-bind="foreach: f.arguments">\n            <tr>\n                <td data-bind="text: $data.name"></td>\n                <td data-bind="text: $data.type"></td>\n                <td data-bind="text: $data.description"></td>\n            </tr>\n        </tbody>\n    </table>\n    \n    <div data-bind="foreach: f.examples">\n        <div class="example">\n            <p data-bind="text: description"></p>\n            <pre data-bind="text: code"></pre>\n            <p>Result:</p>\n            <pre data-bind="text: result"></pre>\n        </div>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-API-functionList"><div data-bind="foreach: pane.data.functions">\n    <div data-bind="pane: \'function\', data: $data"></div>\n</div></script>');
 $('head')
@@ -1045,6 +1047,12 @@ TC.scriptEnvironment = { resourcePath: '/Interface/content' };
 TC.registerModel(function (pane) {
     this.panePath = panePath(pane.data);
 
+    this.renderComplete = function() {
+        pane.find('pre').each(function() {
+            $(this).html(PR.prettyPrintOne($(this).html()));
+        });
+    };
+
     pane.pubsub.subscribe('article.show', function (article) {
         $(pane.element).css({ 'width': '100%' });
         pane.navigate({ path: '/Interface/content', data: article });
@@ -1213,12 +1221,6 @@ TC.registerModel(function(pane) {
     this.f = pane.data;
 
     this.argumentNames = TC.Utils.pluck(pane.data.arguments, 'name').join(', ');
-
-    this.paneRendered = function() {
-        $(pane.element).find('pre').each(function() {
-            $(this).html(PR.prettyPrintOne($(this).text()));
-        });
-    };
 });
 //@ sourceURL=tribe://Panes/Interface/API/function.js
 TC.scriptEnvironment = { resourcePath: '/Interface/API/type' };
