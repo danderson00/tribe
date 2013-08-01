@@ -43,7 +43,7 @@
             arguments: [
                 { name: 'pane', type: 'TC.Types.Pane' }
             ],
-            returns: ''
+            returns: 'undefined'
         },
         {
             name: 'nodeForPath',
