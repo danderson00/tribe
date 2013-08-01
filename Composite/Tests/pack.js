@@ -40,4 +40,4 @@ pack({
     template: T.chromeScript('Tests')
 });
 
-pack(T.mockjax('tests.mockjax.js', 'Integration/Panes'));
+pack(T.mockjax('tests.panes.js', 'Integration/Panes'));
