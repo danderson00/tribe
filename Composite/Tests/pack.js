@@ -40,13 +40,4 @@ pack({
     template: T.chromeScript('Tests')
 });
 
-pack({
-    to: 'tests.mockjax.js',
-    include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes,
-        {
-            files: 'Integration/Panes/*.*',
-            template: 'T.mockjax'
-        }],
-    recursive: true,
-    prioritise: 'setup.js'
-})
+pack(T.mockjax('tests.mockjax.js', 'Integration/Panes'));
