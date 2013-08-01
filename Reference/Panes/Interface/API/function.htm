@@ -1,0 +1,33 @@
+﻿<div class="function">
+    <h1>
+        <span data-bind="text: f.name"></span>(<span data-bind="text: argumentNames"></span>)
+        <span class="returns" data-bind="visible: f.returns">Returns: <span class="type" data-bind="text: f.returns"></span></span>
+    </h1>
+    <p data-bind="html: f.description"></p>
+
+    <table data-bind="visible: f.arguments && f.arguments.length > 0">
+        <thead>
+            <tr>
+                <th>Argument</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: f.arguments">
+            <tr>
+                <td data-bind="text: $data.name"></td>
+                <td data-bind="text: $data.type"></td>
+                <td data-bind="text: $data.description"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div data-bind="foreach: f.examples">
+        <div class="example">
+            <p data-bind="text: description"></p>
+            <pre data-bind="text: code"></pre>
+            <p>Result:</p>
+            <pre data-bind="text: result"></pre>
+        </div>
+    </div>
+</div>

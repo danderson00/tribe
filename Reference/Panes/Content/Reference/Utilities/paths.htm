@@ -1,18 +1,6 @@
-﻿<div class="api content block">
-    <div class="blockHeader">Paths</div>
-    <pre>
-Path = function(path) { return {
-    withoutFilename: function() {
-    filename: function() {
-    extension: function() {
-    withoutExtension: function() {
-    combine: function (additionalPath) {
-    isAbsolute: function() {
-    makeAbsolute: function() {
-    makeRelative: function() {
-    asMarkupIdentifier: function() {
-    setExtension: function(extension) {
-    toString: function()
-}
-            </pre>
+﻿<div class="content block">
+    <h1>Paths</h1>
+    <div data-bind="pane: '/Interface/API/functionList', data: { functions: Reference.Path }"></div>
+    <p>Functions attached to the returned object are described below.</p>
+    <div data-bind="pane: '/Interface/API/functionList', data: { functions: Reference.Path.Functions }"></div>
 </div>

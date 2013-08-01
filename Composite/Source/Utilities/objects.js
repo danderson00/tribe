@@ -1,4 +1,14 @@
-﻿TC.Utils.arguments = function (args) {
+﻿////namespace('TC.Utils');
+////category('Objects');
+
+////func({
+////    name: 'arguments',
+////    description: "Wraps an array or arguments object, providing access by constructor",
+////    arguments: [
+////        { name: 'args', type: 'Array | arguments', description: '' }
+////    ],
+////});
+TC.Utils.arguments = function (args) {
     var byConstructor = {};
     $.each(args, function (index, arg) {
         byConstructor[arg.constructor] = arg;

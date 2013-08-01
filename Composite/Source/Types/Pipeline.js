@@ -1,7 +1,4 @@
-﻿// Manages the step by step execution of a number of named events
-// Each step will only execute after the promise returned by the previous step resolves
-// A rejected promise will halt execution of the pipeline
-TC.Types.Pipeline = function (events, context) {
+﻿TC.Types.Pipeline = function (events, context) {
     this.execute = function (eventsToExecute, target) {
         var currentEvent = -1;
         var promise = $.Deferred();

@@ -1,7 +1,4 @@
-﻿// Ensures URLs are only loaded once. 
-// Concurrent requests return the same promise.
-// Delegates actual loading and handling of resources to LoadHandlers
-TC.Types.Loader = function () {
+﻿TC.Types.Loader = function () {
     var self = this;
     var resources = {};
 

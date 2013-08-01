@@ -116,6 +116,7 @@
     <Content Include="Build\site.js" />
     <Content Include="Build\site.min.js" />
     <Content Include="Images\knockout\background.jpg" />
+    <Content Include="Infrastructure\Reference.js" />
     <Content Include="m.html" />
     <Content Include="index.html" />
     <Content Include="Global.asax" />
@@ -135,9 +136,39 @@
     <Content Include="Images\knockout\refresh.png" />
     <Content Include="Images\knockout\templating.png" />
     <Content Include="Images\logo.png" />
-    <Content Include="Panes\Content\Functions.js" />
+    <Content Include="Panes\Content\Reference\Core\api.js" />
     <Content Include="Panes\Content\Guides\Guides\messageBus.htm" />
     <Content Include="Panes\Content\Guides\Guides\webmail.htm" />
+    <Content Include="Panes\Content\Reference\Core\transitions.htm" />
+    <Content Include="Panes\Content\Reference\Types\History.htm" />
+    <Content Include="Panes\Content\Reference\Types\History.js" />
+    <Content Include="Panes\Content\Reference\Types\Models.htm" />
+    <Content Include="Panes\Content\Reference\Types\Models.js" />
+    <Content Include="Panes\Content\Reference\Types\Node.htm" />
+    <Content Include="Panes\Content\Reference\Types\Node.js" />
+    <Content Include="Panes\Content\Reference\Types\Operation.htm" />
+    <Content Include="Panes\Content\Reference\Types\Operation.js" />
+    <Content Include="Panes\Content\Reference\Types\Pane.htm" />
+    <Content Include="Panes\Content\Reference\Types\Pane.js" />
+    <Content Include="Panes\Content\Reference\Types\Pipeline.htm" />
+    <Content Include="Panes\Content\Reference\Types\Pipeline.js" />
+    <Content Include="Panes\Content\Reference\Types\Saga.htm" />
+    <Content Include="Panes\Content\Reference\Types\Saga.js" />
+    <Content Include="Panes\Content\Reference\Types\Templates.htm" />
+    <Content Include="Panes\Content\Reference\Types\Templates.js" />
+    <Content Include="Panes\Content\Reference\Types\Logger.htm" />
+    <Content Include="Panes\Content\Reference\Types\Logger.js" />
+    <Content Include="Panes\Content\Reference\Types\Loader.htm" />
+    <Content Include="Panes\Content\Reference\Types\Loader.js" />
+    <Content Include="Panes\Content\Reference\Utilities\collections.js" />
+    <Content Include="Panes\Content\Reference\Utilities\embeddedState.js" />
+    <Content Include="Panes\Content\Reference\Utilities\panes.js" />
+    <Content Include="Panes\Content\Reference\Utilities\paths.js" />
+    <Content Include="Panes\Content\Reference\Utilities\objects.js" />
+    <Content Include="Panes\Content\Reference\Utilities\misc.js" />
+    <Content Include="Panes\Content\Reference\Utilities\packScript.js" />
+    <Content Include="Panes\Content\Reference\Utilities\events.js" />
+    <Content Include="Panes\Content\Reference\Utilities\packScript.htm" />
     <Content Include="Panes\Content\Reference\Utilities\panes.htm" />
     <Content Include="Panes\Content\Reference\Utilities\paths.htm" />
     <Content Include="Panes\Content\Reference\Utilities\collections.htm" />
@@ -212,7 +243,6 @@
     <Content Include="Panes\Interface\layout.css" />
     <Content Include="Panes\Interface\layout.htm" />
     <Content Include="Panes\Interface\main.htm" />
-    <Content Include="Panes\Interface\layout.js" />
     <Content Include="Panes\Interface\navigation.css" />
     <Content Include="Panes\Interface\navigation.htm" />
     <Content Include="Panes\Interface\navigation.js" />
@@ -271,7 +301,6 @@
     <Folder Include="Panes\Content\Reference\MessageHub\" />
     <Folder Include="Panes\Content\Reference\Mobile\" />
     <Folder Include="Panes\Content\Reference\PubSub\" />
-    <Folder Include="Panes\Content\Reference\Types\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

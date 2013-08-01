@@ -14,7 +14,7 @@
                 return Path(path.substring(filenameIndex));
             },
             extension: function() {
-                return Path(extensionIndex === -1 ? '' : path.substring(extensionIndex + 1));
+                return extensionIndex === -1 ? '' : path.substring(extensionIndex + 1);
             },
             withoutExtension: function() {
                 return Path(extensionIndex === -1 ? path : path.substring(0, extensionIndex));
@@ -33,10 +33,10 @@
                 return Path(path[0] === '/' ? path.substring(1) : path);
             },
             asMarkupIdentifier: function() {
-                return Path(this.withoutExtension().toString().replace(/\//g, '-').replace(/\./g, ''));
+                return this.withoutExtension().toString().replace(/\//g, '-').replace(/\./g, '');
             },
             setExtension: function(extension) {
-                return this.withoutExtension() + '.' + extension;
+                return Path(this.withoutExtension() + '.' + extension);
             },
             toString: function() {
                 return path.toString();

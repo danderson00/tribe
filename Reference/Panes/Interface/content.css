@@ -29,9 +29,10 @@
     margin-top: 0;
 }
 
-.blockHeader {
+.block > h1 {
     color: white;
     font-weight: bold;
+    font-size: inherit;
     height: 20px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;

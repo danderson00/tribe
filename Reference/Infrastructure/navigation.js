@@ -13,8 +13,9 @@
     Reference: {
         'Core': {
             'Panes': 'panes',
+            'Transitions': 'transitions',
+            'API': 'api',
             'Global Options': 'options',
-            'API': 'api'
         },
         'Types': {
             'History': 'History',
@@ -35,7 +36,8 @@
             'Embedded State': 'embeddedState',
             'Objects': 'objects',
             'Collections': 'collections',
-            'Miscellaneous': 'misc'
+            'Miscellaneous': 'misc',
+            'PackScript': 'packScript'
         },
         'PubSub': {
             'Core': 'core',

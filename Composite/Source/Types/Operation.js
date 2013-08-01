@@ -1,7 +1,4 @@
-﻿// Encapsulates an operation involving several child operations, keyed by an id
-// Child operations can be added cumulatively
-// Promise resolves when the all child operations complete
-TC.Types.Operation = function () {
+﻿TC.Types.Operation = function () {
     var self = this;
     var incomplete = [];
 

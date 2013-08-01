@@ -1,0 +1,15 @@
+﻿<div class="content block">
+    <h1 data-bind="text: t.name"></h1>
+    <p data-bind="text: t.description"></p>
+    <div data-bind="pane: 'constructor', data: t"></div>
+</div>
+
+<div class="content block" data-bind="visible: t.properties">
+    <h1>Properties</h1>
+    <div data-bind="pane: 'propertyList', data: { properties: t.properties }"></div>
+</div>
+
+<div class="content block" data-bind="visible: t.functions">
+    <h1>Functions</h1>
+    <div data-bind="pane: 'functionList', data: { functions: t.functions }"></div>
+</div>
