@@ -503,7 +503,17 @@ TC.options = TC.defaultOptions();(function () {
     $.cleanData = undefined;
     ko.cleanNode(element);
     $.cleanData = func;
-};TC.Utils.arguments = function (args) {
+};////namespace('TC.Utils');
+////category('Objects');
+
+////func({
+////    name: 'arguments',
+////    description: "Wraps an array or arguments object, providing access by constructor",
+////    arguments: [
+////        { name: 'args', type: 'Array | arguments', description: '' }
+////    ],
+////});
+TC.Utils.arguments = function (args) {
     var byConstructor = {};
     $.each(args, function (index, arg) {
         byConstructor[arg.constructor] = arg;
@@ -585,7 +595,7 @@ TC.Utils.evaluateProperty = function(target, property) {
                 return Path(path.substring(filenameIndex));
             },
             extension: function() {
-                return Path(extensionIndex === -1 ? '' : path.substring(extensionIndex + 1));
+                return extensionIndex === -1 ? '' : path.substring(extensionIndex + 1);
             },
             withoutExtension: function() {
                 return Path(extensionIndex === -1 ? path : path.substring(0, extensionIndex));
@@ -604,10 +614,10 @@ TC.Utils.evaluateProperty = function(target, property) {
                 return Path(path[0] === '/' ? path.substring(1) : path);
             },
             asMarkupIdentifier: function() {
-                return Path(this.withoutExtension().toString().replace(/\//g, '-').replace(/\./g, ''));
+                return this.withoutExtension().toString().replace(/\//g, '-').replace(/\./g, '');
             },
             setExtension: function(extension) {
-                return this.withoutExtension() + '.' + extension;
+                return Path(this.withoutExtension() + '.' + extension);
             },
             toString: function() {
                 return path.toString();
@@ -857,10 +867,7 @@ TC.Types.History = function (history) {
         window.removeEventListener('popstate', executeCurrentAction);
     };
 };
-TC.history = new TC.Types.History(window.history);// Ensures URLs are only loaded once. 
-// Concurrent requests return the same promise.
-// Delegates actual loading and handling of resources to LoadHandlers
-TC.Types.Loader = function () {
+TC.history = new TC.Types.History(window.history);TC.Types.Loader = function () {
     var self = this;
     var resources = {};
 
@@ -1100,10 +1107,7 @@ TC.Types.Node.prototype.dispose = function() {
         delete this.pane.node;
         this.pane.dispose();
     }
-};// Encapsulates an operation involving several child operations, keyed by an id
-// Child operations can be added cumulatively
-// Promise resolves when the all child operations complete
-TC.Types.Operation = function () {
+};TC.Types.Operation = function () {
     var self = this;
     var incomplete = [];
 
@@ -1133,7 +1137,11 @@ TC.Types.Pane.prototype.navigate = function (pathOrPane, data) {
     this.node && this.node.navigate(pathOrPane, data);
 };
 
-TC.Types.Pane.prototype.remove = function() {
+TC.Types.Pane.prototype.navigateBack = function () {
+    this.node && this.node.navigateBack();
+};
+
+TC.Types.Pane.prototype.remove = function () {
     $(this.element).remove();
 };
 
@@ -1174,10 +1182,7 @@ TC.Types.Pane.prototype.endRender = function () {
 
 TC.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
-};// Manages the step by step execution of a number of named events
-// Each step will only execute after the promise returned by the previous step resolves
-// A rejected promise will halt execution of the pipeline
-TC.Types.Pipeline = function (events, context) {
+};TC.Types.Pipeline = function (events, context) {
     this.execute = function (eventsToExecute, target) {
         var currentEvent = -1;
         var promise = $.Deferred();
@@ -1506,6 +1511,7 @@ TC.LoadStrategies.adhoc = function (pane, context) {
             $element.css({
                 position: 'absolute',
                 width: '100%',
+                //'box-sizing': 'border-box',
                 left: $element.position().left,
                 top: $element.position().top
             });
@@ -1636,7 +1642,7 @@ $('<style/>')
             if ($.isArray(preload))
                 for (var i = 0; i < preload.length; i++)
                     addPromise(preload[i]);
-            else
+            else if(preload.constructor === String)
                 addPromise(preload);
             
             function addPromise(path) {
@@ -1649,7 +1655,7 @@ $('<style/>')
         } else
             ko.applyBindings(model);
     };
-})();(function() {
+})(); (function() {
     ko.bindingHandlers.pane = { init: updateBinding };
 
     function updateBinding(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {

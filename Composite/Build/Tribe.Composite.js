@@ -1137,7 +1137,11 @@ TC.Types.Pane.prototype.navigate = function (pathOrPane, data) {
     this.node && this.node.navigate(pathOrPane, data);
 };
 
-TC.Types.Pane.prototype.remove = function() {
+TC.Types.Pane.prototype.navigateBack = function () {
+    this.node && this.node.navigateBack();
+};
+
+TC.Types.Pane.prototype.remove = function () {
     $(this.element).remove();
 };
 
@@ -1507,6 +1511,7 @@ TC.LoadStrategies.adhoc = function (pane, context) {
             $element.css({
                 position: 'absolute',
                 width: '100%',
+                //'box-sizing': 'border-box',
                 left: $element.position().left,
                 top: $element.position().top
             });

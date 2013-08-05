@@ -53,6 +53,7 @@
             $element.css({
                 position: 'absolute',
                 width: '100%',
+                //'box-sizing': 'border-box',
                 left: $element.position().left,
                 top: $element.position().top
             });

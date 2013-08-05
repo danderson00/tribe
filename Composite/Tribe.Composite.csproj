@@ -132,8 +132,10 @@
     <Content Include="Tests\Integration\Panes\PubSub\subscriber.js" />
     <Content Include="Tests\Integration\Panes\Tree\12.htm" />
     <Content Include="Tests\Integration\PubSub.tests.js" />
+    <Content Include="Tests\Resources\jquery.mockjax.min.js" />
     <Content Include="Tests\tests.js" />
     <Content Include="Tests\tests.min.js" />
+    <Content Include="Tests\tests.panes.js" />
     <Content Include="Tests\tests.unit.js" />
     <Content Include="Tests\unit.html" />
     <Content Include="Tests\Integration\Panes\Events\data.htm" />
@@ -182,7 +184,6 @@
     <Content Include="Tests\Unit\Infrastructure\node.js" />
     <Content Include="Tests\setup.js" />
     <Content Include="Tests\Unit\Infrastructure\pane.js" />
-    <Content Include="Tests\Unit\Infrastructure\testUrlProvider.js" />
     <Content Include="Tests\Unit\LoadStrategies\adhoc.tests.js" />
     <Content Include="Tests\Unit\Events\renderPane.tests.js" />
     <Content Include="Tests\Unit\LoadStrategies\preloaded.tests.js" />

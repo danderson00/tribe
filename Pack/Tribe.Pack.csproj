@@ -35,8 +35,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="T.mockjax.outer.template.js" />
+    <Content Include="T.mockjax.pack.config.js" />
     <Content Include="T.document.pack.config.js" />
     <Content Include="T.document.template.js" />
+    <Content Include="T.mockjax.template.js" />
     <Content Include="T.testModule.pack.config.js" />
     <Content Include="T.scriptUrl.pack.config.js" />
     <Content Include="T.scriptUrl.template.js" />

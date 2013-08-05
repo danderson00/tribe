@@ -12,7 +12,11 @@ TC.Types.Pane.prototype.navigate = function (pathOrPane, data) {
     this.node && this.node.navigate(pathOrPane, data);
 };
 
-TC.Types.Pane.prototype.remove = function() {
+TC.Types.Pane.prototype.navigateBack = function () {
+    this.node && this.node.navigateBack();
+};
+
+TC.Types.Pane.prototype.remove = function () {
     $(this.element).remove();
 };
 

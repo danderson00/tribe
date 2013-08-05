@@ -64,7 +64,8 @@
 }
 
 .sample .samplePane {
-    overflow: auto; 
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: 5px;
     height: 262px; /* HACK */
     position: relative;

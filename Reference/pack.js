@@ -2,9 +2,14 @@
     {
         to: 'Infrastructure/samples.js',
         include: [
-            sample('Tasks'),
-            sample('Chat'),
-            sample('Mobile')
+            sample('About/Tasks'),
+            sample('About/Chat'),
+            sample('About/Mobile'),
+            sample('Panes/Creating'),
+            sample('Panes/Dynamic'),
+            sample('Panes/Communicating'),
+            sample('Panes/Lifecycle'),
+            sample('Panes/Navigating')
         ]
     },
     {

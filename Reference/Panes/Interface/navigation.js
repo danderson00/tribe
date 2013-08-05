@@ -36,16 +36,18 @@
     };
 
     function updateCurrentArticle(data) {
-        self.selectedTopic(data.topic);
+        if (data.section && data.topic) {
+            self.selectedTopic(data.topic);
 
-        if (currentSection !== data.section) {
-            currentSection = data.section;
-            var items = mapNavigation(data.section);
-            if (items.length > 0) {
-                self.items(items);
-                show();
-            } else
-                hide();
+            if (currentSection !== data.section) {
+                currentSection = data.section;
+                var items = mapNavigation(data.section);
+                if (items.length > 0) {
+                    self.items(items);
+                    show();
+                } else
+                    hide();
+            }
         }
     }
 

@@ -1,13 +1,14 @@
 ﻿Navigation = {
     isHome: function(article) {
-        return article && article.section === 'About' && article.topic === 'index';
+        return article && article.section === 'About' && article.topic === 'home';
     },
     Guides: {
         'Guides': {
             'Features': 'features',
             'Getting Started': 'getStarted',
+            'Working With Panes': 'panes',
+            'Webmail Tutorial': 'webmail',
             'Configuring MessageBus': 'messageBus',
-            'Webmail Tutorial': 'webmail'
         }
     },
     Reference: {

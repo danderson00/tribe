@@ -10,6 +10,10 @@ h1, h2, h3 {
     margin-top: 0;
 }
 
+b {
+    color: #103070;
+}
+
 .padded {
     padding: 10px;
 }

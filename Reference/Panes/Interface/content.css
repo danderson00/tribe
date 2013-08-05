@@ -86,3 +86,17 @@ img.topRight {
     background: linear-gradient(to bottom,  #103070 0%,#457ae4 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103070', endColorstr='#457ae4',GradientType=0 ); /* IE6-9 */
 }
+
+.block h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 20px 0 20px;
+}
+
+.com { color: #008000; }
+.str, .tag { color: #A31515; }
+.kwd, .atv { color: #0000FF; }
+.typ { color: #2B91AF; }
+.lit, .atn { color: #FF0000; }
+.pun, .pln { color: #000000; }
+.dec { color: purple; }
