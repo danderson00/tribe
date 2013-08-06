@@ -2,3 +2,5 @@
     Utilities: {},
     Types: {}
 };
+
+Tutorials = {};

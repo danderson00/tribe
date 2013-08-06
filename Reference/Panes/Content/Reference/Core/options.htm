@@ -1,22 +1,53 @@
 ﻿<div class="content block">
     <h1>Global Options</h1>
-    <pre>
-TC.options = {
-    basePath: '',
-    synchronous: false,
-    splitScripts: false,
-    handleExceptions: true,
-    loadStrategy: 'adhoc',
-    events: ['loadResources', 'createPubSub', 'createModel', 'initialiseModel', 
-        'renderPane', 'renderComplete', 'active', 'dispose']
-}
-    </pre>
-    <ul>
-        <li>basePath - root path to load panes from</li>
-        <li>synchronous - perform load operations synchronously</li>
-        <li>splitScripts - split any loaded scripts on sourceURL tags and load individually</li>
-        <li>handleExceptions - handle exceptions raised - set to false in debug mode</li>
-        <li>loadStrategy - string containing the name of the registered load strategy to use</li>
-        <li>events - array of ordered event names to execute in the pane rendering pipeline</li>
-    </ul>
+    <p>Global options can be set on the TC.options object.</p>
+    <pre class="example">TC.options.basePath = 'Panes'</pre>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>basePath</td>
+                <td>String</td>
+                <td></td>
+                <td>Root path to load panes from</td>
+            </tr>
+            <tr>
+                <td>synchronous</td>
+                <td>Boolean</td>
+                <td>false</td>
+                <td>Load resources and execute message subscribers synchronously</td>
+            </tr>
+            <tr>
+                <td>splitScripts</td>
+                <td>Boolean</td>
+                <td>false</td>
+                <td>Split loaded scripts on each sourceURL tag and execute individually</td>
+            </tr>
+            <tr>
+                <td>handleExceptions</td>
+                <td>Boolean</td>
+                <td>true</td>
+                <td>Handle exceptions within the framework</td>
+            </tr>
+            <tr>
+                <td>loadStrategy</td>
+                <td>String</td>
+                <td>adhoc</td>
+                <td>Name of the registered load strategy to use</td>
+            </tr>
+            <tr>
+                <td>events</td>
+                <td>[String]</td>
+                <td><a data-bind="click: Article.show('Reference', 'Core/panes')">See reference</a></td>
+                <td>Array of ordered event names to execute in the pane rendering pipeline</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

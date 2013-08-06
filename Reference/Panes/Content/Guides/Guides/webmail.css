@@ -1,0 +1,22 @@
+﻿.webmail .sample .result {
+    margin: 10px auto 0 auto;
+    width: 920px;
+    height: auto;
+}
+
+.webmail .sample .samplePane {
+    height: auto;
+}
+
+.webmail .sample .fileContent {
+    width: 770px;
+}
+
+.webmail .fixedHeight .samplePane {
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.webmail h2 {
+    margin-top: 20px !important;
+}

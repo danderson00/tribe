@@ -1,0 +1,9 @@
+﻿<!-- A simple list of the folder names.
+     Apply the "selected" CSS class to the selected folder.
+     On click, set the selected folder -->
+
+<ul class="folders" data-bind="foreach: folders">
+    <li data-bind="text: $data,
+                   css: { selected: $data === $root.selectedFolder() },
+                   click: $root.selectedFolder"></li>
+</ul>

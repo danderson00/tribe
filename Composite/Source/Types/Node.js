@@ -12,7 +12,7 @@ TC.Types.Node.prototype.navigate = function (pathOrPane, data) {
     var paneOptions = TC.Utils.getPaneOptions(pathOrPane, { data: data });
     if (!TC.Path(paneOptions.path).isAbsolute())
         // this is duplicated in Pane.inheritPathFrom - the concept (relative paths inherit existing paths) needs to be clearer
-        paneOptions.path = TC.Path(this.pane.path).withoutFilename().combine(paneOptions.path).toString();
+        paneOptions.path = TC.Path(this.nodeForPath().pane.path).withoutFilename().combine(paneOptions.path).toString();
     
     this.findNavigation().navigate(paneOptions);
 };

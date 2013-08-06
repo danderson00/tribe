@@ -19,6 +19,5 @@
 
     $(function() {
         $('head').append('<style class="__tribe">.__rendering { position: fixed; top: -10000px; left: -10000px; }</style>');
-        //$('head').append('<style class="__tribe">.__rendering { position: fixed; right: 100%; }</style>');
     });
 })(window || this);

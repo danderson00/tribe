@@ -79,7 +79,9 @@ Article = {
 };Reference = {
     Utilities: {},
     Types: {}
-};Samples = window.Samples || {};
+};
+
+Tutorials = {};Samples = window.Samples || {};
 Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'create.htm',
@@ -403,6 +405,144 @@ Samples['Panes/Navigating'].push({
     filename: 'third.js',
     icon: 'Images/icon.js.png',
     content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.back = function() {\n        pane.navigateBack();\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
+Samples['Webmail/1-Folders'].push({
+    filename: 'folders.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">/* Some CSS to make our folder list pretty */\n\n.folders { \n    background-color: #bbb; \n    list-style-type: none; \n    padding: 0; \n    margin: 0; \n    border-radius: 7px; \n    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d6d6d6),\n                                       color-stop(0.4, #c0c0c0), color-stop(1,#a4a4a4)); \n    margin: 10px 0 16px 0;\n    font-size: 0px;\n}\n\n.folders li:hover {\n     background-color: #ddd;\n}    \n\n.folders li:first-child {\n     border-left: none; \n     border-radius: 7px 0 0 7px;\n}\n\n.folders li {\n     font-size: 16px; \n     font-weight: bold; \n     display: inline-block; \n     padding: 0.5em 1.5em; \n     cursor: pointer; \n     color: #444; \n     text-shadow: #f7f7f7 0 1px 1px; \n     border-left: 1px solid #ddd; \n     border-right: 1px solid #888;\n}\n\n.folders li {\n     *display: inline !important;\n} /* IE7 only */\n\n.folders .selected {\n     background-color: #444 !important; \n     color: white; \n     text-shadow: none; \n     border-right-color: #aaa; \n     border-left: none; \n     box-shadow: inset 1px 2px 6px #070707;\n}    \n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
+Samples['Webmail/1-Folders'].push({
+    filename: 'folders.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;!-- A simple list of the folder names.\n     Apply the "selected" CSS class to the selected folder.\n     On click, set the selected folder -->\n\n&lt;ul class="folders" data-bind="foreach: folders">\n    &lt;li data-bind="text: $data,\n                   css: { selected: $data === $root.selectedFolder() },\n                   click: $root.selectedFolder">&lt;/li>\n&lt;/ul></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
+Samples['Webmail/1-Folders'].push({
+    filename: 'folders.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">// Our model just contains a list of folders and\n// an observable to hold the selected folder.\n\nTC.registerModel(function (pane) {\n    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];\n    this.selectedFolder = ko.observable(\'Inbox\');\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
+Samples['Webmail/1-Folders'].push({
+    filename: 'index.html',
+    icon: 'Images/icon.html.png',
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;!-- Dependencies and bootstrap -->\n    &lt;/head>\n\n    &lt;body data-bind="pane: \'folders\'">\n    &lt;/body>\n&lt;/html></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'folders.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">/* Some CSS to make our folder list pretty */\n\n.folders { \n    background-color: #bbb; \n    list-style-type: none; \n    padding: 0; \n    margin: 0; \n    border-radius: 7px; \n    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d6d6d6),\n                                       color-stop(0.4, #c0c0c0), color-stop(1,#a4a4a4)); \n    margin: 10px 0 16px 0;\n    font-size: 0px;\n}\n\n.folders li:hover {\n     background-color: #ddd;\n}    \n\n.folders li:first-child {\n     border-left: none; \n     border-radius: 7px 0 0 7px;\n}\n\n.folders li {\n     font-size: 16px; \n     font-weight: bold; \n     display: inline-block; \n     padding: 0.5em 1.5em; \n     cursor: pointer; \n     color: #444; \n     text-shadow: #f7f7f7 0 1px 1px; \n     border-left: 1px solid #ddd; \n     border-right: 1px solid #888;\n}\n\n.folders li {\n     *display: inline !important;\n} /* IE7 only */\n\n.folders .selected {\n     background-color: #444 !important; \n     color: white; \n     text-shadow: none; \n     border-right-color: #aaa; \n     border-left: none; \n     box-shadow: inset 1px 2px 6px #070707;\n}    \n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'folders.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;!-- The click binding is now to the selectFolder function -->\n\n&lt;ul class="folders" data-bind="foreach: folders">\n    &lt;li data-bind="text: $data,\n                   css: { selected: $data === $root.selectedFolder() },\n                   click: $root.selectFolder">&lt;/li>\n&lt;/ul></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'folders.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n    \n    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];\n    this.selectedFolder = ko.observable(pane.data.folder);\n\n    // We\'ve added a separate click handler to navigate\n    // when a folder is selected.\n    this.selectFolder = function (folder) {\n        self.selectedFolder(folder);\n        pane.navigate(\'mails\', { folder: folder });\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'index.html',
+    icon: 'Images/icon.html.png',
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;!-- Dependencies and bootstrap -->\n    &lt;/head>\n\n    &lt;body data-bind="pane: \'layout\'">\n    &lt;/body>\n&lt;/html></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'layout.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;!-- The handlesNavigation binding tells Tribe to use that node for navigation. -->\n\n&lt;div data-bind="pane: \'folders\', data: { folder: \'Inbox\' }">&lt;/div>\n&lt;div data-bind="pane: \'mails\', data: { folder: \'Inbox\' }, handlesNavigation: \'fade\'">&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'mails.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">.mails {\n    width: 100%;\n    table-layout: fixed;\n    border-spacing: 0;\n}\n\n.mails th {\n    background-color: #bbb;\n    font-weight: bold;\n    color: #444;\n    text-shadow: #f7f7f7 0 1px 1px;\n}\n\n.mails tbody tr:hover {\n    cursor: pointer;\n    background-color: #68c !important;\n    color: White;\n}\n\n.mails th, .mails td {\n    text-align: left;\n    padding: 0.4em 0.3em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.mails td {\n    border: 0;\n}\n\n.mails th {\n    border: 0;\n    border-left: 1px solid #ddd;\n    border-right: 1px solid #888;\n    padding: 0.4em 0 0.3em 0.7em;\n}\n\n.mails th:nth-child(1), .mails td:nth-child(1) {\n    width: 20%;\n}\n\n.mails th:nth-child(2), .mails td:nth-child(2) {\n    width: 15%;\n}\n\n.mails th:nth-child(3), .mails td:nth-child(3) {\n    width: 45%;\n}\n\n.mails th:nth-child(4), .mails td:nth-child(4) {\n    width: 15%;\n}\n\n.mails th:last-child {\n    border-right: none;\n}\n\n.mails tr:nth-child(even) {\n    background-color: #EEE;\n}\n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'mails.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;table class="mails" data-bind="with: data">\n    &lt;thead>\n        &lt;tr>\n            &lt;th>From&lt;/th>\n            &lt;th>To&lt;/th>\n            &lt;th>Subject&lt;/th>\n            &lt;th>Date&lt;/th>\n        &lt;/tr>\n    &lt;/thead>\n\n    &lt;tbody data-bind="foreach: mails">\n        &lt;tr>\n            &lt;td data-bind="text: from">&lt;/td>\n            &lt;td data-bind="text: to">&lt;/td>\n            &lt;td data-bind="text: subject">&lt;/td>\n            &lt;td data-bind="text: date">&lt;/td>\n        &lt;/tr>     \n    &lt;/tbody>\n&lt;/table></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'mails.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n\n    this.data = ko.observable();\n\n    // Load data using AJAX to our data property    \n    this.initialise = function() {\n        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'folders.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">/* Some CSS to make our folder list pretty */\n\n.folders { \n    background-color: #bbb; \n    list-style-type: none; \n    padding: 0; \n    margin: 0; \n    border-radius: 7px; \n    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d6d6d6),\n                                       color-stop(0.4, #c0c0c0), color-stop(1,#a4a4a4)); \n    margin: 10px 0 16px 0;\n    font-size: 0px;\n}\n\n.folders li:hover {\n     background-color: #ddd;\n}    \n\n.folders li:first-child {\n     border-left: none; \n     border-radius: 7px 0 0 7px;\n}\n\n.folders li {\n     font-size: 16px; \n     font-weight: bold; \n     display: inline-block; \n     padding: 0.5em 1.5em; \n     cursor: pointer; \n     color: #444; \n     text-shadow: #f7f7f7 0 1px 1px; \n     border-left: 1px solid #ddd; \n     border-right: 1px solid #888;\n}\n\n.folders li {\n     *display: inline !important;\n} /* IE7 only */\n\n.folders .selected {\n     background-color: #444 !important; \n     color: white; \n     text-shadow: none; \n     border-right-color: #aaa; \n     border-left: none; \n     box-shadow: inset 1px 2px 6px #070707;\n}    \n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'folders.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;ul class="folders" data-bind="foreach: folders">\n    &lt;li data-bind="text: $data,\n                   css: { selected: $data === $root.selectedFolder() },\n                   click: $root.selectFolder">&lt;/li>\n&lt;/ul></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'folders.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n\n    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];\n    this.selectedFolder = ko.observable(pane.data.folder);\n\n    this.selectFolder = function (folder) {\n        self.selectedFolder(folder);\n        pane.navigate(\'mails\', { folder: folder });\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'index.html',
+    icon: 'Images/icon.html.png',
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;!-- Dependencies and bootstrap -->\n    &lt;/head>\n\n    &lt;body data-bind="pane: \'layout\'">\n    &lt;/body>\n&lt;/html></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'layout.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div data-bind="pane: \'folders\', data: { folder: \'Inbox\' }">&lt;/div>\n&lt;div data-bind="pane: \'mails\', data: { folder: \'Inbox\' }, handlesNavigation: \'fade\'">&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'mails.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">.mails {\n    width: 100%;\n    table-layout: fixed;\n    border-spacing: 0;\n}\n\n.mails th {\n    background-color: #bbb;\n    font-weight: bold;\n    color: #444;\n    text-shadow: #f7f7f7 0 1px 1px;\n}\n\n.mails tbody tr:hover {\n    cursor: pointer;\n    background-color: #68c !important;\n    color: White;\n}\n\n.mails th, .mails td {\n    text-align: left;\n    padding: 0.4em 0.3em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.mails td {\n    border: 0;\n}\n\n.mails th {\n    border: 0;\n    border-left: 1px solid #ddd;\n    border-right: 1px solid #888;\n    padding: 0.4em 0 0.3em 0.7em;\n}\n\n.mails th:nth-child(1), .mails td:nth-child(1) {\n    width: 20%;\n}\n\n.mails th:nth-child(2), .mails td:nth-child(2) {\n    width: 15%;\n}\n\n.mails th:nth-child(3), .mails td:nth-child(3) {\n    width: 45%;\n}\n\n.mails th:nth-child(4), .mails td:nth-child(4) {\n    width: 15%;\n}\n\n.mails th:last-child {\n    border-right: none;\n}\n\n.mails tr:nth-child(even) {\n    background-color: #EEE;\n}\n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'mails.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;table class="mails" data-bind="with: data">\n    &lt;thead>\n        &lt;tr>\n            &lt;th>From&lt;/th>\n            &lt;th>To&lt;/th>\n            &lt;th>Subject&lt;/th>\n            &lt;th>Date&lt;/th>\n        &lt;/tr>\n    &lt;/thead>\n\n    &lt;tbody data-bind="foreach: mails">\n        &lt;tr data-bind="click: $root.selectMail">\n            &lt;td data-bind="text: from">&lt;/td>\n            &lt;td data-bind="text: to">&lt;/td>\n            &lt;td data-bind="text: subject">&lt;/td>\n            &lt;td data-bind="text: date">&lt;/td>\n        &lt;/tr>     \n    &lt;/tbody>\n&lt;/table></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'mails.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n\n    this.data = ko.observable();\n\n    this.initialise = function () {\n        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);\n    };\n    \n    this.selectMail = function (mail) {\n        pane.navigate(\'viewMail\', mail);\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'viewMail.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">.viewMail .mailInfo {\n    background-color: #dae0e8; \n    padding: 1em 1em 0.5em 1.25em; \n    border-radius: 1em;\n}\n\n.viewMail .mailInfo h1 {\n    margin-top: 0.2em; \n    font-size: 130%;\n}\n\n.viewMail .mailInfo label {\n    color: #777; \n    font-weight: bold; \n    min-width: 2.75em; \n    text-align:right; \n    display: inline-block;\n}\n\n.viewMail .message {\n    padding: 0 1.25em;\n}</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'viewMail.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div class="viewMail" data-bind="with: data">\n    &lt;div class="mailInfo">\n        &lt;h1 data-bind="text: subject">&lt;/h1>\n        &lt;p>&lt;label>From&lt;/label>: &lt;span data-bind="text: from">&lt;/span>&lt;/p>\n        &lt;p>&lt;label>To&lt;/label>: &lt;span data-bind="text: to">&lt;/span>&lt;/p>\n        &lt;p>&lt;label>Date&lt;/label>: &lt;span data-bind="text: date">&lt;/span>&lt;/p>\n        &lt;div class="message">\n            &lt;p data-bind="html: messageContent" />            \n        &lt;/div>\n    &lt;/div>\n&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'viewMail.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n    \n    this.data = ko.observable();\n\n    this.initialise = function () {\n        $.getJSON(\'Data/mail/\' + pane.data.id, self.data);\n    };\n});</pre>'
 });TC.Events.syntaxHighlight = function(pane) {
     pane.find();
 };$('<style/>')
@@ -427,7 +567,11 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}.block{background:#fff;border:1px solid #aaa;margin-bottom:10px;margin-top:10px;border-radius:8px;box-sizing:border-box}.block p{margin:10px 20px;font-size:18px}.block .child{position:relative;margin:10px;padding:15px;border:2px solid #222;border-radius:6px}.block .child h1{color:#fff;background:#222;font-weight:bold;font-size:inherit;height:20px;margin:-15px -15px 0 -15px;padding:7px 10px 10px 10px}.block .child p{margin:10px 0}.block .child pre{margin:0}.child img{position:absolute;top:50%;right:20px;margin-top:-30px}img.topRight{position:static!important;float:right;margin:0!important}.out .content.block{margin-top:0}.block>h1{color:#fff;font-weight:bold;font-size:inherit;height:20px;border-top-left-radius:8px;border-top-right-radius:8px;padding:10px;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;background:-moz-linear-gradient(top,#103070 0%,#457ae4 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#103070),color-stop(100%,#457ae4));background:-webkit-linear-gradient(top,#103070 0%,#457ae4 100%);background:-o-linear-gradient(top,#103070 0%,#457ae4 100%);background:-ms-linear-gradient(top,#103070 0%,#457ae4 100%);background:linear-gradient(to bottom,#103070 0%,#457ae4 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#103070\',endColorstr=\'#457ae4\',GradientType=0)}.block h2{font-size:1.2em;font-weight:bold;padding:10px 20px 0 20px}.com{color:green}.str,.tag{color:#a31515}.kwd,.atv{color:#00f}.typ{color:#2b91af}.lit,.atn{color:red}.pun,.pln{color:#000}.dec{color:purple}')
+    .text('.webmail .sample .result{margin:10px auto 0 auto;width:920px;height:auto}.webmail .sample .samplePane{height:auto}.webmail .sample .fileContent{width:770px}.webmail .fixedHeight .samplePane{height:500px;overflow-y:scroll}.webmail h2{margin-top:20px!important}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
@@ -439,11 +583,11 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('body{background:#ccc;font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif;padding:0;margin:0;overflow-y:scroll}h1,h2,h3{margin-top:0}b{color:#103070}.padded{padding:10px}.underline{text-decoration:underline}.clear{clear:both}a,a:active,a:visited,a:link{text-decoration:none;cursor:pointer;color:#1b50ba}a:hover{text-decoration:underline}table{border-spacing:0;border-collapse:collapse}th{text-align:left;background:#457ae4;color:#fff;padding:2px 5px}th,td{border:1px solid #457ae4;padding:2px 5px}')
+    .text('.navigation{display:none;background:#eee;border:1px solid #000;box-sizing:border-box}.navigation ul{list-style:none}.navigation li{cursor:pointer}.navigation ul li:hover{background:#111;color:#eee}.navigation li.selectedItem{background:#ccc}.navigation>ul li{padding:2px 10px;font-weight:bold}.navigation ul ul li{margin:0;padding:2px 0 2px 20px;box-sizing:border-box;font-weight:normal}@media(max-width:1300px){.navigation{width:980px;position:relative;left:50%;margin-left:-490px!important;border-radius:8px;padding:10px;margin-top:10px}.navigation ul{margin:0;padding:0;width:33%}.navigation ul ul{position:absolute;top:10px;right:10px;width:66%}.navigation ul ul li{width:50%;float:left}}@media(min-width:1300px){.navigation{width:170px!important;position:fixed;left:0;top:56px;border-left:0;box-shadow:3px 3px 4px -1px rgba(0,0,0,.3);border-top-right-radius:8px;border-bottom-right-radius:8px}.navigation>ul{padding:0;margin:10px}.navigation ul ul{margin:0;padding:0}}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.navigation{display:none;background:#eee;border:1px solid #000;box-sizing:border-box}.navigation ul{list-style:none}.navigation li{cursor:pointer}.navigation ul li:hover{background:#111;color:#eee}.navigation li.selectedItem{background:#ccc}.navigation>ul li{padding:2px 10px;font-weight:bold}.navigation ul ul li{margin:0;padding:2px 0 2px 20px;box-sizing:border-box;font-weight:normal}@media(max-width:1300px){.navigation{width:980px;position:relative;left:50%;margin-left:-490px!important;border-radius:8px;padding:10px;margin-top:10px}.navigation ul{margin:0;padding:0;width:33%}.navigation ul ul{position:absolute;top:10px;right:10px;width:66%}.navigation ul ul li{width:50%;float:left}}@media(min-width:1300px){.navigation{width:170px!important;position:fixed;left:0;top:56px;border-left:0;box-shadow:3px 3px 4px -1px rgba(0,0,0,.3);border-top-right-radius:8px;border-bottom-right-radius:8px}.navigation>ul{padding:0;margin:10px}.navigation ul ul{margin:0;padding:0}}')
+    .text('.navigationContainer{position:relative}.navigationContainer>ul{position:absolute;top:0;right:0;list-style:none;margin:0;padding:0}.navigationContainer>ul li{display:inline-block;width:70px;height:25px;text-align:center;padding-top:2px;border-radius:6px;border:1px solid #eee;cursor:pointer}.navigationContainer>ul li:hover{background:#000;color:#fff}.navigationContainer>.out{margin-top:-20px}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
@@ -451,11 +595,7 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.function h1 .returns{float:right;font-weight:normal}.function h1 .returns .type{font-weight:bold;font-style:italic}.function .name{font-size:1.2em}.example{background:#eed;padding:0 10px;margin:20px}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.propertyList{margin:10px}')
+    .text('.function h1 .returns{float:right;font-weight:normal}.function h1 .returns .type{font-weight:bold;font-style:italic}.function .name{font-size:1.2em}.example{background:#eed;padding:10px;margin:10px 0}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
@@ -477,6 +617,30 @@ $('<style/>')
     .attr('class', '__tribe')
     .text('.helloWorld h1{text-shadow:3px 3px 0 #aaa}')
     .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.folders{background-color:#bbb;list-style-type:none;padding:0;margin:0;border-radius:7px;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#d6d6d6),color-stop(.4,silver),color-stop(1,#a4a4a4));margin:10px 0 16px 0;font-size:0}.folders li:hover{background-color:#ddd}.folders li:first-child{border-left:none;border-radius:7px 0 0 7px}.folders li{font-size:16px;font-weight:bold;display:inline-block;padding:.5em 1.5em;cursor:pointer;color:#444;text-shadow:#f7f7f7 0 1px 1px;border-left:1px solid #ddd;border-right:1px solid #888}.folders li{*display:inline!important}.folders .selected{background-color:#444!important;color:#fff;text-shadow:none;border-right-color:#aaa;border-left:none;box-shadow:inset 1px 2px 6px #070707}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.folders{background-color:#bbb;list-style-type:none;padding:0;margin:0;border-radius:7px;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#d6d6d6),color-stop(.4,silver),color-stop(1,#a4a4a4));margin:10px 0 16px 0;font-size:0}.folders li:hover{background-color:#ddd}.folders li:first-child{border-left:none;border-radius:7px 0 0 7px}.folders li{font-size:16px;font-weight:bold;display:inline-block;padding:.5em 1.5em;cursor:pointer;color:#444;text-shadow:#f7f7f7 0 1px 1px;border-left:1px solid #ddd;border-right:1px solid #888}.folders li{*display:inline!important}.folders .selected{background-color:#444!important;color:#fff;text-shadow:none;border-right-color:#aaa;border-left:none;box-shadow:inset 1px 2px 6px #070707}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.mails{width:100%;table-layout:fixed;border-spacing:0}.mails th{background-color:#bbb;font-weight:bold;color:#444;text-shadow:#f7f7f7 0 1px 1px}.mails tbody tr:hover{cursor:pointer;background-color:#68c!important;color:#fff}.mails th,.mails td{text-align:left;padding:.4em .3em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mails td{border:0}.mails th{border:0;border-left:1px solid #ddd;border-right:1px solid #888;padding:.4em 0 .3em .7em}.mails th:nth-child(1),.mails td:nth-child(1){width:20%}.mails th:nth-child(2),.mails td:nth-child(2){width:15%}.mails th:nth-child(3),.mails td:nth-child(3){width:45%}.mails th:nth-child(4),.mails td:nth-child(4){width:15%}.mails th:last-child{border-right:none}.mails tr:nth-child(even){background-color:#eee}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.folders{background-color:#bbb;list-style-type:none;padding:0;margin:0;border-radius:7px;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#d6d6d6),color-stop(.4,silver),color-stop(1,#a4a4a4));margin:10px 0 16px 0;font-size:0}.folders li:hover{background-color:#ddd}.folders li:first-child{border-left:none;border-radius:7px 0 0 7px}.folders li{font-size:16px;font-weight:bold;display:inline-block;padding:.5em 1.5em;cursor:pointer;color:#444;text-shadow:#f7f7f7 0 1px 1px;border-left:1px solid #ddd;border-right:1px solid #888}.folders li{*display:inline!important}.folders .selected{background-color:#444!important;color:#fff;text-shadow:none;border-right-color:#aaa;border-left:none;box-shadow:inset 1px 2px 6px #070707}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.mails{width:100%;table-layout:fixed;border-spacing:0}.mails th{background-color:#bbb;font-weight:bold;color:#444;text-shadow:#f7f7f7 0 1px 1px}.mails tbody tr:hover{cursor:pointer;background-color:#68c!important;color:#fff}.mails th,.mails td{text-align:left;padding:.4em .3em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mails td{border:0}.mails th{border:0;border-left:1px solid #ddd;border-right:1px solid #888;padding:.4em 0 .3em .7em}.mails th:nth-child(1),.mails td:nth-child(1){width:20%}.mails th:nth-child(2),.mails td:nth-child(2){width:15%}.mails th:nth-child(3),.mails td:nth-child(3){width:45%}.mails th:nth-child(4),.mails td:nth-child(4){width:15%}.mails th:last-child{border-right:none}.mails tr:nth-child(even){background-color:#eee}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.viewMail .mailInfo{background-color:#dae0e8;padding:1em 1em .5em 1.25em;border-radius:1em}.viewMail .mailInfo h1{margin-top:.2em;font-size:130%}.viewMail .mailInfo label{color:#777;font-weight:bold;min-width:2.75em;text-align:right;display:inline-block}.viewMail .message{padding:0 1.25em}')
+    .appendTo('head');
 $('head')
     .append('<script type="text/template" id="template--Content-About-example1"><div class="example1 block">\n    <h1>Show Me!</h1>\n    \n    <p>\n        Tribe allows you to easily break your UI down into "panes" that can consist \n        of a JavaScript model, HTML template and CSS stylesheet. \n    </p>\n    <p>\n        Simply create these files and refer to the pane by name. No complex configuration required.\n    </p>\n\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'About/Tasks\', initialFile: \'layout.htm\' }"></div>\n    \n    <p>\n        This is pretty trivial example. You can check out the <a href="" target="_blank">source</a> \n        to this site or the <a href="" target="_blank">samples</a>. \n    </p>\n    <p>\n        If you\'re using Chrome, head over to the <a href="debug.html">debug version</a> of the site \n        and look at the source in the developer tools.\n    </p>\n</div></script>');
 $('head')
@@ -484,7 +648,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-About-example3"><div class="example3 block">\n    <h1>Mobile App</h1>\n    \n    <p>\n        Tribe makes it effortless to create mobile device apps that look and perform like native apps, using the same code as your web app.\n    </p>\n\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'About/Mobile\', initialFile: \'index.html\', rootPane: { path: \'/Mobile/main\', data: { pane: \'/Samples/About/Mobile/welcome\' } } }"></div>\n    \n    <p>\n        Point your phone\'s browser at <a href="m.html" target="_blank">http://tribejs.com/m.html</a> to see the demo on your device.\n    </p>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-About-features"><div class="block">\n    <h1>Key Features</h1>\n    <div class="padded features">\n        <div>\n            <img src="Images/Features/composite.jpg" />\n            <strong>Composite UI</strong>\n            <span>Simple, powerful UI decomposition.</span>\n        </div>\n        <div>\n            <img src="Images/Features/resources.jpg" />\n            <strong>Resource Management</strong>\n            <span>Full lifecycle management. Powerful load optimisation.</span>\n        </div>\n        <div>\n            <img src="Images/Features/communication.jpg" />\n            <strong>Seamless Communication</strong>\n            <span>Broadcast messages to other users and internal services in real time.</span>\n        </div>\n        <div>\n            <img src="Images/Features/mobile.jpg" />\n            <strong>Mobile Devices</strong>\n            <span>Effortlessly target web and mobile platforms with a shared codebase.</span>\n        </div>\n        <div>\n            <img src="Images/Features/simple.jpg" />\n            <strong>Simple and Intuitive</strong>\n            <span>Flexible, intuitive file structure. No complex configuration.</span>\n        </div>\n    </div>\n    <div class="padded">\n        <a data-bind="click: Article.show(\'Guides\', \'Guides/features\')">Read more...</a>\n    </div>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-About-features"><div class="block">\n    <h1>Key Features</h1>\n    <div class="features">\n        <div>\n            <img src="Images/Features/composite.jpg" />\n            <strong>Composite UI</strong>\n            <span>Simple, powerful UI decomposition.</span>\n        </div>\n        <div>\n            <img src="Images/Features/resources.jpg" />\n            <strong>Resource Management</strong>\n            <span>Full lifecycle management. Powerful load optimisation.</span>\n        </div>\n        <div>\n            <img src="Images/Features/communication.jpg" />\n            <strong>Seamless Communication</strong>\n            <span>Broadcast messages to other users and internal services in real time.</span>\n        </div>\n        <div>\n            <img src="Images/Features/mobile.jpg" />\n            <strong>Mobile Devices</strong>\n            <span>Effortlessly target web and mobile platforms with a shared codebase.</span>\n        </div>\n        <div>\n            <img src="Images/Features/simple.jpg" />\n            <strong>Simple and Intuitive</strong>\n            <span>Flexible, intuitive file structure. No complex configuration.</span>\n        </div>\n    </div>\n    <div>\n        <a data-bind="click: Article.show(\'Guides\', \'Guides/features\')">Read more...</a>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-About-guides"><div class="guides content block">\n    <ul>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/features\')">\n            <h2>Features</h2>\n            <p>Describes the individual components of Tribe and the features they offer.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/getStarted\')">\n            <h2>Get Started</h2>\n            <p>How to obtain the Tribe libraries and start your project.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/panes\')">\n            <h2>Working With Panes</h2>\n            <p>How to create panes, communicate between them and navigate around.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/webmail\')">\n            <h2>Webmail Tutorial</h2>\n            <p>A step by step tutorial for building a simple webmail app.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/packscript\')">\n            <h2>Deployment - Packing Your Apps for Maximum Performance</h2>\n            <p>How to use PackScript to combine and minify your resources for deployment.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/packscript\')">\n            <h2>Modelling Your Navigation Flow and Business Processes</h2>\n            <p>Using sagas to model your navigation and business processes seperately to promote loose coupling.</p>\n        </li>\n        <!--        \n        <li>\n            <h2>Configuring the MessageHub</h2>\n            <p>How to configure the MessageHub component to cater for different scenarios.</p>\n        </li>\n        <li>\n            <h2>Extensibility - Adding Global Behaviour to Panes</h2>\n            <p></p>\n        </li>\n        -->\n    </ul>\n</div></script>');
 $('head')
@@ -504,15 +668,19 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-panes"><div class="content block">\n    <h1>Creating Panes</h1>\n    \n    <p>\n        Panes can consist of a JavaScript model, HTML template and CSS stylesheet. Creating new panes is as\n        simple as creating files with corresponding extensions and referring to them by name.\n    </p>\n    \n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Creating\', initialFile: \'index.html\', rootPane: { path: \'/Samples/Panes/Creating/helloWorld\', data: { message: \'Test message.\' } } }"></div>\n    \n    <h2>Dynamically Injecting Panes</h2>\n    <p>Panes can be injected into the DOM dynamically. Here, we are creating a new pane every time the button is clicked.</p>\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Dynamic\', initialFile: \'create.js\', rootPane: \'create\' }"></div>\n    <p>For a full list of API functions, check out the <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">API reference</a>.</p>\n</div>\n\n<div class="content block">\n    <h1>Communicating</h1>\n    <p>\n        Tribe provides a publish / subscribe engine for communication between panes and other components.\n    </p>\n    <p>\n        Using messages to communicate allows you to create autonomous, loosely decoupled components that\n        are extensible and easy to maintain.\n    </p>\n    <p>\n        You can also share observable objects between panes.\n    </p>\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Communicating\', initialFile: \'sender.js\', rootPane: \'layout\' }"></div>\n    <p>\n        TIP: Use "namespaces" in your message topics to prevent collisions as your app expands.\n    </p>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>Each pane goes through a defined set of steps from ensuring resources are loaded, rendering and binding panes through to disposal.</p>\n    <p>You can perform actions when some of these events occur by declaring functions on your model.</p>\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Lifecycle\', initialFile: \'item.js\', rootPane: \'create\' }"></div>\n    <p>\n        For a full description of the pane lifecycle and events you can hook in to, check out the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">panes reference</a>.\n    </p>\n</div>\n\n<div class="content block">\n    <h1>Navigating</h1>\n    <p>The Tribe navigation mechanism gives you a simple way to transition panes using smooth, hardware accelerated CSS transitions.</p>\n    <p>A navigation stack is maintained, allowing you to navigate back and forth through the stack.</p>\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Navigating\', initialFile: \'layout.htm\', rootPane: \'layout\' }"></div>\n    <p>\n        You can easily hook into the browser history and provide custom URLs. See the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">panes reference</a> for more information.\n    </p>\n    <p>\n        Any element or pane can be transitioned. See the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/transitions\')">transitions reference</a> for more information.\n    </p>\n</div>\n\n</script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Guides-Guides-webmail"><div class="content block">\n    <h1>Webmail Tutorial</h1>\n    <p>Coming soon!</p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Guides-Guides-webmail"><div class="webmail content block">\n    <h1>Webmail Tutorial</h1>\n    <div data-bind="pane: \'/Interface/navigationContainer\', data: Tutorials.webmail"></div>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Guides-Guides-Webmail-content"><h2>Navigating to Mail Content</h2>\n<p>Let\'s add a pane for displaying mail content that is displayed when an email is clicked.</p>\n<div class="fixedHeight" data-bind="pane: \'/Interface/sample\', data: { name: \'Webmail/3-Content\', initialFile: \'mails.js\', rootPane: \'layout\' }"></div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Guides-Guides-Webmail-folders"><h2></h2>\n<p>\n    In this tutorial, we will create a simple webmail system that loads JSON data from a server.\n</p>\n<p>\n    If you are not familiar with <a href="http://knockoutjs.com" target="_blank">knockout</a>, \n    we highly recommend you check out the <a href="http://learn.knockoutjs.com" target="_blank">tutorials.</a>\n</p>\n\n<h2>Folder Navigation Bar</h2>\n<p>First up, let\'s create a simple horizontal folder list to sit at the top of the screen.</p>\n<div data-bind="pane: \'/Interface/sample\', data: { name: \'Webmail/1-Folders\', initialFile: \'folders.js\', rootPane: \'folders\' }"></div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Guides-Guides-Webmail-mails"><h2>Adding a List of Mail</h2>\n<p>Let\'s add a pane called \'mails\' to display the list of mails in the selected folder and a layout pane.</p>\n<div class="fixedHeight" data-bind="pane: \'/Interface/sample\', data: { name: \'Webmail/2-Mails\', initialFile: \'layout.htm\', rootPane: \'layout\' }"></div>\n</script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-api"><div class="content block">\n    <h1>Core API</h1>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.API }"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-index"><div class="content block">\n    <h1>Reference</h1>\n    <p>Under construction</p>\n    \n    <h3>Naming Guidelines</h3>\n</div>\n</script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the TC.options object.</p>\n    <pre class="example">TC.options.basePath = \'Panes\'</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>splitScripts</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Split loaded scripts on each sourceURL tag and execute individually</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="content block">\n    <h1>Global Options</h1>\n    <pre>\nTC.options = {\n    basePath: \'\',\n    synchronous: false,\n    splitScripts: false,\n    handleExceptions: true,\n    loadStrategy: \'adhoc\',\n    events: [\'loadResources\', \'createPubSub\', \'createModel\', \'initialiseModel\', \n        \'renderPane\', \'renderComplete\', \'active\', \'dispose\']\n}\n    </pre>\n    <ul>\n        <li>basePath - root path to load panes from</li>\n        <li>synchronous - perform load operations synchronously</li>\n        <li>splitScripts - split any loaded scripts on sourceURL tags and load individually</li>\n        <li>handleExceptions - handle exceptions raised - set to false in debug mode</li>\n        <li>loadStrategy - string containing the name of the registered load strategy to use</li>\n        <li>events - array of ordered event names to execute in the pane rendering pipeline</li>\n    </ul>\n</div></script>');
-$('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Creating Panes</h1>\n    <p>Panes can be created using the pane binding handler or with JavaScript using the core API functions.</p>\n    <pre>&lt;div data-bind="pane: paneOptions">&lt;/div></pre>\n    <p>paneOptions can either be a string representing the path to the pane, or an object with the following properties</p>\n    <pre>\n{\n    path: string,\n    data: any,\n    transition: string,\n    reverseTransitionIn: boolean,\n    handlesNavigation: string | navigationOptions,\n    id: any,\n    skipPath: boolean\n}\n    </pre>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-transitions"><div class="content block">\n    <h1>Transitions</h1>\n    <p>Under construction</p>\n</div>\n</script>');
 $('head')
@@ -563,6 +731,8 @@ $('head')
     .append('<script type="text/template" id="template--Interface-main"><div data-bind="pane: \'navigation\'"></div>\n<div data-bind="pane: { path: \'content\', data: { section: \'About\', topic: \'home\' }, handlesNavigation: { transition: \'fade\', browser: articleUrlProvider } }"></div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-navigation"><div class="navigation">\n    <ul data-bind="foreach: items">\n        <li data-bind="click: $root.showSection, css: { selectedItem: $data.topic === $root.selectedTopic() }">\n            <span data-bind="text: $data.displayText"></span>\n        </li>\n        <ul data-bind="visible: $data.key === $root.selectedParent(), foreach: $data.items">\n            <li data-bind="click: $root.showArticle, text: $data.displayText, css: { selectedItem: $data.topic === $root.selectedTopic() }"></li>\n        </ul>\n    </ul>\n    <div class="clear"></div>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Interface-navigationContainer"><div class="navigationContainer">\n    <ul>\n        <li data-bind="click: back, visible: !atStart()">Back</li>\n        <li data-bind="click: next, visible: !atEnd()">Next</li>\n    </ul>\n    <div data-bind="pane: initialPane, handlesNavigation: \'fade\'"></div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-sample"><div class="sample">\n    <div class="source">\n        <div class="title">Source</div>\n\n        <ul class="fileList" data-bind="foreach: files">\n            <li data-bind="click: $root.selectFile, css: { selectedFile: $root.selectedFile() === $data }">\n                <img data-bind="attr: { src: icon }" />\n                <span data-bind="text: filename"></span>\n            </li>\n        </ul>\n\n        <div class="fileContent" data-bind="html: selectedFile().content"></div>\n    </div>\n\n    <div class="result">\n        <div class="title">Result</div>\n        <div class="samplePane" data-bind="pane: samplePane"></div>\n    </div>\n</div>\n</script>');
 $('head')
@@ -623,6 +793,22 @@ $('head')
     .append('<script type="text/template" id="template--Samples-Panes-Navigating-second"><div>\n    This is the second pane in our navigation stack.\n</div>\n<button data-bind="click: back">Back</button>\n<button data-bind="click: next">Next</button></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-Panes-Navigating-third"><div>\n    And the last one!\n</div>\n<button data-bind="click: back">Back</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-Webmail-1-Folders-folders"><!-- A simple list of the folder names.\n     Apply the "selected" CSS class to the selected folder.\n     On click, set the selected folder -->\n\n<ul class="folders" data-bind="foreach: folders">\n    <li data-bind="text: $data,\n                   css: { selected: $data === $root.selectedFolder() },\n                   click: $root.selectedFolder"></li>\n</ul></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-Webmail-2-Mails-folders"><!-- The click binding is now to the selectFolder function -->\n\n<ul class="folders" data-bind="foreach: folders">\n    <li data-bind="text: $data,\n                   css: { selected: $data === $root.selectedFolder() },\n                   click: $root.selectFolder"></li>\n</ul></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-Webmail-2-Mails-layout"><!-- The handlesNavigation binding tells Tribe to use that node for navigation. -->\n\n<div data-bind="pane: \'folders\', data: { folder: \'Inbox\' }"></div>\n<div data-bind="pane: \'mails\', data: { folder: \'Inbox\' }, handlesNavigation: \'fade\'"></div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-Webmail-2-Mails-mails"><table class="mails" data-bind="with: data">\n    <thead>\n        <tr>\n            <th>From</th>\n            <th>To</th>\n            <th>Subject</th>\n            <th>Date</th>\n        </tr>\n    </thead>\n\n    <tbody data-bind="foreach: mails">\n        <tr>\n            <td data-bind="text: from"></td>\n            <td data-bind="text: to"></td>\n            <td data-bind="text: subject"></td>\n            <td data-bind="text: date"></td>\n        </tr>     \n    </tbody>\n</table></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-Webmail-3-Content-folders"><ul class="folders" data-bind="foreach: folders">\n    <li data-bind="text: $data,\n                   css: { selected: $data === $root.selectedFolder() },\n                   click: $root.selectFolder"></li>\n</ul></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-Webmail-3-Content-layout"><div data-bind="pane: \'folders\', data: { folder: \'Inbox\' }"></div>\n<div data-bind="pane: \'mails\', data: { folder: \'Inbox\' }, handlesNavigation: \'fade\'"></div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-Webmail-3-Content-mails"><table class="mails" data-bind="with: data">\n    <thead>\n        <tr>\n            <th>From</th>\n            <th>To</th>\n            <th>Subject</th>\n            <th>Date</th>\n        </tr>\n    </thead>\n\n    <tbody data-bind="foreach: mails">\n        <tr data-bind="click: $root.selectMail">\n            <td data-bind="text: from"></td>\n            <td data-bind="text: to"></td>\n            <td data-bind="text: subject"></td>\n            <td data-bind="text: date"></td>\n        </tr>     \n    </tbody>\n</table></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-Webmail-3-Content-viewMail"><div class="viewMail" data-bind="with: data">\n    <div class="mailInfo">\n        <h1 data-bind="text: subject"></h1>\n        <p><label>From</label>: <span data-bind="text: from"></span></p>\n        <p><label>To</label>: <span data-bind="text: to"></span></p>\n        <p><label>Date</label>: <span data-bind="text: date"></span></p>\n        <div class="message">\n            <p data-bind="html: messageContent" />            \n        </div>\n    </div>\n</div></script>');
 TC.scriptEnvironment = { resourcePath: '/Content/About/masthead' };
 TC.registerModel(function (pane) {
     //this.renderComplete = function() {
@@ -640,6 +826,15 @@ TC.registerModel(function (pane) {
     //};
 });
 //@ sourceURL=tribe://Panes/Content/About/masthead.js
+TC.scriptEnvironment = { resourcePath: '/Content/Guides/Guides/Webmail/tutorial' };
+Tutorials.webmail = {
+    frames: [
+        'Webmail/folders',
+        'Webmail/mails',
+        'Webmail/content'
+    ]
+}
+//@ sourceURL=tribe://Panes/Content/Guides/Guides/Webmail/tutorial.js
 TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/api' };
 Reference.API = [
     {
@@ -704,6 +899,19 @@ Reference.API = [
     }
 ];
 //@ sourceURL=tribe://Panes/Content/Reference/Core/api.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/panes' };
+Reference.Panes = {
+    options: [
+        { name: 'pane', type: 'String', description: 'Required. Relative paths will evaluate relative to the parent pane.' },
+        { name: 'data', type: 'Any', description: 'Data to pass to the pane.' },
+        { name: 'handlesNavigation', type: 'String | NavigationOptions', description: 'The underlying node is marked as the node to transition when child panes navigate.' },
+        { name: 'transition', type: 'String', description: 'Transition to use when the pane is transitioned in or out.' },
+        { name: 'reverseTransitionIn', type: 'Boolean', description: 'Use the reverse transition when transitioning in.' },
+        { name: 'id', type: 'Any', description: 'An optional unique identifier for the pane.' },
+        { name: 'skipPath', type: 'Boolean', description: 'When specified, the pane is skipped when determining the parent pane path.' }
+    ]
+};
+//@ sourceURL=tribe://Panes/Content/Reference/Core/panes.js
 TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/History' };
 Reference.Types.History = {
     name: 'TC.Types.History',
@@ -1414,12 +1622,41 @@ TC.registerModel(function (pane) {
     }
 });
 //@ sourceURL=tribe://Panes/Interface/navigation.js
+TC.scriptEnvironment = { resourcePath: '/Interface/navigationContainer' };
+TC.registerModel(function (pane) {
+    pane.node.skipPath = true;
+    pane.node.root = pane.node;
+
+    var currentFrame = 0;
+    this.initialPane = pane.data.frames[currentFrame];
+    this.atStart = ko.observable(true);
+    this.atEnd = ko.observable(false);
+
+    this.back = function() {
+        pane.navigateBack();
+        currentFrame--;
+        this.atEnd(false);
+        this.atStart(currentFrame === 0);
+    };
+
+    this.next = function() {
+        pane.navigate(pane.data.frames[++currentFrame]);
+        this.atEnd(currentFrame === pane.data.frames.length - 1);
+        this.atStart(false);
+    };
+    
+    
+});
+//@ sourceURL=tribe://Panes/Interface/navigationContainer.js
 TC.scriptEnvironment = { resourcePath: '/Interface/sample' };
 TC.registerModel(function (pane) {
     var self = this;
     var data = pane.data || {};
-
     var rootPane = data.rootPane || 'layout';
+
+    // this is a hack to make samples navigate as if they were the root pane
+    pane.node.root = pane.node;
+
     this.samplePane = rootPane.constructor === String ? 
         '/Samples/' + data.name + '/' + rootPane : rootPane;
     this.files = Samples[pane.data.name];
@@ -1704,3 +1941,90 @@ TC.registerModel(function(pane) {
     };
 });
 //@ sourceURL=tribe://Panes/Samples/Panes/Navigating/third.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/1-Folders/folders' };
+// Our model just contains a list of folders and
+// an observable to hold the selected folder.
+
+TC.registerModel(function (pane) {
+    this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    this.selectedFolder = ko.observable('Inbox');
+});
+//@ sourceURL=tribe://Panes/Samples/Webmail/1-Folders/folders.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/folders' };
+TC.registerModel(function (pane) {
+    var self = this;
+    
+    this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    this.selectedFolder = ko.observable(pane.data.folder);
+
+    // We've added a separate click handler to navigate
+    // when a folder is selected.
+    this.selectFolder = function (folder) {
+        self.selectedFolder(folder);
+        pane.navigate('mails', { folder: folder });
+    };
+});
+//@ sourceURL=tribe://Panes/Samples/Webmail/2-Mails/folders.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/mails' };
+TC.registerModel(function (pane) {
+    var self = this;
+
+    this.data = ko.observable();
+
+    // Load data using AJAX to our data property    
+    this.initialise = function() {
+        $.getJSON('Data/folder/' + pane.data.folder, self.data);
+    };
+});
+//@ sourceURL=tribe://Panes/Samples/Webmail/2-Mails/mails.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/folders' };
+TC.registerModel(function (pane) {
+    var self = this;
+
+    this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    this.selectedFolder = ko.observable(pane.data.folder);
+
+    this.selectFolder = function (folder) {
+        self.selectedFolder(folder);
+        pane.navigate('mails', { folder: folder });
+    };
+});
+//@ sourceURL=tribe://Panes/Samples/Webmail/3-Content/folders.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/mails' };
+TC.registerModel(function (pane) {
+    var self = this;
+
+    this.data = ko.observable();
+
+    this.initialise = function () {
+        $.getJSON('Data/folder/' + pane.data.folder, self.data);
+    };
+    
+    this.selectMail = function (mail) {
+        pane.navigate('viewMail', mail);
+    };
+});
+//@ sourceURL=tribe://Panes/Samples/Webmail/3-Content/mails.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/viewMail' };
+TC.registerModel(function (pane) {
+    var self = this;
+    
+    this.data = ko.observable();
+
+    this.initialise = function () {
+        $.getJSON('Data/mail/' + pane.data.id, self.data);
+    };
+});
+//@ sourceURL=tribe://Panes/Samples/Webmail/3-Content/viewMail.js
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.block{background:#fff;border:1px solid #aaa;margin-bottom:10px;margin-top:10px;border-radius:8px;box-sizing:border-box;padding:20px}.block p{margin:10px 0;font-size:18px}.block .child{position:relative;padding:15px;border:2px solid #222;border-radius:6px;margin-bottom:10px}.block .child h1{color:#fff;background:#222;font-weight:bold;font-size:inherit;height:20px;margin:-15px -15px 0 -15px;padding:7px 10px 10px 10px}.block .child p{margin:10px 0}.block .child pre{margin:0}.child img{position:absolute;top:50%;right:20px;margin-top:-30px}img.topRight{position:static!important;float:right;margin:0!important}.out .content.block{margin-top:0}.block>h1{color:#fff;font-weight:bold;font-size:inherit;height:20px;border-top-left-radius:8px;border-top-right-radius:8px;padding:10px;margin:-20px -20px 10px -20px;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;background:-moz-linear-gradient(top,#103070 0%,#457ae4 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#103070),color-stop(100%,#457ae4));background:-webkit-linear-gradient(top,#103070 0%,#457ae4 100%);background:-o-linear-gradient(top,#103070 0%,#457ae4 100%);background:-ms-linear-gradient(top,#103070 0%,#457ae4 100%);background:linear-gradient(to bottom,#103070 0%,#457ae4 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#103070\',endColorstr=\'#457ae4\',GradientType=0)}.block h2{font-size:1.2em;font-weight:bold;margin-top:10px}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('body{background:#ccc;font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif;padding:0;margin:0;overflow-y:scroll}h1,h2,h3{margin-top:0}b{color:#103070}.padded{padding:10px}.underline{text-decoration:underline}.clear{clear:both}a,a:active,a:visited,a:link{text-decoration:none;cursor:pointer;color:#1b50ba}a:hover{text-decoration:underline}table{border-spacing:0;border-collapse:collapse}th{text-align:left;background:#457ae4;color:#fff;padding:2px 5px}th,td{border:1px solid #457ae4;padding:2px 5px}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.com{color:green}.str,.tag{color:#a31515}.kwd,.atv{color:#00f}.typ{color:#2b91af}.lit,.atn{color:red}.pun,.pln{color:#000}.dec{color:purple}')
+    .appendTo('head');

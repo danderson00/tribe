@@ -1,8 +1,11 @@
 ﻿TC.registerModel(function (pane) {
     var self = this;
     var data = pane.data || {};
-
     var rootPane = data.rootPane || 'layout';
+
+    // this is a hack to make samples navigate as if they were the root pane
+    pane.node.root = pane.node;
+
     this.samplePane = rootPane.constructor === String ? 
         '/Samples/' + data.name + '/' + rootPane : rootPane;
     this.files = Samples[pane.data.name];

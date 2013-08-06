@@ -52,7 +52,7 @@
         if (TC.transition.mode === 'absolute')
             $element.css({
                 position: 'absolute',
-                width: '100%',
+                width: $element.width(),
                 //'box-sizing': 'border-box',
                 left: $element.position().left,
                 top: $element.position().top

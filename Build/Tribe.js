@@ -263,7 +263,6 @@ window.Tribe.PubSub = function (options) {
 
     $(function() {
         $('head').append('<style class="__tribe">.__rendering { position: fixed; top: -10000px; left: -10000px; }</style>');
-        //$('head').append('<style class="__tribe">.__rendering { position: fixed; right: 100%; }</style>');
     });
 })(window || this);
 TC.defaultOptions = function() {
@@ -1046,7 +1045,7 @@ TC.Types.Node.prototype.navigate = function (pathOrPane, data) {
     var paneOptions = TC.Utils.getPaneOptions(pathOrPane, { data: data });
     if (!TC.Path(paneOptions.path).isAbsolute())
         // this is duplicated in Pane.inheritPathFrom - the concept (relative paths inherit existing paths) needs to be clearer
-        paneOptions.path = TC.Path(this.pane.path).withoutFilename().combine(paneOptions.path).toString();
+        paneOptions.path = TC.Path(this.nodeForPath().pane.path).withoutFilename().combine(paneOptions.path).toString();
     
     this.findNavigation().navigate(paneOptions);
 };
@@ -1510,7 +1509,7 @@ TC.LoadStrategies.adhoc = function (pane, context) {
         if (TC.transition.mode === 'absolute')
             $element.css({
                 position: 'absolute',
-                width: '100%',
+                width: $element.width(),
                 //'box-sizing': 'border-box',
                 left: $element.position().left,
                 top: $element.position().top

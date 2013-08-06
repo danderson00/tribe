@@ -1,21 +1,70 @@
 ﻿<div class="content block">
-    <h1>Creating Panes</h1>
-    <p>Panes can be created using the pane binding handler or with JavaScript using the core API functions.</p>
-    <pre>&lt;div data-bind="pane: paneOptions">&lt;/div></pre>
-    <p>paneOptions can either be a string representing the path to the pane, or an object with the following properties</p>
-    <pre>
-{
-    path: string,
-    data: any,
-    transition: string,
-    reverseTransitionIn: boolean,
-    handlesNavigation: string | navigationOptions,
-    id: any,
-    skipPath: boolean
-}
-    </pre>
+    <h1>Pane Options</h1>
+    <p>
+        Panes can be created using the pane binding handler or with JavaScript using the 
+        <a data-bind="click: Article.show('Reference', 'Core/api')">core API functions</a>.
+    </p>
+    <pre class="example">&lt;div data-bind="pane: 'path/to/pane', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>
+
+    <p>The following bindings can be used:</p>
+    <div data-bind="pane: '/Interface/API/propertyList', data: { properties: Reference.Panes.options }"></div>
+
+    <p>When using API functions, pass these options as an object and provide a path property:</p>
+    <pre class="example">TC.createNode('body', { path: 'path/to/pane', data: { value: 1 }, handlesNavigation: true });</pre>
 </div>
 
 <div class="content block">
     <h1>Pane Lifecycle</h1>
+    <p>The following events are executed in order against each pane:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Event</th>
+                <th>Description</th>
+                <th>Model Function</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>loadResources</td>
+                <td>HTML, JS and CSS resources for the pane are loaded if required</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>createPubSub</td>
+                <td>A Tribe.PubSub object is created and attached to the pane</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>createModel</td>
+                <td>The appropriate model is instantiated and attached to the pane</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>initialiseModel</td>
+                <td>The initialise function is called on the pane</td>
+                <td>initialise</td>
+            </tr>
+            <tr>
+                <td>renderPane</td>
+                <td>The pane template is rendered in the target element and the model is bound</td>
+                <td>paneRendered</td>
+            </tr>
+            <tr>
+                <td>renderComplete</td>
+                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>
+                <td>renderComplete</td>
+            </tr>
+            <tr>
+                <td>active</td>
+                <td>The pane is active</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>dispose</td>
+                <td>The pane's element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>
+                <td>dispose</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

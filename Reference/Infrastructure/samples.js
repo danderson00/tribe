@@ -322,4 +322,142 @@ Samples['Panes/Navigating'].push({
     filename: 'third.js',
     icon: 'Images/icon.js.png',
     content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.back = function() {\n        pane.navigateBack();\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
+Samples['Webmail/1-Folders'].push({
+    filename: 'folders.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">/* Some CSS to make our folder list pretty */\n\n.folders { \n    background-color: #bbb; \n    list-style-type: none; \n    padding: 0; \n    margin: 0; \n    border-radius: 7px; \n    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d6d6d6),\n                                       color-stop(0.4, #c0c0c0), color-stop(1,#a4a4a4)); \n    margin: 10px 0 16px 0;\n    font-size: 0px;\n}\n\n.folders li:hover {\n     background-color: #ddd;\n}    \n\n.folders li:first-child {\n     border-left: none; \n     border-radius: 7px 0 0 7px;\n}\n\n.folders li {\n     font-size: 16px; \n     font-weight: bold; \n     display: inline-block; \n     padding: 0.5em 1.5em; \n     cursor: pointer; \n     color: #444; \n     text-shadow: #f7f7f7 0 1px 1px; \n     border-left: 1px solid #ddd; \n     border-right: 1px solid #888;\n}\n\n.folders li {\n     *display: inline !important;\n} /* IE7 only */\n\n.folders .selected {\n     background-color: #444 !important; \n     color: white; \n     text-shadow: none; \n     border-right-color: #aaa; \n     border-left: none; \n     box-shadow: inset 1px 2px 6px #070707;\n}    \n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
+Samples['Webmail/1-Folders'].push({
+    filename: 'folders.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;!-- A simple list of the folder names.\n     Apply the "selected" CSS class to the selected folder.\n     On click, set the selected folder -->\n\n&lt;ul class="folders" data-bind="foreach: folders">\n    &lt;li data-bind="text: $data,\n                   css: { selected: $data === $root.selectedFolder() },\n                   click: $root.selectedFolder">&lt;/li>\n&lt;/ul></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
+Samples['Webmail/1-Folders'].push({
+    filename: 'folders.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">// Our model just contains a list of folders and\n// an observable to hold the selected folder.\n\nTC.registerModel(function (pane) {\n    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];\n    this.selectedFolder = ko.observable(\'Inbox\');\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
+Samples['Webmail/1-Folders'].push({
+    filename: 'index.html',
+    icon: 'Images/icon.html.png',
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;!-- Dependencies and bootstrap -->\n    &lt;/head>\n\n    &lt;body data-bind="pane: \'folders\'">\n    &lt;/body>\n&lt;/html></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'folders.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">/* Some CSS to make our folder list pretty */\n\n.folders { \n    background-color: #bbb; \n    list-style-type: none; \n    padding: 0; \n    margin: 0; \n    border-radius: 7px; \n    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d6d6d6),\n                                       color-stop(0.4, #c0c0c0), color-stop(1,#a4a4a4)); \n    margin: 10px 0 16px 0;\n    font-size: 0px;\n}\n\n.folders li:hover {\n     background-color: #ddd;\n}    \n\n.folders li:first-child {\n     border-left: none; \n     border-radius: 7px 0 0 7px;\n}\n\n.folders li {\n     font-size: 16px; \n     font-weight: bold; \n     display: inline-block; \n     padding: 0.5em 1.5em; \n     cursor: pointer; \n     color: #444; \n     text-shadow: #f7f7f7 0 1px 1px; \n     border-left: 1px solid #ddd; \n     border-right: 1px solid #888;\n}\n\n.folders li {\n     *display: inline !important;\n} /* IE7 only */\n\n.folders .selected {\n     background-color: #444 !important; \n     color: white; \n     text-shadow: none; \n     border-right-color: #aaa; \n     border-left: none; \n     box-shadow: inset 1px 2px 6px #070707;\n}    \n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'folders.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;!-- The click binding is now to the selectFolder function -->\n\n&lt;ul class="folders" data-bind="foreach: folders">\n    &lt;li data-bind="text: $data,\n                   css: { selected: $data === $root.selectedFolder() },\n                   click: $root.selectFolder">&lt;/li>\n&lt;/ul></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'folders.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n    \n    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];\n    this.selectedFolder = ko.observable(pane.data.folder);\n\n    // We\'ve added a separate click handler to navigate\n    // when a folder is selected.\n    this.selectFolder = function (folder) {\n        self.selectedFolder(folder);\n        pane.navigate(\'mails\', { folder: folder });\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'index.html',
+    icon: 'Images/icon.html.png',
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;!-- Dependencies and bootstrap -->\n    &lt;/head>\n\n    &lt;body data-bind="pane: \'layout\'">\n    &lt;/body>\n&lt;/html></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'layout.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;!-- The handlesNavigation binding tells Tribe to use that node for navigation. -->\n\n&lt;div data-bind="pane: \'folders\', data: { folder: \'Inbox\' }">&lt;/div>\n&lt;div data-bind="pane: \'mails\', data: { folder: \'Inbox\' }, handlesNavigation: \'fade\'">&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'mails.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">.mails {\n    width: 100%;\n    table-layout: fixed;\n    border-spacing: 0;\n}\n\n.mails th {\n    background-color: #bbb;\n    font-weight: bold;\n    color: #444;\n    text-shadow: #f7f7f7 0 1px 1px;\n}\n\n.mails tbody tr:hover {\n    cursor: pointer;\n    background-color: #68c !important;\n    color: White;\n}\n\n.mails th, .mails td {\n    text-align: left;\n    padding: 0.4em 0.3em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.mails td {\n    border: 0;\n}\n\n.mails th {\n    border: 0;\n    border-left: 1px solid #ddd;\n    border-right: 1px solid #888;\n    padding: 0.4em 0 0.3em 0.7em;\n}\n\n.mails th:nth-child(1), .mails td:nth-child(1) {\n    width: 20%;\n}\n\n.mails th:nth-child(2), .mails td:nth-child(2) {\n    width: 15%;\n}\n\n.mails th:nth-child(3), .mails td:nth-child(3) {\n    width: 45%;\n}\n\n.mails th:nth-child(4), .mails td:nth-child(4) {\n    width: 15%;\n}\n\n.mails th:last-child {\n    border-right: none;\n}\n\n.mails tr:nth-child(even) {\n    background-color: #EEE;\n}\n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'mails.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;table class="mails" data-bind="with: data">\n    &lt;thead>\n        &lt;tr>\n            &lt;th>From&lt;/th>\n            &lt;th>To&lt;/th>\n            &lt;th>Subject&lt;/th>\n            &lt;th>Date&lt;/th>\n        &lt;/tr>\n    &lt;/thead>\n\n    &lt;tbody data-bind="foreach: mails">\n        &lt;tr>\n            &lt;td data-bind="text: from">&lt;/td>\n            &lt;td data-bind="text: to">&lt;/td>\n            &lt;td data-bind="text: subject">&lt;/td>\n            &lt;td data-bind="text: date">&lt;/td>\n        &lt;/tr>     \n    &lt;/tbody>\n&lt;/table></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
+Samples['Webmail/2-Mails'].push({
+    filename: 'mails.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n\n    this.data = ko.observable();\n\n    // Load data using AJAX to our data property    \n    this.initialise = function() {\n        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'folders.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">/* Some CSS to make our folder list pretty */\n\n.folders { \n    background-color: #bbb; \n    list-style-type: none; \n    padding: 0; \n    margin: 0; \n    border-radius: 7px; \n    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d6d6d6),\n                                       color-stop(0.4, #c0c0c0), color-stop(1,#a4a4a4)); \n    margin: 10px 0 16px 0;\n    font-size: 0px;\n}\n\n.folders li:hover {\n     background-color: #ddd;\n}    \n\n.folders li:first-child {\n     border-left: none; \n     border-radius: 7px 0 0 7px;\n}\n\n.folders li {\n     font-size: 16px; \n     font-weight: bold; \n     display: inline-block; \n     padding: 0.5em 1.5em; \n     cursor: pointer; \n     color: #444; \n     text-shadow: #f7f7f7 0 1px 1px; \n     border-left: 1px solid #ddd; \n     border-right: 1px solid #888;\n}\n\n.folders li {\n     *display: inline !important;\n} /* IE7 only */\n\n.folders .selected {\n     background-color: #444 !important; \n     color: white; \n     text-shadow: none; \n     border-right-color: #aaa; \n     border-left: none; \n     box-shadow: inset 1px 2px 6px #070707;\n}    \n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'folders.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;ul class="folders" data-bind="foreach: folders">\n    &lt;li data-bind="text: $data,\n                   css: { selected: $data === $root.selectedFolder() },\n                   click: $root.selectFolder">&lt;/li>\n&lt;/ul></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'folders.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n\n    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];\n    this.selectedFolder = ko.observable(pane.data.folder);\n\n    this.selectFolder = function (folder) {\n        self.selectedFolder(folder);\n        pane.navigate(\'mails\', { folder: folder });\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'index.html',
+    icon: 'Images/icon.html.png',
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;!-- Dependencies and bootstrap -->\n    &lt;/head>\n\n    &lt;body data-bind="pane: \'layout\'">\n    &lt;/body>\n&lt;/html></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'layout.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div data-bind="pane: \'folders\', data: { folder: \'Inbox\' }">&lt;/div>\n&lt;div data-bind="pane: \'mails\', data: { folder: \'Inbox\' }, handlesNavigation: \'fade\'">&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'mails.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">.mails {\n    width: 100%;\n    table-layout: fixed;\n    border-spacing: 0;\n}\n\n.mails th {\n    background-color: #bbb;\n    font-weight: bold;\n    color: #444;\n    text-shadow: #f7f7f7 0 1px 1px;\n}\n\n.mails tbody tr:hover {\n    cursor: pointer;\n    background-color: #68c !important;\n    color: White;\n}\n\n.mails th, .mails td {\n    text-align: left;\n    padding: 0.4em 0.3em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.mails td {\n    border: 0;\n}\n\n.mails th {\n    border: 0;\n    border-left: 1px solid #ddd;\n    border-right: 1px solid #888;\n    padding: 0.4em 0 0.3em 0.7em;\n}\n\n.mails th:nth-child(1), .mails td:nth-child(1) {\n    width: 20%;\n}\n\n.mails th:nth-child(2), .mails td:nth-child(2) {\n    width: 15%;\n}\n\n.mails th:nth-child(3), .mails td:nth-child(3) {\n    width: 45%;\n}\n\n.mails th:nth-child(4), .mails td:nth-child(4) {\n    width: 15%;\n}\n\n.mails th:last-child {\n    border-right: none;\n}\n\n.mails tr:nth-child(even) {\n    background-color: #EEE;\n}\n</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'mails.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;table class="mails" data-bind="with: data">\n    &lt;thead>\n        &lt;tr>\n            &lt;th>From&lt;/th>\n            &lt;th>To&lt;/th>\n            &lt;th>Subject&lt;/th>\n            &lt;th>Date&lt;/th>\n        &lt;/tr>\n    &lt;/thead>\n\n    &lt;tbody data-bind="foreach: mails">\n        &lt;tr data-bind="click: $root.selectMail">\n            &lt;td data-bind="text: from">&lt;/td>\n            &lt;td data-bind="text: to">&lt;/td>\n            &lt;td data-bind="text: subject">&lt;/td>\n            &lt;td data-bind="text: date">&lt;/td>\n        &lt;/tr>     \n    &lt;/tbody>\n&lt;/table></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'mails.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n\n    this.data = ko.observable();\n\n    this.initialise = function () {\n        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);\n    };\n    \n    this.selectMail = function (mail) {\n        pane.navigate(\'viewMail\', mail);\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'viewMail.css',
+    icon: 'Images/icon.css.png',
+    content: '<pre class="prettyprint">.viewMail .mailInfo {\n    background-color: #dae0e8; \n    padding: 1em 1em 0.5em 1.25em; \n    border-radius: 1em;\n}\n\n.viewMail .mailInfo h1 {\n    margin-top: 0.2em; \n    font-size: 130%;\n}\n\n.viewMail .mailInfo label {\n    color: #777; \n    font-weight: bold; \n    min-width: 2.75em; \n    text-align:right; \n    display: inline-block;\n}\n\n.viewMail .message {\n    padding: 0 1.25em;\n}</pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'viewMail.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div class="viewMail" data-bind="with: data">\n    &lt;div class="mailInfo">\n        &lt;h1 data-bind="text: subject">&lt;/h1>\n        &lt;p>&lt;label>From&lt;/label>: &lt;span data-bind="text: from">&lt;/span>&lt;/p>\n        &lt;p>&lt;label>To&lt;/label>: &lt;span data-bind="text: to">&lt;/span>&lt;/p>\n        &lt;p>&lt;label>Date&lt;/label>: &lt;span data-bind="text: date">&lt;/span>&lt;/p>\n        &lt;div class="message">\n            &lt;p data-bind="html: messageContent" />            \n        &lt;/div>\n    &lt;/div>\n&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
+Samples['Webmail/3-Content'].push({
+    filename: 'viewMail.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n    \n    this.data = ko.observable();\n\n    this.initialise = function () {\n        $.getJSON(\'Data/mail/\' + pane.data.id, self.data);\n    };\n});</pre>'
 });

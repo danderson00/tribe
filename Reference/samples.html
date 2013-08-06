@@ -2,17 +2,17 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Sample</title>
-        <script type="text/javascript" src="Libraries/jquery-1.8.3.js"></script>
+        <script type="text/javascript" src="Libraries/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="Libraries/jquery.signalR-1.1.2.js"></script>
-        <script type="text/javascript" src="Libraries/knockout.js"></script>
-        <script type="text/javascript" src="Libraries/Tribe.js"></script>
-        <script type="text/javascript" src="Libraries/Tribe.Mobile.js"></script>
+        <script type="text/javascript" src="Libraries/knockout-2.3.0.debug.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.chrome.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.Mobile.chrome.js"></script>
 
         <!--        <script type="text/javascript" src="Libraries/jquery.flot.min.js"></script>-->
         <script type="text/javascript" src="Libraries/prettify.js"></script>
         <link rel="stylesheet" href="Libraries/prettify.css" />
 
-        <script type="text/javascript" src="Build/site.js"></script>
+        <script type="text/javascript" src="Build/site.chrome.js"></script>
         <script type="text/javascript">
             $(function () {
                 TC.options.basePath = 'Panes/';
@@ -28,6 +28,8 @@
         </style>
     </head>
     <body>
-    <div class="padded" data-bind="pane: '/Content/About/example3'"></div>
+    <div class="webmail" data-bind="//pane: '/Interface/sample', data: { name: 'Webmail/1-Folders', initialFile: 'folders.js', rootPane: 'folders' }"></div>
+    <div class="webmail" data-bind="//pane: '/Interface/sample', data: { name: 'Webmail/2-Mails', initialFile: 'folders.js', rootPane: 'layout' }"></div>
+    <div class="webmail" data-bind="pane: '/Interface/sample', data: { name: 'Webmail/3-Content', initialFile: 'folders.js', rootPane: 'layout' }"></div>
     </body>
 </html>
