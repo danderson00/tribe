@@ -685,7 +685,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-transitions"><div class="content block">\n    <h1>Transitions</h1>\n    <p>Under construction</p>\n</div>\n</script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-transitions"><div class="content block">\n    <h1>Transitions</h1>\n\n    <p>Use the TC.transition function to perform transitions:</p>\n    <div data-bind="pane: \'/Interface/API/function\', data: Reference.Transition"></div>\n\n    <p>The returned object can be used to transition the target in, out or to another pane:</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.Transition.Functions }"></div>\n\n    <div class="child">\n        <h1>Examples</h1>\n\n        <p>Fade the first element with a class of "target" out of view and remove it from the DOM</p>\n        <pre class="example">\n    TC.transition(\'.target\', \'fade\').out();</pre>\n\n        <p>Transition the node containing the element with a class of "target" to a new pane</p>\n        <pre class="example">\n    TC.transition(TC.nodeFor(\'.target\')).to(\'path/to/pane\');</pre>\n\n        <p>This can also be expressed as:</p>\n        <pre class="example">\n    TC.nodeFor(\'.target\').transitionTo(\'path/to/pane\');</pre>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-MessageHub-client"><div class="content block">\n    <h1>MessageHub Client API</h1>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.MessageHub }"></div>\n    <div class="child">\n        <h1>joinChannel Options</h1>\n        <p>An object containing any of the following options can be passed to the TMH.joinChannel function.</p>\n        <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.MessageHub.ChannelOptions }"></div>\n    </div>\n</div></script>');
 $('head')
@@ -751,7 +751,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Interface-API-constructor"><div data-bind="pane: \'function\', data: func">\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Interface-API-function"><div class="function child">\n    <h1>\n        <span data-bind="text: f.name"></span>(<span data-bind="text: argumentNames"></span>)\n        <span class="returns" data-bind="visible: f.returns">Returns: <span class="type" data-bind="text: f.returns"></span></span>\n    </h1>\n    <p data-bind="html: f.description"></p>\n\n    <table data-bind="visible: f.arguments && f.arguments.length > 0">\n        <thead>\n            <tr>\n                <th>Argument</th>\n                <th>Type</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody data-bind="foreach: f.arguments">\n            <tr>\n                <td data-bind="text: $data.name"></td>\n                <td data-bind="text: $data.type"></td>\n                <td data-bind="text: $data.description"></td>\n            </tr>\n        </tbody>\n    </table>\n    \n    <div data-bind="foreach: f.examples">\n        <div class="example">\n            <p data-bind="text: description"></p>\n            <pre data-bind="text: code"></pre>\n            <p>Result:</p>\n            <pre data-bind="text: result"></pre>\n        </div>\n    </div>\n</div></script>');
+    .append('<script type="text/template" id="template--Interface-API-function"><div class="function child">\n    <h1>\n        <span data-bind="text: f.name"></span>(<span data-bind="text: argumentNames"></span>)\n        <span class="returns" data-bind="visible: f.returns">Returns: <span class="type" data-bind="text: f.returns"></span></span>\n    </h1>\n    <p data-bind="html: f.description"></p>\n\n    <table data-bind="visible: f.arguments && f.arguments.length > 0">\n        <thead>\n            <tr>\n                <th>Argument</th>\n                <th>Type</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody data-bind="foreach: f.arguments">\n            <tr>\n                <td data-bind="text: $data.name"></td>\n                <td data-bind="text: $data.type"></td>\n                <td data-bind="html: $data.description"></td>\n            </tr>\n        </tbody>\n    </table>\n    \n    <div data-bind="foreach: f.examples">\n        <div class="example">\n            <p data-bind="text: description"></p>\n            <pre data-bind="text: code"></pre>\n            <p>Result:</p>\n            <pre data-bind="text: result"></pre>\n        </div>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-API-functionList"><div data-bind="foreach: pane.data.functions">\n    <div data-bind="pane: \'function\', data: $data"></div>\n</div></script>');
 $('head')
@@ -908,6 +908,43 @@ Reference.Panes = {
     ]
 };
 //@ sourceURL=tribe://Panes/Content/Reference/Core/panes.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/transitions' };
+Reference.Transition = {
+    name: 'TC.transition',
+    description: 'Create an object with a set of functions for transition elements and nodes.',
+    arguments: [
+        { name: 'target', type: 'selector | TC.Types.Pane | TC.Types.Node', description: 'The target of the transition.' },
+        { name: 'transition', type: 'String', description: 'The name of the transition registered in the TC.Transitions collection. If not specified, this will default to transition specified on the pane or node.<br/>Built-in transitions are fade, slideLeft, slideRight, slideUp and slideDown.' },
+        { name: 'reverse', type: 'Boolean', description: 'Use the reverse transition to the one specified.' }
+    ],
+    returns: 'Object'
+};
+
+Reference.Transition.Functions = [
+    {
+        name: 'in',
+        description: 'Transition the target into view. Returned promise resolves when transition is complete.',
+        returns: 'jQuery.Deferred'
+    },
+    {
+        name: 'out',
+        description: 'Transition the target out of view. By default, the target is removed from the DOM after transitioning. Returned promise resolves when transition is complete.',
+        arguments: [
+            { name: 'remove', type: 'Boolean', description: 'Specify false to hide the target instead.' }
+        ],
+        returns: 'jQuery.Deferred'
+    },
+    {
+        name: 'to',
+        description: 'Transition the target to another pane. If the target is an element, a new node is created. Returned promise resolves when the render operation for the new pane is complete.',
+        arguments: [
+            { name: 'paneOptions', type: 'String | Object', description: 'The path to the new pane or an object containing path and data properties.' },
+            { name: 'remove', type: 'Boolean', description: 'Specify false to hide the original target instead of removing.' }
+        ],
+        returns: 'jQuery.Deferred'
+    }
+];
+//@ sourceURL=tribe://Panes/Content/Reference/Core/transitions.js
 TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/client' };
 Reference.MessageHub = [
     {

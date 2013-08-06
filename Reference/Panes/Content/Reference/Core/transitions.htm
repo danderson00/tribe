@@ -1,4 +1,25 @@
 ﻿<div class="content block">
     <h1>Transitions</h1>
-    <p>Under construction</p>
+
+    <p>Use the TC.transition function to perform transitions:</p>
+    <div data-bind="pane: '/Interface/API/function', data: Reference.Transition"></div>
+
+    <p>The returned object can be used to transition the target in, out or to another pane:</p>
+    <div data-bind="pane: '/Interface/API/functionList', data: { functions: Reference.Transition.Functions }"></div>
+
+    <div class="child">
+        <h1>Examples</h1>
+
+        <p>Fade the first element with a class of "target" out of view and remove it from the DOM</p>
+        <pre class="example">
+    TC.transition('.target', 'fade').out();</pre>
+
+        <p>Transition the node containing the element with a class of "target" to a new pane</p>
+        <pre class="example">
+    TC.transition(TC.nodeFor('.target')).to('path/to/pane');</pre>
+
+        <p>This can also be expressed as:</p>
+        <pre class="example">
+    TC.nodeFor('.target').transitionTo('path/to/pane');</pre>
+    </div>
 </div>

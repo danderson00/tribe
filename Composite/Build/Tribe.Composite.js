@@ -1469,7 +1469,7 @@ TC.LoadStrategies.adhoc = function (pane, context) {
     var element;
     setState();
     
-    transition = transition || (pane && pane.transition);
+    transition = transition || (pane && pane.transition) || (node && node.transition);
     var implementation = TC.Transitions[transition];
     if (reverse && implementation && implementation.reverse)
         implementation = TC.Transitions[implementation.reverse];
