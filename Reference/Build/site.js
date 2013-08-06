@@ -66,15 +66,16 @@ Article = {
         },
         'PubSub': {
             'Core': 'core',
-            'Lifetimes': 'lifetimes'
-        },
+            'Message Envelopes': 'envelopes',
+            'Global Options': 'options',
+            },
         'MessageHub': {
             'Configuration': 'configuration',
             'Client API': 'client',
         },
-        'Mobile': {},
-        'Forms': {},
-        'Components': {}
+        //'Mobile': {},
+        //'Forms': {},
+        //'Components': {}
     }
 };Reference = {
     Utilities: {},
@@ -680,7 +681,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-api"><div class="content block">\n    <h1>Core API</h1>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.API }"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the TC.options object.</p>\n    <pre class="example">TC.options.basePath = \'Panes\'</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>splitScripts</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Split loaded scripts on each sourceURL tag and execute individually</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the TC.options object.</p>\n    <pre class="example">TC.options.basePath = \'Panes\';</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>splitScripts</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Split loaded scripts on each sourceURL tag and execute individually</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
@@ -689,6 +690,12 @@ $('head')
     .append('<script type="text/template" id="template--Content-Reference-MessageHub-client"><div class="content block">\n    <h1>MessageHub Client API</h1>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.MessageHub }"></div>\n    <div class="child">\n        <h1>joinChannel Options</h1>\n        <p>An object containing any of the following options can be passed to the TMH.joinChannel function.</p>\n        <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.MessageHub.ChannelOptions }"></div>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-MessageHub-configuration"><div class="content block">\n    <h1>MessageHub Server Configuration API</h1>\n    \n    <p>\n        Configuration must start with ConfigureHub.With() followed by a container configuration.\n        Currently only Unity is supported.\n    </p>\n    <pre class="example">\nusing Tribe.MessageHub.Core.Configuration;\nusing Tribe.MessageHub.Containers.Unity;\n\nConfigureHub.With().Unity(container).StartHub();</pre>\n    \n    <p>The following extension methods are then provided, all chainable:</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.MessageHub.Server }"></div>\n    \n    <pre class="example">\nusing Tribe.MessageHub.Core.Configuration;\nusing Tribe.MessageHub.Containers.Unity;\nusing Tribe.MessageHub.ChannelPersisters.SqlServer;\nusing Tribe.MessageHub.Buses.NServiceBus;\n\nConfigureHub.With()\n    .Unity(container)\n    .ChannelAuthoriser&lt;MyChannelAuthoriser>()\n    .SqlServerPersistence("Data Source=.;Initial Catalog=Tribe.Channels;Integrated Security=true")\n    .NServiceBus(bus)\n    .MessagesFrom(typeof(ExampleMessage).Assembly)\n    .StartHub();</pre>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PubSub-core"><div data-bind="pane: \'/Interface/API/type\', data: Reference.PubSub"></div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PubSub-envelopes"><div class="content block">\n    <h1>Message Envelopes</h1>\n    <p>Message envelopes may contain the following properties:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PubSub.Envelopes }"></div>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PubSub-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the Tribe.PubSub.options object.</p>\n    <pre class="example">Tribe.PubSub.options.sync = true;</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>sync</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Execute message handlers synchronously.</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Wrap handler functions in a try..catch block.</td>\n            </tr>\n            <tr>\n                <td>exceptionHandler</td>\n                <td>Function(error, envelope)</td>\n                <td>undefined</td>\n                <td>A function to execute when exceptions occur. Only executed if handleExceptions is false.</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Types-History"><div data-bind="pane: \'/Interface/API/type\', data: Reference.Types.History"></div></script>');
 $('head')
@@ -905,46 +912,46 @@ TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/client' };
 Reference.MessageHub = [
     {
         name: 'TMH.initialise',
-        description: 'Initialise the MessageHub client',
+        description: 'Initialise the MessageHub client.',
         returns: 'undefined',
         arguments: [
-            { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub object to attach to' },
-            { name: 'url', type: 'String', description: 'The URL of the SignalR instance. Usually "signalr"' }
+            { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub object to attach to.' },
+            { name: 'url', type: 'String', description: 'The URL of the SignalR instance. Usually "signalr".' }
         ]
     },
     {
         name: 'TMH.joinChannel',
-        description: 'Join the specified channel',
+        description: 'Join the specified channel.',
         returns: '{ leave: function () { } }',
         arguments: [
-            { name: 'id', type: 'String', description: 'The channel identifier' },
-            { name: 'options', type: 'Object', description: 'A hashtable of options, described below' }
+            { name: 'id', type: 'String', description: 'The channel identifier.' },
+            { name: 'options', type: 'Object', description: 'A hashtable of options, described below.' }
         ]
     },
     {
         name: 'TMH.leaveChannel',
-        description: 'Leave the specified channel',
+        description: 'Leave the specified channel.',
         returns: 'undefined',
         arguments: [
-            { name: 'id', type: 'String', description: 'The channel identifier' }
+            { name: 'id', type: 'String', description: 'The channel identifier.' }
         ]
     },
     {
         name: 'TMH.publishToServer',
-        description: 'Publish a message to the server',
+        description: 'Publish a message to the server.',
         returns: 'undefined',
         arguments: [
-            { name: 'channelId', type: 'String', description: 'The channel identifier' },
-            { name: 'envelope', type: 'Object', description: 'The PubSub message envelope. See the PubSub reference for more information' },
-            { name: 'record', type: 'Boolean', description: 'Request the server to record the message' }
+            { name: 'channelId', type: 'String', description: 'The channel identifier.' },
+            { name: 'envelope', type: 'Object', description: 'The PubSub message envelope. See the PubSub reference for more information.' },
+            { name: 'record', type: 'Boolean', description: 'Request the server to record the message.' }
         ]
     }
 ];
 
 Reference.MessageHub.ChannelOptions = [
-    { name: 'serverEvents', type: '[String]', description: 'An array of message topics to publish to the server. Wildcards can be used' },
-    { name: 'record', type: 'Boolean', description: 'Request the server to record messages published to this channel' },
-    { name: 'replay', type: 'Boolean', description: 'Request the server to replay messages previously published to this channel' }
+    { name: 'serverEvents', type: '[String]', description: 'An array of message topics to publish to the server. Wildcards can be used.' },
+    { name: 'record', type: 'Boolean', description: 'Request the server to record messages published to this channel.' },
+    { name: 'replay', type: 'Boolean', description: 'Request the server to replay messages previously published to this channel.' }
 ];
 //@ sourceURL=tribe://Panes/Content/Reference/MessageHub/client.js
 TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/configuration' };
@@ -953,67 +960,154 @@ Reference.MessageHub.Server = [
         name: 'TopicResolver',
         description: 'Specify a function to resolve message types to a topic names.',
         arguments: [
-            { name: 'resolver', type: 'Func<Type, string>', description: 'A function that resolves a message type to a topic name' }
+            { name: 'resolver', type: 'Func<Type, string>', description: 'A function that resolves a message type to a topic name.' }
         ]
     },
     {
         name: 'TopicResolver<T>',
         description: 'Specify a type to resolve message types to a topic names. The default uses the type name as the client message topic.',
         arguments: [
-            { name: '', type: 'IMessageTopicResolver', description: 'A type that implements IMessageTopicResolver' }
+            { name: '', type: 'IMessageTopicResolver', description: 'A type that implements IMessageTopicResolver.' }
         ]
     },
     {
         name: 'MessageSerialiser<T>',
         description: 'Specify a type to serialise messages. The default is JsonMessageSerialiser.',
         arguments: [
-            { name: '', type: 'IMessageSerialiser', description: 'A type that implements IMessageSerialiser' }
+            { name: '', type: 'IMessageSerialiser', description: 'A type that implements IMessageSerialiser.' }
         ]
     },
     {
         name: 'MessageBus<T>',
         description: 'Specify a type that handles translation of client and server side messages.',
         arguments: [
-            { name: '', type: 'IMessageBus', description: 'A type that implements IMessageBus' }
+            { name: '', type: 'IMessageBus', description: 'A type that implements IMessageBus.' }
         ]
     },
     {
         name: 'MessagesFrom',
         description: 'Use incoming and outgoing message types from the specified assemblies.',
         arguments: [
-            { name: 'assemblies', type: 'params Assembly[]', description: 'A parameter array of assemblies' }
+            { name: 'assemblies', type: 'params Assembly[]', description: 'A parameter array of assemblies.' }
         ]
     },
     {
         name: 'HostStarter<T>',
         description: 'Specify a type that can initialise and start the MessageHub host. The default is the IisHostStarter.',
         arguments: [
-            { name: '', type: 'IHostStarter', description: 'A type that implements IHostStarter' }
+            { name: '', type: 'IHostStarter', description: 'A type that implements IHostStarter.' }
         ]
     },
     {
         name: 'ChannelAuthoriser<T>',
         description: 'Specify a type that can authorise channel requests.',
         arguments: [
-            { name: '', type: 'IChannelAuthoriser', description: 'A type that implements IChannelAuthoriser' }
+            { name: '', type: 'IChannelAuthoriser', description: 'A type that implements IChannelAuthoriser.' }
         ]
     },
     {
         name: 'SqlServerPersistence',
         description: 'Store recorded messages in a SQL Server database. Requires a reference to the Tribe.MessageHub.ChannelPersisters.SqlServer assembly.',
         arguments: [
-            { name: 'connectionStringOrName', type: 'String', description: 'A literal connection string or the name of a connection string defined in the configuration file' }
+            { name: 'connectionStringOrName', type: 'String', description: 'A literal connection string or the name of a connection string defined in the configuration file.' }
         ]
     },
     {
         name: 'NServiceBus',
         description: 'Use NServiceBus as the server side messaging infrastructure. Requires a reference to the Tribe.MessageHub.Buses.NServiceBus assembly.',
         arguments: [
-            { name: 'bus', type: 'NServiceBus.IBus', description: 'A configured instance of the NServiceBus IBus interface' }
+            { name: 'bus', type: 'NServiceBus.IBus', description: 'A configured instance of the NServiceBus IBus interface.' }
         ]
     },
 ];
 //@ sourceURL=tribe://Panes/Content/Reference/MessageHub/configuration.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/core' };
+Reference.PubSub = {
+    name: 'Tribe.PubSub',
+    description: 'A fully featured publish / subscribe engine.',
+    constructor: {
+        arguments: [
+            { name: 'options', type: 'Object', description: 'A hashtable of options. These are the same as and override those specified in global options.' }
+        ]
+    },
+    functions: [
+        {
+            name: 'publish',
+            description: 'Publish the specified message to the bus.',
+            arguments: [
+                { name: 'topicOrEnvelope', type: 'String | Object', description: 'A string message topic or a message envelope object.' },
+                { name: 'data', type: 'Any', description: 'Data to attach to the message envelope.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'publishSync',
+            description: 'Publish the specified message to the bus synchronously.',
+            arguments: [
+                { name: 'topic', type: 'String', description: 'The message topic.' },
+                { name: 'data', type: 'Any', description: 'Data to attach to the message envelope.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'subscribe',
+            description: 'Subscribe to one or more message topics. Returns numeric token(s) that can be used to unsubscribe message handlers.',
+            arguments: [
+                { name: 'topic', type: 'String | [String] | Object', description: 'A single message topic, array of topics or object map of topic names to handler functions.' },
+                { name: 'func', type: 'Function(data, envelope)', description: 'The message handler function.' }
+            ],
+            returns: 'Number | [Number]'
+        },
+        {
+            name: 'subscribeOnce',
+            description: 'Subscribe to one or more message topics with a handler that is executed once only.',
+            arguments: [
+                { name: 'topic', type: 'String | [String] | Object', description: 'A single message topic, array of topics or object map of topic names to handler functions.' },
+                { name: 'handler', type: 'Function(data, envelope)', description: 'The message handler function.' }
+            ],
+            returns: 'Number | [Number]'
+        },
+        {
+            name: 'unsubscribe',
+            description: 'Unsubscribe one or more message handlers.',
+            arguments: [
+                { name: 'tokens', type: 'Number | [Number]', description: 'A single subscription token or array of tokens to unsubscribe. Returns the token(s) that were successfully unsubscribed.' }
+            ],
+            returns: 'Number | [Number]'
+        },
+        {
+            name: 'createLifetime',
+            description: 'Create a child PubSub object where all subscriptions can be removed by calling .end().',
+            returns: 'Object'
+        }
+    ],
+    properties: [
+        {
+            name: 'owner',
+            description: 'The root PubSub object. Child lifetimes will refer back to the owning PubSub object.',
+            type: 'Tribe.PubSub'
+        },
+        {
+            name: 'sync',
+            description: 'True if the PubSub object is operating synchronously.',
+            type: 'Boolean'
+        },
+        {
+            name: 'subscribers',
+            description: 'A managed collection of message subscribers. Use get(\'*\') to retrieve all subscribers.',
+            type: 'Tribe.PubSub.SubscriberList'
+        }
+    ]
+};
+//@ sourceURL=tribe://Panes/Content/Reference/PubSub/core.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/envelopes' };
+Reference.PubSub.Envelopes = [
+    { name: 'topic', type: 'String', description: 'The message topic.' },
+    { name: 'data', type: 'Any', description: 'The message data.' },
+    { name: 'sync', type: 'Boolean', description: 'Publish the message synchronously.' },
+    { name: 'server', type: 'Boolean', description: 'True if the message originated from a Tribe.MessageHub host.' }
+];
+//@ sourceURL=tribe://Panes/Content/Reference/PubSub/envelopes.js
 TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/History' };
 Reference.Types.History = {
     name: 'TC.Types.History',

@@ -42,14 +42,15 @@
         },
         'PubSub': {
             'Core': 'core',
-            'Lifetimes': 'lifetimes'
-        },
+            'Message Envelopes': 'envelopes',
+            'Global Options': 'options',
+            },
         'MessageHub': {
             'Configuration': 'configuration',
             'Client API': 'client',
         },
-        'Mobile': {},
-        'Forms': {},
-        'Components': {}
+        //'Mobile': {},
+        //'Forms': {},
+        //'Components': {}
     }
 };
