@@ -143,7 +143,7 @@
     <Content Include="Images\logo.png" />
     <Content Include="Panes\Content\About\guides.css" />
     <Content Include="Panes\Content\About\guides.htm" />
-    <Content Include="Panes\Content\About\masthead.js" />
+    <Content Include="Panes\Content\Guides\Guides\nservicebus.htm" />
     <Content Include="Panes\Content\Guides\Guides\packscript.htm" />
     <Content Include="Panes\Content\Guides\Guides\panes.htm" />
     <Content Include="Panes\Content\Guides\Guides\webmail.css" />
@@ -156,6 +156,16 @@
     <Content Include="Panes\Content\Guides\Guides\webmail.htm" />
     <Content Include="Panes\Content\Reference\Core\panes.js" />
     <Content Include="Panes\Content\Reference\Core\transitions.htm" />
+    <Content Include="Panes\Content\Reference\Core\transitions.js" />
+    <Content Include="Panes\Content\Reference\MessageHub\client.htm" />
+    <Content Include="Panes\Content\Reference\MessageHub\client.js" />
+    <Content Include="Panes\Content\Reference\MessageHub\configuration.htm" />
+    <Content Include="Panes\Content\Reference\MessageHub\configuration.js" />
+    <Content Include="Panes\Content\Reference\PubSub\envelopes.htm" />
+    <Content Include="Panes\Content\Reference\PubSub\envelopes.js" />
+    <Content Include="Panes\Content\Reference\PubSub\core.htm" />
+    <Content Include="Panes\Content\Reference\PubSub\core.js" />
+    <Content Include="Panes\Content\Reference\PubSub\options.htm" />
     <Content Include="Panes\Content\Reference\Types\History.htm" />
     <Content Include="Panes\Content\Reference\Types\History.js" />
     <Content Include="Panes\Content\Reference\Types\Models.htm" />
@@ -435,9 +445,7 @@
   <ItemGroup>
     <Folder Include="Panes\Content\Reference\Components\" />
     <Folder Include="Panes\Content\Reference\Forms\" />
-    <Folder Include="Panes\Content\Reference\MessageHub\" />
     <Folder Include="Panes\Content\Reference\Mobile\" />
-    <Folder Include="Panes\Content\Reference\PubSub\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

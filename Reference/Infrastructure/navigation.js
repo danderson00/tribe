@@ -8,7 +8,6 @@
             'Getting Started': 'getStarted',
             'Working With Panes': 'panes',
             'Webmail Tutorial': 'webmail',
-            'Configuring MessageBus': 'messageBus',
         }
     },
     Reference: {
