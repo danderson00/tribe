@@ -1,4 +1,6 @@
 ﻿(function () {
+    var supported = supportsTransitions();
+    
     createCssTransition('fade');
     createCssTransition('slideLeft', 'slideRight');
     createCssTransition('slideRight', 'slideLeft');
@@ -10,16 +12,18 @@
     function createCssTransition(transition, reverse) {
         TC.Transitions[transition] = {
             in: function (element) {
+                if (!supported) return null;
+                
                 var promise = $.Deferred();
                 $(element).bind(transitionEndEvents, transitionEnded(element, promise))
                     .addClass('prepare in ' + transition);
-                    //.show();
 
                 trigger(element);
                 return promise;
             },
 
             out: function (element) {
+                if (!supported) return null;
                 var promise = $.Deferred();
 
                 $(element).addClass('prepare out ' + transition)
@@ -46,39 +50,21 @@
             };
         }
     }
+    
+    function supportsTransitions() {
+        var b = document.body || document.documentElement;
+        var style = b.style;
+        var property = 'transition';
+        var vendors = ['Moz', 'Webkit', 'Khtml', 'O', 'ms'];
 
-    //function createCssTransition(name, reverse) {
-    //    TC.Transitions[name] = {
-    //        in: function(element) {
-    //            var $element = $(element);
-    //            $element.bind('webkitTransitionEnd', animationEnd)
-    //                    .addClass(name + ' in');
+        if (typeof style[property] == 'string') { return true; }
 
-    //            var promise = $.Deferred();
-    //            return promise;
-
-    //            function animationEnd() {
-    //                $element.unbind('webkitTransitionEnd', animationEnd)
-    //                        .removeClass(name + ' in');
-    //                promise.resolve();
-    //            }
-    //        },
-
-    //        out: function(element) {
-    //            var $element = $(element);
-    //            $element.bind('webkitTransitionEnd', animationEnd)
-    //                    .addClass(name + ' out');
-
-    //            var promise = $.Deferred();
-    //            return promise;
-
-    //            function animationEnd() {
-    //                $element.unbind('webkitTransitionEnd', animationEnd)
-    //                        .removeClass(name + ' out');
-    //                promise.resolve();
-    //            }
-    //        },
-    //        reverse: reverse || name
-    //    };
-    //}
+        // Tests for vendor specific prop
+        property = property.charAt(0).toUpperCase() + property.substr(1);
+        for (var i = 0; i < vendors.length; i++) {
+            if (typeof style[vendors[i] + property] == 'string') { return true; }
+        }
+        
+        return false;
+    }
 })();

@@ -583,7 +583,7 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.navigation{display:none;background:#eee;border:1px solid #000;box-sizing:border-box}.navigation ul{list-style:none}.navigation li{cursor:pointer}.navigation ul li:hover{background:#111;color:#eee}.navigation li.selectedItem{background:#ccc}.navigation>ul li{padding:2px 10px;font-weight:bold}.navigation ul ul li{margin:0;padding:2px 0 2px 20px;box-sizing:border-box;font-weight:normal}@media(max-width:1300px){.navigation{width:980px;position:relative;left:50%;margin-left:-490px!important;border-radius:8px;padding:10px;margin-top:10px}.navigation ul{margin:0;padding:0;width:33%}.navigation ul ul{position:absolute;top:10px;right:10px;width:66%}.navigation ul ul li{width:50%;float:left}}@media(min-width:1300px){.navigation{width:170px!important;position:fixed;left:0;top:56px;border-left:0;box-shadow:3px 3px 4px -1px rgba(0,0,0,.3);border-top-right-radius:8px;border-bottom-right-radius:8px}.navigation>ul{padding:0;margin:10px}.navigation ul ul{margin:0;padding:0}}')
+    .text('.navigation{display:none;background:#eee;border:1px solid #000;box-sizing:border-box;z-index:100}.navigation ul{list-style:none}.navigation li{cursor:pointer}.navigation ul li:hover{background:#111;color:#eee}.navigation li.selectedItem{background:#ccc}.navigation>ul li{padding:2px 10px;font-weight:bold}.navigation ul ul li{margin:0;padding:2px 0 2px 20px;box-sizing:border-box;font-weight:normal}@media(max-width:1300px){.navigation{width:980px;position:relative;left:50%;margin-left:-490px!important;border-radius:8px;padding:10px;margin-top:10px}.navigation ul{margin:0;padding:0;width:33%}.navigation ul ul{position:absolute;top:10px;right:10px;width:66%}.navigation ul ul li{width:50%;float:left}}@media(min-width:1300px){.navigation{width:170px!important;position:fixed;left:0;top:56px;border-left:0;box-shadow:3px 3px 4px -1px rgba(0,0,0,.3);border-top-right-radius:8px;border-bottom-right-radius:8px}.navigation>ul{padding:0;margin:10px}.navigation ul ul{margin:0;padding:0}}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
@@ -591,7 +591,7 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.sample{width:935px;margin:0 auto}.sample>*{display:inline-block;vertical-align:top;height:305px;border:1px solid #000;border-radius:8px;overflow:hidden;background:#fff}.sample .fileList,.sample .fileContent{float:left;height:300px;box-sizing:border-box}.sample ul.fileList{width:150px;list-style:none;margin:0;padding:0}.sample .fileList li{padding:2px;cursor:pointer}.sample .fileList li:hover{color:#fff;background:#000}.sample .selectedFile{color:#fff;background:grey}.sample .fileContent{padding:5px;width:515px;overflow:auto;height:272px}.sample .result{margin-left:5px;margin-bottom:5px;width:255px}.sample .title{background:#ccc;padding:5px;width:100%;box-sizing:border-box;border-top-left-radius:8px;border-top-right-radius:8px}.sample .samplePane{overflow-y:auto;overflow-x:hidden;padding:5px;height:262px;position:relative}.sample pre{margin:0}.sample pre.prettyprint{border:none}')
+    .text('.sample{width:935px;margin:0}.sample>*{display:inline-block;vertical-align:top;height:305px;border:1px solid #000;border-radius:8px;overflow:hidden;background:#fff}.sample .fileList,.sample .fileContent{float:left;height:300px;box-sizing:border-box}.sample ul.fileList{width:150px;list-style:none;margin:0;padding:0}.sample .fileList li{padding:2px;cursor:pointer}.sample .fileList li:hover{color:#fff;background:#000}.sample .selectedFile{color:#fff;background:grey}.sample .fileContent{padding:5px;width:515px;overflow:auto;height:272px}.sample .result{margin-left:5px;margin-bottom:5px;width:255px}.sample .title{background:#ccc;padding:5px;width:100%;box-sizing:border-box;border-top-left-radius:8px;border-top-right-radius:8px}.sample .samplePane{overflow-y:auto;overflow-x:hidden;padding:5px;height:262px;position:relative}.sample pre{margin:0}.sample pre.prettyprint{border:none}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
@@ -650,7 +650,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-About-features"><div class="block">\n    <h1>Key Features</h1>\n    <div class="features">\n        <div>\n            <img src="Images/Features/composite.jpg" />\n            <strong>Composite UI</strong>\n            <span>Simple, powerful UI decomposition.</span>\n        </div>\n        <div>\n            <img src="Images/Features/resources.jpg" />\n            <strong>Resource Management</strong>\n            <span>Full lifecycle management. Powerful load optimisation.</span>\n        </div>\n        <div>\n            <img src="Images/Features/communication.jpg" />\n            <strong>Seamless Communication</strong>\n            <span>Broadcast messages to other users and internal services in real time.</span>\n        </div>\n        <div>\n            <img src="Images/Features/mobile.jpg" />\n            <strong>Mobile Devices</strong>\n            <span>Effortlessly target web and mobile platforms with a shared codebase.</span>\n        </div>\n        <div>\n            <img src="Images/Features/simple.jpg" />\n            <strong>Simple and Intuitive</strong>\n            <span>Flexible, intuitive file structure. No complex configuration.</span>\n        </div>\n    </div>\n    <div>\n        <a data-bind="click: Article.show(\'Guides\', \'Guides/features\')">Read more...</a>\n    </div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-About-guides"><div class="guides content block">\n    <ul>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/features\')">\n            <h2>Features</h2>\n            <p>Describes the individual components of Tribe and the features they offer.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/getStarted\')">\n            <h2>Get Started</h2>\n            <p>How to obtain the Tribe libraries and start your project.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/panes\')">\n            <h2>Working With Panes</h2>\n            <p>How to create panes, communicate between them and navigate around.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/webmail\')">\n            <h2>Webmail Tutorial</h2>\n            <p>A step by step tutorial for building a simple webmail app.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/packscript\')">\n            <h2>Deployment - Packing Your Apps for Maximum Performance</h2>\n            <p>How to use PackScript to combine and minify your resources for deployment.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/packscript\')">\n            <h2>Modelling Your Navigation Flow and Business Processes</h2>\n            <p>Using sagas to model your navigation and business processes seperately to promote loose coupling.</p>\n        </li>\n        <!--        \n        <li>\n            <h2>Configuring the MessageHub</h2>\n            <p>How to configure the MessageHub component to cater for different scenarios.</p>\n        </li>\n        <li>\n            <h2>Extensibility - Adding Global Behaviour to Panes</h2>\n            <p></p>\n        </li>\n        -->\n    </ul>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-About-guides"><div class="guides content block">\n    <ul>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/features\')">\n            <h2>Features</h2>\n            <p>Describes the individual components of Tribe and the features they offer.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/getStarted\')">\n            <h2>Get Started</h2>\n            <p>How to obtain the Tribe libraries and start your project.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/panes\')">\n            <h2>Working With Panes</h2>\n            <p>How to create panes, communicate between them and navigate around.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/webmail\')">\n            <h2>Webmail Tutorial</h2>\n            <p>A step by step tutorial for building a simple webmail app.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/packscript\')">\n            <h2>Deployment - Packing Your Apps for Maximum Performance</h2>\n            <p>How to use PackScript to combine and minify your resources for deployment.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/packscript\')">\n            <h2>Modelling Your Navigation Flow and Business Processes</h2>\n            <p>Using sagas to model your navigation and business processes seperately to promote loose coupling.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/nservicebus\')">\n            <h2>NServiceBus Integration</h2>\n            <p>Transparently send messages from the client to internal services and publish internal events to client channels.</p>\n        </li>\n        <!--        \n        <li>\n            <h2>Configuring the MessageHub</h2>\n            <p>How to configure the MessageHub component to cater for different scenarios.</p>\n        </li>\n        <li>\n            <h2>Extensibility - Adding Global Behaviour to Panes</h2>\n            <p></p>\n        </li>\n        -->\n    </ul>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-About-home"><div>\n    <div data-bind="pane: \'masthead\'"></div>\n\n    <div class="content">\n        <div data-bind="pane: \'knockout\'"></div>\n        <div data-bind="pane: \'features\'"></div>\n        <div data-bind="pane: \'example1\'"></div>\n        <div data-bind="pane: \'example2\'"></div>\n        <div data-bind="pane: \'example3\'"></div>\n\n        <!--<ul>\n                <li>Tribe comes with a set of UI components but integrates easily with others, like jQuery UI.</li>\n            </ul>-->\n    </div>\n</div></script>');
 $('head')
@@ -663,6 +663,8 @@ $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-getStarted"><div class="content block">\n    <h1>Get Started</h1>\n    <p>There are three easy ways to get started with the Tribe platform.</p>\n\n    <div class="child">\n        <h1>Online Resources</h1>\n        <p>Use the following HTML for your bootstrapper:</p>\n        <div class="example">\n            <pre>\n&lt;!DOCTYPE HTML>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">&lt;/script>        \n        &lt;script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js">&lt;/script>\n        &lt;script src="http://danderson00.github.io/Tribe/Build/Tribe.min.js">&lt;/script>\n        &lt;script>$(TC.run)&lt;/script>\n    &lt;/head>\n    &lt;body data-bind="pane: \'layout\'">&lt;/body>\n&lt;/html></pre>\n        </div>\n        <p>Replace \'layout\' with the path to your starting pane.</p>\n    </div>\n\n    <div class="child">\n        <h1>NuGet Packages</h1>\n        <img class="topRight" style="margin-top: 10px !important" src="Images/Features/nuget.jpg"/>\n        <p>If you\'re a Visual Studio user, the easiest way to get started is to install one of the Tribe NuGet packages.</p>\n        <ul>\n            <li>Tribe - Everything you need for complete Composite and MessageHub functionality.</li>\n            <li>Tribe.Template - Everything in the Tribe package plus a basic starter template.</li>\n            <li>Tribe.Composite - Tribe.Composite, Mobile, Forms and Components.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Download</h1>\n        <a><img class="topRight" src="Images/download.png" /></a>\n        <p><a>Download a ZIP file</a> containing</p>\n        <ul>\n            <li>The production, debug and special Chrome version of Tribe.Composite</li>\n            <li>Tribe.MessageHub binaries (currently requires ASP.NET, self-hosting server coming soon!)</li>\n            <li>Forms, Mobile and Components</li>\n            <li>A starter template</li>\n        </ul>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-messageBus"><div class="content block">\n    <h1>Configuring Tribe.MessageBus</h1>\n    <p>Coming soon!</p>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Guides-Guides-nservicebus"><div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-packscript"><div>\n</div></script>');
 $('head')
@@ -683,6 +685,10 @@ $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-transitions"><div class="content block">\n    <h1>Transitions</h1>\n    <p>Under construction</p>\n</div>\n</script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-MessageHub-client"><div class="content block">\n    <h1>MessageHub Client API</h1>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.MessageHub }"></div>\n    <div class="child">\n        <h1>joinChannel Options</h1>\n        <p>An object containing any of the following options can be passed to the TMH.joinChannel function.</p>\n        <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.MessageHub.ChannelOptions }"></div>\n    </div>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-MessageHub-configuration"><div class="content block">\n    <h1>MessageHub Server Configuration API</h1>\n    \n    <p>\n        Configuration must start with ConfigureHub.With() followed by a container configuration.\n        Currently only Unity is supported.\n    </p>\n    <pre class="example">\nusing Tribe.MessageHub.Core.Configuration;\nusing Tribe.MessageHub.Containers.Unity;\n\nConfigureHub.With().Unity(container).StartHub();</pre>\n    \n    <p>The following extension methods are then provided, all chainable:</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.MessageHub.Server }"></div>\n    \n    <pre class="example">\nusing Tribe.MessageHub.Core.Configuration;\nusing Tribe.MessageHub.Containers.Unity;\nusing Tribe.MessageHub.ChannelPersisters.SqlServer;\nusing Tribe.MessageHub.Buses.NServiceBus;\n\nConfigureHub.With()\n    .Unity(container)\n    .ChannelAuthoriser&lt;MyChannelAuthoriser>()\n    .SqlServerPersistence("Data Source=.;Initial Catalog=Tribe.Channels;Integrated Security=true")\n    .NServiceBus(bus)\n    .MessagesFrom(typeof(ExampleMessage).Assembly)\n    .StartHub();</pre>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Types-History"><div data-bind="pane: \'/Interface/API/type\', data: Reference.Types.History"></div></script>');
 $('head')
@@ -809,23 +815,6 @@ $('head')
     .append('<script type="text/template" id="template--Samples-Webmail-3-Content-mails"><table class="mails" data-bind="with: data">\n    <thead>\n        <tr>\n            <th>From</th>\n            <th>To</th>\n            <th>Subject</th>\n            <th>Date</th>\n        </tr>\n    </thead>\n\n    <tbody data-bind="foreach: mails">\n        <tr data-bind="click: $root.selectMail">\n            <td data-bind="text: from"></td>\n            <td data-bind="text: to"></td>\n            <td data-bind="text: subject"></td>\n            <td data-bind="text: date"></td>\n        </tr>     \n    </tbody>\n</table></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-Webmail-3-Content-viewMail"><div class="viewMail" data-bind="with: data">\n    <div class="mailInfo">\n        <h1 data-bind="text: subject"></h1>\n        <p><label>From</label>: <span data-bind="text: from"></span></p>\n        <p><label>To</label>: <span data-bind="text: to"></span></p>\n        <p><label>Date</label>: <span data-bind="text: date"></span></p>\n        <div class="message">\n            <p data-bind="html: messageContent" />            \n        </div>\n    </div>\n</div></script>');
-TC.scriptEnvironment = { resourcePath: '/Content/About/masthead' };
-TC.registerModel(function (pane) {
-    //this.renderComplete = function() {
-    //    var id = 'twitter-wjs',
-    //        js,
-    //        fjs = document.getElementById('twitter'),
-    //        p = /^http:/.test(document.location) ? 'http' : 'https';
-
-    //    if (!document.getElementById(id)) {
-    //        js = document.createElement('script');
-    //        js.id = id;
-    //        js.src = p + '://platform.twitter.com/widgets.js';
-    //        fjs.parentNode.insertBefore(js, fjs);
-    //    }
-    //};
-});
-//@ sourceURL=tribe://Panes/Content/About/masthead.js
 TC.scriptEnvironment = { resourcePath: '/Content/Guides/Guides/Webmail/tutorial' };
 Tutorials.webmail = {
     frames: [
@@ -912,6 +901,119 @@ Reference.Panes = {
     ]
 };
 //@ sourceURL=tribe://Panes/Content/Reference/Core/panes.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/client' };
+Reference.MessageHub = [
+    {
+        name: 'TMH.initialise',
+        description: 'Initialise the MessageHub client',
+        returns: 'undefined',
+        arguments: [
+            { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub object to attach to' },
+            { name: 'url', type: 'String', description: 'The URL of the SignalR instance. Usually "signalr"' }
+        ]
+    },
+    {
+        name: 'TMH.joinChannel',
+        description: 'Join the specified channel',
+        returns: '{ leave: function () { } }',
+        arguments: [
+            { name: 'id', type: 'String', description: 'The channel identifier' },
+            { name: 'options', type: 'Object', description: 'A hashtable of options, described below' }
+        ]
+    },
+    {
+        name: 'TMH.leaveChannel',
+        description: 'Leave the specified channel',
+        returns: 'undefined',
+        arguments: [
+            { name: 'id', type: 'String', description: 'The channel identifier' }
+        ]
+    },
+    {
+        name: 'TMH.publishToServer',
+        description: 'Publish a message to the server',
+        returns: 'undefined',
+        arguments: [
+            { name: 'channelId', type: 'String', description: 'The channel identifier' },
+            { name: 'envelope', type: 'Object', description: 'The PubSub message envelope. See the PubSub reference for more information' },
+            { name: 'record', type: 'Boolean', description: 'Request the server to record the message' }
+        ]
+    }
+];
+
+Reference.MessageHub.ChannelOptions = [
+    { name: 'serverEvents', type: '[String]', description: 'An array of message topics to publish to the server. Wildcards can be used' },
+    { name: 'record', type: 'Boolean', description: 'Request the server to record messages published to this channel' },
+    { name: 'replay', type: 'Boolean', description: 'Request the server to replay messages previously published to this channel' }
+];
+//@ sourceURL=tribe://Panes/Content/Reference/MessageHub/client.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/configuration' };
+Reference.MessageHub.Server = [
+    {
+        name: 'TopicResolver',
+        description: 'Specify a function to resolve message types to a topic names.',
+        arguments: [
+            { name: 'resolver', type: 'Func<Type, string>', description: 'A function that resolves a message type to a topic name' }
+        ]
+    },
+    {
+        name: 'TopicResolver<T>',
+        description: 'Specify a type to resolve message types to a topic names. The default uses the type name as the client message topic.',
+        arguments: [
+            { name: '', type: 'IMessageTopicResolver', description: 'A type that implements IMessageTopicResolver' }
+        ]
+    },
+    {
+        name: 'MessageSerialiser<T>',
+        description: 'Specify a type to serialise messages. The default is JsonMessageSerialiser.',
+        arguments: [
+            { name: '', type: 'IMessageSerialiser', description: 'A type that implements IMessageSerialiser' }
+        ]
+    },
+    {
+        name: 'MessageBus<T>',
+        description: 'Specify a type that handles translation of client and server side messages.',
+        arguments: [
+            { name: '', type: 'IMessageBus', description: 'A type that implements IMessageBus' }
+        ]
+    },
+    {
+        name: 'MessagesFrom',
+        description: 'Use incoming and outgoing message types from the specified assemblies.',
+        arguments: [
+            { name: 'assemblies', type: 'params Assembly[]', description: 'A parameter array of assemblies' }
+        ]
+    },
+    {
+        name: 'HostStarter<T>',
+        description: 'Specify a type that can initialise and start the MessageHub host. The default is the IisHostStarter.',
+        arguments: [
+            { name: '', type: 'IHostStarter', description: 'A type that implements IHostStarter' }
+        ]
+    },
+    {
+        name: 'ChannelAuthoriser<T>',
+        description: 'Specify a type that can authorise channel requests.',
+        arguments: [
+            { name: '', type: 'IChannelAuthoriser', description: 'A type that implements IChannelAuthoriser' }
+        ]
+    },
+    {
+        name: 'SqlServerPersistence',
+        description: 'Store recorded messages in a SQL Server database. Requires a reference to the Tribe.MessageHub.ChannelPersisters.SqlServer assembly.',
+        arguments: [
+            { name: 'connectionStringOrName', type: 'String', description: 'A literal connection string or the name of a connection string defined in the configuration file' }
+        ]
+    },
+    {
+        name: 'NServiceBus',
+        description: 'Use NServiceBus as the server side messaging infrastructure. Requires a reference to the Tribe.MessageHub.Buses.NServiceBus assembly.',
+        arguments: [
+            { name: 'bus', type: 'NServiceBus.IBus', description: 'A configured instance of the NServiceBus IBus interface' }
+        ]
+    },
+];
+//@ sourceURL=tribe://Panes/Content/Reference/MessageHub/configuration.js
 TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/History' };
 Reference.Types.History = {
     name: 'TC.Types.History',
@@ -2022,7 +2124,7 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('body{background:#ccc;font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif;padding:0;margin:0;overflow-y:scroll}h1,h2,h3{margin-top:0}b{color:#103070}.padded{padding:10px}.underline{text-decoration:underline}.clear{clear:both}a,a:active,a:visited,a:link{text-decoration:none;cursor:pointer;color:#1b50ba}a:hover{text-decoration:underline}table{border-spacing:0;border-collapse:collapse}th{text-align:left;background:#457ae4;color:#fff;padding:2px 5px}th,td{border:1px solid #457ae4;padding:2px 5px}')
+    .text('body{background:#ccc;font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif;padding:0;margin:0;overflow-y:scroll}h1,h2,h3{margin-top:0}b{color:#103070}.padded{padding:10px}.underline{text-decoration:underline}.clear{clear:both}a,a:active,a:visited,a:link{text-decoration:none;cursor:pointer;color:#1b50ba}a:hover{text-decoration:underline}table{border-spacing:0;border-collapse:collapse}th{text-align:left;background:#457ae4;color:#fff;padding:2px 5px}th,td{border:1px solid #457ae4;padding:2px 5px}pre.inline{display:inline-block}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')

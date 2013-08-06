@@ -1,4 +1,4 @@
-﻿TC.Utils.try = function(func, args, handleExceptions, message) {
+﻿TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
     if (handleExceptions)
         try {
             func.apply(func, args);

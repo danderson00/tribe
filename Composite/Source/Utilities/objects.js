@@ -20,7 +20,7 @@ TC.Utils.arguments = function (args) {
         },
         object: byConstructor[Object],
         string: byConstructor[String],
-        function: byConstructor[Function],
+        'function': byConstructor[Function],
         array: byConstructor[Array],
         number: byConstructor[Number]
     };

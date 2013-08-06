@@ -1,0 +1,30 @@
+﻿<div class="content block">
+    <h1>MessageHub Server Configuration API</h1>
+    
+    <p>
+        Configuration must start with ConfigureHub.With() followed by a container configuration.
+        Currently only Unity is supported.
+    </p>
+    <pre class="example">
+using Tribe.MessageHub.Core.Configuration;
+using Tribe.MessageHub.Containers.Unity;
+
+ConfigureHub.With().Unity(container).StartHub();</pre>
+    
+    <p>The following extension methods are then provided, all chainable:</p>
+    <div data-bind="pane: '/Interface/API/functionList', data: { functions: Reference.MessageHub.Server }"></div>
+    
+    <pre class="example">
+using Tribe.MessageHub.Core.Configuration;
+using Tribe.MessageHub.Containers.Unity;
+using Tribe.MessageHub.ChannelPersisters.SqlServer;
+using Tribe.MessageHub.Buses.NServiceBus;
+
+ConfigureHub.With()
+    .Unity(container)
+    .ChannelAuthoriser&lt;MyChannelAuthoriser>()
+    .SqlServerPersistence("Data Source=.;Initial Catalog=Tribe.Channels;Integrated Security=true")
+    .NServiceBus(bus)
+    .MessagesFrom(typeof(ExampleMessage).Assembly)
+    .StartHub();</pre>
+</div>

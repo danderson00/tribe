@@ -3,7 +3,7 @@
 
     pane.startRender();
     context.templates.render(pane.element, pane.path);
-    TC.Utils.try(applyBindings, null, context.options.handleExceptions, 'An error occurred applying the bindings for ' + pane.toString());
+    TC.Utils.tryCatch(applyBindings, null, context.options.handleExceptions, 'An error occurred applying the bindings for ' + pane.toString());
 
     if (pane.model.paneRendered)
         pane.model.paneRendered();

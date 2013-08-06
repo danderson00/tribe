@@ -52,3 +52,7 @@ th, td {
     border: 1px solid #457ae4;
     padding: 2px 5px;
 }
+
+pre.inline {
+    display: inline-block;
+}

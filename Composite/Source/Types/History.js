@@ -38,4 +38,12 @@
         window.removeEventListener('popstate', executeCurrentAction);
     };
 };
-TC.history = new TC.Types.History(window.history);
+
+if (window.history.pushState)
+    TC.history = new TC.Types.History(window.history);
+else
+    TC.history = new TC.Types.History({
+        replaceState: function () { },
+        pushState: function () { },
+        go: function () { }
+    });

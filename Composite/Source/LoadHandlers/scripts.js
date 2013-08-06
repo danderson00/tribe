@@ -30,7 +30,7 @@
             context: context
         };
 
-        TC.Utils.try($.globalEval, [script], context.options.handleExceptions,
+        TC.Utils.tryCatch($.globalEval, [script], context.options.handleExceptions,
             'An error occurred executing script loaded from ' + url + (resourcePath ? ' for resource ' + resourcePath : ''));
 
         delete TC.scriptEnvironment;

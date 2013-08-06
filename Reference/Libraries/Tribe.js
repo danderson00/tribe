@@ -419,7 +419,7 @@ TC.options = TC.defaultOptions();(function () {
             document.removeEventListener(name, internalHandler);
         }
     };    
-})();TC.Utils.try = function(func, args, handleExceptions, message) {
+})();TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
     if (handleExceptions)
         try {
             func.apply(func, args);
@@ -524,7 +524,7 @@ TC.Utils.arguments = function (args) {
         },
         object: byConstructor[Object],
         string: byConstructor[String],
-        function: byConstructor[Function],
+        'function': byConstructor[Function],
         array: byConstructor[Array],
         number: byConstructor[Number]
     };
@@ -866,7 +866,15 @@ TC.Types.History = function (history) {
         window.removeEventListener('popstate', executeCurrentAction);
     };
 };
-TC.history = new TC.Types.History(window.history);TC.Types.Loader = function () {
+
+if (window.history.pushState)
+    TC.history = new TC.Types.History(window.history);
+else
+    TC.history = new TC.Types.History({
+        replaceState: function () { },
+        pushState: function () { },
+        go: function () { }
+    });TC.Types.Loader = function () {
     var self = this;
     var resources = {};
 
@@ -1329,7 +1337,7 @@ TC.Events.initialiseModel = function (pane, context) {
 
     pane.startRender();
     context.templates.render(pane.element, pane.path);
-    TC.Utils.try(applyBindings, null, context.options.handleExceptions, 'An error occurred applying the bindings for ' + pane.toString());
+    TC.Utils.tryCatch(applyBindings, null, context.options.handleExceptions, 'An error occurred applying the bindings for ' + pane.toString());
 
     if (pane.model.paneRendered)
         pane.model.paneRendered();
@@ -1374,7 +1382,7 @@ TC.Events.initialiseModel = function (pane, context) {
             context: context
         };
 
-        TC.Utils.try($.globalEval, [script], context.options.handleExceptions,
+        TC.Utils.tryCatch($.globalEval, [script], context.options.handleExceptions,
             'An error occurred executing script loaded from ' + url + (resourcePath ? ' for resource ' + resourcePath : ''));
 
         delete TC.scriptEnvironment;
@@ -1532,6 +1540,8 @@ TC.LoadStrategies.adhoc = function (pane, context) {
         }
     }    
 };(function () {
+    var supported = supportsTransitions();
+    
     createCssTransition('fade');
     createCssTransition('slideLeft', 'slideRight');
     createCssTransition('slideRight', 'slideLeft');
@@ -1543,16 +1553,18 @@ TC.LoadStrategies.adhoc = function (pane, context) {
     function createCssTransition(transition, reverse) {
         TC.Transitions[transition] = {
             in: function (element) {
+                if (!supported) return null;
+                
                 var promise = $.Deferred();
                 $(element).bind(transitionEndEvents, transitionEnded(element, promise))
                     .addClass('prepare in ' + transition);
-                    //.show();
 
                 trigger(element);
                 return promise;
             },
 
             out: function (element) {
+                if (!supported) return null;
                 var promise = $.Deferred();
 
                 $(element).addClass('prepare out ' + transition)
@@ -1579,41 +1591,23 @@ TC.LoadStrategies.adhoc = function (pane, context) {
             };
         }
     }
+    
+    function supportsTransitions() {
+        var b = document.body || document.documentElement;
+        var style = b.style;
+        var property = 'transition';
+        var vendors = ['Moz', 'Webkit', 'Khtml', 'O', 'ms'];
 
-    //function createCssTransition(name, reverse) {
-    //    TC.Transitions[name] = {
-    //        in: function(element) {
-    //            var $element = $(element);
-    //            $element.bind('webkitTransitionEnd', animationEnd)
-    //                    .addClass(name + ' in');
+        if (typeof style[property] == 'string') { return true; }
 
-    //            var promise = $.Deferred();
-    //            return promise;
-
-    //            function animationEnd() {
-    //                $element.unbind('webkitTransitionEnd', animationEnd)
-    //                        .removeClass(name + ' in');
-    //                promise.resolve();
-    //            }
-    //        },
-
-    //        out: function(element) {
-    //            var $element = $(element);
-    //            $element.bind('webkitTransitionEnd', animationEnd)
-    //                    .addClass(name + ' out');
-
-    //            var promise = $.Deferred();
-    //            return promise;
-
-    //            function animationEnd() {
-    //                $element.unbind('webkitTransitionEnd', animationEnd)
-    //                        .removeClass(name + ' out');
-    //                promise.resolve();
-    //            }
-    //        },
-    //        reverse: reverse || name
-    //    };
-    //}
+        // Tests for vendor specific prop
+        property = property.charAt(0).toUpperCase() + property.substr(1);
+        for (var i = 0; i < vendors.length; i++) {
+            if (typeof style[vendors[i] + property] == 'string') { return true; }
+        }
+        
+        return false;
+    }
 })();
 $('<style/>')
     .attr('class', '__tribe')
