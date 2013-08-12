@@ -194,25 +194,31 @@ Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n  &lt;head>\n    &lt;title>Tribe Mobile&lt;/title>\n    &lt;meta name="viewport" \n      content="minimum-scale=1.0, width=device-width, \n               maximum-scale=1.0, user-scalable=no" />\n\n    &lt;script src="jquery.js">&lt;/script>\n    &lt;script src="knockout.js">&lt;/script>\n    &lt;script src="Tribe.js">&lt;/script>\n    &lt;script src="Tribe.Mobile.js">&lt;/script>\n        \n    &lt;script type="text/javascript">\n      $(TC.run);\n    &lt;/script>\n  &lt;/head>\n  &lt;body data-bind="pane: \'/Mobile/main\',\n                   data: { pane: \'welcome\' }">\n  &lt;/body>\n&lt;/html></pre>'
+    content: '<pre class="prettyprint">&lt;!DOCTYPE html>\n&lt;html>\n  &lt;head>\n    &lt;title>Tribe Mobile&lt;/title>\n    \n    &lt;!-- Some metadata for mobile browsers -->\n    &lt;meta name="viewport"\n          content="minimum-scale=1.0, width=device-width, \n                   maximum-scale=1.0, user-scalable=no" />\n     \n    &lt;script src="jquery.js">&lt;/script>\n    &lt;script src="knockout.js">&lt;/script>\n    &lt;script src="Tribe.js">&lt;/script>\n\n    &lt;!-- Tribe.Mobile.js is all you need to load -->\n    &lt;script src="Tribe.Mobile.js">&lt;/script>\n\n    &lt;script type="text/javascript">\n        $(TC.run);\n    &lt;/script>\n  &lt;/head>\n\n  &lt;!-- Use /Mobile/main as your host pane -->\n  &lt;body data-bind="pane: \'/Mobile/main\',\n                   data: { pane: \'welcome\' }">\n  &lt;/body>\n&lt;/html>\n</pre>'
 });Samples = window.Samples || {};
 Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
-    filename: 'layout.htm',
+    filename: 'navigate.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;div class="layout">\n    &lt;ul class="rounded">\n        &lt;li class="forward">Test1&lt;/li>\n        &lt;li class="forward">Test2&lt;/li>\n        &lt;li class="arrow" data-bind="click: function() {}">Test3&lt;/li>\n        &lt;li data-bind="pane: \'/Mobile/editable\', data: { initialText: \'New Player...\', }">&lt;/li>\n    &lt;/ul>\n    \n    &lt;div data-bind="pane: \'/Mobile/list\', data: listData">&lt;/div>\n    \n    &lt;button class="white" data-bind="click: overlay">Overlay&lt;/button>\n    &lt;button class="white" data-bind="click: toolbar">Toolbar&lt;/button>\n    &lt;button class="white" data-bind="click: navigate">Navigate&lt;/button>\n&lt;/div></pre>'
-});Samples = window.Samples || {};
-Samples['About/Mobile'] = Samples['About/Mobile'] || [];
-Samples['About/Mobile'].push({
-    filename: 'layout.js',
-    icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    TC.toolbar.title(\'Title!\');\n    TC.toolbar.options([\n        { text: \'test\', func: function () { alert(\'test\'); } },\n        { text: \'test2\', func: function () { alert(\'test2\'); } }\n    ]);\n\n    this.listData = {\n        items: [\n            { id: 1, name: \'test1\' },\n            { id: 2, name: \'test2\' },\n            { id: 3, name: \'test3\' }\n        ],\n        itemText: function (item) { return item.id + \': \' + item.name; },\n        headerText: \'Select Item:\',\n        itemClick: function(item) {\n        },\n        cssClass: \'rounded\'\n    };\n\n    this.overlay = function() {\n        TC.overlay(\'overlay\');\n    };\n\n    this.toolbar = function () {\n        TC.toolbar.visible(!TC.toolbar.visible());\n    };\n\n    this.navigate = function() {\n        pane.navigate(\'navigate\');\n    };\n});</pre>'
+    content: '<pre class="prettyprint">&lt;ul>&lt;li>You selected an item in the list...&lt;/li>&lt;/ul>\n&lt;ul>&lt;li>Click the back button to go back.&lt;/li>&lt;/ul>\n</pre>'
 });Samples = window.Samples || {};
 Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
     filename: 'overlay.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;ul>\n    &lt;li>One&lt;/li>\n    &lt;li>Two&lt;/li>\n    &lt;li>Three&lt;/li>\n    &lt;li>Four&lt;/li>\n&lt;/ul>\n\n&lt;button class="white" data-bind="click: function() { pane.remove(); }">Close&lt;/button></pre>'
+    content: '<pre class="prettyprint">&lt;ul>\n    &lt;li>One&lt;/li>\n    &lt;li>Two&lt;/li>\n    &lt;li>Three&lt;/li>\n    &lt;li>Four&lt;/li>\n&lt;/ul>\n\n&lt;button class="white" \n        data-bind="click: function() { pane.remove(); }">\n    Close\n&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['About/Mobile'] = Samples['About/Mobile'] || [];
+Samples['About/Mobile'].push({
+    filename: 'samples.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div class="layout">\n    &lt;ul class="rounded">\n        &lt;li>\n            Display any HTML in themed blocks\n        &lt;/li>\n        &lt;li class="arrow" data-bind="click: navigate">\n            With arrow...\n        &lt;/li>\n        &lt;li class="forward" data-bind="click: navigate">\n            Alternate arrow...\n        &lt;/li>\n        &lt;li data-bind="pane: \'/Mobile/editable\',\n                       data: { initialText: \'New Item...\', }">&lt;/li>\n    &lt;/ul>\n    \n    &lt;div data-bind="pane: \'/Mobile/list\', data: listData">&lt;/div>\n    \n    &lt;button class="white" data-bind="click: overlay">\n        Overlay\n    &lt;/button>\n&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['About/Mobile'] = Samples['About/Mobile'] || [];
+Samples['About/Mobile'].push({
+    filename: 'samples.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    TC.toolbar.title(\'Title!\');\n    \n    TC.toolbar.options([\n        { text: \'Option 1\', func: function () { } },\n        { text: \'Option 2\', func: function () { } }\n    ]);\n\n    this.listData = {\n        items: [\n            { id: 1, name: \'Item 1\' },\n            { id: 2, name: \'Item 2\' }\n        ],\n        itemText: function(item) {\n             return item.id + \' - \' + item.name;\n        },\n        headerText: \'Select List\',\n        itemClick: function(item) { }\n    };\n\n    this.overlay = function() {\n        TC.overlay(\'overlay\');\n    };\n\n    this.navigate = function() {\n        pane.navigate(\'navigate\');\n    };\n});</pre>'
 });Samples = window.Samples || {};
 Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
@@ -230,7 +236,7 @@ Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    TC.toolbar.defaults.back = true;\n\n    this.samples = function() {\n        pane.navigate(\'layout\');\n    };\n\n    this.chat = function () {\n        pane.navigate(\'chat\');\n    };\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    TC.toolbar.defaults.back = true;\n\n    this.samples = function() {\n        pane.navigate(\'samples\');\n    };\n\n    this.chat = function () {\n        pane.navigate(\'chat\');\n    };\n});</pre>'
 });Samples = window.Samples || {};
 Samples['Panes/Creating'] = Samples['Panes/Creating'] || [];
 Samples['Panes/Creating'].push({
@@ -682,7 +688,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the TC.options object.</p>\n    <pre class="example">TC.options.basePath = \'Panes\';</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>splitScripts</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Split loaded scripts on each sourceURL tag and execute individually</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n\n    <p>TIP: When running from a local filesystem, Google Chrome must be launched with the --allow-file-access-from-files option to load adhoc panes.</p>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-transitions"><div class="content block">\n    <h1>Transitions</h1>\n\n    <p>Use the TC.transition function to perform transitions:</p>\n    <div data-bind="pane: \'/Interface/API/function\', data: Reference.Transition"></div>\n\n    <p>The returned object can be used to transition the target in, out or to another pane:</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.Transition.Functions }"></div>\n\n    <div class="child">\n        <h1>Examples</h1>\n\n        <p>Fade the first element with a class of "target" out of view and remove it from the DOM</p>\n        <pre class="example">\n    TC.transition(\'.target\', \'fade\').out();</pre>\n\n        <p>Transition the node containing the element with a class of "target" to a new pane</p>\n        <pre class="example">\n    TC.transition(TC.nodeFor(\'.target\')).to(\'path/to/pane\');</pre>\n\n        <p>This can also be expressed as:</p>\n        <pre class="example">\n    TC.nodeFor(\'.target\').transitionTo(\'path/to/pane\');</pre>\n    </div>\n</div></script>');
 $('head')
@@ -768,9 +774,11 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Samples-About-Mobile-chat"><!-- Let\'s reuse our panes from the previous example -->\n<ul class="rounded">\n    <li data-bind="pane: \'../Chat/sender\'"></li>\n    <li data-bind="pane: \'../Chat/messages\'"></li>\n</ul></script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-About-Mobile-layout"><div class="layout">\n    <ul class="rounded">\n        <li class="forward">Test1</li>\n        <li class="forward">Test2</li>\n        <li class="arrow" data-bind="click: function() {}">Test3</li>\n        <li data-bind="pane: \'/Mobile/editable\', data: { initialText: \'New Player...\', }"></li>\n    </ul>\n    \n    <div data-bind="pane: \'/Mobile/list\', data: listData"></div>\n    \n    <button class="white" data-bind="click: overlay">Overlay</button>\n    <button class="white" data-bind="click: toolbar">Toolbar</button>\n    <button class="white" data-bind="click: navigate">Navigate</button>\n</div></script>');
+    .append('<script type="text/template" id="template--Samples-About-Mobile-navigate"><ul><li>You selected an item in the list...</li></ul>\n<ul><li>Click the back button to go back.</li></ul>\n</script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-About-Mobile-overlay"><ul>\n    <li>One</li>\n    <li>Two</li>\n    <li>Three</li>\n    <li>Four</li>\n</ul>\n\n<button class="white" data-bind="click: function() { pane.remove(); }">Close</button></script>');
+    .append('<script type="text/template" id="template--Samples-About-Mobile-overlay"><ul>\n    <li>One</li>\n    <li>Two</li>\n    <li>Three</li>\n    <li>Four</li>\n</ul>\n\n<button class="white" \n        data-bind="click: function() { pane.remove(); }">\n    Close\n</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-About-Mobile-samples"><div class="layout">\n    <ul class="rounded">\n        <li>\n            Display any HTML in themed blocks\n        </li>\n        <li class="arrow" data-bind="click: navigate">\n            With arrow...\n        </li>\n        <li class="forward" data-bind="click: navigate">\n            Alternate arrow...\n        </li>\n        <li data-bind="pane: \'/Mobile/editable\',\n                       data: { initialText: \'New Item...\', }"></li>\n    </ul>\n    \n    <div data-bind="pane: \'/Mobile/list\', data: listData"></div>\n    \n    <button class="white" data-bind="click: overlay">\n        Overlay\n    </button>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-About-Mobile-welcome"><ul class="rounded welcome">\n    <li>tribe</li>\n</ul>\n<ul class="rounded">\n    <li data-bind="click: samples">Samples</li>\n</ul>\n<ul class="rounded">\n    <li data-bind="click: chat">Chat</li>\n</ul></script>');
 $('head')
@@ -1978,46 +1986,42 @@ TC.registerModel(function(pane) {
     };
 });
 //@ sourceURL=tribe://Panes/Samples/About/Chat/sender.js
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/layout' };
+TC.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/samples' };
 TC.registerModel(function (pane) {
     TC.toolbar.title('Title!');
+    
     TC.toolbar.options([
-        { text: 'test', func: function () { alert('test'); } },
-        { text: 'test2', func: function () { alert('test2'); } }
+        { text: 'Option 1', func: function () { } },
+        { text: 'Option 2', func: function () { } }
     ]);
 
     this.listData = {
         items: [
-            { id: 1, name: 'test1' },
-            { id: 2, name: 'test2' },
-            { id: 3, name: 'test3' }
+            { id: 1, name: 'Item 1' },
+            { id: 2, name: 'Item 2' }
         ],
-        itemText: function (item) { return item.id + ': ' + item.name; },
-        headerText: 'Select Item:',
-        itemClick: function(item) {
+        itemText: function(item) {
+             return item.id + ' - ' + item.name;
         },
-        cssClass: 'rounded'
+        headerText: 'Select List',
+        itemClick: function(item) { }
     };
 
     this.overlay = function() {
         TC.overlay('overlay');
     };
 
-    this.toolbar = function () {
-        TC.toolbar.visible(!TC.toolbar.visible());
-    };
-
     this.navigate = function() {
         pane.navigate('navigate');
     };
 });
-//@ sourceURL=tribe://Panes/Samples/About/Mobile/layout.js
+//@ sourceURL=tribe://Panes/Samples/About/Mobile/samples.js
 TC.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/welcome' };
 TC.registerModel(function (pane) {
     TC.toolbar.defaults.back = true;
 
     this.samples = function() {
-        pane.navigate('layout');
+        pane.navigate('samples');
     };
 
     this.chat = function () {

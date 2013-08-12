@@ -2,7 +2,7 @@
     TC.toolbar.defaults.back = true;
 
     this.samples = function() {
-        pane.navigate('layout');
+        pane.navigate('samples');
     };
 
     this.chat = function () {

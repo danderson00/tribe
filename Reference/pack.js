@@ -1,4 +1,7 @@
-﻿pack([
+﻿pack(synchroniseDependency('../Build/', 'Tribe'));
+pack(synchroniseDependency('../Mobile/Build/', 'Tribe.Mobile'));
+
+pack([
     {
         to: 'Infrastructure/samples.js',
         include: [
@@ -61,4 +64,12 @@ function css() {
         files: 'Css/*.css',
         template: 'embedCss'
     };
+}
+
+function synchroniseDependency(path, name) {
+    return [
+        { to: 'Libraries/' + name + '.js', include: path + name + '.js' },
+        { to: 'Libraries/' + name + '.min.js', include: path + name + '.min.js' },
+        { to: 'Libraries/' + name + '.chrome.js', include: path + name + '.chrome.js' },
+    ];
 }

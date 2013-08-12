@@ -23,14 +23,20 @@ TC.registerModel(function (pane) {
 
     function renderComplete() {
         var defaults = TC.toolbar.defaults;
-        TC.toolbar.title(defaults.title);
-        TC.toolbar.options(defaults.options);
         TC.toolbar.back(defaults.back && !pane.node.findNavigation().isAtStart());
-        TC.toolbar.visible(defaults.visible);
     }
     
+    function navigating() {
+        var defaults = TC.toolbar.defaults;
+        TC.toolbar.title(defaults.title);
+        TC.toolbar.options(defaults.options);
+        TC.toolbar.visible(defaults.visible);
+    }
+
     document.addEventListener('renderComplete', renderComplete);
-    this.dispose = function() {
+    document.addEventListener('navigating', navigating);
+    this.dispose = function () {
         document.removeEventListener('renderComplete', renderComplete);
+        document.removeEventListener('navigating', navigating);
     };
 });

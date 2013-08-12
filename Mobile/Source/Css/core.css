@@ -1,6 +1,6 @@
 .TM ul {
   padding: 0;
-  margin: 5px 10px 10px 10px;
+  margin: 5px 10px;
   -webkit-margin-collapse: separate;
   -webkit-box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0;
   box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0;
@@ -10,10 +10,6 @@
 .TM ul, .TM li {
   background-color: white;
   text-shadow: white 0 1px 0;
-}
-
-.TM ul:first-child {
-  margin-top: 15px;
 }
 
 .TM ul li {

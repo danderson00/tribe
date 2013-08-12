@@ -213,6 +213,7 @@
     <Content Include="Panes\Interface\navigationContainer.css" />
     <Content Include="Panes\Interface\navigationContainer.js" />
     <Content Include="Panes\Interface\navigationContainer.htm" />
+    <Content Include="Panes\Samples\About\Mobile\navigate.htm" />
     <Content Include="Panes\Samples\mobile.htm" />
     <Content Include="Panes\Samples\mobile.js" />
     <Content Include="Panes\Samples\Panes\Communicating\index.html" />
@@ -342,8 +343,8 @@
     <Content Include="Panes\Samples\About\Chat\messages.js" />
     <Content Include="Panes\Samples\About\Mobile\chat.htm" />
     <Content Include="Panes\Samples\About\Mobile\index.html" />
-    <Content Include="Panes\Samples\About\Mobile\layout.htm" />
-    <Content Include="Panes\Samples\About\Mobile\layout.js" />
+    <Content Include="Panes\Samples\About\Mobile\samples.htm" />
+    <Content Include="Panes\Samples\About\Mobile\samples.js" />
     <Content Include="Panes\Samples\About\Mobile\overlay.htm" />
     <Content Include="Panes\Samples\About\Mobile\welcome.css" />
     <Content Include="Panes\Samples\About\Mobile\welcome.htm" />

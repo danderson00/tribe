@@ -11,7 +11,8 @@
 
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(255, 255, 255, 0.15)), color-stop(100%, rgba(255, 255, 255, 0))), -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #92a3b9), color-stop(50%, #7f93ad), color-stop(51%, #768ba7), color-stop(100%, #6d83a1));
   background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)), -webkit-linear-gradient(top, #92a3b9, #7f93ad 50%, #768ba7 51%, #6d83a1);
-  background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)), linear-gradient(top, #92a3b9, #7f93ad 50%, #768ba7 51%, #6d83a1);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)), linear-gradient(to bottom, #92a3b9, #7f93ad 50%, #768ba7 51%, #6d83a1);
+
   -webkit-box-shadow: rgba(255, 255, 255, 0.3) 0 1px 0 inset;
   box-shadow: rgba(255, 255, 255, 0.3) 0 1px 0 inset;
 }
