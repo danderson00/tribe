@@ -1,4 +1,7 @@
 (function () {
+    var supportsTouch;
+    $(function() { supportsTouch = 'ontouchstart' in document; });
+    
     ko.bindingHandlers['click'] = {
         'init': function (element, valueAccessor, allBindingsAccessor, viewModel) {
             applyFastClick(element);
@@ -11,17 +14,17 @@
 
     function applyActiveClass(element) {
         var $element = $(element);
-        $element.bind(window.Touch ? 'touchstart' : 'mousedown', touchStartHandler);
+        $element.bind(supportsTouch ? 'touchstart' : 'mousedown', touchStartHandler);
 
         function touchStartHandler(e) {
             $element.addClass('active');
 
             // Remove our active class if we move
-            $element.on(window.Touch ? 'touchmove' : 'mousemove', function () {
+            $element.on(supportsTouch ? 'touchmove' : 'mousemove', function () {
                 $element.removeClass('active');
             });
 
-            $element.on(window.Touch ? 'touchend' : 'mouseup', function () {
+            $element.on(supportsTouch ? 'touchend' : 'mouseup', function () {
                 $element.removeClass('active').unbind('touchmove mousemove');
             });
         }
@@ -30,7 +33,7 @@
     function applyFastClick(element) {
         var $element = $(element);
 
-        if (window.Touch)
+        if (supportsTouch)
             $element.on('touchstart', touchstart);
 
         var moved;
@@ -98,7 +101,7 @@ $(function () {
         } else if (android) {
             // The stock Android browser has a location bar height of 56 pixels, but
             // this very likely could be broken in other Android browsers.
-            setTimeout(scrollTo, 250, 0, 56);
+            //setTimeout(scrollTo, 1000, 0, 56);
             height = window.innerHeight + 56;
         }
 
