@@ -101,6 +101,7 @@ $(function () {
         } else if (android) {
             // The stock Android browser has a location bar height of 56 pixels, but
             // this very likely could be broken in other Android browsers.
+            
             //setTimeout(scrollTo, 1000, 0, 56);
             height = window.innerHeight + 56;
         }

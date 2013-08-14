@@ -1,0 +1,1 @@
+﻿PackScript.exe /watch ".."

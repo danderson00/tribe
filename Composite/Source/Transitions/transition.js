@@ -49,11 +49,10 @@
                 left: $element.offset().left,
                 top: $element.offset().top
             });
-        if (TC.transition.mode === 'absolute')
+        else
             $element.css({
                 position: 'absolute',
                 width: $element.width(),
-                //'box-sizing': 'border-box',
                 left: $element.position().left,
                 top: $element.position().top
             });

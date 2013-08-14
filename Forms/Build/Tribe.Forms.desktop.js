@@ -1617,7 +1617,7 @@ TF.renderTemplate = function(name, target) {
 $('head')
     .append('<script type="text/template" id="template--booleanField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="checkbox" data-bind="checked: value" />\n    </div>\n    <div style="clear: both"></div>\n</div>\n</script>');
 $('head')
-    .append('<script type="text/template" id="template--dateField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="text" class="datePicker" data-bind="value: value, restrictKeys: \'[^0-9\/]+\'" />\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
+    .append('<script type="text/template" id="template--dateField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="text" class="datePicker" data-bind="value: value, restrictKeys: \'[^0-9\\/]+\'" />\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--display"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <span data-bind="text: value"></span>\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
 $('head')

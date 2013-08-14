@@ -1,6 +1,6 @@
 ﻿TC.registerModel(function (pane) {
     // Hook up our message hub and join a channel
-    TMH.initialise(pane.pubsub, 'signalr');
+    TMH.initialise(pane.pubsub);
     TMH.joinChannel('chat', {
          serverEvents: ['chat.*']
     });

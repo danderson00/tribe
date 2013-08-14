@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Tribe.Template</id>
+    <version>0.2</version>
+    <title>Tribe.Template</title>
+    <authors>danderson00</authors>
+    <owners>danderson00</owners>
+    <projectUrl>http://tribejs.com/</projectUrl>
+    <!--<iconUrl>http://tribejs.com/Images/nuget.gif</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The Tribe platform.</description>
+    <releaseNotes>Second release.</releaseNotes>
+    <copyright>Released under the MIT license.</copyright>
+    <tags>composite knockout signalr</tags>
+
+    <dependencies>
+      <dependency id="Tribe" />
+      <dependency id="Microsoft.AspNet.SignalR" />
+      <dependency id="knockout" />
+    </dependencies>
+  </metadata>
+</package>
