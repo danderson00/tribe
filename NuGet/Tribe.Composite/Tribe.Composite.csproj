@@ -32,13 +32,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Tribe.Composite.nuspec" />
+    <None Include="content\Tools\watch.bat" />
+    <None Include="tools\Uninstall.ps1" />
+    <None Include="tools\Install.ps1" />
+    <None Include="Tribe.Composite.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="content\NewFolder1\" />
-    <Folder Include="content\NewFolder2\" />
     <Folder Include="lib\" />
-    <Folder Include="tools\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="content\Scripts\Tribe.chrome.js" />
+    <Content Include="content\Scripts\Tribe.js" />
+    <Content Include="content\Scripts\Tribe.min.js" />
+    <Content Include="content\Tools\Noesis.Javascript.dll" />
+    <Content Include="content\Tools\PackScript.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -32,17 +32,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="content\" />
-    <Folder Include="lib\" />
     <Folder Include="tools\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NuGet.exe" />
-    <Content Include="pack.js" />
+    <None Include="Tribe.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Tribe.0.2.nupkg" />
-    <None Include="Tribe.nuspec" />
+    <Content Include="lib\net40\Tribe.MessageHub.Buses.NServiceBus.dll" />
+    <Content Include="lib\net40\Tribe.MessageHub.ChannelPersisters.SqlServer.dll" />
+    <Content Include="lib\net40\Tribe.MessageHub.Containers.Unity.dll" />
+    <Content Include="lib\net40\Tribe.MessageHub.Core.dll" />
+    <Content Include="lib\net40\Tribe.MessageHub.Interfaces.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="content\App_Start\Tribe.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

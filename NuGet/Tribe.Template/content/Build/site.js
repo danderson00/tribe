@@ -6,10 +6,6 @@ $('<style/>')
     .attr('class', '__tribe')
     .text('')
     .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('body{font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif}')
-    .appendTo('head');
 $('head')
     .append('<script type="text/template" id="template--chat"><div class="chat">\n    <input data-bind="value: message" /><br />\n    <button data-bind="click: send">Send Message</button>\n    <ul data-bind="foreach: messages">\n        <li data-bind="text: $data"></li>\n    </ul>\n</div></script>');
 $('head')
@@ -37,3 +33,8 @@ TC.registerModel(function(pane) {
     });
 });
 //@ sourceURL=tribe://Panes/chat.js
+// Any .js file in the Infrastructure folder will be included in the build
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('body{font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif}')
+    .appendTo('head');

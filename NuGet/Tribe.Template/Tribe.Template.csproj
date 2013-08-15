@@ -32,12 +32,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Tribe.Template.nuspec" />
+    <None Include="tools\Install.ps1" />
+    <None Include="Tribe.readme" />
+    <None Include="Tribe.Template.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="content\" />
     <Folder Include="lib\" />
-    <Folder Include="tools\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="content\Build\site.chrome.js" />
+    <Content Include="content\Build\site.js" />
+    <Content Include="content\Build\site.min.js" />
+    <Content Include="content\chrome.html" />
+    <Content Include="content\debug.html" />
+    <Content Include="content\index.html" />
+    <Content Include="content\Infrastructure\setup.js" />
+    <Content Include="content\pack.js" />
+    <Content Include="content\Panes\chat.css" />
+    <Content Include="content\Panes\chat.htm" />
+    <Content Include="content\Panes\chat.js" />
+    <Content Include="content\Panes\header.css" />
+    <Content Include="content\Panes\header.htm" />
+    <Content Include="content\Panes\home.htm" />
+    <Content Include="content\Css\elements.css" />
+    <Content Include="content\Panes\layout.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
