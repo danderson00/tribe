@@ -1,1 +1,1 @@
-﻿PackScript.exe /watch ".."
+PackScript.exe /watch ".."

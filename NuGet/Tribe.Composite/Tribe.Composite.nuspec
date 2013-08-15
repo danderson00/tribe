@@ -9,7 +9,7 @@
     <projectUrl>http://tribejs.com/</projectUrl>
     <!--<iconUrl>http://tribejs.com/Images/nuget.gif</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>The Tribe platform.</description>
+    <description>The Composite component of the Tribe platform.</description>
     <releaseNotes>Second release.</releaseNotes>
     <copyright>Released under the MIT license.</copyright>
     <tags>composite knockout signalr</tags>

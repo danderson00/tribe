@@ -46,6 +46,7 @@
         if (TC.transition.mode === 'fixed')
             $element.css({
                 position: 'fixed',
+                width: $element.width(),
                 left: $element.offset().left,
                 top: $element.offset().top
             });
