@@ -10,6 +10,12 @@ sync({
     recursive: true
 });
 
+zip({
+    to: 'Tribe.zip',
+    include: 'Build/*.*',
+    recursive: true
+});
+
 pack({
     to: 'Build/Tribe.js',
     include: includes()
