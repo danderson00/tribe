@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="Build\Tests\Tribe.PubSub.tests.js" />
     <Content Include="Build\Tribe.PubSub.chrome.js" />
     <Content Include="Build\Tribe.PubSub.js" />
     <Content Include="Build\Tribe.PubSub.min.js" />

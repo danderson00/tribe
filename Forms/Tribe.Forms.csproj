@@ -44,10 +44,9 @@
     <Content Include="Binding Handlers\select.js" />
     <Content Include="Binding Handlers\validatedClick.js" />
     <Content Include="Binding Handlers\validationMessage.tooltip.js" />
-    <Content Include="Build\Tribe.Forms.desktop.js" />
-    <Content Include="Build\Tribe.Forms.desktop.min.js" />
-    <Content Include="Build\Tribe.Forms.mobile.js" />
-    <Content Include="Build\Tribe.Forms.mobile.min.js" />
+    <Content Include="Build\Tribe.Forms.chrome.js" />
+    <Content Include="Build\Tribe.Forms.js" />
+    <Content Include="Build\Tribe.Forms.min.js" />
     <Content Include="Css\datepicker.css" />
     <Content Include="Css\desktop.css" />
     <Content Include="Css\mobile.css" />

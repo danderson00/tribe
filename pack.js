@@ -10,6 +10,11 @@ sync({
     recursive: true
 });
 
+sync({
+    to: 'Build/Binaries',
+    include: 'MessageHub/Build/Debug/*.*'
+});
+
 zip({
     to: 'Tribe.zip',
     include: 'Build/*.*',

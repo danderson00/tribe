@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="Build\Tests\Tribe.Composite.tests.js" />
+    <Content Include="Build\Tests\Tribe.Composite.tests.mockjax.js" />
     <Content Include="Build\Tribe.Composite.chrome.js" />
     <Content Include="Build\Tribe.Composite.js" />
     <Content Include="Build\Tribe.Composite.min.js" />
@@ -133,11 +135,6 @@
     <Content Include="Tests\Integration\Panes\Tree\12.htm" />
     <Content Include="Tests\Integration\PubSub.tests.js" />
     <Content Include="Tests\Resources\jquery.mockjax.min.js" />
-    <Content Include="Tests\tests.js" />
-    <Content Include="Tests\tests.min.js" />
-    <Content Include="Tests\tests.panes.js" />
-    <Content Include="Tests\tests.unit.js" />
-    <Content Include="Tests\unit.html" />
     <Content Include="Tests\Integration\Panes\Events\data.htm" />
     <Content Include="Tests\Integration\Panes\Events\data.js" />
     <Content Include="Tests\Integration\Panes\Transition\pane2.htm" />
