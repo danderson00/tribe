@@ -17,27 +17,11 @@ var infrastructureIncludes = [
 ];
 
 pack({
-    to: 'tests.js',
+    to: '../Build/Tests/Tribe.Composite.tests.js',
     include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes],
     recursive: true,
     prioritise: 'setup.js',
     template: T.chromeScript('Tests')
 });
 
-pack({
-    to: 'tests.min.js',
-    include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes],
-    recursive: true,
-    prioritise: 'setup.js',
-    minify: true
-});
-
-pack({
-    to: 'tests.unit.js',
-    include: ['setup.js', infrastructureIncludes, unitTestIncludes],
-    recursive: true,
-    prioritise: 'setup.js',
-    template: T.chromeScript('Tests')
-});
-
-pack(T.mockjax('tests.panes.js', 'Integration/Panes'));
+pack(T.mockjax('../Build/Tests/Tribe.Composite.tests.mockjax.js', 'Integration/Panes'));

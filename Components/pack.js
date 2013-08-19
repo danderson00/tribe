@@ -1,4 +1,6 @@
-﻿//build('desktop');
+﻿// the component method below was initially migrated from another project and now removed
+// update to use T.panes, T.scripts and add the chrome versions
+//build('desktop');
 //build('mobile');
 
 //function build(platform) {

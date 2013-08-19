@@ -1,33 +1,25 @@
-﻿var includes = [
-    { files: 'Dependencies/*.js' },
-    { files: 'Infrastructure/*.js' },
-    { files: 'Binding Handlers/*.js' },
-    { files: 'Templates/*.htm', template: { name: 'embedTemplate', data: { component: 'Forms' } } },
-    { files: 'Css/*.css', template: { name: 'embedCss', data: { component: 'Forms' } } }
-];
+﻿function includes(chrome) {
+    return [
+        T.scripts('Dependencies', chrome, 'Tribe.Mobile'),
+        T.scripts('Infrastructure', chrome, 'Tribe.Mobile'),
+        T.scripts('Binding Handlers', chrome, 'Tribe.Mobile'),
+        { files: 'Templates/*.htm', template: { name: 'embedTemplate', data: { component: 'Forms' } } },
+        { files: 'Css/*.css', template: { name: 'embedCss', data: { component: 'Forms' } } }
+    ];
+}
 
 pack({
-    to: 'Build/Tribe.Forms.desktop.js',
-    include: includes,
-    exclude: 'Css/mobile.css'
+    to: 'Build/Tribe.Forms.js',
+    include: includes(),
 });
 
 pack({
-    to: 'Build/Tribe.Forms.mobile.js',
-    include: includes,
-    exclude: 'Css/desktop.css'
+    to: 'Build/Tribe.Forms.chrome.js',
+    include: includes(true),
 });
 
 pack({
-    to: 'Build/Tribe.Forms.desktop.min.js',
-    include: includes,
-    exclude: 'Css/mobile.css',
-    minify: true
-});
-
-pack({
-    to: 'Build/Tribe.Forms.mobile.min.js',
-    include: includes,
-    exclude: 'Css/desktop.css',
+    to: 'Build/Tribe.Forms.min.js',
+    include: includes(),
     minify: true
 });

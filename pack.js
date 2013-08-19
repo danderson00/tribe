@@ -1,3 +1,15 @@
+sync({
+    to: 'Build',
+    include: [
+        'Composite/Build/*.js',
+        'Forms/Build/*.js',
+        'MessageHub/Client/Build/*.js',
+        'Mobile/Build/*.js',
+        'PubSub/Build/*.js'
+    ],
+    recursive: true
+});
+
 pack({
     to: 'Build/Tribe.js',
     include: includes()

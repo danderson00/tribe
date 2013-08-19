@@ -1,11 +1,5 @@
 ﻿pack({
-    to: 'tests.js',
+    to: '../Build/Tests/Tribe.PubSub.tests.js',
     include: '*.tests.js',
     template: T.chromeScript('Tests')
-});
-
-pack({
-    to: 'tests.min.js',
-    include: '*.tests.js',
-    minify: true
 });
