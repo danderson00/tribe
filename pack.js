@@ -1,5 +1,5 @@
 sync({
-    to: 'Build',
+    to: 'Build/Components',
     include: [
         'Composite/Build/*.js',
         'Forms/Build/*.js',
