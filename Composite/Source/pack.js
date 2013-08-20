@@ -16,6 +16,7 @@ pack({
 
 function includes(debug) {
     return [
+        'license.js',
         '../Libraries/Tribe.PubSub' + ((debug && '.chrome') || '') + '.js',
         file('setup.js'),
         file('options.js'),

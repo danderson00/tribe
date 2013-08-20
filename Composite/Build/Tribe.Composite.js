@@ -1,3 +1,4 @@
+/*! The Tribe platform is licensed under the MIT license. See http://tribejs.com/ for more information. */
 window.Tribe = window.Tribe || {};
 window.Tribe.PubSub = function (options) {
     var self = this;
@@ -242,7 +243,7 @@ window.Tribe.PubSub = function (options) {
         return results;
     };
 })(Tribe.PubSub.utils);
-(function(global) {
+(function (global) {
     if (!jQuery)
         throw 'jQuery must be loaded before knockout.composite can initialise';
     if (!ko)

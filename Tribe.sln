@@ -41,23 +41,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{839161CD-9546-42A5-A2EB-265D71C7EB9C}"
 	ProjectSection(SolutionItems) = preProject
 		Build\Tribe.chrome.js = Build\Tribe.chrome.js
-		Build\Tribe.Composite.chrome.js = Build\Tribe.Composite.chrome.js
-		Build\Tribe.Composite.js = Build\Tribe.Composite.js
-		Build\Tribe.Composite.min.js = Build\Tribe.Composite.min.js
-		Build\Tribe.Forms.chrome.js = Build\Tribe.Forms.chrome.js
-		Build\Tribe.Forms.js = Build\Tribe.Forms.js
-		Build\Tribe.Forms.min.js = Build\Tribe.Forms.min.js
 		Build\Tribe.js = Build\Tribe.js
-		Build\Tribe.MessageHub.chrome.js = Build\Tribe.MessageHub.chrome.js
-		Build\Tribe.MessageHub.js = Build\Tribe.MessageHub.js
-		Build\Tribe.MessageHub.min.js = Build\Tribe.MessageHub.min.js
 		Build\Tribe.min.js = Build\Tribe.min.js
-		Build\Tribe.Mobile.chrome.js = Build\Tribe.Mobile.chrome.js
-		Build\Tribe.Mobile.js = Build\Tribe.Mobile.js
-		Build\Tribe.Mobile.min.js = Build\Tribe.Mobile.min.js
-		Build\Tribe.PubSub.chrome.js = Build\Tribe.PubSub.chrome.js
-		Build\Tribe.PubSub.js = Build\Tribe.PubSub.js
-		Build\Tribe.PubSub.min.js = Build\Tribe.PubSub.min.js
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{606E0C0D-6A62-45A8-8542-AA9BB95D4629}"
@@ -67,14 +52,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{606E0C
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D486D40C-7852-4E1E-A027-AF7871B7C318}"
-	ProjectSection(SolutionItems) = preProject
-		Build\Tests\Tribe.Composite.tests.js = Build\Tests\Tribe.Composite.tests.js
-		Build\Tests\Tribe.Composite.tests.mockjax.js = Build\Tests\Tribe.Composite.tests.mockjax.js
-		Build\Tests\Tribe.MessageHub.tests.js = Build\Tests\Tribe.MessageHub.tests.js
-		Build\Tests\Tribe.PubSub.tests.js = Build\Tests\Tribe.PubSub.tests.js
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tribe.NuGet", "Tribe.NuGet", "{A65B7D4A-597A-4A24-8E90-0AC2524FF465}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe", "NuGet\Tribe\Tribe.csproj", "{4E1D207D-17E0-499E-A77D-4FB969BAB658}"
@@ -82,6 +59,71 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Composite", "NuGet\Tribe.Composite\Tribe.Composite.csproj", "{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Template", "NuGet\Tribe.Template\Tribe.Template.csproj", "{6540CDD7-5049-41AA-9637-910E8C15A718}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{6FE1C6A9-283A-41CE-BFAF-5E3117E05A20}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Binaries\EntityFramework.dll = Build\Binaries\EntityFramework.dll
+		Build\Binaries\EntityFramework.xml = Build\Binaries\EntityFramework.xml
+		Build\Binaries\Microsoft.AspNet.SignalR.Core.dll = Build\Binaries\Microsoft.AspNet.SignalR.Core.dll
+		Build\Binaries\Microsoft.AspNet.SignalR.Core.xml = Build\Binaries\Microsoft.AspNet.SignalR.Core.xml
+		Build\Binaries\Microsoft.AspNet.SignalR.Owin.dll = Build\Binaries\Microsoft.AspNet.SignalR.Owin.dll
+		Build\Binaries\Microsoft.AspNet.SignalR.Owin.xml = Build\Binaries\Microsoft.AspNet.SignalR.Owin.xml
+		Build\Binaries\Microsoft.AspNet.SignalR.SystemWeb.dll = Build\Binaries\Microsoft.AspNet.SignalR.SystemWeb.dll
+		Build\Binaries\Microsoft.AspNet.SignalR.SystemWeb.xml = Build\Binaries\Microsoft.AspNet.SignalR.SystemWeb.xml
+		Build\Binaries\Microsoft.Owin.Host.SystemWeb.dll = Build\Binaries\Microsoft.Owin.Host.SystemWeb.dll
+		Build\Binaries\Microsoft.Owin.Host.SystemWeb.xml = Build\Binaries\Microsoft.Owin.Host.SystemWeb.xml
+		Build\Binaries\Microsoft.Practices.ServiceLocation.dll = Build\Binaries\Microsoft.Practices.ServiceLocation.dll
+		Build\Binaries\Microsoft.Practices.ServiceLocation.pdb = Build\Binaries\Microsoft.Practices.ServiceLocation.pdb
+		Build\Binaries\Microsoft.Practices.ServiceLocation.xml = Build\Binaries\Microsoft.Practices.ServiceLocation.xml
+		Build\Binaries\Microsoft.Practices.Unity.Configuration.dll = Build\Binaries\Microsoft.Practices.Unity.Configuration.dll
+		Build\Binaries\Microsoft.Practices.Unity.Configuration.xml = Build\Binaries\Microsoft.Practices.Unity.Configuration.xml
+		Build\Binaries\Microsoft.Practices.Unity.dll = Build\Binaries\Microsoft.Practices.Unity.dll
+		Build\Binaries\Microsoft.Practices.Unity.xml = Build\Binaries\Microsoft.Practices.Unity.xml
+		Build\Binaries\Microsoft.Web.Infrastructure.dll = Build\Binaries\Microsoft.Web.Infrastructure.dll
+		Build\Binaries\Newtonsoft.Json.dll = Build\Binaries\Newtonsoft.Json.dll
+		Build\Binaries\Newtonsoft.Json.xml = Build\Binaries\Newtonsoft.Json.xml
+		Build\Binaries\NServiceBus.dll = Build\Binaries\NServiceBus.dll
+		Build\Binaries\NServiceBus.pdb = Build\Binaries\NServiceBus.pdb
+		Build\Binaries\NServiceBus.xml = Build\Binaries\NServiceBus.xml
+		Build\Binaries\Owin.dll = Build\Binaries\Owin.dll
+		Build\Binaries\Tribe.MessageHub.Buses.NServiceBus.dll = Build\Binaries\Tribe.MessageHub.Buses.NServiceBus.dll
+		Build\Binaries\Tribe.MessageHub.Buses.NServiceBus.pdb = Build\Binaries\Tribe.MessageHub.Buses.NServiceBus.pdb
+		Build\Binaries\Tribe.MessageHub.ChannelPersisters.SqlServer.dll = Build\Binaries\Tribe.MessageHub.ChannelPersisters.SqlServer.dll
+		Build\Binaries\Tribe.MessageHub.ChannelPersisters.SqlServer.pdb = Build\Binaries\Tribe.MessageHub.ChannelPersisters.SqlServer.pdb
+		Build\Binaries\Tribe.MessageHub.Containers.Unity.dll = Build\Binaries\Tribe.MessageHub.Containers.Unity.dll
+		Build\Binaries\Tribe.MessageHub.Containers.Unity.pdb = Build\Binaries\Tribe.MessageHub.Containers.Unity.pdb
+		Build\Binaries\Tribe.MessageHub.Core.dll = Build\Binaries\Tribe.MessageHub.Core.dll
+		Build\Binaries\Tribe.MessageHub.Core.pdb = Build\Binaries\Tribe.MessageHub.Core.pdb
+		Build\Binaries\Tribe.MessageHub.Interfaces.dll = Build\Binaries\Tribe.MessageHub.Interfaces.dll
+		Build\Binaries\Tribe.MessageHub.Interfaces.pdb = Build\Binaries\Tribe.MessageHub.Interfaces.pdb
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{78BE0F69-84EA-4CD9-BB19-B71CB3F25744}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Components\Tribe.Composite.chrome.js = Build\Components\Tribe.Composite.chrome.js
+		Build\Components\Tribe.Composite.js = Build\Components\Tribe.Composite.js
+		Build\Components\Tribe.Composite.min.js = Build\Components\Tribe.Composite.min.js
+		Build\Components\Tribe.Forms.chrome.js = Build\Components\Tribe.Forms.chrome.js
+		Build\Components\Tribe.Forms.js = Build\Components\Tribe.Forms.js
+		Build\Components\Tribe.Forms.min.js = Build\Components\Tribe.Forms.min.js
+		Build\Components\Tribe.MessageHub.chrome.js = Build\Components\Tribe.MessageHub.chrome.js
+		Build\Components\Tribe.MessageHub.js = Build\Components\Tribe.MessageHub.js
+		Build\Components\Tribe.MessageHub.min.js = Build\Components\Tribe.MessageHub.min.js
+		Build\Components\Tribe.Mobile.chrome.js = Build\Components\Tribe.Mobile.chrome.js
+		Build\Components\Tribe.Mobile.js = Build\Components\Tribe.Mobile.js
+		Build\Components\Tribe.Mobile.min.js = Build\Components\Tribe.Mobile.min.js
+		Build\Components\Tribe.PubSub.chrome.js = Build\Components\Tribe.PubSub.chrome.js
+		Build\Components\Tribe.PubSub.js = Build\Components\Tribe.PubSub.js
+		Build\Components\Tribe.PubSub.min.js = Build\Components\Tribe.PubSub.min.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BDA0D532-7669-4244-AFE4-601AFBDCA82F}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Components\Tests\Tribe.Composite.tests.js = Build\Components\Tests\Tribe.Composite.tests.js
+		Build\Components\Tests\Tribe.Composite.tests.mockjax.js = Build\Components\Tests\Tribe.Composite.tests.mockjax.js
+		Build\Components\Tests\Tribe.MessageHub.tests.js = Build\Components\Tests\Tribe.MessageHub.tests.js
+		Build\Components\Tests\Tribe.PubSub.tests.js = Build\Components\Tests\Tribe.PubSub.tests.js
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -165,9 +207,11 @@ Global
 		{3A44BDBA-DAB4-4B90-AE73-9BB82FEC0120} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
 		{09F75416-657A-477E-BC20-EB201B34069F} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
 		{A6B72826-C5EF-4CC0-A007-EACD3A58F65C} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
-		{D486D40C-7852-4E1E-A027-AF7871B7C318} = {839161CD-9546-42A5-A2EB-265D71C7EB9C}
+		{6FE1C6A9-283A-41CE-BFAF-5E3117E05A20} = {839161CD-9546-42A5-A2EB-265D71C7EB9C}
+		{78BE0F69-84EA-4CD9-BB19-B71CB3F25744} = {839161CD-9546-42A5-A2EB-265D71C7EB9C}
 		{4E1D207D-17E0-499E-A77D-4FB969BAB658} = {A65B7D4A-597A-4A24-8E90-0AC2524FF465}
 		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81} = {A65B7D4A-597A-4A24-8E90-0AC2524FF465}
 		{6540CDD7-5049-41AA-9637-910E8C15A718} = {A65B7D4A-597A-4A24-8E90-0AC2524FF465}
+		{BDA0D532-7669-4244-AFE4-601AFBDCA82F} = {78BE0F69-84EA-4CD9-BB19-B71CB3F25744}
 	EndGlobalSection
 EndGlobal

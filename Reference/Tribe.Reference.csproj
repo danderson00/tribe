@@ -115,6 +115,7 @@
     <Content Include="Build\site.chrome.js" />
     <Content Include="Build\site.js" />
     <Content Include="Build\site.min.js" />
+    <Content Include="Images\download.png" />
     <Content Include="unsupported.html" />
     <Content Include="Css\block.css" />
     <Content Include="Css\prettify.css" />

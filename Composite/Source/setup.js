@@ -1,4 +1,4 @@
-﻿(function(global) {
+﻿(function (global) {
     if (!jQuery)
         throw 'jQuery must be loaded before knockout.composite can initialise';
     if (!ko)

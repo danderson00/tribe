@@ -1644,5 +1644,5 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.field{width:100%;margin-bottom:5px}.label{font-size:.7em}.display{width:100%}.display input{width:100%}.fieldColumn{float:left}.fieldColumn:nth-child(n+2){padding-left:20px}.validationElement{border:2px solid red!important}')
+    .text('.TM .field{width:100%;margin-bottom:5px}.TM .label{font-size:.7em}.TM .display{width:100%}.TM .display input{width:100%}.TM .fieldColumn{float:left}.TM .fieldColumn:nth-child(n+2){padding-left:20px}.TM .validationElement{border:2px solid red!important}')
     .appendTo('head');

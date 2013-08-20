@@ -829,11 +829,6 @@ $('head')
     .append('<script type="text/template" id="template--Samples-Webmail-3-Content-mails"><table class="mails" data-bind="with: data">\n    <thead>\n        <tr>\n            <th>From</th>\n            <th>To</th>\n            <th>Subject</th>\n            <th>Date</th>\n        </tr>\n    </thead>\n\n    <tbody data-bind="foreach: mails">\n        <tr data-bind="click: $root.selectMail">\n            <td data-bind="text: from"></td>\n            <td data-bind="text: to"></td>\n            <td data-bind="text: subject"></td>\n            <td data-bind="text: date"></td>\n        </tr>     \n    </tbody>\n</table></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-Webmail-3-Content-viewMail"><div class="viewMail" data-bind="with: data">\n    <div class="mailInfo">\n        <h1 data-bind="text: subject"></h1>\n        <p><label>From</label>: <span data-bind="text: from"></span></p>\n        <p><label>To</label>: <span data-bind="text: to"></span></p>\n        <p><label>Date</label>: <span data-bind="text: date"></span></p>\n        <div class="message">\n            <p data-bind="html: messageContent" />            \n        </div>\n    </div>\n</div></script>');
-TC.scriptEnvironment = { resourcePath: '/Content/About/example3' };
-TC.registerModel(function(pane) {
-
-});
-//@ sourceURL=tribe://Panes/Content/About/example3.js
 TC.scriptEnvironment = { resourcePath: '/Content/Guides/Guides/Webmail/tutorial' };
 Tutorials.webmail = {
     frames: [
