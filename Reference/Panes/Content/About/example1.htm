@@ -2,6 +2,11 @@
     <h1>Show Me!</h1>
     
     <p>
+        If you're not familiar with knockout, we recommend you have a quick 
+        run through the excellent tutorials at
+        <a href="http://learn.knockoutjs.com/" target="_blank">http://learn.knockoutjs.com/</a>.        
+    </p>
+    <p>
         Tribe allows you to easily break your UI down into "panes" that can consist 
         of a JavaScript model, HTML template and CSS stylesheet. 
     </p>
@@ -12,11 +17,17 @@
     <div data-bind="pane: '/Interface/sample', data: { name: 'About/Tasks', initialFile: 'layout.htm' }"></div>
     
     <p>
-        This is pretty trivial example. You can check out the <a href="" target="_blank">source</a> 
-        to this site or the <a href="" target="_blank">samples</a>. 
+        Tribe gives you an awesome debugging experience. Using the developer tools built in to Google Chrome, 
+        your file structure is preserved and each individual JavaScript file is fully debuggable.
     </p>
     <p>
-        If you're using Chrome, head over to the <a href="debug.html">debug version</a> of the site 
-        and look at the source in the developer tools.
+        Head over to the <a href="debug.html">debug version</a> of the site and check out the "Sources" tab
+        in the developer tools.
+    </p>
+    <p>
+        For more practical examples, check out the 
+        <a data-bind="click: Article.show('Guides', 'Guides/webmail')">webmail tutorial</a>, or the 
+        <a href="https://github.com/danderson00/Tribe" target="_blank">source</a> 
+        to this site.
     </p>
 </div>

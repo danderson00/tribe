@@ -130,7 +130,7 @@
     <Content Include="Infrastructure\samples.js" />
     <Content Include="Infrastructure\syntaxHighlightEvent.js" />
     <Content Include="m.html" />
-    <Content Include="index.html" />
+    <Content Include="debug.html" />
     <Content Include="Global.asax" />
     <Content Include="Images\device.mobile.png" />
     <Content Include="Images\icon.css.png" />
@@ -270,7 +270,7 @@
     <Content Include="Panes\Samples\Webmail\3-Content\viewMail.css" />
     <Content Include="Panes\Samples\Webmail\3-Content\viewMail.htm" />
     <Content Include="Panes\Samples\Webmail\3-Content\viewMail.js" />
-    <Content Include="release.html" />
+    <Content Include="index.html" />
     <Content Include="Infrastructure\articleUrlProvider.js" />
     <Content Include="Infrastructure\Navigation.js" />
     <Content Include="Infrastructure\Article.js" />

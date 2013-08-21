@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Tribe</title>
+        
+        <!--[if lt IE 9]>
+            <script>window.location.href = 'unsupported.html'</script>
+        <![endif]-->
+
+        <script type="text/javascript" src="Libraries/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="Libraries/jquery.signalR-1.1.2.js"></script>
+        <script type="text/javascript" src="Libraries/knockout-2.3.0.debug.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.chrome.js"></script>
+        <script type="text/javascript" src="Libraries/Tribe.Mobile.chrome.js"></script>
+        
+        <script type="text/javascript" src="Libraries/prettify.js"></script>
+        <link rel="stylesheet" href="Libraries/prettify.css" />
+        
+        <script type="text/javascript" src="Build/site.chrome.js"></script>
+
+        <script type="text/javascript">
+            $(function () {
+                TC.options.handleExceptions = false;
+                TC.transition.mode = 'absolute';
+                TC.run();
+            });
+        </script>
+    </head>
+    <body data-bind="pane: 'Interface/layout'">
+    </body>
+</html>
