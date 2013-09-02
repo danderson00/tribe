@@ -50,6 +50,7 @@
     <Content Include="Samples\Transitions\target2.htm" />
     <Content Include="Samples\Transitions\target3.htm" />
     <Content Include="Source\Api\defaultUrlProvider.js" />
+    <Content Include="Source\license.js" />
     <Content Include="Source\Transitions\Css\slide.css" />
     <Content Include="Source\Types\History.js" />
     <Content Include="Source\Types\Navigation.js" />

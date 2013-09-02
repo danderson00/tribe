@@ -18,24 +18,24 @@ function includes(debug) {
     return [
         'license.js',
         '../Libraries/Tribe.PubSub' + ((debug && '.chrome') || '') + '.js',
-        file('setup.js'),
-        file('options.js'),
-        folder('Utilities'),
-        folder('Types'),
-        folder('Events'),
-        folder('LoadHandlers'),
-        folder('LoadStrategies'),
-        folder('Transitions'),
-        folder('Api'),
-        folder('Loggers')
+        T.scripts(options('setup.js')),
+        T.scripts(options('options.js')),
+        T.scripts(options('Utilities', debug)),
+        T.scripts(options('Types')),
+        T.scripts(options('Events')),
+        T.scripts(options('LoadHandlers')),
+        T.scripts(options('LoadStrategies')),
+        T.scripts(options('Transitions')),
+        T.scripts(options('Api')),
+        T.scripts(options('Loggers'))
     ];
-
-    function folder(name) {
-        return { files: name + '/*.js', recursive: true, template: debug && T.chromeScript('Tribe.Composite') };
-    }
     
-    function file(name) {
-        return { files: name, template: debug && T.chromeScript('Tribe.Composite') };
-    }
+    function options(path) {
+        return {
+            path: path,
+            domain: 'Tribe.Composite',
+            debug: debug
+        };
+    }    
 }
 

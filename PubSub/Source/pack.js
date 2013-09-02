@@ -1,19 +1,26 @@
 ﻿pack({
     to: '../Build/Tribe.PubSub.js',
-    include: '*.js',
+    include: T.scripts(options()),
     prioritise: 'core.js'
 });
 
 pack({
     to: '../Build/Tribe.PubSub.chrome.js',
-    include: '*.js',
-    prioritise: 'core.js',
-    template: T.chromeScript('Tribe.PubSub')
+    include: T.scripts(options(true)),
+    prioritise: 'core.js'
 });
 
 pack({
     to: '../Build/Tribe.PubSub.min.js',
-    include: '*.js',
+    include: T.scripts(options()),
     prioritise: 'core.js',
     minify: true
 });
+
+function options(debug) {
+    return {
+        path: '*.js',
+        domain: 'Tribe.PubSub',
+        debug: debug
+    };
+}

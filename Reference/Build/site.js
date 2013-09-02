@@ -1,10 +1,13 @@
+// Infrastructure/Article.js
 Article = {
     show: function (section, topic) {
         return function () {
             TC.nodeFor('.content').pane.pubsub.publish('article.show', { section: section, topic: topic });
         };
     }
-};var articleUrlProvider = {
+};
+// Infrastructure/articleUrlProvider.js
+var articleUrlProvider = {
     urlDataFrom: function(options) {
         return {
             url: Navigation.isHome(options.data) ? '/' : '?section=' + encodeURI(options.data.section) + '&topic=' + encodeURI(options.data.topic)
@@ -22,7 +25,9 @@ Article = {
             };
         }
     }
-};Navigation = {
+};
+// Infrastructure/Navigation.js
+Navigation = {
     isHome: function(article) {
         return article && article.section === 'About' && article.topic === 'home';
     },
@@ -72,16 +77,29 @@ Article = {
             'Configuration': 'configuration',
             'Client API': 'client',
         },
+        'PackScript': {
+            'Operation': 'operation',
+            'Packing': 'pack',
+            'Synchronising': 'sync',
+            'Compressing': 'zip',
+            'Including Files': 'includes',
+            'Templates': 'templates',
+            'Tribe': 'builtins'
+        }
         //'Mobile': {},
         //'Forms': {},
         //'Components': {}
     }
-};Reference = {
+};
+// Infrastructure/Reference.js
+Reference = {
     Utilities: {},
     Types: {}
 };
 
-Tutorials = {};Samples = window.Samples || {};
+Tutorials = {};
+// Infrastructure/samples.js
+Samples = window.Samples || {};
 Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'create.htm',
@@ -549,106 +567,1568 @@ Samples['Webmail/3-Content'].push({
     filename: 'viewMail.js',
     icon: 'Images/icon.js.png',
     content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n    \n    this.data = ko.observable();\n\n    this.initialise = function () {\n        $.getJSON(\'Data/mail/\' + pane.data.id, self.data);\n    };\n});</pre>'
-});TC.Events.syntaxHighlight = function(pane) {
+});
+// Infrastructure/syntaxHighlightEvent.js
+TC.Events.syntaxHighlight = function(pane) {
     pane.find();
-};$('<style/>')
-    .attr('class', '__tribe')
-    .text('.example3 .sample .samplePane{padding:0;width:320px;height:480px;left:22px;top:136px}.example3 .sample>*{height:711px}.example3 .sample .source{width:548px}.example3 .sample .result{width:365px;height:721px;border:none;background:url(\'../Images/device.mobile.png\');margin-left:15px}.example3 .sample .fileList{width:548px;height:auto}.example3 .sample .fileContent{width:548px;height:auto}.example3 .result .title{display:none}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.features{text-align:center;color:#081735;font-size:18px}.features.small{font-size:inherit}.features>*{vertical-align:top;display:inline-block;width:180px}.features.small>*{width:100px}.features strong{font-size:1.1em;height:50px;color:#701010;padding-bottom:10px}.features>* *{text-align:center;margin:0 auto;display:block}.features.small img{margin-bottom:5px}.features img{margin-bottom:20px}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.guides h2{margin-bottom:5px}.guides ul{list-style:none;padding:0;margin:0}.guides li{cursor:pointer;margin-bottom:10px;padding:5px 20px;background:#f6f6f6;border-radius:8px}.guides li:hover{background:#eed}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.knockout.block{text-align:center;background:center url(\'../Images/knockout/background.jpg\')}.knockout .features{display:inline-block;margin-left:50px;background-clip:padding-box;color:#b64838}.knockout .logo{color:#fff;vertical-align:top;margin-top:20px;display:inline-block;width:250px;font:inherit}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.masthead{color:#fff;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;text-align:center;padding-bottom:20px;border-bottom:1px #333 solid}.masthead h1{height:60px;font-size:96pt;padding:0}.masthead h2{font-size:18px}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.webmail .sample .result{margin:10px auto 0 auto;width:920px;height:auto}.webmail .sample .samplePane{height:auto}.webmail .sample .fileContent{width:770px}.webmail .fixedHeight .samplePane{height:500px;overflow-y:scroll}.webmail h2{margin-top:20px!important}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.footer{text-align:right;font-size:10pt;color:#888;text-shadow:1px 1px rgba(255,255,255,.2)}.footer a,.footer a:active,.footer a:visited,.footer a:link{text-decoration:none;color:#66f}.footer a:hover{color:#fff}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.header{height:46px}.header .background{position:absolute;top:0;width:100%;height:45px;border-bottom:1px #333 solid;background:#45484d;background:-moz-linear-gradient(top,#45484d 0%,#000 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#45484d),color-stop(100%,#000));background:-webkit-linear-gradient(top,#45484d 0%,#000 100%);background:-o-linear-gradient(top,#45484d 0%,#000 100%);background:-ms-linear-gradient(top,#45484d 0%,#000 100%);background:linear-gradient(to bottom,#45484d 0%,#000 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#45484d\',endColorstr=\'#000000\',GradientType=0);z-index:-2}.header .logo{display:none;position:absolute;cursor:pointer;top:2px;left:20px;color:#fff;font-size:22pt;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5)}.header .buttons{text-align:center;position:absolute;right:0}.header .buttons span{font-size:.7em;float:left;color:#eee;text-shadow:2px 2px 0 black;padding:9px;cursor:pointer;background:rgba(32,96,224,.2);font-size:1.2em;width:110px;height:27px;margin:0;margin-left:-1px;border-left:1px solid #000;border-right:1px solid #000}.header .buttons span:hover{background:#fff;background:-moz-linear-gradient(top,#fff 0%,#000 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#fff),color-stop(100%,#000));background:-webkit-linear-gradient(top,#fff 0%,#000 100%);background:-o-linear-gradient(top,#fff 0%,#000 100%);background:-ms-linear-gradient(top,#fff 0%,#000 100%);background:linear-gradient(to bottom,#fff 0%,#000 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#ffffff\',endColorstr=\'#000000\',GradientType=0);color:#aaa}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.navigation{display:none;background:#eee;border:1px solid #000;box-sizing:border-box;z-index:100}.navigation ul{list-style:none}.navigation li{cursor:pointer}.navigation ul li:hover{background:#111;color:#eee}.navigation li.selectedItem{background:#ccc}.navigation>ul li{padding:2px 10px;font-weight:bold}.navigation ul ul li{margin:0;padding:2px 0 2px 20px;box-sizing:border-box;font-weight:normal}@media(max-width:1300px){.navigation{width:980px;position:relative;left:50%;margin-left:-490px!important;border-radius:8px;padding:10px;margin-top:10px}.navigation ul{margin:0;padding:0;width:33%;min-height:50px}.navigation ul ul{position:absolute;top:10px;right:10px;width:66%}.navigation ul ul li{width:50%;float:left}}@media(min-width:1300px){.navigation{width:170px!important;position:fixed;left:0;top:56px;border-left:0;box-shadow:3px 3px 4px -1px rgba(0,0,0,.3);border-top-right-radius:8px;border-bottom-right-radius:8px}.navigation>ul{padding:0;margin:10px}.navigation ul ul{margin:0;padding:0}}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.navigationContainer{position:relative}.navigationContainer>ul{position:absolute;top:0;right:0;list-style:none;margin:0;padding:0}.navigationContainer>ul li{display:inline-block;width:70px;height:25px;text-align:center;padding-top:2px;border-radius:6px;border:1px solid #eee;cursor:pointer}.navigationContainer>ul li:hover{background:#000;color:#fff}.navigationContainer>.out{margin-top:-20px}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.sample{width:935px;margin:0}.sample>*{display:inline-block;vertical-align:top;height:305px;border:1px solid #000;border-radius:8px;overflow:hidden;background:#fff}.sample .fileList,.sample .fileContent{float:left;height:300px;box-sizing:border-box}.sample ul.fileList{width:150px;list-style:none;margin:0;padding:0}.sample .fileList li{padding:2px;cursor:pointer}.sample .fileList li:hover{color:#fff;background:#000}.sample .selectedFile{color:#fff;background:grey}.sample .fileContent{padding:5px;width:515px;overflow:auto;height:272px}.sample .result{margin-left:5px;margin-bottom:5px;width:255px}.sample .title{background:#ccc;padding:5px;width:100%;box-sizing:border-box;border-top-left-radius:8px;border-top-right-radius:8px}.sample .samplePane{overflow-y:auto;overflow-x:hidden;padding:5px;height:262px;position:relative}.sample pre{margin:0}.sample pre.prettyprint{border:none}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.function h1 .returns{float:right;font-weight:normal}.function h1 .returns .type{font-weight:bold;font-style:italic}.function .name{font-size:1.2em}.example{background:#eed;padding:10px;margin:10px 0}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.messages{list-style:none;padding:0}.messages li{padding:5px}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('ul.welcome li{background:#103070;color:#fff;text-align:center;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);font:bold 64pt \'Cambria\'}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.taskList{list-style:none;padding:0}.taskList li{padding:5px}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.panels>div{margin-bottom:5px;border:1px solid #000}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.helloWorld h1{text-shadow:3px 3px 0 #aaa}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.folders{background-color:#bbb;list-style-type:none;padding:0;margin:0;border-radius:7px;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#d6d6d6),color-stop(.4,silver),color-stop(1,#a4a4a4));margin:10px 0 16px 0;font-size:0}.folders li:hover{background-color:#ddd}.folders li:first-child{border-left:none;border-radius:7px 0 0 7px}.folders li{font-size:16px;font-weight:bold;display:inline-block;padding:.5em 1.5em;cursor:pointer;color:#444;text-shadow:#f7f7f7 0 1px 1px;border-left:1px solid #ddd;border-right:1px solid #888}.folders li{*display:inline!important}.folders .selected{background-color:#444!important;color:#fff;text-shadow:none;border-right-color:#aaa;border-left:none;box-shadow:inset 1px 2px 6px #070707}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.folders{background-color:#bbb;list-style-type:none;padding:0;margin:0;border-radius:7px;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#d6d6d6),color-stop(.4,silver),color-stop(1,#a4a4a4));margin:10px 0 16px 0;font-size:0}.folders li:hover{background-color:#ddd}.folders li:first-child{border-left:none;border-radius:7px 0 0 7px}.folders li{font-size:16px;font-weight:bold;display:inline-block;padding:.5em 1.5em;cursor:pointer;color:#444;text-shadow:#f7f7f7 0 1px 1px;border-left:1px solid #ddd;border-right:1px solid #888}.folders li{*display:inline!important}.folders .selected{background-color:#444!important;color:#fff;text-shadow:none;border-right-color:#aaa;border-left:none;box-shadow:inset 1px 2px 6px #070707}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.mails{width:100%;table-layout:fixed;border-spacing:0}.mails th{background-color:#bbb;font-weight:bold;color:#444;text-shadow:#f7f7f7 0 1px 1px}.mails tbody tr:hover{cursor:pointer;background-color:#68c!important;color:#fff}.mails th,.mails td{text-align:left;padding:.4em .3em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mails td{border:0}.mails th{border:0;border-left:1px solid #ddd;border-right:1px solid #888;padding:.4em 0 .3em .7em}.mails th:nth-child(1),.mails td:nth-child(1){width:20%}.mails th:nth-child(2),.mails td:nth-child(2){width:15%}.mails th:nth-child(3),.mails td:nth-child(3){width:45%}.mails th:nth-child(4),.mails td:nth-child(4){width:15%}.mails th:last-child{border-right:none}.mails tr:nth-child(even){background-color:#eee}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.folders{background-color:#bbb;list-style-type:none;padding:0;margin:0;border-radius:7px;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#d6d6d6),color-stop(.4,silver),color-stop(1,#a4a4a4));margin:10px 0 16px 0;font-size:0}.folders li:hover{background-color:#ddd}.folders li:first-child{border-left:none;border-radius:7px 0 0 7px}.folders li{font-size:16px;font-weight:bold;display:inline-block;padding:.5em 1.5em;cursor:pointer;color:#444;text-shadow:#f7f7f7 0 1px 1px;border-left:1px solid #ddd;border-right:1px solid #888}.folders li{*display:inline!important}.folders .selected{background-color:#444!important;color:#fff;text-shadow:none;border-right-color:#aaa;border-left:none;box-shadow:inset 1px 2px 6px #070707}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.mails{width:100%;table-layout:fixed;border-spacing:0}.mails th{background-color:#bbb;font-weight:bold;color:#444;text-shadow:#f7f7f7 0 1px 1px}.mails tbody tr:hover{cursor:pointer;background-color:#68c!important;color:#fff}.mails th,.mails td{text-align:left;padding:.4em .3em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mails td{border:0}.mails th{border:0;border-left:1px solid #ddd;border-right:1px solid #888;padding:.4em 0 .3em .7em}.mails th:nth-child(1),.mails td:nth-child(1){width:20%}.mails th:nth-child(2),.mails td:nth-child(2){width:15%}.mails th:nth-child(3),.mails td:nth-child(3){width:45%}.mails th:nth-child(4),.mails td:nth-child(4){width:15%}.mails th:last-child{border-right:none}.mails tr:nth-child(even){background-color:#eee}')
-    .appendTo('head');
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.viewMail .mailInfo{background-color:#dae0e8;padding:1em 1em .5em 1.25em;border-radius:1em}.viewMail .mailInfo h1{margin-top:.2em;font-size:130%}.viewMail .mailInfo label{color:#777;font-weight:bold;min-width:2.75em;text-align:right;display:inline-block}.viewMail .message{padding:0 1.25em}')
-    .appendTo('head');
+};
+// Panes/Content/Guides/Guides/Webmail/tutorial.js
+TC.scriptEnvironment = { resourcePath: '/Content/Guides/Guides/Webmail/tutorial' };
+Tutorials.webmail = {
+    frames: [
+        'Webmail/folders',
+        'Webmail/mails',
+        'Webmail/content'
+    ]
+}
+
+// Panes/Content/Reference/Core/api.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/api' };
+Reference.API = [
+    {
+        name: 'TC.run',
+        description: 'Start Tribe.Composite, ensuring the specified resources are loaded first.',
+        arguments: [
+            { name: 'resourcesToPreload', type: '[String]', description: 'URLs to required HTML, CSS or JS resources.' },
+            { name: 'initialModel', type: 'Any', description: 'The model supplied to the initial ko.applyBindings call.' }
+        ],
+        returns: 'undefined'
+    },
+    {
+        name: 'TC.createNode',
+        description: 'Creates a new Pane object and binds it to the specified element with the specified pane options, and encapsulates it in a Node object.',
+        arguments: [
+            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' },
+            { name: 'paneOptions', type: 'Object' },
+            { name: 'parentNode', type: 'TC.Types.Node' },
+            { name: 'context', type: 'TC.Types.Context' }
+        ],
+        returns: 'TC.Types.Node'
+    },
+    {
+        name: 'TC.appendNode',
+        description: 'Same as createNode, but appends a new DIV element to the target element.',
+        arguments: [
+            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' },
+            { name: 'paneOptions', type: 'Object' },
+            { name: 'parentNode', type: 'TC.Types.Node' },
+            { name: 'context', type: 'TC.Types.Context' }
+        ],
+        returns: 'TC.Types.Node'
+    },
+    {
+        name: 'TC.insertNodeAfter',
+        description: 'Same as createNode, but inserts a new DIV element after the target element.',
+        arguments: [
+            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' },
+            { name: 'paneOptions', type: 'Object' },
+            { name: 'parentNode', type: 'TC.Types.Node' },
+            { name: 'context', type: 'TC.Types.Context' }
+        ],
+        returns: 'TC.Types.Node'
+    },
+    {
+        name: 'TC.nodeFor',
+        description: 'Find the Node object for the specified selector, Node or Pane.',
+        arguments: [
+            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' }
+        ],
+        returns: 'TC.Types.Node'
+    },
+    {
+        name: 'TC.registerModel',
+        description: 'Registers a model in the repository. Either the TC.scriptEnvironment must be set first or a resourcePath must be specified.',
+        arguments: [
+            { name: 'modelConstructor', type: 'Function' },
+            { name: 'options', type: 'Object' },
+            { name: 'resourcePath', type: 'String' }
+        ],
+        returns: 'undefined'
+    }
+];
+
+// Panes/Content/Reference/Core/panes.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/panes' };
+Reference.Panes = {
+    options: [
+        { name: 'pane', type: 'String', description: 'Required. Relative paths will evaluate relative to the parent pane.' },
+        { name: 'data', type: 'Any', description: 'Data to pass to the pane.' },
+        { name: 'handlesNavigation', type: 'String | NavigationOptions', description: 'The underlying node is marked as the node to transition when child panes navigate.' },
+        { name: 'transition', type: 'String', description: 'Transition to use when the pane is transitioned in or out.' },
+        { name: 'reverseTransitionIn', type: 'Boolean', description: 'Use the reverse transition when transitioning in.' },
+        { name: 'id', type: 'Any', description: 'An optional unique identifier for the pane.' },
+        { name: 'skipPath', type: 'Boolean', description: 'When specified, the pane is skipped when determining the parent pane path.' }
+    ]
+};
+
+// Panes/Content/Reference/Core/transitions.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/transitions' };
+Reference.Transition = {
+    name: 'TC.transition',
+    description: 'Create an object with a set of functions for transition elements and nodes.',
+    arguments: [
+        { name: 'target', type: 'selector | TC.Types.Pane | TC.Types.Node', description: 'The target of the transition.' },
+        { name: 'transition', type: 'String', description: 'The name of the transition registered in the TC.Transitions collection. If not specified, this will default to transition specified on the pane or node.<br/>Built-in transitions are fade, slideLeft, slideRight, slideUp and slideDown.' },
+        { name: 'reverse', type: 'Boolean', description: 'Use the reverse transition to the one specified.' }
+    ],
+    returns: 'Object'
+};
+
+Reference.Transition.Functions = [
+    {
+        name: 'in',
+        description: 'Transition the target into view. Returned promise resolves when transition is complete.',
+        returns: 'jQuery.Deferred'
+    },
+    {
+        name: 'out',
+        description: 'Transition the target out of view. By default, the target is removed from the DOM after transitioning. Returned promise resolves when transition is complete.',
+        arguments: [
+            { name: 'remove', type: 'Boolean', description: 'Specify false to hide the target instead.' }
+        ],
+        returns: 'jQuery.Deferred'
+    },
+    {
+        name: 'to',
+        description: 'Transition the target to another pane. If the target is an element, a new node is created. Returned promise resolves when the render operation for the new pane is complete.',
+        arguments: [
+            { name: 'paneOptions', type: 'String | Object', description: 'The path to the new pane or an object containing path and data properties.' },
+            { name: 'remove', type: 'Boolean', description: 'Specify false to hide the original target instead of removing.' }
+        ],
+        returns: 'jQuery.Deferred'
+    }
+];
+
+// Panes/Content/Reference/MessageHub/client.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/client' };
+Reference.MessageHub = [
+    {
+        name: 'TMH.initialise',
+        description: 'Initialise the MessageHub client.',
+        returns: 'undefined',
+        arguments: [
+            { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub object to attach to.' },
+            { name: 'url', type: 'String', description: 'The URL of the SignalR instance. Usually "signalr".' }
+        ]
+    },
+    {
+        name: 'TMH.joinChannel',
+        description: 'Join the specified channel.',
+        returns: '{ leave: function () { } }',
+        arguments: [
+            { name: 'id', type: 'String', description: 'The channel identifier.' },
+            { name: 'options', type: 'Object', description: 'A hashtable of options, described below.' }
+        ]
+    },
+    {
+        name: 'TMH.leaveChannel',
+        description: 'Leave the specified channel.',
+        returns: 'undefined',
+        arguments: [
+            { name: 'id', type: 'String', description: 'The channel identifier.' }
+        ]
+    },
+    {
+        name: 'TMH.publishToServer',
+        description: 'Publish a message to the server. This is called internally when a message topic specified in joinChannel is published.',
+        returns: 'undefined',
+        arguments: [
+            { name: 'channelId', type: 'String', description: 'The channel identifier.' },
+            { name: 'envelope', type: 'Object', description: 'The PubSub message envelope. See the PubSub reference for more information.' },
+            { name: 'record', type: 'Boolean', description: 'Request the server to record the message.' }
+        ]
+    }
+];
+
+Reference.MessageHub.ChannelOptions = [
+    { name: 'serverEvents', type: '[String]', description: 'An array of message topics to publish to the server. Wildcards can be used.' },
+    { name: 'record', type: 'Boolean', description: 'Request the server to record messages published to this channel.' },
+    { name: 'replay', type: 'Boolean', description: 'Request the server to replay messages previously published to this channel.' }
+];
+
+// Panes/Content/Reference/MessageHub/configuration.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/configuration' };
+Reference.MessageHub.Server = [
+    {
+        name: 'TopicResolver',
+        description: 'Specify a function to resolve message types to a topic names.',
+        arguments: [
+            { name: 'resolver', type: 'Func<Type, string>', description: 'A function that resolves a message type to a topic name.' }
+        ]
+    },
+    {
+        name: 'TopicResolver<T>',
+        description: 'Specify a type to resolve message types to a topic names. The default uses the type name as the client message topic.',
+        arguments: [
+            { name: '', type: 'IMessageTopicResolver', description: 'A type that implements IMessageTopicResolver.' }
+        ]
+    },
+    {
+        name: 'MessageSerialiser<T>',
+        description: 'Specify a type to serialise messages. The default is JsonMessageSerialiser.',
+        arguments: [
+            { name: '', type: 'IMessageSerialiser', description: 'A type that implements IMessageSerialiser.' }
+        ]
+    },
+    {
+        name: 'MessageBus<T>',
+        description: 'Specify a type that handles translation of client and server side messages.',
+        arguments: [
+            { name: '', type: 'IMessageBus', description: 'A type that implements IMessageBus.' }
+        ]
+    },
+    {
+        name: 'MessagesFrom',
+        description: 'Use incoming and outgoing message types from the specified assemblies.',
+        arguments: [
+            { name: 'assemblies', type: 'params Assembly[]', description: 'A parameter array of assemblies.' }
+        ]
+    },
+    {
+        name: 'HostStarter<T>',
+        description: 'Specify a type that can initialise and start the MessageHub host. The default is the IisHostStarter.',
+        arguments: [
+            { name: '', type: 'IHostStarter', description: 'A type that implements IHostStarter.' }
+        ]
+    },
+    {
+        name: 'ChannelAuthoriser<T>',
+        description: 'Specify a type that can authorise channel requests.',
+        arguments: [
+            { name: '', type: 'IChannelAuthoriser', description: 'A type that implements IChannelAuthoriser.' }
+        ]
+    },
+    {
+        name: 'SqlServerPersistence',
+        description: 'Store recorded messages in a SQL Server database. Requires a reference to the Tribe.MessageHub.ChannelPersisters.SqlServer assembly.',
+        arguments: [
+            { name: 'connectionStringOrName', type: 'String', description: 'A literal connection string or the name of a connection string defined in the configuration file.' }
+        ]
+    },
+    {
+        name: 'NServiceBus',
+        description: 'Use NServiceBus as the server side messaging infrastructure. Requires a reference to the Tribe.MessageHub.Buses.NServiceBus assembly.',
+        arguments: [
+            { name: 'bus', type: 'NServiceBus.IBus', description: 'A configured instance of the NServiceBus IBus interface.' }
+        ]
+    },
+];
+
+// Panes/Content/Reference/PackScript/packscript.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/PackScript/packscript' };
+Reference.PackScript = {
+    pack: [
+        { name: 'to', type: 'String', description: 'Destination path and filename for the output file.' },
+        { name: 'include', type: 'include options', description: 'The set of files to include in the output. See below for more details.' },
+        { name: 'exclude', type: 'include options', description: 'A set of files to explicitly exclude.' },
+        { name: 'template', type: 'template options', description: 'A template or array of templates to apply to each included file. See templates reference for more details.' },
+        { name: 'outputTemplate', type: 'template options', description: 'A template or array of templates to apply to the output.' },
+        { name: 'recursive', type: 'Boolean', description: 'Recurse through directories by default when including files.' },
+        { name: 'prioritise', type: 'String | Array', description: 'Specified file(s) will be included at the top of the output file.' },
+        { name: 'first', type: 'String | Array', description: 'Alias for prioritise.' },
+        { name: 'last', type: 'String | Array', description: 'Specified file(s) will be included at the bottom of the output file.' },
+        { name: 'includeConfigs', type: 'Boolean', description: 'PackScript configuration files are excluded by default. Overrides this behaviour.' },
+        { name: 'minify', type: 'Boolean', description: 'Minify resources using the configured minifier.' },
+        { name: 'sass', type: 'Boolean', description: 'Compile included SASS resources using the configured compiler.' },
+        { name: 'xdt', type: 'String | Array', description: 'Apply specified XDT transformations to included files.' }
+    ],
+    sync: [
+        { name: 'to', type: 'String', description: 'Destination path to synchronise files to.' },
+        { name: 'include', type: 'include options', description: 'The set of files to synchronise.' },
+        { name: 'exclude', type: 'include options', description: 'A set of files to explicitly exclude.' },
+        { name: 'recursive', type: 'Boolean', description: 'Recurse through directories by default when including files.' },
+        { name: 'includeConfigs', type: 'Boolean', description: 'PackScript configuration files are excluded by default. Overrides this behaviour.' }
+    ],
+    zip: [
+        { name: 'to', type: 'String', description: 'Destination path and filename for the output ZIP file.' },
+        { name: 'include', type: 'include options', description: 'The set of files to include in the ZIP file.' },
+        { name: 'exclude', type: 'include options', description: 'A set of files to explicitly exclude.' },
+        { name: 'recursive', type: 'Boolean', description: 'Recurse through directories by default when including files.' },
+        { name: 'includeConfigs', type: 'Boolean', description: 'PackScript configuration files are excluded by default. Overrides this behaviour.' }
+    ],
+    includeOptions: [
+        { name: 'files', type: 'String', description: 'File specification of files to include.' },
+        { name: 'recursive', type: 'Boolean', description: 'Recurse through directories by default when including files.' },
+        { name: 'prioritise', type: 'String | Array', description: 'Specified file(s) will be included at the top of the output file.' },
+        { name: 'first', type: 'String | Array', description: 'Alias for prioritise.' },
+        { name: 'last', type: 'String | Array', description: 'Specified file(s) will be included at the bottom of the output file.' },
+        { name: 'template', type: 'template options', description: 'A template or array of templates to apply to each included file. See templates reference for more details.' }
+    ],
+    functions: [
+        { name: 'pack', description: 'Combine, minify, embed and transform into a single output file.' },
+        { name: 'sync', description: 'Synchronise a set of files to a target directory.' },
+        { name: 'zip', description: 'Compress a set of files into a single ZIP format archive.' }
+    ],
+    templateProperties: [
+        { name: 'content', type: 'String', description: 'The content of the included file.' },
+        { name: 'path', type: 'String', description: 'The full path to the included file.' },
+        { name: 'configPath', type: 'String', description: 'The full path to the configuration file that is using the template.' },
+        { name: 'pathRelativeToConfig', type: 'String', description: 'The path of the included file relative to the configuration file.' },
+        { name: 'includePath', type: 'String', description: 'The full path to the path specified in the include option.' },
+        { name: 'pathRelativeToInclude', type: 'String', description: 'The path of the included file relative to the path specified in the include option.' },
+        { name: 'data', type: 'Any', description: 'The data object passed in the configuration file, or an empty object if not specified.' }
+    ],
+    builtins: [
+    {
+        name: 'T.',
+        description: '',
+        arguments: [
+            { name: '', type: '', description: '' },
+        ],
+        returns: ''
+    },
+    ]
+};
+
+/*
+T.panes(folderOrOptions, chrome)
+T.scripts(folderOrOptions, chrome)
+T.templates(folderOrOptions)
+T.styles(folderOrOptions)
+*/
+
+// Panes/Content/Reference/PubSub/core.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/core' };
+Reference.PubSub = {
+    name: 'Tribe.PubSub',
+    description: 'A fully featured publish / subscribe engine.',
+    constructor: {
+        arguments: [
+            { name: 'options', type: 'Object', description: 'A hashtable of options. These are the same as and override those specified in global options.' }
+        ]
+    },
+    functions: [
+        {
+            name: 'publish',
+            description: 'Publish the specified message to the bus.',
+            arguments: [
+                { name: 'topicOrEnvelope', type: 'String | Object', description: 'A string message topic or a message envelope object.' },
+                { name: 'data', type: 'Any', description: 'Data to attach to the message envelope.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'publishSync',
+            description: 'Publish the specified message to the bus synchronously.',
+            arguments: [
+                { name: 'topic', type: 'String', description: 'The message topic.' },
+                { name: 'data', type: 'Any', description: 'Data to attach to the message envelope.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'subscribe',
+            description: 'Subscribe to one or more message topics. Returns numeric token(s) that can be used to unsubscribe message handlers.',
+            arguments: [
+                { name: 'topic', type: 'String | [String] | Object', description: 'A single message topic, array of topics or object map of topic names to handler functions.' },
+                { name: 'func', type: 'Function(data, envelope)', description: 'The message handler function.' }
+            ],
+            returns: 'Number | [Number]'
+        },
+        {
+            name: 'subscribeOnce',
+            description: 'Subscribe to one or more message topics with a handler that is executed once only.',
+            arguments: [
+                { name: 'topic', type: 'String | [String] | Object', description: 'A single message topic, array of topics or object map of topic names to handler functions.' },
+                { name: 'handler', type: 'Function(data, envelope)', description: 'The message handler function.' }
+            ],
+            returns: 'Number | [Number]'
+        },
+        {
+            name: 'unsubscribe',
+            description: 'Unsubscribe one or more message handlers.',
+            arguments: [
+                { name: 'tokens', type: 'Number | [Number]', description: 'A single subscription token or array of tokens to unsubscribe. Returns the token(s) that were successfully unsubscribed.' }
+            ],
+            returns: 'Number | [Number]'
+        },
+        {
+            name: 'createLifetime',
+            description: 'Create a child PubSub object where all subscriptions can be removed by calling .end().',
+            returns: 'Object'
+        }
+    ],
+    properties: [
+        {
+            name: 'owner',
+            description: 'The root PubSub object. Child lifetimes will refer back to the owning PubSub object.',
+            type: 'Tribe.PubSub'
+        },
+        {
+            name: 'sync',
+            description: 'True if the PubSub object is operating synchronously.',
+            type: 'Boolean'
+        },
+        {
+            name: 'subscribers',
+            description: 'A managed collection of message subscribers. Use get(\'*\') to retrieve all subscribers.',
+            type: 'Tribe.PubSub.SubscriberList'
+        }
+    ]
+};
+
+// Panes/Content/Reference/PubSub/envelopes.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/envelopes' };
+Reference.PubSub.Envelopes = [
+    { name: 'topic', type: 'String', description: 'The message topic.' },
+    { name: 'data', type: 'Any', description: 'The message data.' },
+    { name: 'sync', type: 'Boolean', description: 'Publish the message synchronously.' },
+    { name: 'server', type: 'Boolean', description: 'True if the message originated from a Tribe.MessageHub host.' }
+];
+
+// Panes/Content/Reference/Types/History.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/History' };
+Reference.Types.History = {
+    name: 'TC.Types.History',
+    description: 'Maintains the state of the browser history stack, including URL data.',
+    constructor: {
+        arguments: [
+            { name: 'history', type: 'window.History', description: 'An object that exposes an interface matching that of the window.History object.' }
+        ]
+    },
+    functions: [
+        {
+            name: 'navigate',
+            description: 'Load a history entry onto the stack.',
+            arguments: [
+                { name: 'urlOptions', type: 'Object', description: 'An object containing url and title properties.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'go',
+            description: 'Move the current stack frame forward or back the specified number of frames, triggering the browser.go document event.',
+            arguments: [
+                { name: 'frameCount', type: 'Number' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'update',
+            description: 'Move the current stack frame forward or back the specified number of frames, WITHOUT triggering the browser.go document event.',
+            arguments: [
+                { name: 'frameCount', type: 'Number' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'dispose',
+            description: 'Clean up resources used by the History object.',
+            returns: 'undefined'
+        }
+    ]
+};
+
+// Panes/Content/Reference/Types/Loader.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Loader' };
+Reference.Types.Loader = {
+    name: 'TC.Types.Loader',
+    description: 'Ensures URLs are only loaded once. Concurrent requests return the same promise. The actual loading of resources is performed by specific LoadHandlers.',
+    functions: [
+        {
+            name: 'get',
+            description: 'Load the specified URL using the LoadHandler that corresponds with the file extension. Returns the result of executing the LoadHandler, usually a jQuery.Deferred.',
+            arguments: [
+                { name: 'url', type: 'String', description: 'The URL to load.' },
+                { name: 'resourcePath', type: 'String', description: 'The resource path to pass to the LoadHandler.' },
+                { name: 'context', type: 'Any', description: 'A context object to pass to the LoadHandler.' }
+            ],
+            returns: 'jQuery.Deferred'
+        }
+    ]
+};
+
+// Panes/Content/Reference/Types/Logger.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Logger' };
+Reference.Types.Logger = {
+    name: 'TC.Types.Logger',
+    description: 'Provides a unified API for logging functionality',
+    functions: [
+        {
+            name: 'debug',
+            description: '',
+            arguments: [
+                { name: 'message', type: 'String' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'info',
+            description: '',
+            arguments: [
+                { name: 'message', type: 'String' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'warn',
+            description: '',
+            arguments: [
+                { name: 'message', type: 'String' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'error',
+            description: '',
+            arguments: [
+                { name: 'message', type: 'String' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'setLogLevel',
+            description: '',
+            arguments: [
+                { name: 'level', type: 'Number', description: 'Number corresponding with the desired log level - 0 = debug, 4 = none.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'setLogger',
+            description: 'Set the underlying logging mechanism registed in the TC.Loggers collection. Default is \'console\'.',
+            arguments: [
+                { name: 'newLogger', type: 'String' }
+            ],
+            returns: 'undefined'
+        }
+    ]
+};
+
+// Panes/Content/Reference/Types/Models.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Models' };
+Reference.Types.Models = {
+    name: 'TC.Types.Models',
+    description: 'Managed collection of pane models.',
+    functions: [
+        {
+            name: 'register',
+            description: 'Register a model model with the collection. Registered models can be accessed as properties on the collection, keyed by resource path.',
+            arguments: [
+                { name: 'resourcePath', type: 'String', description: 'Associated pane path.' },
+                { name: 'constructor', type: 'Function', description: 'Constructor function for the model.' },
+                { name: 'options', type: 'Object', description: 'Options hashtable to store with the model.' }
+            ],
+            returns: ''
+        }
+    ]
+};
+
+// Panes/Content/Reference/Types/Node.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Node' };
+Reference.Types.Node = {
+    name: 'TC.Types.Node',
+    description: 'A Node object is a placeholder for a pane within the UI structure. Nodes can be transitioned to display different panes using the navigate or transitionTo functions.',
+    constructor: {
+        arguments: [
+            { name: 'parent', type: 'TC.Types.Node' },
+            { name: 'pane', type: 'TC.Types.Pane' }
+        ]
+    },
+    functions: [
+        {
+            name: 'navigate',
+            description: 'Find the navigation node for the current node and transition it to the specified pane, updating the history stack.',
+            arguments: [
+                { name: 'pathOrPane', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
+                { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'navigateBack',
+            description: 'Find the navigation node for the current node and transition it to the previous pane in the history stack.',
+            returns: 'undefined'
+        },
+        {
+            name: 'findNavigation',
+            description: 'Find the node that handles navigation for the current node. Usually the closest parent that has been marked with handlesNavigation, unless overridden.',
+            returns: 'TC.Types.Navigation'
+        },
+        {
+            name: 'transitionTo',
+            description: 'Transition the pane for the current node to the specified pane.',
+            arguments: [
+                { name: 'paneOptions', type: 'Object', description: 'An object containined path and data properties.' },
+                { name: 'transition', type: 'String', description: 'The transition to use.' },
+                { name: 'reverse', type: 'Boolean', description: 'Use the reverse transition.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'setPane',
+            description: 'Sets the pane on the current node.',
+            arguments: [
+                { name: 'pane', type: 'TC.Types.Pane' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'nodeForPath',
+            description: 'Find the node to use for inheriting paths from.',
+            returns: 'TC.Types.Node'
+        },
+        {
+            name: 'dispose',
+            description: 'Clean up resources used by the node.',
+            returns: 'undefined'
+        }
+    ],
+    properties: [
+        {
+            name: 'parent',
+            type: 'TC.Types.Node'
+        },
+        {
+            name: 'children',
+            type: '[TC.Types.Node]'
+        },
+        {
+            name: 'root',
+            description: 'The root node of the current node tree.',
+            type: 'TC.Types.Node'
+        },
+        {
+            name: 'id',
+            description: 'A unique numeric identifier for the current node.',
+            type: 'Number'
+        },
+        {
+            name: 'pane',
+            type: 'TC.Types.Pane'
+        },
+        {
+            name: 'navigation',
+            description: 'The Navigation object for the current node, if any.',
+            type: 'TC.Types.Navigation'
+        },
+        {
+            name: 'defaultNavigation',
+            description: 'The default Navigation object to use for the current node. Set on the root node so that all nodes in the tree can access the navigation node.',
+            type: 'TC.Types.Node'
+        }
+    ]
+};
+
+// Panes/Content/Reference/Types/Operation.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Operation' };
+Reference.Types.Operation = {
+    name: 'TC.Types.Operation',
+    description: 'Encapsulates an operation involving several child operations, keyed by an id. Child operations can be added cumulatively. Promise resolves when the all child operations complete.',
+    functions: [
+        {
+            name: 'add',
+            description: 'Add an id corresponding with a child operation',
+            arguments: [
+                { name: 'id', type: 'Any' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'complete',
+            description: 'Mark the specified id is being complete',
+            arguments: [
+                { name: 'id', type: 'Any' }
+            ],
+            returns: 'undefined'
+        }
+    ],
+    properties: [
+        {
+            name: 'promise',
+            description: 'The promise object representing the state of the operation.',
+            type: 'jQuery.Deferred'
+        },
+    ]
+};
+
+// Panes/Content/Reference/Types/Pane.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Pane' };
+Reference.Types.Pane = {
+    name: 'TC.Types.Pane',
+    description: 'A pane is a single user interface component within an application. It can consist of a HTML template, a JavaScript model and a CSS stylesheet. Panes can be nested within other panes.',
+    constructor: {
+        arguments: [
+            { name: 'options', type: 'Object', description: 'Hashtable of options for the pane.' }
+        ]
+    },
+    functions: [
+        {
+            name: 'navigate',
+            description: 'Navigate the node containing the pane to the specified pane.',
+            arguments: [
+                { name: 'pathOrPane', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
+                { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'remove',
+            description: 'Remove the pane from the DOM.',
+            returns: 'undefined'
+        },
+        {
+            name: 'find',
+            description: 'Find elements contained within the pane.',
+            arguments: [
+                { name: 'selector', type: 'selector' }
+            ],
+            returns: 'jQuery'
+        },
+        {
+            name: 'inheritPathFrom',
+            description: 'If the pane\'s current path is relative, inherit the absolute path from the specified node.',
+            arguments: [
+                { name: 'node', type: 'TC.Types.Node' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'startRender',
+            description: 'Adds a CSS class to identify the pane as currently being rendered.',
+            returns: 'undefined'
+        },
+        {
+            name: 'endRender',
+            description: 'Remvoes the CSS class used to identify the pane as currently being rendered.',
+            returns: 'undefined'
+        },
+        {
+            name: 'dispose',
+            description: 'Clean up resources used by the pane.',
+            returns: 'undefined'
+        },
+        {
+            name: 'toString',
+            description: 'Returns a human readable identifier for the pane.',
+            returns: 'String'
+        }
+    ],
+    properties: [
+        {
+            name: 'path',
+            type: 'String'
+        },
+        {
+            name: 'data',
+            type: 'Any'
+        },
+        {
+            name: 'element',
+            type: 'HTMLElement'
+        },
+        {
+            name: 'transition',
+            description: 'Transition to use when the pane is rendered and removed.',
+            type: ''
+        },
+        {
+            name: 'reverseTransitionIn',
+            description: 'Use the reverse transition when rendering.',
+            type: ''
+        },
+        {
+            name: 'handlesNavigation',
+            description: 'The pane has been marked as handling navigation.',
+            type: ''
+        },
+        {
+            name: 'pubsub',
+            type: 'Tribe.PubSub'
+        },
+        {
+            name: 'id',
+            type: 'Any'
+        },
+        {
+            name: 'skipPath',
+            description: 'Skip this pane when determining the parent path to inherit from.',
+            type: 'Boolean'
+        },
+        {
+            name: 'is.rendered',
+            description: '',
+            type: ''
+        },
+        {
+            name: 'is.disposed',
+            description: '',
+            type: ''
+        },
+    ]
+};
+
+// Panes/Content/Reference/Types/Pipeline.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Pipeline' };
+Reference.Types.Pipeline = {
+    name: 'TC.Types.Pipeline',
+    description: 'Manages the step by step execution of a number of named events. Each step will only execute after the promise returned by the previous step resolves. A rejected promise will halt execution of the pipeline.',
+    constructor: {
+        arguments: [
+            { name: 'events', type: 'Object', description: 'Hashtable of event handler functions, keyed by the event name.' },
+            { name: 'context', type: 'Any', description: 'Context data that is passed to each event function.' }
+        ]
+    },
+    functions: [
+        {
+            name: 'execute',
+            description: 'Execute the specified events against the specified target.',
+            arguments: [
+                { name: 'eventsToExecute', type: '[String]', description: 'Ordered array of events to execute against the target.' },
+                { name: 'target', type: 'Object', description: 'Target object to pass to each event handler function.' }
+            ],
+            returns: 'jQuery.Deferred'
+        }
+    ]
+};
+
+// Panes/Content/Reference/Types/Saga.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Saga' };
+Reference.Types.Saga = {
+    name: 'TC.Types.Saga',
+    description: 'Manages a long running process by maintaining state and handling specific messages.',
+    constructor: {
+        arguments: [
+            { name: 'pane', type: 'TC.Types.Pane', description: 'A Pane object to serve as the saga\'s "parent". The lifetime of the saga is tied to the pane.' },
+            { name: 'handlers', type: 'Object', description: 'A hashtable of message handlers, keyed by the message topic.' },
+            { name: 'initialData', type: 'Any', description: 'Initial value for the saga\'s data property.' }
+        ]
+    },
+    functions: [
+        {
+            name: 'start',
+            description: 'Subscribes provided message handlers to messages published on the pane\'s pubsub engine.',
+            returns: 'undefined'
+        },
+        {
+            name: 'startChild',
+            description: 'Starts a new saga. The lifetime of the new saga is bound to the current saga.',
+            arguments: [
+                { name: 'childHandlers', type: 'Object', description: 'A hashtable of message handlers, keyed by the message topic.' },
+                { name: 'childData', type: 'Any', description: 'Initial value for the saga\'s data property.' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'end',
+            description: 'Unsubscribes message handlers for this and all child sagas.',
+            returns: 'undefined'
+        }
+    ],
+    properties: [
+        { name: 'pubsub', type: 'Tribe.PubSub' },
+        { name: 'pane', type: 'TC.Types.Pane' },
+        { name: 'data', type: 'Any' },
+        { name: 'children', type: '[TC.Types.Saga]' }
+    ]
+};
+
+// Panes/Content/Reference/Types/Templates.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Templates' };
+Reference.Types.Templates = {
+    name: 'TC.Types.Templates',
+    description: 'Managed collection of HTML templates.',
+    functions: [
+        {
+            name: 'store',
+            description: 'Store the specified template, keyed by the specified path',
+            arguments: [
+                { name: 'template', type: 'String' },
+                { name: 'path', type: 'String' }
+            ],
+            returns: 'undefined'
+        },
+        {
+            name: 'loaded',
+            description: 'Checks whether the template for the specified path has been loaded',
+            arguments: [
+                { name: 'path', type: 'String' }
+            ],
+            returns: 'Boolean'
+        },
+        {
+            name: 'render',
+            description: 'Render the template for the specified path to the specified target',
+            arguments: [
+                { name: 'target', type: 'selector' },
+                { name: 'path', type: 'string' }
+            ],
+            returns: 'undefined'
+        }
+    ]
+};
+
+// Panes/Content/Reference/Utilities/collections.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/collections' };
+Reference.Utilities.Collections = [
+    { name: 'TC.Utils.each', description: '', arguments: [{ name: 'collection' }, { name: 'iterator' }] },
+    { name: 'TC.Utils.map', description: '', arguments: [{ name: 'collection' }, { name: 'iterator' }] },
+    { name: 'TC.Utils.reduce', description: '', arguments: [{ name: 'collection' }, { name: 'initialValue' }, { name: 'iterator' }] },
+    { name: 'TC.Utils.filter', description: '', arguments: [{ name: 'array' }, { name: 'iterator' }] },
+    { name: 'TC.Utils.pluck', description: '', arguments: [{ name: 'array' }, { name: 'iterator' }] }
+];
+
+// Panes/Content/Reference/Utilities/embeddedState.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/embeddedState' };
+Reference.Utilities.EmbeddedState = [
+    { name: 'TC.Utils.embedState', description: '', arguments: [{ name: 'model' }, { name: 'context' }, { name: 'node' }] },
+    { name: 'TC.Utils.contextFor', description: '', arguments: [{ name: 'element' }] },
+    { name: 'TC.Utils.extractContext', description: '', arguments: [{ name: 'koBindingContext' }] },
+    { name: 'TC.Utils.extractNode', description: '', arguments: [{ name: 'koBindingContext' }] }
+];
+
+// Panes/Content/Reference/Utilities/events.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/events' };
+Reference.Utilities.Events = [
+    { name: 'TC.Utils.elementDestroyed', description: '', arguments: [{ name: 'element' }], returns: 'jQuery.Deferred' },
+    { name: 'TC.Utils.raiseDocumentEvent', description: '', arguments: [{ name: 'name' }, { name: 'data' }] },
+    { name: 'TC.Utils.handleDocumentEvent', description: '', arguments: [{ name: 'name' }, { name: 'handler' }] },
+    { name: '$.complete', description: '', arguments: [{ name: 'deferreds' }] },
+    { name: 'jQuery.Event("destroyed")' }
+];
+
+
+// Panes/Content/Reference/Utilities/misc.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/misc' };
+Reference.Utilities.Misc = [
+    { name: 'TC.Utils.try', description: '', arguments: [{ name: 'func' }, { name: 'args' }, { name: 'handleExceptions' }, { name: 'message' }] },
+    { name: 'TC.Utils.idGenerator', description: '', returns: '{ next: function() }' },
+    { name: 'TC.Utils.getUniqueId', description: '' },
+    { name: 'TC.Utils.cleanElement', description: '', arguments: [{ name: 'element' }] }
+];
+
+
+// Panes/Content/Reference/Utilities/objects.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/objects' };
+Reference.Utilities.Objects = [
+    { name: 'TC.Utils.arguments', description: '', arguments: [{ name: 'args' }] },
+    { name: 'TC.Utils.removeItem', description: '', arguments: [{ name: 'array' }, { name: 'item' }] },
+    { name: 'TC.Utils.inheritOptions', description: '', arguments: [{ name: 'from' }, { name: 'to' }, { name: 'options' }] },
+    { name: 'TC.Utils.evaluateProperty', description: '', arguments: [{ name: 'target' }, { name: 'property' }] }
+];
+
+
+// Panes/Content/Reference/Utilities/packScript.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/packScript' };
+Reference.Utilities.PackScript = [
+];
+
+// Panes/Content/Reference/Utilities/panes.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/panes' };
+Reference.Utilities.Panes = [
+    {
+        name: 'TC.Utils.getPaneOptions',
+        description: 'Normalise the passed value and merge the other options.',
+        arguments: [{ name: 'value' }, { name: 'otherOptions' }]
+    },
+    {
+        name: 'TC.Utils.bindPane',
+        description: 'Load and bind the pane specified in paneOptions to the specified element and link it to the specified node.',
+        arguments: [{ name: 'node' }, { name: 'element' }, { name: 'paneOptions' }, { name: 'context' }]
+    },
+    {
+        name: 'TC.Utils.insertPaneAfter',
+        description: 'As bindPane, but create a new DIV element and insert it after the specified target.',
+        arguments: [{ name: 'node' }, { name: 'target' }, { name: 'paneOptions' }, { name: 'context' }]
+    }
+];
+
+// Panes/Content/Reference/Utilities/paths.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/paths' };
+Reference.Path = [
+    {
+        name: 'TC.Path',
+        description: 'The Path function accepts a string containing a path, normalises the path and returns an object with several manipulation functions attached.',
+        arguments: [{ name: 'path', type: 'String' }],
+        returns: 'TC.Path',
+        examples: [{
+            description: 'Most functions can be chained',
+            code: "TC.Path('Folder').makeAbsolute().combine('file.ext').withoutExtension().toString()",
+            result: '/Folder/file'
+        }]
+    }
+];
+
+Reference.Path.Functions = [
+    { name: 'withoutFilename', description: '', returns: 'TC.Path' },
+    { name: 'filename', description: '', returns: 'TC.Path' },
+    { name: 'extension', description: '', returns: 'String' },
+    { name: 'withoutExtension', description: '', returns: 'TC.Path' },
+    { name: 'combine', description: '', arguments: [{ name: 'additionalPath' }], returns: 'TC.Path' },
+    { name: 'isAbsolute', description: '', returns: 'Boolean' },
+    { name: 'makeAbsolute', description: '', returns: 'TC.Path' },
+    { name: 'makeRelative', description: '', returns: 'TC.Path' },
+    { name: 'asMarkupIdentifier', description: '', returns: 'String' },
+    { name: 'setExtension', description: '', arguments: [{ name: 'extension' }], returns: 'TC.Path' },
+    { name: 'toString', description: '', returns: 'String' }
+];
+
+// Panes/Interface/content.js
+TC.scriptEnvironment = { resourcePath: '/Interface/content' };
+TC.registerModel(function (pane) {
+    this.panePath = panePath(pane.data);
+
+    this.renderComplete = function() {
+        pane.find('pre').each(function() {
+            $(this).html(PR.prettyPrintOne($(this).html()));
+        });
+    };
+
+    pane.pubsub.subscribe('article.show', function (article) {
+        $(pane.element).css({ 'width': '100%' });
+        pane.navigate({ path: '/Interface/content', data: article });
+    });
+    
+    function panePath(article) {
+        return '/Content/' + article.section + '/' + article.topic;
+    }
+});
+
+// Panes/Interface/header.js
+TC.scriptEnvironment = { resourcePath: '/Interface/header' };
+TC.registerModel(function (pane) {
+    window.addEventListener('navigating', navigating);
+    function navigating(e) {
+        if (Navigation.isHome(e.data.options.data))
+            hide();
+        else
+            show();
+    }
+
+    this.renderComplete = function() {
+        if (!Navigation.isHome(pane.node.findNavigation().node.pane.data))
+            show();
+    };
+
+    function show() {
+        if (!$('.header .logo').is(':visible'))
+            TC.transition('.header .logo', 'fade').in();
+    }
+
+    function hide() {
+        if ($('.header .logo').is(':visible'))
+            TC.transition('.header .logo', 'fade').out(false);
+    }
+
+    this.dispose = function () {
+        window.removeEventListener('navigating', navigating);
+    };
+});
+
+// Panes/Interface/navigation.js
+TC.scriptEnvironment = { resourcePath: '/Interface/navigation' };
+TC.registerModel(function (pane) {
+    var self = this;
+    var currentSection;
+
+    this.items = ko.observableArray();
+    this.selectedTopic = ko.observable();
+    this.selectedParent = ko.computed(function () {
+        var topic = self.selectedTopic();
+        if (!topic) return null;
+        var index = topic.indexOf('/');
+        return index == -1 ? topic :
+            topic.substr(0, index);
+    });
+
+    this.showSection = function (item) {
+        self.selectedTopic(item.topic);
+    };
+
+    this.showArticle = function (item) {
+        self.selectedTopic(item.topic);
+        pane.pubsub.publish('article.show', { section: currentSection, topic: item.topic });
+    };
+
+    // it would be nice to use the article.show message for this,
+    // but that won't work with browser back and forward buttons
+    window.addEventListener('navigating', navigating);
+    function navigating(e) {
+        var data = e.data.options.data || {};
+        updateCurrentArticle(data);
+    }
+    
+    // this is to handle bookmarks / refresh
+    // need to come up with a better way of doing this
+    this.renderComplete = function() {
+        updateCurrentArticle(pane.node.findNavigation().node.pane.data);
+    };
+
+    function updateCurrentArticle(data) {
+        if (data.section && data.topic) {
+            self.selectedTopic(data.topic);
+
+            if (currentSection !== data.section) {
+                currentSection = data.section;
+                var items = mapNavigation(data.section);
+                if (items.length > 0) {
+                    self.items(items);
+                    show();
+                } else
+                    hide();
+            }
+        }
+    }
+
+    function show() {
+        if (!$('.navigation').is(':visible'))
+            TC.transition('.navigation', 'slideRight').in();
+    }
+
+    function hide() {
+        if ($('.navigation').is(':visible'))
+            TC.transition('.navigation', 'slideLeft').out(false);
+    }
+
+    this.dispose = function () {
+        window.removeEventListener('navigating', navigating);
+    };
+
+    // maps the cleaner API navigation structure into a structure suitable for data bindings. could be refactored out.
+    function mapNavigation(section) {
+        return TC.Utils.map(Navigation[section], function (item, key) {
+            return {
+                displayText: key,
+                section: section,
+                key: key,
+                topic: key + '/index',
+                items: mapChildItems(key, item)
+            };
+        });
+    }
+
+    function mapChildItems(parentKey, container) {
+        return TC.Utils.map(container, function (item, key) {
+            return {
+                displayText: key,
+                topic: parentKey + '/' + item
+            };
+        });
+    }
+});
+
+// Panes/Interface/navigationContainer.js
+TC.scriptEnvironment = { resourcePath: '/Interface/navigationContainer' };
+TC.registerModel(function (pane) {
+    pane.node.skipPath = true;
+    pane.node.root = pane.node;
+
+    var currentFrame = 0;
+    this.initialPane = pane.data.frames[currentFrame];
+    this.atStart = ko.observable(true);
+    this.atEnd = ko.observable(false);
+
+    this.back = function() {
+        pane.navigateBack();
+        currentFrame--;
+        this.atEnd(false);
+        this.atStart(currentFrame === 0);
+    };
+
+    this.next = function() {
+        pane.navigate(pane.data.frames[++currentFrame]);
+        this.atEnd(currentFrame === pane.data.frames.length - 1);
+        this.atStart(false);
+    };
+    
+    
+});
+
+// Panes/Interface/sample.js
+TC.scriptEnvironment = { resourcePath: '/Interface/sample' };
+TC.registerModel(function (pane) {
+    var self = this;
+    var data = pane.data || {};
+    var rootPane = data.rootPane || 'layout';
+
+    // this is a hack to make samples navigate as if they were the root pane
+    pane.node.root = pane.node;
+
+    this.samplePane = rootPane.constructor === String ? 
+        '/Samples/' + data.name + '/' + rootPane : rootPane;
+    this.files = Samples[pane.data.name];
+    this.selectedFile = ko.observable(initialSelection());
+    
+    this.selectFile = function(file) {
+        self.selectedFile(file);
+        PR.prettyPrint();
+    };
+
+    this.renderComplete = function() {
+        PR.prettyPrint();
+    };
+    
+    function initialSelection() {
+        if (!pane.data.initialFile)
+            return self.files[0];
+        for(var i = 0; i < self.files.length; i++)
+            if (self.files[i].filename === pane.data.initialFile)
+                return self.files[i];
+    }
+});
+
+// Panes/Interface/API/constructor.js
+TC.scriptEnvironment = { resourcePath: '/Interface/API/constructor' };
+TC.registerModel(function (pane) {    
+    this.func = $.extend({ name: 'new ' + pane.data.name }, pane.data.constructor);
+});
+
+// Panes/Interface/API/function.js
+TC.scriptEnvironment = { resourcePath: '/Interface/API/function' };
+TC.registerModel(function(pane) {
+    this.f = pane.data;
+
+    this.argumentNames = TC.Utils.pluck(pane.data.arguments, 'name').join(', ');
+});
+
+// Panes/Interface/API/type.js
+TC.scriptEnvironment = { resourcePath: '/Interface/API/type' };
+TC.registerModel(function(pane) {
+    this.t = pane.data;
+});
+
+// Panes/Samples/mobile.js
+TC.scriptEnvironment = { resourcePath: '/Samples/mobile' };
+TC.registerModel(function(pane) {
+    TMH.initialise(pane.pubsub, 'signalr');
+    TMH.joinChannel('chat', { serverEvents: ['chat.*'] });
+});
+
+// Panes/Samples/About/Chat/chat.js
+TC.scriptEnvironment = { resourcePath: '/Samples/About/Chat/chat' };
+TC.registerModel(function (pane) {
+    // Hook up our message hub and join a channel
+    TMH.initialise(pane.pubsub);
+    TMH.joinChannel('chat', {
+         serverEvents: ['chat.*']
+    });
+
+    // The dispose function is called automatically
+    // when the pane is removed from the DOM.
+    this.dispose = function() {
+        TMH.leaveChannel('chat');
+    };
+});
+
+// Panes/Samples/About/Chat/messages.js
+TC.scriptEnvironment = { resourcePath: '/Samples/About/Chat/messages' };
+TC.registerModel(function(pane) {
+    var self = this;
+
+    this.messages = ko.observableArray();
+
+    pane.pubsub.subscribe('chat.message',
+        function (message) {
+            self.messages.push(message);
+        });
+});
+
+// Panes/Samples/About/Chat/sender.js
+TC.scriptEnvironment = { resourcePath: '/Samples/About/Chat/sender' };
+TC.registerModel(function(pane) {
+    var self = this;
+
+    this.name = ko.observable('Anonymous');
+    this.message = ko.observable();
+
+    this.send = function() {
+        pane.pubsub.publish('chat.message', {
+            name: self.name(),
+            message: self.message()
+        });
+        self.message('');
+    };
+});
+
+// Panes/Samples/About/Mobile/samples.js
+TC.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/samples' };
+TC.registerModel(function (pane) {
+    TC.toolbar.title('Title!');
+    
+    TC.toolbar.options([
+        { text: 'Option 1', func: function () { } },
+        { text: 'Option 2', func: function () { } }
+    ]);
+
+    this.listData = {
+        items: [
+            { id: 1, name: 'Item 1' },
+            { id: 2, name: 'Item 2' }
+        ],
+        itemText: function(item) {
+             return item.id + ' - ' + item.name;
+        },
+        headerText: 'Select List',
+        itemClick: function(item) { }
+    };
+
+    this.overlay = function() {
+        TC.overlay('overlay');
+    };
+
+    this.navigate = function() {
+        pane.navigate('navigate');
+    };
+});
+
+// Panes/Samples/About/Mobile/welcome.js
+TC.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/welcome' };
+TC.registerModel(function (pane) {
+    TC.toolbar.defaults.back = true;
+
+    this.samples = function() {
+        pane.navigate('samples');
+    };
+
+    this.chat = function () {
+        pane.navigate('chat');
+    };
+});
+
+// Panes/Samples/About/Tasks/create.js
+TC.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/create' };
+// Declare model constructors using this simple function.
+// Tribe creates an instance and binds it to the template.
+
+TC.registerModel(function (pane) {
+    var self = this;
+    
+    this.task = ko.observable();
+    
+    this.create = function() {
+        pane.pubsub.publish('task.create', self.task());
+        self.task('');
+    };
+});
+
+// Panes/Samples/About/Tasks/list.js
+TC.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/list' };
+TC.registerModel(function(pane) {
+    var self = this;
+
+    this.tasks = ko.observableArray(['Sample task']);
+
+    // Using messages decouples your components.
+    // Tribe cleans up subscriptions automatically.
+    pane.pubsub.subscribe('task.create', function(task) {
+        self.tasks.push(task);
+    });
+
+    pane.pubsub.subscribe('task.delete', function (task) {
+        var index = self.tasks.indexOf(task);
+        self.tasks.splice(index, 1);
+    });
+});
+
+// Panes/Samples/About/Tasks/task.js
+TC.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/task' };
+TC.registerModel(function(pane) {
+    var self = this;
+
+    this.task = pane.data;
+    
+    this.deleteTask = function() {
+        pane.pubsub.publish('task.delete', self.task);
+    };
+});
+
+// Panes/Samples/Panes/Communicating/layout.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/layout' };
+TC.registerModel(function (pane) {
+    // Create an observable to share between child panes
+    this.observable = ko.observable('Test');
+});
+
+// Panes/Samples/Panes/Communicating/receiver.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/receiver' };
+TC.registerModel(function(pane) {
+    var self = this;
+
+    // Our shared observable
+    this.observable = pane.data;
+    
+    // Listen for messages and push them onto 
+    // an array as they arrive
+    this.messages = ko.observableArray();
+    pane.pubsub.subscribe('sample.message', function (data) {
+        self.messages.push(data);
+    });
+});
+
+// Panes/Samples/Panes/Communicating/sender.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/sender' };
+TC.registerModel(function (pane) {
+    var self = this;
+    
+    // Our shared observable
+    this.observable = pane.data;
+    
+    // The pubsub object is available through the pane object.
+    this.message = ko.observable();
+    this.send = function() {
+        pane.pubsub.publish('sample.message',
+            { message: self.message() });
+    };
+});
+
+// Panes/Samples/Panes/Creating/helloWorld.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Creating/helloWorld' };
+TC.registerModel(function (pane) {
+    // Model properties are available for 
+    // data binding in your template.
+    this.message = "Message passed: " + pane.data.message;
+});
+
+// Panes/Samples/Panes/Dynamic/create.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Dynamic/create' };
+TC.registerModel(function (pane) {
+    var i = 0;
+    
+    // Dynamically insert a pane into the element
+    // with its class set to "items".
+    this.createPane = function() {
+        TC.appendNode('.items', { path: 'item', data: ++i });
+    };
+});
+
+// Panes/Samples/Panes/Lifecycle/create.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Lifecycle/create' };
+TC.registerModel(function (pane) {
+    var i = 0;
+    
+    this.createPane = function() {
+        TC.appendNode(pane.find('.items'),
+            { path: 'item', data: ++i });
+    };
+});
+
+// Panes/Samples/Panes/Lifecycle/item.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Lifecycle/item' };
+TC.registerModel(function (pane) {
+    this.data = pane.data;
+
+    // The initialise function is called before the pane
+    // is rendered. If you return a jQuery deferred object,
+    // Tribe will wait for it to resolve before continuing.
+    
+    this.initialise = function() {
+        var promise = $.Deferred();
+        setTimeout(promise.resolve, 500);
+        return promise;
+    };
+});
+
+// Panes/Samples/Panes/Navigating/first.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/first' };
+TC.registerModel(function(pane) {
+    this.next = function() {
+        pane.navigate('second');
+    };
+});
+
+// Panes/Samples/Panes/Navigating/second.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/second' };
+TC.registerModel(function(pane) {
+    this.back = function () {
+        pane.navigateBack();
+    };
+
+    this.next = function () {
+        pane.navigate('third');
+    };
+});
+
+// Panes/Samples/Panes/Navigating/third.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/third' };
+TC.registerModel(function(pane) {
+    this.back = function() {
+        pane.navigateBack();
+    };
+});
+
+// Panes/Samples/Webmail/1-Folders/folders.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/1-Folders/folders' };
+// Our model just contains a list of folders and
+// an observable to hold the selected folder.
+
+TC.registerModel(function (pane) {
+    this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    this.selectedFolder = ko.observable('Inbox');
+});
+
+// Panes/Samples/Webmail/2-Mails/folders.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/folders' };
+TC.registerModel(function (pane) {
+    var self = this;
+    
+    this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    this.selectedFolder = ko.observable(pane.data.folder);
+
+    // We've added a separate click handler to navigate
+    // when a folder is selected.
+    this.selectFolder = function (folder) {
+        self.selectedFolder(folder);
+        pane.navigate('mails', { folder: folder });
+    };
+});
+
+// Panes/Samples/Webmail/2-Mails/mails.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/mails' };
+TC.registerModel(function (pane) {
+    var self = this;
+
+    this.data = ko.observable();
+
+    // Load data using AJAX to our data property    
+    this.initialise = function() {
+        $.getJSON('Data/folder/' + pane.data.folder, self.data);
+    };
+});
+
+// Panes/Samples/Webmail/3-Content/folders.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/folders' };
+TC.registerModel(function (pane) {
+    var self = this;
+
+    this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    this.selectedFolder = ko.observable(pane.data.folder);
+
+    this.selectFolder = function (folder) {
+        self.selectedFolder(folder);
+        pane.navigate('mails', { folder: folder });
+    };
+});
+
+// Panes/Samples/Webmail/3-Content/mails.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/mails' };
+TC.registerModel(function (pane) {
+    var self = this;
+
+    this.data = ko.observable();
+
+    this.initialise = function () {
+        $.getJSON('Data/folder/' + pane.data.folder, self.data);
+    };
+    
+    this.selectMail = function (mail) {
+        pane.navigate('viewMail', mail);
+    };
+});
+
+// Panes/Samples/Webmail/3-Content/viewMail.js
+TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/viewMail' };
+TC.registerModel(function (pane) {
+    var self = this;
+    
+    this.data = ko.observable();
+
+    this.initialise = function () {
+        $.getJSON('Data/mail/' + pane.data.id, self.data);
+    };
+});
+
 $('head')
-    .append('<script type="text/template" id="template--Content-About-example1"><div class="example1 block">\n    <h1>Show Me!</h1>\n    \n    <p>\n        If you\'re not familiar with knockout, we recommend you have a quick \n        run through the excellent tutorials at\n        <a href="http://learn.knockoutjs.com/" target="_blank">http://learn.knockoutjs.com/</a>.        \n    </p>\n    <p>\n        Tribe allows you to easily break your UI down into "panes" that can consist \n        of a JavaScript model, HTML template and CSS stylesheet. \n    </p>\n    <p>\n        Simply create these files and refer to the pane by name. No complex configuration required.\n    </p>\n\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'About/Tasks\', initialFile: \'layout.htm\' }"></div>\n    \n    <p>\n        Tribe gives you an awesome debugging experience. Using the developer tools built in to Google Chrome, \n        your file structure is preserved and each individual JavaScript file is fully debuggable.\n    </p>\n    <p>\n        Head over to the <a href="debug.html">debug version</a> of the site and check out the "Sources" tab\n        in the developer tools.\n    </p>\n    <p>\n        For more practical examples, check out the \n        <a data-bind="click: Article.show(\'Guides\', \'Guides/webmail\')">webmail tutorial</a>, or the \n        <a href="https://github.com/danderson00/Tribe" target="_blank">source</a> \n        to this site.\n    </p>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-About-example1"><div class="example1 block">\n    <h1>Show Me!</h1>\n    \n    <p>\n        If you\'re not familiar with knockout, we recommend you have a quick \n        run through the excellent tutorials at\n        <a href="http://learn.knockoutjs.com/" target="_blank">http://learn.knockoutjs.com/</a>.        \n    </p>\n    <p>\n        Tribe allows you to easily break your UI down into "panes" that can consist \n        of a JavaScript model, HTML template and CSS stylesheet. \n    </p>\n    <p>\n        Simply create these files and refer to the pane by name. No complex configuration is required.\n    </p>\n\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'About/Tasks\', initialFile: \'layout.htm\' }"></div>\n    \n    <p>\n        Tribe gives you an awesome debugging experience. Using the developer tools built in to Google Chrome, \n        your file structure is preserved and each individual JavaScript file is fully debuggable.\n    </p>\n    <p>\n        To see this in action, head over to the <a href="debug.html">debug version</a> of the site using\n        Chrome and check out the "Sources" tab in the developer tools.\n    </p>\n    <p>\n        For more practical examples, check out the \n        <a data-bind="click: Article.show(\'Guides\', \'Guides/webmail\')">webmail tutorial</a>, or the \n        <a href="https://github.com/danderson00/Tribe" target="_blank">source</a> \n        to this site.\n    </p>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-About-example2"><div class="example2 block">\n    <h1>Seamless, Real Time Communication</h1>\n    \n    <p>Connect your users in real time with just a few lines of code - messages you publish are seamlessly broadcast to other users or internal services.</p>\n\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'About/Chat\', initialFile: \'chat.js\', rootPane: \'chat\' }"></div>\n</div></script>');
 $('head')
@@ -688,13 +2168,27 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the TC.options object.</p>\n    <pre class="example">TC.options.basePath = \'Panes\';</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>splitScripts</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Split loaded scripts on each sourceURL tag and execute individually</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n\n    <p>TIP: When running from a local filesystem, Google Chrome must be launched with the --allow-file-access-from-files option to load adhoc panes.</p>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n\n    <p>TIP: When running from a local filesystem and loading ad-hoc panes, Google Chrome must be launched with the --allow-file-access-from-files option.</p>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-transitions"><div class="content block">\n    <h1>Transitions</h1>\n\n    <p>Use the TC.transition function to perform transitions:</p>\n    <div data-bind="pane: \'/Interface/API/function\', data: Reference.Transition"></div>\n\n    <p>The returned object can be used to transition the target in, out or to another pane:</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.Transition.Functions }"></div>\n\n    <div class="child">\n        <h1>Examples</h1>\n\n        <p>Fade the first element with a class of "target" out of view and remove it from the DOM</p>\n        <pre class="example">\n    TC.transition(\'.target\', \'fade\').out();</pre>\n\n        <p>Transition the node containing the element with a class of "target" to a new pane</p>\n        <pre class="example">\n    TC.transition(TC.nodeFor(\'.target\')).to(\'path/to/pane\');</pre>\n\n        <p>This can also be expressed as:</p>\n        <pre class="example">\n    TC.nodeFor(\'.target\').transitionTo(\'path/to/pane\');</pre>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-MessageHub-client"><div class="content block">\n    <h1>MessageHub Client API</h1>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.MessageHub }"></div>\n    <div class="child">\n        <h1>joinChannel Options</h1>\n        <p>An object containing any of the following options can be passed to the TMH.joinChannel function.</p>\n        <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.MessageHub.ChannelOptions }"></div>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-MessageHub-configuration"><div class="content block">\n    <h1>MessageHub Server Configuration API</h1>\n    \n    <p>\n        Configuration must start with ConfigureHub.With() followed by a container configuration.\n        Currently only Unity is supported.\n    </p>\n    <pre class="example">\nusing Tribe.MessageHub.Core.Configuration;\nusing Tribe.MessageHub.Containers.Unity;\n\nConfigureHub.With().Unity(container).StartHub();</pre>\n    \n    <p>The following extension methods are then provided, all chainable:</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.MessageHub.Server }"></div>\n    \n    <pre class="example">\nusing Tribe.MessageHub.Core.Configuration;\nusing Tribe.MessageHub.Containers.Unity;\nusing Tribe.MessageHub.ChannelPersisters.SqlServer;\nusing Tribe.MessageHub.Buses.NServiceBus;\n\nConfigureHub.With()\n    .Unity(container)\n    .ChannelAuthoriser&lt;MyChannelAuthoriser>()\n    .SqlServerPersistence("Data Source=.;Initial Catalog=Tribe.Channels;Integrated Security=true")\n    .NServiceBus(bus)\n    .MessagesFrom(typeof(ExampleMessage).Assembly)\n    .StartHub();</pre>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PackScript-builtins"><div class="content block">\n    <h1>Built-in Tribe Functions and Templates</h1>\n    <p>\n        PackScript provides a number of built-in configuration functions and templates to make\n        building and debugging your Tribe applications much easier.\n    </p>\n</div>\n\n<div class="content block">\n    <h1>Building Tribe Applications</h1>\n    \n    <div class="child">\n        <h1>T.panes</h1>\n        <p>The T.panes function </p>\n    </div>\n\n    <div class="child">\n        <h1>T.scripts</h1>\n    </div>\n\n    <div class="child">\n        <h1>T.template</h1>\n    </div>\n</div>\n\n<div class="content block">\n    <h1>Embedding Content in JavaScript</h1>\n\n    <div class="child">\n        <h1>embedCss</h1>\n    </div>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PackScript-includes"><div class="content block">\n    <h1>Including and Excluding Sets of Files</h1>\n    <p>\n        The include and exclude options are available when using the pack, sync or zip commands.\n        Files can be specified as simple string specifications, as an object or an array of both.\n        Options available are:\n    </p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PackScript.includeOptions }"></div>\n    <p>Options such as recursive and template override the values set in the main configuration.</p>\n\n    <h2>Examples</h2>\n    <p>A simple string specification.</p>\n    <pre class="example">\ninclude: \'Scripts/*.js\'</pre>\n\n    <p>As an object that specifies additional options.</p>\n    <pre class="example">\ninclude: { files: \'Templates/*.htm\', template: \'embedTemplate\' }</pre>\n\n    <p>A more complex example.</p>\n    <pre class="example">\npack({\n    to: \'Build/site.js\',\n    include: [\n        { \n            files: \'Scripts/*.js\', \n            template: { name: \'sourceUrl\', data: { prefix: \'/Source/\' } },\n            first: \'intro.js\',\n            last: \'outro.js\',\n            recursive: false\n        }, {\n        { \n            files: \'Templates/*.htm\', \n            template: \'embedTemplate\' \n        }, {\n            files: \'Styles/*.css\',\n            template: \'embedCss\'\n        }\n    ],\n    exclude: \'*.debug.js\',\n    outputTemplate: \'license\',\n    recursive: true,\n    minify: true\n});</pre>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PackScript-operation"><div class="content block">\n    <h1>PackScript</h1>\n    <h2>Operation</h2>\n    <p>\n        PackScript is distributed as a Windows console application. A node.js version will be released in\n        the near future. PackScript binaries can be obtained from \n        <a href="https://github.com/danderson00/PackScript" target="_blank">github</a> and\n        are included in the Tribe <a href="http://danderson00.github.io/Tribe/Tribe.zip">download</a>.\n    </p>\n    \n    <p>\n        PackScript.exe has the following command line syntax:\n    </p>\n\n    <pre>PackScript.exe ["Directory\\To\\Process\\"] [/watch]</pre>\n    \n    <p>If no directory is specified, the current working directory is used.</p>\n    <p>\n        /watch causes PackScript to remain active and keep all output files up to date as files change.\n        The console can also be used to interrogate or execute JavaScript members.\n    </p>\n\n    <h2>Configuration Files</h2>\n    <p>\n        PackScript scans recursively through the target directory structure and finds all files \n        fitting the following specifications:\n    </p>\n    <table>\n        <tbody>\n            <tr>\n                <td>*pack.config.js</td>\n                <td>JavaScript configuration files. These are executed before any other file is processed.</td>\n            </tr>\n            <tr>\n                <td>*pack.js</td>\n                <td>JavaScript configuration files.</td>\n            </tr>\n            <tr>\n                <td>*.template.*</td>\n                <td>These files are loaded as templates and can be accessed by name using the template option.</td>\n            </tr>\n        </tbody>\n    </table>\n    \n    <p>Create output files by executing the following functions in your configuration files:</p>\n    <table class="pointer">\n        <tbody data-bind="foreach: Reference.PackScript.functions">\n            <tr data-bind="click: Article.show(\'Reference\', \'PackScript/\' + name)">\n                <td data-bind="text: name"></td>\n                <td data-bind="text: description"></td>\n            </tr>\n        </tbody>\n    </table>\n\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PackScript-pack"><div class="content block">\n    <h1>pack(options);</h1>\n    <p>\n        The pack function is used to combine and transform sets of files into a single output.\n        The following options can be used:\n    </p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PackScript.pack }"></div>\n\n    <h2>Examples</h2>\n    <pre class="example">\npack({\n    to: \'Build/site.min.js\',\n    include: \'*.js\',\n    exclude: \'debug.js\',\n    minify: true\n});</pre>\n    <p>\n        This example combines all of the JavaScript files in the same directory as the configuration file,\n        minifies the output and writes it to site.min.js in the Build folder.\n    </p>\n\n    <pre class="example">\npack({\n    to: \'Build/site.js\',\n    include: [\n        \'Scripts/*.js\',\n        { files: \'Templates/*.htm\', template: \'embedTemplate\' },\n        { files: \'Styles/*.css\', template: \'embedCss\' }\n    ]\n});</pre>\n    <p>\n        This example combines JavaScript files in the Scripts folder, HTML templates from the Templates\n        folder and CSS files from the Styles folder into a single file. The templates and stylesheets\n        are embedded into the output JavaScript using the built in templates embedTemplate and embedCss.\n    </p>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PackScript-sync"><div class="content block">\n    <h1>sync(options);</h1>\n    <p>\n        The sync function is used to synchronise files from one location to another.\n        The following options can be used:\n    </p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PackScript.sync }"></div>\n\n    <h2>Examples</h2>\n    <pre class="example">\nsync({\n    to: \'Libraries\',\n    include: \'../../Libraries/foo.js\'\n});</pre>\n    <p>This simple example keeps a local copy of foo.js in sync with an external source.</p>\n\n    <pre class="example">\nsync({\n    to: \'Build\',\n    include: [\n        \'Component1/Build/*.js\',\n        \'Component2/Client/Build/*.js\'\n    ],\n    exclude: \'debug.js\',\n    recursive: true\n});</pre>\n    <p>\n        Here, we are keeping a master build folder synchronised with individual components.\n        The folder structure underneath each included path is preserved.\n    </p>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PackScript-templates"><div class="content block">\n    <h1>Templates</h1>\n    <p>\n        PackScript includes powerful templating functionality based on \n        <a href="http://underscorejs.org/#template" target="_blank">underscore.js templates</a>.\n    </p>\n    \n    <p>\n        PackScript scans the target folder recursively for files with names matching the filespec <strong>*.template.*</strong>.\n        These templates are made available to the pack function.\n    </p>\n\n\n    <h2>Examples</h2>\n    <p>\n        Let\'s define a simple template that appends a sourceUrl tag to scripts. We\'ll give this a filename of <strong>sourceUrl.template.js</strong>.\n        This file can be placed anywhere under the directory being processed by PackScript.\n    </p>\n    <pre class="example">\n<%= content %>\n//@ sourceURL=<%= data.prefix %><%= pathRelativeToConfig %></pre>\n    \n    <p>This template can then be used in the template option of the pack function:</p>    \n    <pre class="example">\npack({\n    to: \'Build/site.js\',\n    include: \'*.js\',\n    template: {\n        name: \'sourceUrl\',\n        data: { prefix: \'/Source/\' }\n    }\n});</pre>    \n    <p></p>\n\n    <p>From within templates, the following properties are available:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PackScript.templateProperties }"></div>\n    <p>Only the content, data and configPath properties are available when the outputTemplate option is used.</p>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-PackScript-zip"><div class="content block">\n    <h1>zip(options);</h1>\n    <p>\n        The zip function is used to create a compressed file in ZIP format.\n        The following options can be used:\n    </p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PackScript.zip }"></div>\n\n\n    <h2>Examples</h2>\n    <pre class="example">\nzip({\n    to: \'Content/Build.zip\',\n    include: \'Build/*.*\',\n    recursive: true\n});</pre>\n    <p>This compresses the entire directory structure underneath the Build directory to Content/Build.zip.</p>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-PubSub-core"><div data-bind="pane: \'/Interface/API/type\', data: Reference.PubSub"></div></script>');
 $('head')
@@ -829,1436 +2323,109 @@ $('head')
     .append('<script type="text/template" id="template--Samples-Webmail-3-Content-mails"><table class="mails" data-bind="with: data">\n    <thead>\n        <tr>\n            <th>From</th>\n            <th>To</th>\n            <th>Subject</th>\n            <th>Date</th>\n        </tr>\n    </thead>\n\n    <tbody data-bind="foreach: mails">\n        <tr data-bind="click: $root.selectMail">\n            <td data-bind="text: from"></td>\n            <td data-bind="text: to"></td>\n            <td data-bind="text: subject"></td>\n            <td data-bind="text: date"></td>\n        </tr>     \n    </tbody>\n</table></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-Webmail-3-Content-viewMail"><div class="viewMail" data-bind="with: data">\n    <div class="mailInfo">\n        <h1 data-bind="text: subject"></h1>\n        <p><label>From</label>: <span data-bind="text: from"></span></p>\n        <p><label>To</label>: <span data-bind="text: to"></span></p>\n        <p><label>Date</label>: <span data-bind="text: date"></span></p>\n        <div class="message">\n            <p data-bind="html: messageContent" />            \n        </div>\n    </div>\n</div></script>');
-TC.scriptEnvironment = { resourcePath: '/Content/Guides/Guides/Webmail/tutorial' };
-Tutorials.webmail = {
-    frames: [
-        'Webmail/folders',
-        'Webmail/mails',
-        'Webmail/content'
-    ]
-}
-//@ sourceURL=tribe://Panes/Content/Guides/Guides/Webmail/tutorial.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/api' };
-Reference.API = [
-    {
-        name: 'TC.run',
-        description: 'Start Tribe.Composite, ensuring the specified resources are loaded first.',
-        arguments: [
-            { name: 'resourcesToPreload', type: '[String]', description: 'URLs to required HTML, CSS or JS resources.' },
-            { name: 'initialModel', type: 'Any', description: 'The model supplied to the initial ko.applyBindings call.' }
-        ],
-        returns: 'undefined'
-    },
-    {
-        name: 'TC.createNode',
-        description: 'Creates a new Pane object and binds it to the specified element with the specified pane options, and encapsulates it in a Node object.',
-        arguments: [
-            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' },
-            { name: 'paneOptions', type: 'Object' },
-            { name: 'parentNode', type: 'TC.Types.Node' },
-            { name: 'context', type: 'TC.Types.Context' }
-        ],
-        returns: 'TC.Types.Node'
-    },
-    {
-        name: 'TC.appendNode',
-        description: 'Same as createNode, but appends a new DIV element to the target element.',
-        arguments: [
-            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' },
-            { name: 'paneOptions', type: 'Object' },
-            { name: 'parentNode', type: 'TC.Types.Node' },
-            { name: 'context', type: 'TC.Types.Context' }
-        ],
-        returns: 'TC.Types.Node'
-    },
-    {
-        name: 'TC.insertNodeAfter',
-        description: 'Same as createNode, but inserts a new DIV element after the target element.',
-        arguments: [
-            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' },
-            { name: 'paneOptions', type: 'Object' },
-            { name: 'parentNode', type: 'TC.Types.Node' },
-            { name: 'context', type: 'TC.Types.Context' }
-        ],
-        returns: 'TC.Types.Node'
-    },
-    {
-        name: 'TC.nodeFor',
-        description: 'Find the Node object for the specified selector, Node or Pane.',
-        arguments: [
-            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' }
-        ],
-        returns: 'TC.Types.Node'
-    },
-    {
-        name: 'TC.registerModel',
-        description: 'Registers a model in the repository. Either the TC.scriptEnvironment must be set first or a resourcePath must be specified.',
-        arguments: [
-            { name: 'modelConstructor', type: 'Function' },
-            { name: 'options', type: 'Object' },
-            { name: 'resourcePath', type: 'String' }
-        ],
-        returns: 'undefined'
-    }
-];
-//@ sourceURL=tribe://Panes/Content/Reference/Core/api.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/panes' };
-Reference.Panes = {
-    options: [
-        { name: 'pane', type: 'String', description: 'Required. Relative paths will evaluate relative to the parent pane.' },
-        { name: 'data', type: 'Any', description: 'Data to pass to the pane.' },
-        { name: 'handlesNavigation', type: 'String | NavigationOptions', description: 'The underlying node is marked as the node to transition when child panes navigate.' },
-        { name: 'transition', type: 'String', description: 'Transition to use when the pane is transitioned in or out.' },
-        { name: 'reverseTransitionIn', type: 'Boolean', description: 'Use the reverse transition when transitioning in.' },
-        { name: 'id', type: 'Any', description: 'An optional unique identifier for the pane.' },
-        { name: 'skipPath', type: 'Boolean', description: 'When specified, the pane is skipped when determining the parent pane path.' }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Core/panes.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/transitions' };
-Reference.Transition = {
-    name: 'TC.transition',
-    description: 'Create an object with a set of functions for transition elements and nodes.',
-    arguments: [
-        { name: 'target', type: 'selector | TC.Types.Pane | TC.Types.Node', description: 'The target of the transition.' },
-        { name: 'transition', type: 'String', description: 'The name of the transition registered in the TC.Transitions collection. If not specified, this will default to transition specified on the pane or node.<br/>Built-in transitions are fade, slideLeft, slideRight, slideUp and slideDown.' },
-        { name: 'reverse', type: 'Boolean', description: 'Use the reverse transition to the one specified.' }
-    ],
-    returns: 'Object'
-};
-
-Reference.Transition.Functions = [
-    {
-        name: 'in',
-        description: 'Transition the target into view. Returned promise resolves when transition is complete.',
-        returns: 'jQuery.Deferred'
-    },
-    {
-        name: 'out',
-        description: 'Transition the target out of view. By default, the target is removed from the DOM after transitioning. Returned promise resolves when transition is complete.',
-        arguments: [
-            { name: 'remove', type: 'Boolean', description: 'Specify false to hide the target instead.' }
-        ],
-        returns: 'jQuery.Deferred'
-    },
-    {
-        name: 'to',
-        description: 'Transition the target to another pane. If the target is an element, a new node is created. Returned promise resolves when the render operation for the new pane is complete.',
-        arguments: [
-            { name: 'paneOptions', type: 'String | Object', description: 'The path to the new pane or an object containing path and data properties.' },
-            { name: 'remove', type: 'Boolean', description: 'Specify false to hide the original target instead of removing.' }
-        ],
-        returns: 'jQuery.Deferred'
-    }
-];
-//@ sourceURL=tribe://Panes/Content/Reference/Core/transitions.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/client' };
-Reference.MessageHub = [
-    {
-        name: 'TMH.initialise',
-        description: 'Initialise the MessageHub client.',
-        returns: 'undefined',
-        arguments: [
-            { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub object to attach to.' },
-            { name: 'url', type: 'String', description: 'The URL of the SignalR instance. Usually "signalr".' }
-        ]
-    },
-    {
-        name: 'TMH.joinChannel',
-        description: 'Join the specified channel.',
-        returns: '{ leave: function () { } }',
-        arguments: [
-            { name: 'id', type: 'String', description: 'The channel identifier.' },
-            { name: 'options', type: 'Object', description: 'A hashtable of options, described below.' }
-        ]
-    },
-    {
-        name: 'TMH.leaveChannel',
-        description: 'Leave the specified channel.',
-        returns: 'undefined',
-        arguments: [
-            { name: 'id', type: 'String', description: 'The channel identifier.' }
-        ]
-    },
-    {
-        name: 'TMH.publishToServer',
-        description: 'Publish a message to the server.',
-        returns: 'undefined',
-        arguments: [
-            { name: 'channelId', type: 'String', description: 'The channel identifier.' },
-            { name: 'envelope', type: 'Object', description: 'The PubSub message envelope. See the PubSub reference for more information.' },
-            { name: 'record', type: 'Boolean', description: 'Request the server to record the message.' }
-        ]
-    }
-];
-
-Reference.MessageHub.ChannelOptions = [
-    { name: 'serverEvents', type: '[String]', description: 'An array of message topics to publish to the server. Wildcards can be used.' },
-    { name: 'record', type: 'Boolean', description: 'Request the server to record messages published to this channel.' },
-    { name: 'replay', type: 'Boolean', description: 'Request the server to replay messages previously published to this channel.' }
-];
-//@ sourceURL=tribe://Panes/Content/Reference/MessageHub/client.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/configuration' };
-Reference.MessageHub.Server = [
-    {
-        name: 'TopicResolver',
-        description: 'Specify a function to resolve message types to a topic names.',
-        arguments: [
-            { name: 'resolver', type: 'Func<Type, string>', description: 'A function that resolves a message type to a topic name.' }
-        ]
-    },
-    {
-        name: 'TopicResolver<T>',
-        description: 'Specify a type to resolve message types to a topic names. The default uses the type name as the client message topic.',
-        arguments: [
-            { name: '', type: 'IMessageTopicResolver', description: 'A type that implements IMessageTopicResolver.' }
-        ]
-    },
-    {
-        name: 'MessageSerialiser<T>',
-        description: 'Specify a type to serialise messages. The default is JsonMessageSerialiser.',
-        arguments: [
-            { name: '', type: 'IMessageSerialiser', description: 'A type that implements IMessageSerialiser.' }
-        ]
-    },
-    {
-        name: 'MessageBus<T>',
-        description: 'Specify a type that handles translation of client and server side messages.',
-        arguments: [
-            { name: '', type: 'IMessageBus', description: 'A type that implements IMessageBus.' }
-        ]
-    },
-    {
-        name: 'MessagesFrom',
-        description: 'Use incoming and outgoing message types from the specified assemblies.',
-        arguments: [
-            { name: 'assemblies', type: 'params Assembly[]', description: 'A parameter array of assemblies.' }
-        ]
-    },
-    {
-        name: 'HostStarter<T>',
-        description: 'Specify a type that can initialise and start the MessageHub host. The default is the IisHostStarter.',
-        arguments: [
-            { name: '', type: 'IHostStarter', description: 'A type that implements IHostStarter.' }
-        ]
-    },
-    {
-        name: 'ChannelAuthoriser<T>',
-        description: 'Specify a type that can authorise channel requests.',
-        arguments: [
-            { name: '', type: 'IChannelAuthoriser', description: 'A type that implements IChannelAuthoriser.' }
-        ]
-    },
-    {
-        name: 'SqlServerPersistence',
-        description: 'Store recorded messages in a SQL Server database. Requires a reference to the Tribe.MessageHub.ChannelPersisters.SqlServer assembly.',
-        arguments: [
-            { name: 'connectionStringOrName', type: 'String', description: 'A literal connection string or the name of a connection string defined in the configuration file.' }
-        ]
-    },
-    {
-        name: 'NServiceBus',
-        description: 'Use NServiceBus as the server side messaging infrastructure. Requires a reference to the Tribe.MessageHub.Buses.NServiceBus assembly.',
-        arguments: [
-            { name: 'bus', type: 'NServiceBus.IBus', description: 'A configured instance of the NServiceBus IBus interface.' }
-        ]
-    },
-];
-//@ sourceURL=tribe://Panes/Content/Reference/MessageHub/configuration.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/core' };
-Reference.PubSub = {
-    name: 'Tribe.PubSub',
-    description: 'A fully featured publish / subscribe engine.',
-    constructor: {
-        arguments: [
-            { name: 'options', type: 'Object', description: 'A hashtable of options. These are the same as and override those specified in global options.' }
-        ]
-    },
-    functions: [
-        {
-            name: 'publish',
-            description: 'Publish the specified message to the bus.',
-            arguments: [
-                { name: 'topicOrEnvelope', type: 'String | Object', description: 'A string message topic or a message envelope object.' },
-                { name: 'data', type: 'Any', description: 'Data to attach to the message envelope.' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'publishSync',
-            description: 'Publish the specified message to the bus synchronously.',
-            arguments: [
-                { name: 'topic', type: 'String', description: 'The message topic.' },
-                { name: 'data', type: 'Any', description: 'Data to attach to the message envelope.' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'subscribe',
-            description: 'Subscribe to one or more message topics. Returns numeric token(s) that can be used to unsubscribe message handlers.',
-            arguments: [
-                { name: 'topic', type: 'String | [String] | Object', description: 'A single message topic, array of topics or object map of topic names to handler functions.' },
-                { name: 'func', type: 'Function(data, envelope)', description: 'The message handler function.' }
-            ],
-            returns: 'Number | [Number]'
-        },
-        {
-            name: 'subscribeOnce',
-            description: 'Subscribe to one or more message topics with a handler that is executed once only.',
-            arguments: [
-                { name: 'topic', type: 'String | [String] | Object', description: 'A single message topic, array of topics or object map of topic names to handler functions.' },
-                { name: 'handler', type: 'Function(data, envelope)', description: 'The message handler function.' }
-            ],
-            returns: 'Number | [Number]'
-        },
-        {
-            name: 'unsubscribe',
-            description: 'Unsubscribe one or more message handlers.',
-            arguments: [
-                { name: 'tokens', type: 'Number | [Number]', description: 'A single subscription token or array of tokens to unsubscribe. Returns the token(s) that were successfully unsubscribed.' }
-            ],
-            returns: 'Number | [Number]'
-        },
-        {
-            name: 'createLifetime',
-            description: 'Create a child PubSub object where all subscriptions can be removed by calling .end().',
-            returns: 'Object'
-        }
-    ],
-    properties: [
-        {
-            name: 'owner',
-            description: 'The root PubSub object. Child lifetimes will refer back to the owning PubSub object.',
-            type: 'Tribe.PubSub'
-        },
-        {
-            name: 'sync',
-            description: 'True if the PubSub object is operating synchronously.',
-            type: 'Boolean'
-        },
-        {
-            name: 'subscribers',
-            description: 'A managed collection of message subscribers. Use get(\'*\') to retrieve all subscribers.',
-            type: 'Tribe.PubSub.SubscriberList'
-        }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/PubSub/core.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/envelopes' };
-Reference.PubSub.Envelopes = [
-    { name: 'topic', type: 'String', description: 'The message topic.' },
-    { name: 'data', type: 'Any', description: 'The message data.' },
-    { name: 'sync', type: 'Boolean', description: 'Publish the message synchronously.' },
-    { name: 'server', type: 'Boolean', description: 'True if the message originated from a Tribe.MessageHub host.' }
-];
-//@ sourceURL=tribe://Panes/Content/Reference/PubSub/envelopes.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/History' };
-Reference.Types.History = {
-    name: 'TC.Types.History',
-    description: 'Maintains the state of the browser history stack, including URL data.',
-    constructor: {
-        arguments: [
-            { name: 'history', type: 'window.History', description: 'An object that exposes an interface matching that of the window.History object.' }
-        ]
-    },
-    functions: [
-        {
-            name: 'navigate',
-            description: 'Load a history entry onto the stack.',
-            arguments: [
-                { name: 'urlOptions', type: 'Object', description: 'An object containing url and title properties.' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'go',
-            description: 'Move the current stack frame forward or back the specified number of frames, triggering the browser.go document event.',
-            arguments: [
-                { name: 'frameCount', type: 'Number' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'update',
-            description: 'Move the current stack frame forward or back the specified number of frames, WITHOUT triggering the browser.go document event.',
-            arguments: [
-                { name: 'frameCount', type: 'Number' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'dispose',
-            description: 'Clean up resources used by the History object.',
-            returns: 'undefined'
-        }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/History.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Loader' };
-Reference.Types.Loader = {
-    name: 'TC.Types.Loader',
-    description: 'Ensures URLs are only loaded once. Concurrent requests return the same promise. The actual loading of resources is performed by specific LoadHandlers.',
-    functions: [
-        {
-            name: 'get',
-            description: 'Load the specified URL using the LoadHandler that corresponds with the file extension. Returns the result of executing the LoadHandler, usually a jQuery.Deferred.',
-            arguments: [
-                { name: 'url', type: 'String', description: 'The URL to load.' },
-                { name: 'resourcePath', type: 'String', description: 'The resource path to pass to the LoadHandler.' },
-                { name: 'context', type: 'Any', description: 'A context object to pass to the LoadHandler.' }
-            ],
-            returns: 'jQuery.Deferred'
-        }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/Loader.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Logger' };
-Reference.Types.Logger = {
-    name: 'TC.Types.Logger',
-    description: 'Provides a unified API for logging functionality',
-    functions: [
-        {
-            name: 'debug',
-            description: '',
-            arguments: [
-                { name: 'message', type: 'String' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'info',
-            description: '',
-            arguments: [
-                { name: 'message', type: 'String' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'warn',
-            description: '',
-            arguments: [
-                { name: 'message', type: 'String' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'error',
-            description: '',
-            arguments: [
-                { name: 'message', type: 'String' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'setLogLevel',
-            description: '',
-            arguments: [
-                { name: 'level', type: 'Number', description: 'Number corresponding with the desired log level - 0 = debug, 4 = none.' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'setLogger',
-            description: 'Set the underlying logging mechanism registed in the TC.Loggers collection. Default is \'console\'.',
-            arguments: [
-                { name: 'newLogger', type: 'String' }
-            ],
-            returns: 'undefined'
-        }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/Logger.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Models' };
-Reference.Types.Models = {
-    name: 'TC.Types.Models',
-    description: 'Managed collection of pane models.',
-    functions: [
-        {
-            name: 'register',
-            description: 'Register a model model with the collection. Registered models can be accessed as properties on the collection, keyed by resource path.',
-            arguments: [
-                { name: 'resourcePath', type: 'String', description: 'Associated pane path.' },
-                { name: 'constructor', type: 'Function', description: 'Constructor function for the model.' },
-                { name: 'options', type: 'Object', description: 'Options hashtable to store with the model.' }
-            ],
-            returns: ''
-        }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/Models.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Node' };
-Reference.Types.Node = {
-    name: 'TC.Types.Node',
-    description: 'A Node object is a placeholder for a pane within the UI structure. Nodes can be transitioned to display different panes using the navigate or transitionTo functions.',
-    constructor: {
-        arguments: [
-            { name: 'parent', type: 'TC.Types.Node' },
-            { name: 'pane', type: 'TC.Types.Pane' }
-        ]
-    },
-    functions: [
-        {
-            name: 'navigate',
-            description: 'Find the navigation node for the current node and transition it to the specified pane, updating the history stack.',
-            arguments: [
-                { name: 'pathOrPane', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
-                { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'navigateBack',
-            description: 'Find the navigation node for the current node and transition it to the previous pane in the history stack.',
-            returns: 'undefined'
-        },
-        {
-            name: 'findNavigation',
-            description: 'Find the node that handles navigation for the current node. Usually the closest parent that has been marked with handlesNavigation, unless overridden.',
-            returns: 'TC.Types.Navigation'
-        },
-        {
-            name: 'transitionTo',
-            description: 'Transition the pane for the current node to the specified pane.',
-            arguments: [
-                { name: 'paneOptions', type: 'Object', description: 'An object containined path and data properties.' },
-                { name: 'transition', type: 'String', description: 'The transition to use.' },
-                { name: 'reverse', type: 'Boolean', description: 'Use the reverse transition.' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'setPane',
-            description: 'Sets the pane on the current node.',
-            arguments: [
-                { name: 'pane', type: 'TC.Types.Pane' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'nodeForPath',
-            description: 'Find the node to use for inheriting paths from.',
-            returns: 'TC.Types.Node'
-        },
-        {
-            name: 'dispose',
-            description: 'Clean up resources used by the node.',
-            returns: 'undefined'
-        }
-    ],
-    properties: [
-        {
-            name: 'parent',
-            type: 'TC.Types.Node'
-        },
-        {
-            name: 'children',
-            type: '[TC.Types.Node]'
-        },
-        {
-            name: 'root',
-            description: 'The root node of the current node tree.',
-            type: 'TC.Types.Node'
-        },
-        {
-            name: 'id',
-            description: 'A unique numeric identifier for the current node.',
-            type: 'Number'
-        },
-        {
-            name: 'pane',
-            type: 'TC.Types.Pane'
-        },
-        {
-            name: 'navigation',
-            description: 'The Navigation object for the current node, if any.',
-            type: 'TC.Types.Navigation'
-        },
-        {
-            name: 'defaultNavigation',
-            description: 'The default Navigation object to use for the current node. Set on the root node so that all nodes in the tree can access the navigation node.',
-            type: 'TC.Types.Node'
-        }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/Node.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Operation' };
-Reference.Types.Operation = {
-    name: 'TC.Types.Operation',
-    description: 'Encapsulates an operation involving several child operations, keyed by an id. Child operations can be added cumulatively. Promise resolves when the all child operations complete.',
-    functions: [
-        {
-            name: 'add',
-            description: 'Add an id corresponding with a child operation',
-            arguments: [
-                { name: 'id', type: 'Any' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'complete',
-            description: 'Mark the specified id is being complete',
-            arguments: [
-                { name: 'id', type: 'Any' }
-            ],
-            returns: 'undefined'
-        }
-    ],
-    properties: [
-        {
-            name: 'promise',
-            description: 'The promise object representing the state of the operation.',
-            type: 'jQuery.Deferred'
-        },
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/Operation.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Pane' };
-Reference.Types.Pane = {
-    name: 'TC.Types.Pane',
-    description: 'A pane is a single user interface component within an application. It can consist of a HTML template, a JavaScript model and a CSS stylesheet. Panes can be nested within other panes.',
-    constructor: {
-        arguments: [
-            { name: 'options', type: 'Object', description: 'Hashtable of options for the pane.' }
-        ]
-    },
-    functions: [
-        {
-            name: 'navigate',
-            description: 'Navigate the node containing the pane to the specified pane.',
-            arguments: [
-                { name: 'pathOrPane', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
-                { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'remove',
-            description: 'Remove the pane from the DOM.',
-            returns: 'undefined'
-        },
-        {
-            name: 'find',
-            description: 'Find elements contained within the pane.',
-            arguments: [
-                { name: 'selector', type: 'selector' }
-            ],
-            returns: 'jQuery'
-        },
-        {
-            name: 'inheritPathFrom',
-            description: 'If the pane\'s current path is relative, inherit the absolute path from the specified node.',
-            arguments: [
-                { name: 'node', type: 'TC.Types.Node' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'startRender',
-            description: 'Adds a CSS class to identify the pane as currently being rendered.',
-            returns: 'undefined'
-        },
-        {
-            name: 'endRender',
-            description: 'Remvoes the CSS class used to identify the pane as currently being rendered.',
-            returns: 'undefined'
-        },
-        {
-            name: 'dispose',
-            description: 'Clean up resources used by the pane.',
-            returns: 'undefined'
-        },
-        {
-            name: 'toString',
-            description: 'Returns a human readable identifier for the pane.',
-            returns: 'String'
-        }
-    ],
-    properties: [
-        {
-            name: 'path',
-            type: 'String'
-        },
-        {
-            name: 'data',
-            type: 'Any'
-        },
-        {
-            name: 'element',
-            type: 'HTMLElement'
-        },
-        {
-            name: 'transition',
-            description: 'Transition to use when the pane is rendered and removed.',
-            type: ''
-        },
-        {
-            name: 'reverseTransitionIn',
-            description: 'Use the reverse transition when rendering.',
-            type: ''
-        },
-        {
-            name: 'handlesNavigation',
-            description: 'The pane has been marked as handling navigation.',
-            type: ''
-        },
-        {
-            name: 'pubsub',
-            type: 'Tribe.PubSub'
-        },
-        {
-            name: 'id',
-            type: 'Any'
-        },
-        {
-            name: 'skipPath',
-            description: 'Skip this pane when determining the parent path to inherit from.',
-            type: 'Boolean'
-        },
-        {
-            name: 'is.rendered',
-            description: '',
-            type: ''
-        },
-        {
-            name: 'is.disposed',
-            description: '',
-            type: ''
-        },
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/Pane.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Pipeline' };
-Reference.Types.Pipeline = {
-    name: 'TC.Types.Pipeline',
-    description: 'Manages the step by step execution of a number of named events. Each step will only execute after the promise returned by the previous step resolves. A rejected promise will halt execution of the pipeline.',
-    constructor: {
-        arguments: [
-            { name: 'events', type: 'Object', description: 'Hashtable of event handler functions, keyed by the event name.' },
-            { name: 'context', type: 'Any', description: 'Context data that is passed to each event function.' }
-        ]
-    },
-    functions: [
-        {
-            name: 'execute',
-            description: 'Execute the specified events against the specified target.',
-            arguments: [
-                { name: 'eventsToExecute', type: '[String]', description: 'Ordered array of events to execute against the target.' },
-                { name: 'target', type: 'Object', description: 'Target object to pass to each event handler function.' }
-            ],
-            returns: 'jQuery.Deferred'
-        }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/Pipeline.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Saga' };
-Reference.Types.Saga = {
-    name: 'TC.Types.Saga',
-    description: 'Manages a long running process by maintaining state and handling specific messages.',
-    constructor: {
-        arguments: [
-            { name: 'pane', type: 'TC.Types.Pane', description: 'A Pane object to serve as the saga\'s "parent". The lifetime of the saga is tied to the pane.' },
-            { name: 'handlers', type: 'Object', description: 'A hashtable of message handlers, keyed by the message topic.' },
-            { name: 'initialData', type: 'Any', description: 'Initial value for the saga\'s data property.' }
-        ]
-    },
-    functions: [
-        {
-            name: 'start',
-            description: 'Subscribes provided message handlers to messages published on the pane\'s pubsub engine.',
-            returns: 'undefined'
-        },
-        {
-            name: 'startChild',
-            description: 'Starts a new saga. The lifetime of the new saga is bound to the current saga.',
-            arguments: [
-                { name: 'childHandlers', type: 'Object', description: 'A hashtable of message handlers, keyed by the message topic.' },
-                { name: 'childData', type: 'Any', description: 'Initial value for the saga\'s data property.' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'end',
-            description: 'Unsubscribes message handlers for this and all child sagas.',
-            returns: 'undefined'
-        }
-    ],
-    properties: [
-        { name: 'pubsub', type: 'Tribe.PubSub' },
-        { name: 'pane', type: 'TC.Types.Pane' },
-        { name: 'data', type: 'Any' },
-        { name: 'children', type: '[TC.Types.Saga]' }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/Saga.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Templates' };
-Reference.Types.Templates = {
-    name: 'TC.Types.Templates',
-    description: 'Managed collection of HTML templates.',
-    functions: [
-        {
-            name: 'store',
-            description: 'Store the specified template, keyed by the specified path',
-            arguments: [
-                { name: 'template', type: 'String' },
-                { name: 'path', type: 'String' }
-            ],
-            returns: 'undefined'
-        },
-        {
-            name: 'loaded',
-            description: 'Checks whether the template for the specified path has been loaded',
-            arguments: [
-                { name: 'path', type: 'String' }
-            ],
-            returns: 'Boolean'
-        },
-        {
-            name: 'render',
-            description: 'Render the template for the specified path to the specified target',
-            arguments: [
-                { name: 'target', type: 'selector' },
-                { name: 'path', type: 'string' }
-            ],
-            returns: 'undefined'
-        }
-    ]
-};
-//@ sourceURL=tribe://Panes/Content/Reference/Types/Templates.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/collections' };
-Reference.Utilities.Collections = [
-    { name: 'TC.Utils.each', description: '', arguments: [{ name: 'collection' }, { name: 'iterator' }] },
-    { name: 'TC.Utils.map', description: '', arguments: [{ name: 'collection' }, { name: 'iterator' }] },
-    { name: 'TC.Utils.reduce', description: '', arguments: [{ name: 'collection' }, { name: 'initialValue' }, { name: 'iterator' }] },
-    { name: 'TC.Utils.filter', description: '', arguments: [{ name: 'array' }, { name: 'iterator' }] },
-    { name: 'TC.Utils.pluck', description: '', arguments: [{ name: 'array' }, { name: 'iterator' }] }
-];
-//@ sourceURL=tribe://Panes/Content/Reference/Utilities/collections.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/embeddedState' };
-Reference.Utilities.EmbeddedState = [
-    { name: 'TC.Utils.embedState', description: '', arguments: [{ name: 'model' }, { name: 'context' }, { name: 'node' }] },
-    { name: 'TC.Utils.contextFor', description: '', arguments: [{ name: 'element' }] },
-    { name: 'TC.Utils.extractContext', description: '', arguments: [{ name: 'koBindingContext' }] },
-    { name: 'TC.Utils.extractNode', description: '', arguments: [{ name: 'koBindingContext' }] }
-];
-//@ sourceURL=tribe://Panes/Content/Reference/Utilities/embeddedState.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/events' };
-Reference.Utilities.Events = [
-    { name: 'TC.Utils.elementDestroyed', description: '', arguments: [{ name: 'element' }], returns: 'jQuery.Deferred' },
-    { name: 'TC.Utils.raiseDocumentEvent', description: '', arguments: [{ name: 'name' }, { name: 'data' }] },
-    { name: 'TC.Utils.handleDocumentEvent', description: '', arguments: [{ name: 'name' }, { name: 'handler' }] },
-    { name: '$.complete', description: '', arguments: [{ name: 'deferreds' }] },
-    { name: 'jQuery.Event("destroyed")' }
-];
-
-//@ sourceURL=tribe://Panes/Content/Reference/Utilities/events.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/misc' };
-Reference.Utilities.Misc = [
-    { name: 'TC.Utils.try', description: '', arguments: [{ name: 'func' }, { name: 'args' }, { name: 'handleExceptions' }, { name: 'message' }] },
-    { name: 'TC.Utils.idGenerator', description: '', returns: '{ next: function() }' },
-    { name: 'TC.Utils.getUniqueId', description: '' },
-    { name: 'TC.Utils.cleanElement', description: '', arguments: [{ name: 'element' }] }
-];
-
-//@ sourceURL=tribe://Panes/Content/Reference/Utilities/misc.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/objects' };
-Reference.Utilities.Objects = [
-    { name: 'TC.Utils.arguments', description: '', arguments: [{ name: 'args' }] },
-    { name: 'TC.Utils.removeItem', description: '', arguments: [{ name: 'array' }, { name: 'item' }] },
-    { name: 'TC.Utils.inheritOptions', description: '', arguments: [{ name: 'from' }, { name: 'to' }, { name: 'options' }] },
-    { name: 'TC.Utils.evaluateProperty', description: '', arguments: [{ name: 'target' }, { name: 'property' }] }
-];
-
-//@ sourceURL=tribe://Panes/Content/Reference/Utilities/objects.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/packScript' };
-Reference.Utilities.PackScript = [
-];
-//@ sourceURL=tribe://Panes/Content/Reference/Utilities/packScript.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/panes' };
-Reference.Utilities.Panes = [
-    {
-        name: 'TC.Utils.getPaneOptions',
-        description: 'Normalise the passed value and merge the other options.',
-        arguments: [{ name: 'value' }, { name: 'otherOptions' }]
-    },
-    {
-        name: 'TC.Utils.bindPane',
-        description: 'Load and bind the pane specified in paneOptions to the specified element and link it to the specified node.',
-        arguments: [{ name: 'node' }, { name: 'element' }, { name: 'paneOptions' }, { name: 'context' }]
-    },
-    {
-        name: 'TC.Utils.insertPaneAfter',
-        description: 'As bindPane, but create a new DIV element and insert it after the specified target.',
-        arguments: [{ name: 'node' }, { name: 'target' }, { name: 'paneOptions' }, { name: 'context' }]
-    }
-];
-//@ sourceURL=tribe://Panes/Content/Reference/Utilities/panes.js
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/paths' };
-Reference.Path = [
-    {
-        name: 'TC.Path',
-        description: 'The Path function accepts a string containing a path, normalises the path and returns an object with several manipulation functions attached.',
-        arguments: [{ name: 'path', type: 'String' }],
-        returns: 'TC.Path',
-        examples: [{
-            description: 'Most functions can be chained',
-            code: "TC.Path('Folder').makeAbsolute().combine('file.ext').withoutExtension().toString()",
-            result: '/Folder/file'
-        }]
-    }
-];
-
-Reference.Path.Functions = [
-    { name: 'withoutFilename', description: '', returns: 'TC.Path' },
-    { name: 'filename', description: '', returns: 'TC.Path' },
-    { name: 'extension', description: '', returns: 'String' },
-    { name: 'withoutExtension', description: '', returns: 'TC.Path' },
-    { name: 'combine', description: '', arguments: [{ name: 'additionalPath' }], returns: 'TC.Path' },
-    { name: 'isAbsolute', description: '', returns: 'Boolean' },
-    { name: 'makeAbsolute', description: '', returns: 'TC.Path' },
-    { name: 'makeRelative', description: '', returns: 'TC.Path' },
-    { name: 'asMarkupIdentifier', description: '', returns: 'String' },
-    { name: 'setExtension', description: '', arguments: [{ name: 'extension' }], returns: 'TC.Path' },
-    { name: 'toString', description: '', returns: 'String' }
-];
-//@ sourceURL=tribe://Panes/Content/Reference/Utilities/paths.js
-TC.scriptEnvironment = { resourcePath: '/Interface/content' };
-TC.registerModel(function (pane) {
-    this.panePath = panePath(pane.data);
-
-    this.renderComplete = function() {
-        pane.find('pre').each(function() {
-            $(this).html(PR.prettyPrintOne($(this).html()));
-        });
-    };
-
-    pane.pubsub.subscribe('article.show', function (article) {
-        $(pane.element).css({ 'width': '100%' });
-        pane.navigate({ path: '/Interface/content', data: article });
-    });
-    
-    function panePath(article) {
-        return '/Content/' + article.section + '/' + article.topic;
-    }
-});
-//@ sourceURL=tribe://Panes/Interface/content.js
-TC.scriptEnvironment = { resourcePath: '/Interface/header' };
-TC.registerModel(function (pane) {
-    window.addEventListener('navigating', navigating);
-    function navigating(e) {
-        if (Navigation.isHome(e.data.options.data))
-            hide();
-        else
-            show();
-    }
-
-    this.renderComplete = function() {
-        if (!Navigation.isHome(pane.node.findNavigation().node.pane.data))
-            show();
-    };
-
-    function show() {
-        if (!$('.header .logo').is(':visible'))
-            TC.transition('.header .logo', 'fade').in();
-    }
-
-    function hide() {
-        if ($('.header .logo').is(':visible'))
-            TC.transition('.header .logo', 'fade').out(false);
-    }
-
-    this.dispose = function () {
-        window.removeEventListener('navigating', navigating);
-    };
-});
-//@ sourceURL=tribe://Panes/Interface/header.js
-TC.scriptEnvironment = { resourcePath: '/Interface/navigation' };
-TC.registerModel(function (pane) {
-    var self = this;
-    var currentSection;
-
-    this.items = ko.observableArray();
-    this.selectedTopic = ko.observable();
-    this.selectedParent = ko.computed(function () {
-        var topic = self.selectedTopic();
-        if (!topic) return null;
-        var index = topic.indexOf('/');
-        return index == -1 ? topic :
-            topic.substr(0, index);
-    });
-
-    this.showSection = function (item) {
-        self.selectedTopic(item.topic);
-    };
-
-    this.showArticle = function (item) {
-        self.selectedTopic(item.topic);
-        pane.pubsub.publish('article.show', { section: currentSection, topic: item.topic });
-    };
-
-    // it would be nice to use the article.show message for this,
-    // but that won't work with browser back and forward buttons
-    window.addEventListener('navigating', navigating);
-    function navigating(e) {
-        var data = e.data.options.data || {};
-        updateCurrentArticle(data);
-    }
-    
-    // this is to handle bookmarks / refresh
-    // need to come up with a better way of doing this
-    this.renderComplete = function() {
-        updateCurrentArticle(pane.node.findNavigation().node.pane.data);
-    };
-
-    function updateCurrentArticle(data) {
-        if (data.section && data.topic) {
-            self.selectedTopic(data.topic);
-
-            if (currentSection !== data.section) {
-                currentSection = data.section;
-                var items = mapNavigation(data.section);
-                if (items.length > 0) {
-                    self.items(items);
-                    show();
-                } else
-                    hide();
-            }
-        }
-    }
-
-    function show() {
-        if (!$('.navigation').is(':visible'))
-            TC.transition('.navigation', 'slideRight').in();
-    }
-
-    function hide() {
-        if ($('.navigation').is(':visible'))
-            TC.transition('.navigation', 'slideLeft').out(false);
-    }
-
-    this.dispose = function () {
-        window.removeEventListener('navigating', navigating);
-    };
-
-    // maps the cleaner API navigation structure into a structure suitable for data bindings. could be refactored out.
-    function mapNavigation(section) {
-        return TC.Utils.map(Navigation[section], function (item, key) {
-            return {
-                displayText: key,
-                section: section,
-                key: key,
-                topic: key + '/index',
-                items: mapChildItems(key, item)
-            };
-        });
-    }
-
-    function mapChildItems(parentKey, container) {
-        return TC.Utils.map(container, function (item, key) {
-            return {
-                displayText: key,
-                topic: parentKey + '/' + item
-            };
-        });
-    }
-});
-//@ sourceURL=tribe://Panes/Interface/navigation.js
-TC.scriptEnvironment = { resourcePath: '/Interface/navigationContainer' };
-TC.registerModel(function (pane) {
-    pane.node.skipPath = true;
-    pane.node.root = pane.node;
-
-    var currentFrame = 0;
-    this.initialPane = pane.data.frames[currentFrame];
-    this.atStart = ko.observable(true);
-    this.atEnd = ko.observable(false);
-
-    this.back = function() {
-        pane.navigateBack();
-        currentFrame--;
-        this.atEnd(false);
-        this.atStart(currentFrame === 0);
-    };
-
-    this.next = function() {
-        pane.navigate(pane.data.frames[++currentFrame]);
-        this.atEnd(currentFrame === pane.data.frames.length - 1);
-        this.atStart(false);
-    };
-    
-    
-});
-//@ sourceURL=tribe://Panes/Interface/navigationContainer.js
-TC.scriptEnvironment = { resourcePath: '/Interface/sample' };
-TC.registerModel(function (pane) {
-    var self = this;
-    var data = pane.data || {};
-    var rootPane = data.rootPane || 'layout';
-
-    // this is a hack to make samples navigate as if they were the root pane
-    pane.node.root = pane.node;
-
-    this.samplePane = rootPane.constructor === String ? 
-        '/Samples/' + data.name + '/' + rootPane : rootPane;
-    this.files = Samples[pane.data.name];
-    this.selectedFile = ko.observable(initialSelection());
-    
-    this.selectFile = function(file) {
-        self.selectedFile(file);
-        PR.prettyPrint();
-    };
-
-    this.renderComplete = function() {
-        PR.prettyPrint();
-    };
-    
-    function initialSelection() {
-        if (!pane.data.initialFile)
-            return self.files[0];
-        for(var i = 0; i < self.files.length; i++)
-            if (self.files[i].filename === pane.data.initialFile)
-                return self.files[i];
-    }
-});
-//@ sourceURL=tribe://Panes/Interface/sample.js
-TC.scriptEnvironment = { resourcePath: '/Interface/API/constructor' };
-TC.registerModel(function (pane) {    
-    this.func = $.extend({ name: 'new ' + pane.data.name }, pane.data.constructor);
-});
-//@ sourceURL=tribe://Panes/Interface/API/constructor.js
-TC.scriptEnvironment = { resourcePath: '/Interface/API/function' };
-TC.registerModel(function(pane) {
-    this.f = pane.data;
-
-    this.argumentNames = TC.Utils.pluck(pane.data.arguments, 'name').join(', ');
-});
-//@ sourceURL=tribe://Panes/Interface/API/function.js
-TC.scriptEnvironment = { resourcePath: '/Interface/API/type' };
-TC.registerModel(function(pane) {
-    this.t = pane.data;
-});
-//@ sourceURL=tribe://Panes/Interface/API/type.js
-TC.scriptEnvironment = { resourcePath: '/Samples/mobile' };
-TC.registerModel(function(pane) {
-    TMH.initialise(pane.pubsub, 'signalr');
-    TMH.joinChannel('chat', { serverEvents: ['chat.*'] });
-});
-//@ sourceURL=tribe://Panes/Samples/mobile.js
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Chat/chat' };
-TC.registerModel(function (pane) {
-    // Hook up our message hub and join a channel
-    TMH.initialise(pane.pubsub);
-    TMH.joinChannel('chat', {
-         serverEvents: ['chat.*']
-    });
-
-    // The dispose function is called automatically
-    // when the pane is removed from the DOM.
-    this.dispose = function() {
-        TMH.leaveChannel('chat');
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/About/Chat/chat.js
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Chat/messages' };
-TC.registerModel(function(pane) {
-    var self = this;
-
-    this.messages = ko.observableArray();
-
-    pane.pubsub.subscribe('chat.message',
-        function (message) {
-            self.messages.push(message);
-        });
-});
-//@ sourceURL=tribe://Panes/Samples/About/Chat/messages.js
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Chat/sender' };
-TC.registerModel(function(pane) {
-    var self = this;
-
-    this.name = ko.observable('Anonymous');
-    this.message = ko.observable();
-
-    this.send = function() {
-        pane.pubsub.publish('chat.message', {
-            name: self.name(),
-            message: self.message()
-        });
-        self.message('');
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/About/Chat/sender.js
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/samples' };
-TC.registerModel(function (pane) {
-    TC.toolbar.title('Title!');
-    
-    TC.toolbar.options([
-        { text: 'Option 1', func: function () { } },
-        { text: 'Option 2', func: function () { } }
-    ]);
-
-    this.listData = {
-        items: [
-            { id: 1, name: 'Item 1' },
-            { id: 2, name: 'Item 2' }
-        ],
-        itemText: function(item) {
-             return item.id + ' - ' + item.name;
-        },
-        headerText: 'Select List',
-        itemClick: function(item) { }
-    };
-
-    this.overlay = function() {
-        TC.overlay('overlay');
-    };
-
-    this.navigate = function() {
-        pane.navigate('navigate');
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/About/Mobile/samples.js
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/welcome' };
-TC.registerModel(function (pane) {
-    TC.toolbar.defaults.back = true;
-
-    this.samples = function() {
-        pane.navigate('samples');
-    };
-
-    this.chat = function () {
-        pane.navigate('chat');
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/About/Mobile/welcome.js
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/create' };
-// Declare model constructors using this simple function.
-// Tribe creates an instance and binds it to the template.
-
-TC.registerModel(function (pane) {
-    var self = this;
-    
-    this.task = ko.observable();
-    
-    this.create = function() {
-        pane.pubsub.publish('task.create', self.task());
-        self.task('');
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/About/Tasks/create.js
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/list' };
-TC.registerModel(function(pane) {
-    var self = this;
-
-    this.tasks = ko.observableArray(['Sample task']);
-
-    // Using messages decouples your components.
-    // Tribe cleans up subscriptions automatically.
-    pane.pubsub.subscribe('task.create', function(task) {
-        self.tasks.push(task);
-    });
-
-    pane.pubsub.subscribe('task.delete', function (task) {
-        var index = self.tasks.indexOf(task);
-        self.tasks.splice(index, 1);
-    });
-});
-//@ sourceURL=tribe://Panes/Samples/About/Tasks/list.js
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/task' };
-TC.registerModel(function(pane) {
-    var self = this;
-
-    this.task = pane.data;
-    
-    this.deleteTask = function() {
-        pane.pubsub.publish('task.delete', self.task);
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/About/Tasks/task.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/layout' };
-TC.registerModel(function (pane) {
-    // Create an observable to share between child panes
-    this.observable = ko.observable('Test');
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Communicating/layout.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/receiver' };
-TC.registerModel(function(pane) {
-    var self = this;
-
-    // Our shared observable
-    this.observable = pane.data;
-    
-    // Listen for messages and push them onto 
-    // an array as they arrive
-    this.messages = ko.observableArray();
-    pane.pubsub.subscribe('sample.message', function (data) {
-        self.messages.push(data);
-    });
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Communicating/receiver.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/sender' };
-TC.registerModel(function (pane) {
-    var self = this;
-    
-    // Our shared observable
-    this.observable = pane.data;
-    
-    // The pubsub object is available through the pane object.
-    this.message = ko.observable();
-    this.send = function() {
-        pane.pubsub.publish('sample.message',
-            { message: self.message() });
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Communicating/sender.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Creating/helloWorld' };
-TC.registerModel(function (pane) {
-    // Model properties are available for 
-    // data binding in your template.
-    this.message = "Message passed: " + pane.data.message;
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Creating/helloWorld.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Dynamic/create' };
-TC.registerModel(function (pane) {
-    var i = 0;
-    
-    // Dynamically insert a pane into the element
-    // with its class set to "items".
-    this.createPane = function() {
-        TC.appendNode('.items', { path: 'item', data: ++i });
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Dynamic/create.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Lifecycle/create' };
-TC.registerModel(function (pane) {
-    var i = 0;
-    
-    this.createPane = function() {
-        TC.appendNode(pane.find('.items'),
-            { path: 'item', data: ++i });
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Lifecycle/create.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Lifecycle/item' };
-TC.registerModel(function (pane) {
-    this.data = pane.data;
-
-    // The initialise function is called before the pane
-    // is rendered. If you return a jQuery deferred object,
-    // Tribe will wait for it to resolve before continuing.
-    
-    this.initialise = function() {
-        var promise = $.Deferred();
-        setTimeout(promise.resolve, 500);
-        return promise;
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Lifecycle/item.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/first' };
-TC.registerModel(function(pane) {
-    this.next = function() {
-        pane.navigate('second');
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Navigating/first.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/second' };
-TC.registerModel(function(pane) {
-    this.back = function () {
-        pane.navigateBack();
-    };
-
-    this.next = function () {
-        pane.navigate('third');
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Navigating/second.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/third' };
-TC.registerModel(function(pane) {
-    this.back = function() {
-        pane.navigateBack();
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Panes/Navigating/third.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/1-Folders/folders' };
-// Our model just contains a list of folders and
-// an observable to hold the selected folder.
-
-TC.registerModel(function (pane) {
-    this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
-    this.selectedFolder = ko.observable('Inbox');
-});
-//@ sourceURL=tribe://Panes/Samples/Webmail/1-Folders/folders.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/folders' };
-TC.registerModel(function (pane) {
-    var self = this;
-    
-    this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
-    this.selectedFolder = ko.observable(pane.data.folder);
-
-    // We've added a separate click handler to navigate
-    // when a folder is selected.
-    this.selectFolder = function (folder) {
-        self.selectedFolder(folder);
-        pane.navigate('mails', { folder: folder });
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Webmail/2-Mails/folders.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/mails' };
-TC.registerModel(function (pane) {
-    var self = this;
-
-    this.data = ko.observable();
-
-    // Load data using AJAX to our data property    
-    this.initialise = function() {
-        $.getJSON('Data/folder/' + pane.data.folder, self.data);
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Webmail/2-Mails/mails.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/folders' };
-TC.registerModel(function (pane) {
-    var self = this;
-
-    this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
-    this.selectedFolder = ko.observable(pane.data.folder);
-
-    this.selectFolder = function (folder) {
-        self.selectedFolder(folder);
-        pane.navigate('mails', { folder: folder });
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Webmail/3-Content/folders.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/mails' };
-TC.registerModel(function (pane) {
-    var self = this;
-
-    this.data = ko.observable();
-
-    this.initialise = function () {
-        $.getJSON('Data/folder/' + pane.data.folder, self.data);
-    };
-    
-    this.selectMail = function (mail) {
-        pane.navigate('viewMail', mail);
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Webmail/3-Content/mails.js
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/viewMail' };
-TC.registerModel(function (pane) {
-    var self = this;
-    
-    this.data = ko.observable();
-
-    this.initialise = function () {
-        $.getJSON('Data/mail/' + pane.data.id, self.data);
-    };
-});
-//@ sourceURL=tribe://Panes/Samples/Webmail/3-Content/viewMail.js
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.example3 .sample .samplePane{padding:0;width:320px;height:480px;left:22px;top:136px}.example3 .sample>*{height:711px}.example3 .sample .source{width:548px}.example3 .sample .result{width:365px;height:721px;border:none;background:url(\'../Images/device.mobile.png\');margin-left:15px}.example3 .sample .fileList{width:548px;height:auto}.example3 .sample .fileContent{width:548px;height:auto}.example3 .result .title{display:none}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.features{text-align:center;color:#081735;font-size:18px}.features.small{font-size:inherit}.features>*{vertical-align:top;display:inline-block;width:180px}.features.small>*{width:100px}.features strong{font-size:1.1em;height:50px;color:#701010;padding-bottom:10px}.features>* *{text-align:center;margin:0 auto;display:block}.features.small img{margin-bottom:5px}.features img{margin-bottom:20px}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.guides h2{margin-bottom:5px}.guides ul{list-style:none;padding:0;margin:0}.guides li{cursor:pointer;margin-bottom:10px;padding:5px 20px;background:#f6f6f6;border-radius:8px}.guides li:hover{background:#eed}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.knockout.block{text-align:center;background:center url(\'../Images/knockout/background.jpg\')}.knockout .features{display:inline-block;margin-left:50px;background-clip:padding-box;color:#b64838}.knockout .logo{color:#fff;vertical-align:top;margin-top:20px;display:inline-block;width:250px;font:inherit}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.masthead{color:#fff;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;text-align:center;padding-bottom:20px;border-bottom:1px #333 solid}.masthead h1{height:60px;font-size:96pt;padding:0}.masthead h2{font-size:18px}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.webmail .sample .result{margin:10px auto 0 auto;width:920px;height:auto}.webmail .sample .samplePane{height:auto}.webmail .sample .fileContent{width:770px}.webmail .fixedHeight .samplePane{height:500px;overflow-y:scroll}.webmail h2{margin-top:20px!important}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.footer{text-align:right;font-size:10pt;color:#888;text-shadow:1px 1px rgba(255,255,255,.2)}.footer a,.footer a:active,.footer a:visited,.footer a:link{text-decoration:none;color:#66f}.footer a:hover{color:#fff}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.header{height:46px}.header .background{position:absolute;top:0;width:100%;height:45px;border-bottom:1px #333 solid;background:#45484d;background:-moz-linear-gradient(top,#45484d 0%,#000 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#45484d),color-stop(100%,#000));background:-webkit-linear-gradient(top,#45484d 0%,#000 100%);background:-o-linear-gradient(top,#45484d 0%,#000 100%);background:-ms-linear-gradient(top,#45484d 0%,#000 100%);background:linear-gradient(to bottom,#45484d 0%,#000 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#45484d\',endColorstr=\'#000000\',GradientType=0);z-index:-2}.header .logo{display:none;position:absolute;cursor:pointer;top:2px;left:20px;color:#fff;font-size:22pt;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5)}.header .buttons{text-align:center;position:absolute;right:0}.header .buttons span{font-size:.7em;float:left;color:#eee;text-shadow:2px 2px 0 black;padding:9px;cursor:pointer;background:rgba(32,96,224,.2);font-size:1.2em;width:110px;height:27px;margin:0;margin-left:-1px;border-left:1px solid #000;border-right:1px solid #000}.header .buttons span:hover{background:#fff;background:-moz-linear-gradient(top,#fff 0%,#000 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#fff),color-stop(100%,#000));background:-webkit-linear-gradient(top,#fff 0%,#000 100%);background:-o-linear-gradient(top,#fff 0%,#000 100%);background:-ms-linear-gradient(top,#fff 0%,#000 100%);background:linear-gradient(to bottom,#fff 0%,#000 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#ffffff\',endColorstr=\'#000000\',GradientType=0);color:#aaa}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.navigation{display:none;background:#eee;border:1px solid #000;box-sizing:border-box;z-index:100}.navigation ul{list-style:none}.navigation li{cursor:pointer}.navigation ul li:hover{background:#111;color:#eee}.navigation li.selectedItem{background:#ccc}.navigation>ul li{padding:2px 10px;font-weight:bold}.navigation ul ul li{margin:0;padding:2px 0 2px 20px;box-sizing:border-box;font-weight:normal}@media(max-width:1300px){.navigation{width:980px;position:relative;left:50%;margin-left:-490px!important;border-radius:8px;padding:10px;margin-top:10px}.navigation ul{margin:0;padding:0;width:33%;min-height:50px}.navigation ul ul{position:absolute;top:10px;right:10px;width:66%}.navigation ul ul li{width:50%;float:left}}@media(min-width:1300px){.navigation{width:170px!important;position:fixed;left:0;top:56px;border-left:0;box-shadow:3px 3px 4px -1px rgba(0,0,0,.3);border-top-right-radius:8px;border-bottom-right-radius:8px}.navigation>ul{padding:0;margin:10px}.navigation ul ul{margin:0;padding:0}}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.navigationContainer{position:relative}.navigationContainer>ul{position:absolute;top:0;right:0;list-style:none;margin:0;padding:0}.navigationContainer>ul li{display:inline-block;width:70px;height:25px;text-align:center;padding-top:2px;border-radius:6px;border:1px solid #eee;cursor:pointer}.navigationContainer>ul li:hover{background:#000;color:#fff}.navigationContainer>.out{margin-top:-20px}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.sample{width:935px;margin:0}.sample>*{display:inline-block;vertical-align:top;height:305px;border:1px solid #000;border-radius:8px;overflow:hidden;background:#fff}.sample .fileList,.sample .fileContent{float:left;height:300px;box-sizing:border-box}.sample ul.fileList{width:150px;list-style:none;margin:0;padding:0}.sample .fileList li{padding:2px;cursor:pointer}.sample .fileList li:hover{color:#fff;background:#000}.sample .selectedFile{color:#fff;background:grey}.sample .fileContent{padding:5px;width:515px;overflow:auto;height:272px}.sample .result{margin-left:5px;margin-bottom:5px;width:255px}.sample .title{background:#ccc;padding:5px;width:100%;box-sizing:border-box;border-top-left-radius:8px;border-top-right-radius:8px}.sample .samplePane{overflow-y:auto;overflow-x:hidden;padding:5px;height:262px;position:relative}.sample pre{margin:0}.sample pre.prettyprint{border:none}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.function h1 .returns{float:right;font-weight:normal}.function h1 .returns .type{font-weight:bold;font-style:italic}.function .name{font-size:1.2em}.example{background:#eed;padding:10px;margin:10px 0}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.messages{list-style:none;padding:0}.messages li{padding:5px}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('ul.welcome li{background:#103070;color:#fff;text-align:center;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);font:bold 64pt \'Cambria\'}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.taskList{list-style:none;padding:0}.taskList li{padding:5px}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.panels>div{margin-bottom:5px;border:1px solid #000}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.helloWorld h1{text-shadow:3px 3px 0 #aaa}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.folders{background-color:#bbb;list-style-type:none;padding:0;margin:0;border-radius:7px;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#d6d6d6),color-stop(.4,silver),color-stop(1,#a4a4a4));margin:10px 0 16px 0;font-size:0}.folders li:hover{background-color:#ddd}.folders li:first-child{border-left:none;border-radius:7px 0 0 7px}.folders li{font-size:16px;font-weight:bold;display:inline-block;padding:.5em 1.5em;cursor:pointer;color:#444;text-shadow:#f7f7f7 0 1px 1px;border-left:1px solid #ddd;border-right:1px solid #888}.folders li{*display:inline!important}.folders .selected{background-color:#444!important;color:#fff;text-shadow:none;border-right-color:#aaa;border-left:none;box-shadow:inset 1px 2px 6px #070707}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.folders{background-color:#bbb;list-style-type:none;padding:0;margin:0;border-radius:7px;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#d6d6d6),color-stop(.4,silver),color-stop(1,#a4a4a4));margin:10px 0 16px 0;font-size:0}.folders li:hover{background-color:#ddd}.folders li:first-child{border-left:none;border-radius:7px 0 0 7px}.folders li{font-size:16px;font-weight:bold;display:inline-block;padding:.5em 1.5em;cursor:pointer;color:#444;text-shadow:#f7f7f7 0 1px 1px;border-left:1px solid #ddd;border-right:1px solid #888}.folders li{*display:inline!important}.folders .selected{background-color:#444!important;color:#fff;text-shadow:none;border-right-color:#aaa;border-left:none;box-shadow:inset 1px 2px 6px #070707}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.mails{width:100%;table-layout:fixed;border-spacing:0}.mails th{background-color:#bbb;font-weight:bold;color:#444;text-shadow:#f7f7f7 0 1px 1px}.mails tbody tr:hover{cursor:pointer;background-color:#68c!important;color:#fff}.mails th,.mails td{text-align:left;padding:.4em .3em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mails td{border:0}.mails th{border:0;border-left:1px solid #ddd;border-right:1px solid #888;padding:.4em 0 .3em .7em}.mails th:nth-child(1),.mails td:nth-child(1){width:20%}.mails th:nth-child(2),.mails td:nth-child(2){width:15%}.mails th:nth-child(3),.mails td:nth-child(3){width:45%}.mails th:nth-child(4),.mails td:nth-child(4){width:15%}.mails th:last-child{border-right:none}.mails tr:nth-child(even){background-color:#eee}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.folders{background-color:#bbb;list-style-type:none;padding:0;margin:0;border-radius:7px;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#d6d6d6),color-stop(.4,silver),color-stop(1,#a4a4a4));margin:10px 0 16px 0;font-size:0}.folders li:hover{background-color:#ddd}.folders li:first-child{border-left:none;border-radius:7px 0 0 7px}.folders li{font-size:16px;font-weight:bold;display:inline-block;padding:.5em 1.5em;cursor:pointer;color:#444;text-shadow:#f7f7f7 0 1px 1px;border-left:1px solid #ddd;border-right:1px solid #888}.folders li{*display:inline!important}.folders .selected{background-color:#444!important;color:#fff;text-shadow:none;border-right-color:#aaa;border-left:none;box-shadow:inset 1px 2px 6px #070707}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.mails{width:100%;table-layout:fixed;border-spacing:0}.mails th{background-color:#bbb;font-weight:bold;color:#444;text-shadow:#f7f7f7 0 1px 1px}.mails tbody tr:hover{cursor:pointer;background-color:#68c!important;color:#fff}.mails th,.mails td{text-align:left;padding:.4em .3em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mails td{border:0}.mails th{border:0;border-left:1px solid #ddd;border-right:1px solid #888;padding:.4em 0 .3em .7em}.mails th:nth-child(1),.mails td:nth-child(1){width:20%}.mails th:nth-child(2),.mails td:nth-child(2){width:15%}.mails th:nth-child(3),.mails td:nth-child(3){width:45%}.mails th:nth-child(4),.mails td:nth-child(4){width:15%}.mails th:last-child{border-right:none}.mails tr:nth-child(even){background-color:#eee}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('.viewMail .mailInfo{background-color:#dae0e8;padding:1em 1em .5em 1.25em;border-radius:1em}.viewMail .mailInfo h1{margin-top:.2em;font-size:130%}.viewMail .mailInfo label{color:#777;font-weight:bold;min-width:2.75em;text-align:right;display:inline-block}.viewMail .message{padding:0 1.25em}')
+    .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
     .text('.block{background:#fff;border:1px solid #aaa;margin-bottom:10px;margin-top:10px;border-radius:8px;box-sizing:border-box;padding:20px}.block p{margin:10px 0;font-size:18px}.block .child{position:relative;padding:15px;border:2px solid #222;border-radius:6px;margin-bottom:10px}.block .child h1{color:#fff;background:#222;font-weight:bold;font-size:inherit;height:20px;margin:-15px -15px 0 -15px;padding:7px 10px 10px 10px}.block .child p{margin:10px 0}.block .child pre{margin:0}.child img{position:absolute;top:50%;right:20px;margin-top:-30px}img.topRight{position:static!important;float:right;margin:0!important}.out .content.block{margin-top:0}.block>h1{color:#fff;font-weight:bold;font-size:inherit;height:20px;border-top-left-radius:8px;border-top-right-radius:8px;padding:10px;margin:-20px -20px 10px -20px;text-shadow:3px 3px 0 black,5px 5px 5px rgba(0,0,0,.5);background:#103070;background:-moz-linear-gradient(top,#103070 0%,#457ae4 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#103070),color-stop(100%,#457ae4));background:-webkit-linear-gradient(top,#103070 0%,#457ae4 100%);background:-o-linear-gradient(top,#103070 0%,#457ae4 100%);background:-ms-linear-gradient(top,#103070 0%,#457ae4 100%);background:linear-gradient(to bottom,#103070 0%,#457ae4 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#103070\',endColorstr=\'#457ae4\',GradientType=0)}.block h2{font-size:1.2em;font-weight:bold;margin-top:10px}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('body{background:#ccc;font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif;padding:0;margin:0;overflow-y:scroll}h1,h2,h3{margin-top:0}b{color:#103070}.padded{padding:10px}.underline{text-decoration:underline}.clear{clear:both}a,a:active,a:visited,a:link{text-decoration:none;cursor:pointer;color:#1b50ba}a:hover{text-decoration:underline}table{border-spacing:0;border-collapse:collapse}th{text-align:left;background:#457ae4;color:#fff;padding:2px 5px}th,td{border:1px solid #457ae4;padding:2px 5px}pre.inline{display:inline-block}')
+    .text('body{background:#ccc;font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helvetica,Verdana,sans-serif;padding:0;margin:0;overflow-y:scroll}h1,h2,h3{margin-top:0}b{color:#103070}.padded{padding:10px}.underline{text-decoration:underline}.clear{clear:both}a,a:active,a:visited,a:link{text-decoration:none;cursor:pointer;color:#1b50ba}a:hover{text-decoration:underline}table{border-spacing:0;border-collapse:collapse}table.pointer tr:hover{background:#103070;color:#fff}table.pointer tr{cursor:pointer}th{text-align:left;background:#457ae4;color:#fff;padding:2px 5px}th,td{border:1px solid #457ae4;padding:2px 5px}pre.inline{display:inline-block}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')

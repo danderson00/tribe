@@ -11,7 +11,7 @@
 //        include: [
 //            { files: 'Build/Common.' + platform + '.js' },
 //            { files: 'Build/Common.' + platform + '.htm', template: 'embedHeaderContent' },
-//            { files: 'Build/Common.' + platform + '.css', template: 'embedCss' }
+//            { files: 'Build/Common.' + platform + '.css', template: 'T.style' }
 //        ]
 //    });
 

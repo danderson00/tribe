@@ -116,6 +116,14 @@
     <Content Include="Build\site.js" />
     <Content Include="Build\site.min.js" />
     <Content Include="Images\download.png" />
+    <Content Include="Panes\Content\Reference\PackScript\builtins.htm" />
+    <Content Include="Panes\Content\Reference\PackScript\includes.htm" />
+    <Content Include="Panes\Content\Reference\PackScript\sync.htm" />
+    <Content Include="Panes\Content\Reference\PackScript\zip.htm" />
+    <Content Include="Panes\Content\Reference\PackScript\operation.htm" />
+    <Content Include="Panes\Content\Reference\PackScript\pack.htm" />
+    <Content Include="Panes\Content\Reference\PackScript\packscript.js" />
+    <Content Include="Panes\Content\Reference\PackScript\templates.htm" />
     <Content Include="unsupported.html" />
     <Content Include="Css\block.css" />
     <Content Include="Css\prettify.css" />

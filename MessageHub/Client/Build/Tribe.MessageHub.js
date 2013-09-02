@@ -1,3 +1,4 @@
+// client.js
 Tribe = window.Tribe || {};
 Tribe.MessageHub = Tribe.MessageHub || {};
 
@@ -62,7 +63,9 @@ Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
                 hub.server.leaveChannel(id);
             });
     };
-};/*!
+};
+// initialise.js
+/*!
  * Based on ASP.NET SignalR JavaScript Library v1.0.0 http://signalr.net/
  * License at https://github.com/SignalR/SignalR/blob/master/LICENSE.md
  */
@@ -174,6 +177,8 @@ Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
         $.extend(signalR, signalR.hub.createHubProxies());
     }
 })();
+
+// Publisher.js
 Tribe = window.Tribe || {};
 Tribe.MessageHub = Tribe.MessageHub || {};
 
@@ -216,7 +221,9 @@ Tribe.MessageHub.Publisher = function (hub) {
             state === $.signalR.connectionState.connected :
             hub.connection.state === $.signalR.connectionState.connected;
     }
-};Tribe.PubSub.prototype.joinChannel = function(channelId, replayOrOptions) {
+};
+// PubSub.extensions.js
+Tribe.PubSub.prototype.joinChannel = function(channelId, replayOrOptions) {
     TMH.joinChannel(channelId, replayOrOptions);
 };
 

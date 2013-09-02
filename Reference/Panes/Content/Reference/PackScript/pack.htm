@@ -1,0 +1,36 @@
+﻿<div class="content block">
+    <h1>pack(options);</h1>
+    <p>
+        The pack function is used to combine and transform sets of files into a single output.
+        The following options can be used:
+    </p>
+    <div data-bind="pane: '/Interface/API/propertyList', data: { properties: Reference.PackScript.pack }"></div>
+
+    <h2>Examples</h2>
+    <pre class="example">
+pack({
+    to: 'Build/site.min.js',
+    include: '*.js',
+    exclude: 'debug.js',
+    minify: true
+});</pre>
+    <p>
+        This example combines all of the JavaScript files in the same directory as the configuration file,
+        minifies the output and writes it to site.min.js in the Build folder.
+    </p>
+
+    <pre class="example">
+pack({
+    to: 'Build/site.js',
+    include: [
+        'Scripts/*.js',
+        { files: 'Templates/*.htm', template: 'embedTemplate' },
+        { files: 'Styles/*.css', template: 'embedCss' }
+    ]
+});</pre>
+    <p>
+        This example combines JavaScript files in the Scripts folder, HTML templates from the Templates
+        folder and CSS files from the Styles folder into a single file. The templates and stylesheets
+        are embedded into the output JavaScript using the built in templates embedTemplate and embedCss.
+    </p>
+</div>

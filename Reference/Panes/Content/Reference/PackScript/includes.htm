@@ -1,0 +1,45 @@
+﻿<div class="content block">
+    <h1>Including and Excluding Sets of Files</h1>
+    <p>
+        The include and exclude options are available when using the pack, sync or zip commands.
+        Files can be specified as simple string specifications, as an object or an array of both.
+        Options available are:
+    </p>
+    <div data-bind="pane: '/Interface/API/propertyList', data: { properties: Reference.PackScript.includeOptions }"></div>
+    <p>Options such as recursive and template override the values set in the main configuration.</p>
+
+    <h2>Examples</h2>
+    <p>A simple string specification.</p>
+    <pre class="example">
+include: 'Scripts/*.js'</pre>
+
+    <p>As an object that specifies additional options.</p>
+    <pre class="example">
+include: { files: 'Templates/*.htm', template: 'embedTemplate' }</pre>
+
+    <p>A more complex example.</p>
+    <pre class="example">
+pack({
+    to: 'Build/site.js',
+    include: [
+        { 
+            files: 'Scripts/*.js', 
+            template: { name: 'sourceUrl', data: { prefix: '/Source/' } },
+            first: 'intro.js',
+            last: 'outro.js',
+            recursive: false
+        }, {
+        { 
+            files: 'Templates/*.htm', 
+            template: 'embedTemplate' 
+        }, {
+            files: 'Styles/*.css',
+            template: 'embedCss'
+        }
+    ],
+    exclude: '*.debug.js',
+    outputTemplate: 'license',
+    recursive: true,
+    minify: true
+});</pre>
+</div>

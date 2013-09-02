@@ -19,8 +19,8 @@ pack({
 
 function includes(chrome) {
     return [
-        chrome ? T.panes.chrome('Panes') : T.panes('Panes'),
-        'Infrastructure/*.js',
-        { files: 'Css/*.css', template: 'embedCss' }
+        T.panes('Panes', chrome),
+        T.scripts('Infrastructure', chrome),
+        T.styles('Css')
     ];
 }

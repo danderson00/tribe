@@ -1,0 +1,31 @@
+﻿<div class="content block">
+    <h1>sync(options);</h1>
+    <p>
+        The sync function is used to synchronise files from one location to another.
+        The following options can be used:
+    </p>
+    <div data-bind="pane: '/Interface/API/propertyList', data: { properties: Reference.PackScript.sync }"></div>
+
+    <h2>Examples</h2>
+    <pre class="example">
+sync({
+    to: 'Libraries',
+    include: '../../Libraries/foo.js'
+});</pre>
+    <p>This simple example keeps a local copy of foo.js in sync with an external source.</p>
+
+    <pre class="example">
+sync({
+    to: 'Build',
+    include: [
+        'Component1/Build/*.js',
+        'Component2/Client/Build/*.js'
+    ],
+    exclude: 'debug.js',
+    recursive: true
+});</pre>
+    <p>
+        Here, we are keeping a master build folder synchronised with individual components.
+        The folder structure underneath each included path is preserved.
+    </p>
+</div>

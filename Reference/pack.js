@@ -20,37 +20,31 @@ pack([
     },
     {
         to: 'Build/site.js',
-        include: [
-            T.scripts('Infrastructure'),
-            T.panes('Panes'),
-            css()
-        ]
+        include: includes()
     },
     {
         to: 'Build/site.min.js',
-        include: [
-            T.scripts('Infrastructure'),
-            T.panes('Panes'),
-            css()
-],
+        include: includes(),
         minify: true
     },
     {
         to: 'Build/site.chrome.js',
-        include: [
-            T.scripts.chrome('Infrastructure'),
-            T.panes.chrome('Panes'),
-            css()
-        ]
+        include: includes(true)
     },
     {
         to: 'Build/m.js',
-        include: [
-            T.panes('Panes/Samples')
-        ],
+        include: T.panes('Panes/Samples'),
         minify: true
     }
 ]);
+
+function includes(debug) {
+    return [
+        T.scripts('Infrastructure', debug),
+        T.panes('Panes', debug),
+        T.styles('Css')
+    ];
+}
 
 function sample(name) {
     return {
@@ -62,7 +56,7 @@ function sample(name) {
 function css() {
     return {
         files: 'Css/*.css',
-        template: 'embedCss'
+        template: 'T.style'
     };
 }
 

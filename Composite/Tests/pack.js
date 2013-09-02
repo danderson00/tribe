@@ -1,27 +1,25 @@
 ﻿var unitTestIncludes = [
-    'Unit/Utilities/*.tests.js',
-    'Unit/Types/*.tests.js',
-    'Unit/LoadHandlers/*.tests.js',
-    'Unit/LoadStrategies/*.tests.js',
-    'Unit/Events/*.tests.js',
-    'Unit/Transitions/*.tests.js'
+    T.scripts('Unit/Utilities/*.tests.js', true),
+    T.scripts('Unit/Types/*.tests.js', true),
+    T.scripts('Unit/LoadHandlers/*.tests.js', true),
+    T.scripts('Unit/LoadStrategies/*.tests.js', true),
+    T.scripts('Unit/Events/*.tests.js', true),
+    T.scripts('Unit/Transitions/*.tests.js', true)
 ];
 
 var integrationTestIncludes = [
-    'Integration/*.tests.js'
+    T.scripts('Integration/*.tests.js', true)
 ];
 
 var infrastructureIncludes = [
-    'Integration/Infrastructure/*.js',
-    'Unit/Infrastructure/*.js'
+    T.scripts('Integration/Infrastructure/*.js', true),
+    T.scripts('Unit/Infrastructure/*.js', true)
 ];
 
 pack({
     to: '../Build/Tests/Tribe.Composite.tests.js',
     include: ['setup.js', infrastructureIncludes, unitTestIncludes, integrationTestIncludes],
-    recursive: true,
-    prioritise: 'setup.js',
-    template: T.chromeScript('Tests')
+    prioritise: 'setup.js'
 });
 
 pack(T.mockjax('../Build/Tests/Tribe.Composite.tests.mockjax.js', 'Integration/Panes'));

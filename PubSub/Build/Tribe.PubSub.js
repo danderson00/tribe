@@ -1,3 +1,4 @@
+// core.js
 window.Tribe = window.Tribe || {};
 window.Tribe.PubSub = function (options) {
     var self = this;
@@ -81,7 +82,9 @@ window.Tribe.PubSub = function (options) {
     function option(name) {
         return (options && options.hasOwnProperty(name)) ? options[name] : Tribe.PubSub.options[name];
     }
-};Tribe.PubSub.Lifetime = function (parent, owner) {
+};
+// Lifetime.js
+Tribe.PubSub.Lifetime = function (parent, owner) {
     var self = this;
     var tokens = [];
 
@@ -125,13 +128,17 @@ window.Tribe.PubSub = function (options) {
             tokens.push(token);
         return token;
     }
-};window.Tribe.PubSub.options = {
+};
+// options.js
+window.Tribe.PubSub.options = {
     sync: false,
     handleExceptions: true,
     exceptionHandler: function(e, envelope) {
         console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + e.message);
     }
-};Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
+};
+// subscribeOnce.js
+Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     var self = this;
     var utils = Tribe.PubSub.utils;
     var lifetime = this.createLifetime();
@@ -163,7 +170,9 @@ window.Tribe.PubSub = function (options) {
             func.apply(self, arguments);
         };
     }
-};Tribe.PubSub.SubscriberList = function() {
+};
+// SubscriberList.js
+Tribe.PubSub.SubscriberList = function() {
     var subscribers = {};
     var lastUid = -1;
 
@@ -204,7 +213,9 @@ window.Tribe.PubSub = function (options) {
             .replace(/\*/g, "[^\.]*") + "$";
         return published.match(expression);
     }
-};Tribe.PubSub.utils = {};
+};
+// utils.js
+Tribe.PubSub.utils = {};
 (function(utils) {
     utils.isArray = function (source) {
         return source.constructor === Array;
@@ -242,3 +253,4 @@ window.Tribe.PubSub = function (options) {
         return results;
     };
 })(Tribe.PubSub.utils);
+

@@ -1,0 +1,18 @@
+﻿<div class="content block">
+    <h1>zip(options);</h1>
+    <p>
+        The zip function is used to create a compressed file in ZIP format.
+        The following options can be used:
+    </p>
+    <div data-bind="pane: '/Interface/API/propertyList', data: { properties: Reference.PackScript.zip }"></div>
+
+
+    <h2>Examples</h2>
+    <pre class="example">
+zip({
+    to: 'Content/Build.zip',
+    include: 'Build/*.*',
+    recursive: true
+});</pre>
+    <p>This compresses the entire directory structure underneath the Build directory to Content/Build.zip.</p>
+</div>

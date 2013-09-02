@@ -48,6 +48,15 @@
             'Configuration': 'configuration',
             'Client API': 'client',
         },
+        'PackScript': {
+            'Operation': 'operation',
+            'Packing': 'pack',
+            'Synchronising': 'sync',
+            'Compressing': 'zip',
+            'Including Files': 'includes',
+            'Templates': 'templates',
+            'Tribe': 'builtins'
+        }
         //'Mobile': {},
         //'Forms': {},
         //'Components': {}

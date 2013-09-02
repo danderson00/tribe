@@ -243,6 +243,7 @@ window.Tribe.PubSub = function (options) {
         return results;
     };
 })(Tribe.PubSub.utils);
+// setup.js
 (function (global) {
     if (!jQuery)
         throw 'jQuery must be loaded before knockout.composite can initialise';
@@ -266,6 +267,8 @@ window.Tribe.PubSub = function (options) {
         $('head').append('<style class="__tribe">.__rendering { position: fixed; top: -10000px; left: -10000px; }</style>');
     });
 })(window || this);
+
+// options.js
 TC.defaultOptions = function() {
     return {
         synchronous: false,
@@ -276,7 +279,9 @@ TC.defaultOptions = function() {
         events: ['loadResources', 'createPubSub', 'createModel', 'initialiseModel', 'renderPane', 'renderComplete', 'active', 'dispose']
     };
 };
-TC.options = TC.defaultOptions();(function () {
+TC.options = TC.defaultOptions();
+// Utilities/bindingHandlers.js
+(function () {
     ko.bindingHandlers.cssClass = {
         update: function (element, valueAccessor) {
             var value = valueAccessor();
@@ -306,7 +311,9 @@ TC.options = TC.defaultOptions();(function () {
         };
     }
 
-})();(function (utils) {    
+})();
+// Utilities/collections.js
+(function (utils) {    
     utils.each = function (collection, iterator) {
         return $.each(collection || [], function (index, value) {
             return iterator(value, index);
@@ -343,7 +350,9 @@ TC.options = TC.defaultOptions();(function () {
         });
         return initialValue;
     };
-})(TC.Utils);(function() {
+})(TC.Utils);
+// Utilities/embeddedContext.js
+(function() {
     TC.Utils.embedState = function (model, context, node) {
         embedProperty(model, 'context', context);
         embedProperty(model, 'node', node);
@@ -371,6 +380,8 @@ TC.options = TC.defaultOptions();(function () {
         return target && target['__' + key];
     }
 })();
+
+// Utilities/events.js
 (function () {
     TC.Utils.elementDestroyed = function (element) {
         if (element.constructor === jQuery)
@@ -420,7 +431,9 @@ TC.options = TC.defaultOptions();(function () {
             document.removeEventListener(name, internalHandler);
         }
     };    
-})();TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
+})();
+// Utilities/exceptions.js
+TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
     if (handleExceptions)
         try {
             func.apply(func, args);
@@ -429,7 +442,9 @@ TC.options = TC.defaultOptions();(function () {
         }
     else
         func.apply(func, args);
-};(function () {
+};
+// Utilities/idGenerator.js
+(function () {
     TC.Utils.idGenerator = function () {
         return {
             next: (function () {
@@ -449,7 +464,9 @@ TC.options = TC.defaultOptions();(function () {
     TC.Utils.getUniqueId = function () {
         return generator.next();
     };
-})();(function ($) {
+})();
+// Utilities/jquery.complete.js
+(function ($) {
     $.complete = function (deferreds) {
         var wrappers = [];
         var deferred = $.Deferred();
@@ -480,7 +497,9 @@ TC.options = TC.defaultOptions();(function () {
             }));
         }
     };
-})(jQuery);(function ($) {
+})(jQuery);
+// Utilities/jquery.destroyed.js
+(function ($) {
     var oldClean = jQuery.cleanData;
 
     // knockout also calls cleanData from it's cleanNode method - avoid any loops
@@ -496,14 +515,18 @@ TC.options = TC.defaultOptions();(function () {
         }
         oldClean(elements);
     };
-})(jQuery);TC.Utils.cleanElement = function (element) {
+})(jQuery);
+// Utilities/knockout.js
+TC.Utils.cleanElement = function (element) {
     // prevent knockout from calling cleanData 
     // - calls to this function ultimately result from cleanData being called by jQuery, so a loop will occur
     var func = $.cleanData;
     $.cleanData = undefined;
     ko.cleanNode(element);
     $.cleanData = func;
-};////namespace('TC.Utils');
+};
+// Utilities/objects.js
+////namespace('TC.Utils');
 ////category('Objects');
 
 ////func({
@@ -553,7 +576,9 @@ TC.Utils.evaluateProperty = function(target, property) {
                 result = result[properties[i]];
     }
     return result;
-};(function () {
+};
+// Utilities/panes.js
+(function () {
     var utils = TC.Utils;
 
     utils.getPaneOptions = function(value, otherOptions) {
@@ -579,6 +604,8 @@ TC.Utils.evaluateProperty = function(target, property) {
         return utils.bindPane(node, element, paneOptions, context);
     };
 })();
+
+// Utilities/Path.js
 (function() {
     TC.Path = Path;
 
@@ -658,6 +685,8 @@ TC.Utils.evaluateProperty = function(target, property) {
         }
     };
 })();
+
+// Utilities/querystring.parse.js
 (function () {
     // This is a modified version of modules from the YUI Library - 
     // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-parse.js.html
@@ -761,6 +790,8 @@ TC.Utils.evaluateProperty = function(target, property) {
         return params;
     }
 })();
+
+// Utilities/querystring.stringify.js
 (function () {
     // This is a modified version of modules from the YUI Library - 
     // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-stringify.js.html
@@ -827,6 +858,8 @@ TC.Utils.evaluateProperty = function(target, property) {
         return s;
     };
 })();
+
+// Types/History.js
 TC.Types.History = function (history) {
     var currentState = 0;
     history.replaceState(currentState, window.title);
@@ -875,7 +908,9 @@ else
         replaceState: function () { },
         pushState: function () { },
         go: function () { }
-    });TC.Types.Loader = function () {
+    });
+// Types/Loader.js
+TC.Types.Loader = function () {
     var self = this;
     var resources = {};
 
@@ -901,6 +936,8 @@ else
         return null;
     };
 };
+
+// Types/Logger.js
 TC.Types.Logger = function () {
     var logLevel = 0;
     var logger = 'console';
@@ -954,7 +991,9 @@ TC.Types.Logger = function () {
     };
 };
 
-TC.logger = new TC.Types.Logger();TC.Types.Models = function () { };
+TC.logger = new TC.Types.Logger();
+// Types/Models.js
+TC.Types.Models = function () { };
 
 TC.Types.Models.prototype.register = function (resourcePath, constructor, options) {
     this[resourcePath] = {
@@ -962,7 +1001,9 @@ TC.Types.Models.prototype.register = function (resourcePath, constructor, option
         options: options || {}
     };
     TC.logger.debug("Model loaded for " + resourcePath);
-};TC.Types.Navigation = function (node, options) {
+};
+// Types/Navigation.js
+TC.Types.Navigation = function (node, options) {
     normaliseOptions();
     setInitialPaneState();
 
@@ -1040,7 +1081,9 @@ TC.Types.Models.prototype.register = function (resourcePath, constructor, option
     function initialStackItem() {
         return { path: node.pane.path, data: node.pane.data };
     }
-};TC.Types.Node = function (parent, pane) {
+};
+// Types/Node.js
+TC.Types.Node = function (parent, pane) {
     this.parent = parent;
     this.children = [];
     this.root = parent ? parent.root : this;
@@ -1115,7 +1158,9 @@ TC.Types.Node.prototype.dispose = function() {
         delete this.pane.node;
         this.pane.dispose();
     }
-};TC.Types.Operation = function () {
+};
+// Types/Operation.js
+TC.Types.Operation = function () {
     var self = this;
     var incomplete = [];
 
@@ -1131,7 +1176,9 @@ TC.Types.Node.prototype.dispose = function() {
             self.promise.resolve();
     };
     
-};TC.Types.Pane = function (options) {
+};
+// Types/Pane.js
+TC.Types.Pane = function (options) {
     TC.Utils.inheritOptions(options, this, ['path', 'data', 'element', 'transition', 'reverseTransitionIn', 'handlesNavigation', 'pubsub', 'id', 'skipPath']);
 
     // events we are interested in hooking in to - this could be done completely generically by the pipeline
@@ -1190,7 +1237,9 @@ TC.Types.Pane.prototype.endRender = function () {
 
 TC.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
-};TC.Types.Pipeline = function (events, context) {
+};
+// Types/Pipeline.js
+TC.Types.Pipeline = function (events, context) {
     this.execute = function (eventsToExecute, target) {
         var currentEvent = -1;
         var promise = $.Deferred();
@@ -1225,7 +1274,9 @@ TC.Types.Pane.prototype.toString = function () {
 
         return promise;
     };
-};TC.Types.Saga = function (pane, handlers, initialData) {
+};
+// Types/Saga.js
+TC.Types.Saga = function (pane, handlers, initialData) {
     var self = this;
     
     this.pubsub = pane.pubsub.createLifetime();
@@ -1266,7 +1317,9 @@ TC.Types.Pane.prototype.toString = function () {
             child.end();
         });
     };
-};TC.Types.Templates = function () {
+};
+// Types/Templates.js
+TC.Types.Templates = function () {
     var self = this;
 
     this.store = function (template, path) {
@@ -1287,9 +1340,13 @@ TC.Types.Pane.prototype.toString = function () {
         // can't use html() to append - this uses the element innerHTML property and IE7 and 8 will strip comments (i.e. containerless control flow bindings)
         $(target).empty().append($('head script#template-' + id).html());
     };
-};TC.Events.active = function (pane, context) {
+};
+// Events/active.js
+TC.Events.active = function (pane, context) {
     return TC.Utils.elementDestroyed(pane.element);
-};TC.Events.createModel = function (pane, context) {
+};
+// Events/createModel.js
+TC.Events.createModel = function (pane, context) {
     var definition = context.models[pane.path];
     var model = definition && definition.constructor ?
         new definition.constructor(pane) :
@@ -1298,29 +1355,39 @@ TC.Types.Pane.prototype.toString = function () {
     TC.Utils.embedState(model, context, pane.node);
 
     pane.model = model;
-};TC.Events.createPubSub = function (pane, context) {
+};
+// Events/createPubSub.js
+TC.Events.createPubSub = function (pane, context) {
     if (context.pubsub)
         pane.pubsub = context.pubsub.createLifetime ?
             context.pubsub.createLifetime() :
             context.pubsub;
 };
+
+// Events/dispose.js
 TC.Events.dispose = function (pane, context) {
     pane.pubsub && pane.pubsub.end && pane.pubsub.end();
     pane.dispose();
     pane.is.disposed.resolve();
 };
+
+// Events/initialiseModel.js
 TC.Events.initialiseModel = function (pane, context) {
     if (pane.model.initialise)
         return pane.model.initialise();
     return null;
-};TC.Events.loadResources = function (pane, context) {
+};
+// Events/loadResources.js
+TC.Events.loadResources = function (pane, context) {
     var strategy = TC.LoadStrategies[context.options.loadStrategy];
     
     if (!strategy)
         throw "Unknown resource load strategy";
 
     return strategy(pane, context);
-};TC.Events.renderComplete = function (pane, context) {
+};
+// Events/renderComplete.js
+TC.Events.renderComplete = function (pane, context) {
     $.when(TC.transition(pane, pane.transition, pane.reverseTransitionIn).in()).done(executeRenderComplete);
     setTimeout(function() {
         pane.endRender();
@@ -1333,7 +1400,9 @@ TC.Events.initialiseModel = function (pane, context) {
         TC.Utils.raiseDocumentEvent('renderComplete', pane);
         context.renderOperation = new TC.Types.Operation();
     }
-};TC.Events.renderPane = function (pane, context) {
+};
+// Events/renderPane.js
+TC.Events.renderPane = function (pane, context) {
     var renderOperation = context.renderOperation;
 
     pane.startRender();
@@ -1351,7 +1420,9 @@ TC.Events.initialiseModel = function (pane, context) {
         for (var i = 0; i < elements.length; i++)
             ko.applyBindings(pane.model, elements[i]);
     }
-};TC.LoadHandlers.js = function (url, resourcePath, context) {
+};
+// LoadHandlers/scripts.js
+TC.LoadHandlers.js = function (url, resourcePath, context) {
     return $.ajax({
         url: url,
         dataType: 'text',
@@ -1402,7 +1473,9 @@ TC.Events.initialiseModel = function (pane, context) {
         var tagMatches = script.match("(//@ sourceURL=)");
         return tagMatches && tagMatches.length > 1;
     }
-};TC.LoadHandlers.css = function (url, resourcePath, context) {
+};
+// LoadHandlers/stylesheets.js
+TC.LoadHandlers.css = function (url, resourcePath, context) {
     return $.ajax({
         url: url,
         dataType: 'text',
@@ -1418,7 +1491,9 @@ TC.Events.initialiseModel = function (pane, context) {
             .text(stylesheet)
             .appendTo('head');
     }
-};TC.LoadHandlers.htm = function (url, resourcePath, context) {
+};
+// LoadHandlers/templates.js
+TC.LoadHandlers.htm = function (url, resourcePath, context) {
     return $.ajax({
         url: url,
         dataType: 'html',
@@ -1432,6 +1507,8 @@ TC.Events.initialiseModel = function (pane, context) {
     }
 };
 TC.LoadHandlers.html = TC.LoadHandlers.htm;
+
+// LoadStrategies/adhoc.js
 TC.LoadStrategies.adhoc = function (pane, context) {
     if (context.loadedPanes[pane.path] !== undefined)
         return context.loadedPanes[pane.path];
@@ -1458,13 +1535,17 @@ TC.LoadStrategies.adhoc = function (pane, context) {
         });
 
     return deferred;
-};TC.LoadStrategies.preloaded = function (pane, context) {
+};
+// LoadStrategies/preloaded.js
+TC.LoadStrategies.preloaded = function (pane, context) {
     if (!context.models[pane.path] && !context.templates.loaded(pane.path)) {
         TC.logger.error("No resources loaded for '" + pane.path + "'.");
         return $.Deferred().reject();
     }
     return null;
-};TC.transition = function (target, transition, reverse) {
+};
+// Transitions/transition.js
+TC.transition = function (target, transition, reverse) {
     var node;
     var pane;
     var element;
@@ -1540,7 +1621,9 @@ TC.LoadStrategies.adhoc = function (pane, context) {
             element = target;
         }
     }    
-};(function () {
+};
+// Transitions/Css/css.js
+(function () {
     var supported = supportsTransitions();
     
     createCssTransition('fade');
@@ -1610,10 +1693,14 @@ TC.LoadStrategies.adhoc = function (pane, context) {
         return false;
     }
 })();
+
+// Transitions/Css/style.css.js
 $('<style/>')
     .attr('class', '__tribe')
     .text('.trigger{-webkit-transition:all 250ms ease-in-out;transition:all 250ms ease-in-out}.fade.in.prepare{opacity:0}.fade.in.trigger{opacity:1}.fade.out.prepare{opacity:1}.fade.out.trigger{opacity:0}.slideRight.in.prepare{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideRight.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideRight.out.trigger{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.prepare{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideLeft.out.trigger{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideDown.in.prepare{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.slideDown.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideDown.out.trigger{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.prepare{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideUp.out.trigger{-webkit-transform:translateY(-100%);transform:translateY(-100%)}')
     .appendTo('head');
+
+// Api/api.js
 (function () {
     TC.registerModel = function () {
         var environment = TC.scriptEnvironment || {};
@@ -1649,7 +1736,9 @@ $('<style/>')
         } else
             ko.applyBindings(model);
     };
-})(); (function() {
+})(); 
+// Api/bindingHandler.js
+(function() {
     ko.bindingHandlers.pane = { init: updateBinding };
 
     function updateBinding(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -1662,6 +1751,8 @@ $('<style/>')
         }
     }
 })();
+
+// Api/context.js
 (function () {
     var staticState;
 
@@ -1680,6 +1771,8 @@ $('<style/>')
         return $.extend({}, staticState, perContextState, source);
     };
 })();
+
+// Api/defaultUrlProvider.js
 TC.options.defaultUrlProvider = {
     urlDataFrom: function(paneOptions) {
         return null;
@@ -1687,7 +1780,9 @@ TC.options.defaultUrlProvider = {
     paneOptionsFrom: function(url) {
         return null;
     }
-};(function () {
+};
+// Api/nodes.js
+(function () {
     var utils = TC.Utils;
 
     TC.createNode = function (element, paneOptions, parentNode, context) {
@@ -1714,10 +1809,14 @@ TC.options.defaultUrlProvider = {
         return element && TC.Utils.extractNode(ko.contextFor($(element)[0]));
     };
 })();
+
+// Loggers/console.js
 TC.Loggers.console = function(level, message) {
     if (window.console && window.console.log)
         window.console.log(level.toUpperCase() + ': ' + message);
-};Tribe = window.Tribe || {};
+};
+// client.js
+Tribe = window.Tribe || {};
 Tribe.MessageHub = Tribe.MessageHub || {};
 
 Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
@@ -1781,7 +1880,9 @@ Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
                 hub.server.leaveChannel(id);
             });
     };
-};/*!
+};
+// initialise.js
+/*!
  * Based on ASP.NET SignalR JavaScript Library v1.0.0 http://signalr.net/
  * License at https://github.com/SignalR/SignalR/blob/master/LICENSE.md
  */
@@ -1893,6 +1994,8 @@ Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
         $.extend(signalR, signalR.hub.createHubProxies());
     }
 })();
+
+// Publisher.js
 Tribe = window.Tribe || {};
 Tribe.MessageHub = Tribe.MessageHub || {};
 
@@ -1935,7 +2038,9 @@ Tribe.MessageHub.Publisher = function (hub) {
             state === $.signalR.connectionState.connected :
             hub.connection.state === $.signalR.connectionState.connected;
     }
-};Tribe.PubSub.prototype.joinChannel = function(channelId, replayOrOptions) {
+};
+// PubSub.extensions.js
+Tribe.PubSub.prototype.joinChannel = function(channelId, replayOrOptions) {
     TMH.joinChannel(channelId, replayOrOptions);
 };
 

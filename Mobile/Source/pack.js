@@ -1,27 +1,32 @@
-﻿var includes = [
-    { files: 'Infrastructure/*.js' },
-    { files: 'Css/*.css', template: 'embedCss' },
-    T.panes('Panes', 'Mobile', 'Tribe.Mobile')
-];
+﻿function includes(debug) {
+    return [
+        T.panes(options('Panes', debug)),
+        T.scripts(options('Infrastructure', debug)),
+        T.styles(options('Css', debug))
+    ];
+}
 
-var chrome = [
-    { files: 'Infrastructure/*.js', template: [{ name: 'T.script', data: { domain: 'Tribe.Mobile' } }, 'T.chrome']  },
-    { files: 'Css/*.css', template: ['embedCss', 'T.chrome'] },
-    T.panes.chrome('Panes', 'Mobile', 'Tribe.Mobile')
-];
+function options(path, debug) {
+    return {
+        path: path,
+        prefix: 'Mobile/',
+        domain: 'Tribe.Mobile',
+        debug: debug
+    };
+}
 
 pack({
     to: '../Build/Tribe.Mobile.js',
-    include: includes
+    include: includes()
 });
 
 pack({
     to: '../Build/Tribe.Mobile.min.js',
-    include: includes,
+    include: includes(),
     minify: true
 });
 
 pack({
     to: '../Build/Tribe.Mobile.chrome.js',
-    include: chrome
-})
+    include: includes(true)
+});

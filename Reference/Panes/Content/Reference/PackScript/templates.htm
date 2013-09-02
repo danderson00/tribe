@@ -1,0 +1,38 @@
+﻿<div class="content block">
+    <h1>Templates</h1>
+    <p>
+        PackScript includes powerful templating functionality based on 
+        <a href="http://underscorejs.org/#template" target="_blank">underscore.js templates</a>.
+    </p>
+    
+    <p>
+        PackScript scans the target folder recursively for files with names matching the filespec <strong>*.template.*</strong>.
+        These templates are made available to the pack function.
+    </p>
+
+
+    <h2>Examples</h2>
+    <p>
+        Let's define a simple template that appends a sourceUrl tag to scripts. We'll give this a filename of <strong>sourceUrl.template.js</strong>.
+        This file can be placed anywhere under the directory being processed by PackScript.
+    </p>
+    <pre class="example">
+<%= content %>
+//@ sourceURL=<%= data.prefix %><%= pathRelativeToConfig %></pre>
+    
+    <p>This template can then be used in the template option of the pack function:</p>    
+    <pre class="example">
+pack({
+    to: 'Build/site.js',
+    include: '*.js',
+    template: {
+        name: 'sourceUrl',
+        data: { prefix: '/Source/' }
+    }
+});</pre>    
+    <p></p>
+
+    <p>From within templates, the following properties are available:</p>
+    <div data-bind="pane: '/Interface/API/propertyList', data: { properties: Reference.PackScript.templateProperties }"></div>
+    <p>Only the content, data and configPath properties are available when the outputTemplate option is used.</p>
+</div>

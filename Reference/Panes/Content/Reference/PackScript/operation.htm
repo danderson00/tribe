@@ -1,0 +1,55 @@
+﻿<div class="content block">
+    <h1>PackScript</h1>
+    <h2>Operation</h2>
+    <p>
+        PackScript is distributed as a Windows console application. A node.js version will be released in
+        the near future. PackScript binaries can be obtained from 
+        <a href="https://github.com/danderson00/PackScript" target="_blank">github</a> and
+        are included in the Tribe <a href="http://danderson00.github.io/Tribe/Tribe.zip">download</a>.
+    </p>
+    
+    <p>
+        PackScript.exe has the following command line syntax:
+    </p>
+
+    <pre>PackScript.exe ["Directory\To\Process\"] [/watch]</pre>
+    
+    <p>If no directory is specified, the current working directory is used.</p>
+    <p>
+        /watch causes PackScript to remain active and keep all output files up to date as files change.
+        The console can also be used to interrogate or execute JavaScript members.
+    </p>
+
+    <h2>Configuration Files</h2>
+    <p>
+        PackScript scans recursively through the target directory structure and finds all files 
+        fitting the following specifications:
+    </p>
+    <table>
+        <tbody>
+            <tr>
+                <td>*pack.config.js</td>
+                <td>JavaScript configuration files. These are executed before any other file is processed.</td>
+            </tr>
+            <tr>
+                <td>*pack.js</td>
+                <td>JavaScript configuration files.</td>
+            </tr>
+            <tr>
+                <td>*.template.*</td>
+                <td>These files are loaded as templates and can be accessed by name using the template option.</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p>Create output files by executing the following functions in your configuration files:</p>
+    <table class="pointer">
+        <tbody data-bind="foreach: Reference.PackScript.functions">
+            <tr data-bind="click: Article.show('Reference', 'PackScript/' + name)">
+                <td data-bind="text: name"></td>
+                <td data-bind="text: description"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

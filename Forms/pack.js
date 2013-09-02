@@ -3,8 +3,8 @@
         T.scripts('Dependencies', chrome, 'Tribe.Mobile'),
         T.scripts('Infrastructure', chrome, 'Tribe.Mobile'),
         T.scripts('Binding Handlers', chrome, 'Tribe.Mobile'),
-        { files: 'Templates/*.htm', template: { name: 'embedTemplate', data: { component: 'Forms' } } },
-        { files: 'Css/*.css', template: { name: 'embedCss', data: { component: 'Forms' } } }
+        { files: 'Templates/*.htm', template: { name: 'T.template', data: { component: 'Forms' } } },
+        { files: 'Css/*.css', template: { name: 'T.style', data: { component: 'Forms' } } }
     ];
 }
 

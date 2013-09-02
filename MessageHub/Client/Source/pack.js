@@ -1,16 +1,23 @@
 ﻿pack({
     to: '../Build/Tribe.MessageHub.js',
-    include: '*.js'
+    include: T.scripts(options())
 });
 
 pack({
     to: '../Build/Tribe.MessageHub.chrome.js',
-    include: '*.js',
-    template: T.chromeScript('Tribe.MessageHub')
+    include: T.scripts(options(true))
 });
 
 pack({
     to: '../Build/Tribe.MessageHub.min.js',
-    include: '*.js',
+    include: T.scripts(options()),
     minify: true
 });
+
+function options(debug) {
+    return {
+        path: '*.js',
+        domain: 'Tribe.MessageHub',
+        debug: debug
+    };
+}

@@ -27,7 +27,7 @@
     },
     {
         name: 'TMH.publishToServer',
-        description: 'Publish a message to the server.',
+        description: 'Publish a message to the server. This is called internally when a message topic specified in joinChannel is published.',
         returns: 'undefined',
         arguments: [
             { name: 'channelId', type: 'String', description: 'The channel identifier.' },

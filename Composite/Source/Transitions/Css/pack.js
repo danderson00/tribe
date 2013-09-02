@@ -9,5 +9,5 @@ pack({
 pack({
     to: 'style.css.js',
     include: 'style.css',
-    template: 'embedCss'
+    template: 'T.Style'
 });
