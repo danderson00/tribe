@@ -84,7 +84,7 @@ Navigation = {
             'Compressing': 'zip',
             'Including Files': 'includes',
             'Templates': 'templates',
-            'Tribe': 'builtins'
+            'Built-in': 'builtins'
         }
         //'Mobile': {},
         //'Forms': {},
@@ -869,14 +869,37 @@ Reference.PackScript = {
         { name: 'data', type: 'Any', description: 'The data object passed in the configuration file, or an empty object if not specified.' }
     ],
     builtins: [
-    {
-        name: 'T.',
-        description: '',
-        arguments: [
-            { name: '', type: '', description: '' },
-        ],
-        returns: ''
-    },
+        {
+            Name: 'T.panes',
+            Description: 'Package models, templates and styles for panes from the specified path.'
+        },
+        {
+            Name: 'T.scripts',
+            Description: 'Package JavaScript files with an extension of \'js\' from the specified path.',
+        },
+        {
+            Name: 'T.templates',
+            Description: 'Package HTML templates with an extension of \'htm\' from the specified path.',
+        },
+        {
+            Name: 'T.styles',
+            Description: 'Package CSS styles files with an extension of \'css\' from the specified path.',
+        },
+        {
+            Name: 'T.models',
+            Description: 'Package pane models from the specified path.',
+        }
+    ],
+    builtinArguments: [
+        { name: 'pathOrOptions', type: 'String | Object', description: 'Either the path containing relevant files or an object containing options.' },
+        { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience.' }
+    ],
+    builtinOptions: [
+        { name: 'path', type: 'String', description: 'Can either be a directory name or filespec containing the appropriate extension.' },
+        { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience.' },
+        { name: 'prefix', type: 'String', description: 'Prefix the resource path applied to models and templates.' },
+        { name: 'domain', type: 'String', description: 'Specifies the domain to apply to each script in the debugger.' },
+        { name: 'protocol', type: 'String', description: 'Specifies the protocol to apply to each script in the debugger.' },
     ]
 };
 
@@ -1767,6 +1790,27 @@ TC.registerModel(function (pane) {
     }
 });
 
+// Panes/Interface/table.js
+TC.scriptEnvironment = { resourcePath: '/Interface/table' };
+TC.registerModel(function(pane) {
+    this.columns = mapColumns();
+    this.rows = mapRows();
+    
+    function mapColumns() {
+        return TC.Utils.map(pane.data[0], function(value, key) {
+            return key;
+        });
+    }
+    
+    function mapRows() {
+        return TC.Utils.map(pane.data, function (row) {
+            return TC.Utils.map(row, function(value) {
+                return value.toString();
+            });
+        });
+    }
+});
+
 // Panes/Interface/API/constructor.js
 TC.scriptEnvironment = { resourcePath: '/Interface/API/constructor' };
 TC.registerModel(function (pane) {    
@@ -2176,7 +2220,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-MessageHub-configuration"><div class="content block">\n    <h1>MessageHub Server Configuration API</h1>\n    \n    <p>\n        Configuration must start with ConfigureHub.With() followed by a container configuration.\n        Currently only Unity is supported.\n    </p>\n    <pre class="example">\nusing Tribe.MessageHub.Core.Configuration;\nusing Tribe.MessageHub.Containers.Unity;\n\nConfigureHub.With().Unity(container).StartHub();</pre>\n    \n    <p>The following extension methods are then provided, all chainable:</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.MessageHub.Server }"></div>\n    \n    <pre class="example">\nusing Tribe.MessageHub.Core.Configuration;\nusing Tribe.MessageHub.Containers.Unity;\nusing Tribe.MessageHub.ChannelPersisters.SqlServer;\nusing Tribe.MessageHub.Buses.NServiceBus;\n\nConfigureHub.With()\n    .Unity(container)\n    .ChannelAuthoriser&lt;MyChannelAuthoriser>()\n    .SqlServerPersistence("Data Source=.;Initial Catalog=Tribe.Channels;Integrated Security=true")\n    .NServiceBus(bus)\n    .MessagesFrom(typeof(ExampleMessage).Assembly)\n    .StartHub();</pre>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-PackScript-builtins"><div class="content block">\n    <h1>Built-in Tribe Functions and Templates</h1>\n    <p>\n        PackScript provides a number of built-in configuration functions and templates to make\n        building and debugging your Tribe applications much easier.\n    </p>\n</div>\n\n<div class="content block">\n    <h1>Building Tribe Applications</h1>\n    \n    <div class="child">\n        <h1>T.panes</h1>\n        <p>The T.panes function </p>\n    </div>\n\n    <div class="child">\n        <h1>T.scripts</h1>\n    </div>\n\n    <div class="child">\n        <h1>T.template</h1>\n    </div>\n</div>\n\n<div class="content block">\n    <h1>Embedding Content in JavaScript</h1>\n\n    <div class="child">\n        <h1>embedCss</h1>\n    </div>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-PackScript-builtins"><div class="content block">\n    <h1>Built-in Functions and Templates</h1>\n    <p>\n        PackScript provides a number of built-in configuration functions and templates to make\n        building and debugging your Tribe applications much easier.\n    </p>\n    <div data-bind="pane: \'/Interface/table\', data: Reference.PackScript.builtins"></div>\n    \n    <p>An object consisting of the following properties can be passed to these functions:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PackScript.builtinOptions }"></div>\n    \n    <h2>Examples</h2>\n    <p>A simple site structure.</p>\n    <pre class="example">\npack({\n    to: \'Build/site.js\',\n    include: [\n        T.panes(\'Panes\'),\n        T.scripts(\'Infrastructure\'),\n        T.styles(\'Css\')\n    ]\n});</pre>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-PackScript-includes"><div class="content block">\n    <h1>Including and Excluding Sets of Files</h1>\n    <p>\n        The include and exclude options are available when using the pack, sync or zip commands.\n        Files can be specified as simple string specifications, as an object or an array of both.\n        Options available are:\n    </p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PackScript.includeOptions }"></div>\n    <p>Options such as recursive and template override the values set in the main configuration.</p>\n\n    <h2>Examples</h2>\n    <p>A simple string specification.</p>\n    <pre class="example">\ninclude: \'Scripts/*.js\'</pre>\n\n    <p>As an object that specifies additional options.</p>\n    <pre class="example">\ninclude: { files: \'Templates/*.htm\', template: \'embedTemplate\' }</pre>\n\n    <p>A more complex example.</p>\n    <pre class="example">\npack({\n    to: \'Build/site.js\',\n    include: [\n        { \n            files: \'Scripts/*.js\', \n            template: { name: \'sourceUrl\', data: { prefix: \'/Source/\' } },\n            first: \'intro.js\',\n            last: \'outro.js\',\n            recursive: false\n        }, {\n        { \n            files: \'Templates/*.htm\', \n            template: \'embedTemplate\' \n        }, {\n            files: \'Styles/*.css\',\n            template: \'embedCss\'\n        }\n    ],\n    exclude: \'*.debug.js\',\n    outputTemplate: \'license\',\n    recursive: true,\n    minify: true\n});</pre>\n</div></script>');
 $('head')
@@ -2247,6 +2291,8 @@ $('head')
     .append('<script type="text/template" id="template--Interface-navigationContainer"><div class="navigationContainer">\n    <ul>\n        <li data-bind="click: back, visible: !atStart()">Back</li>\n        <li data-bind="click: next, visible: !atEnd()">Next</li>\n    </ul>\n    <div data-bind="pane: initialPane, handlesNavigation: \'fade\'"></div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-sample"><div class="sample">\n    <div class="source">\n        <div class="title">Source</div>\n\n        <ul class="fileList" data-bind="foreach: files">\n            <li data-bind="click: $root.selectFile, css: { selectedFile: $root.selectedFile() === $data }">\n                <img data-bind="attr: { src: icon }" />\n                <span data-bind="text: filename"></span>\n            </li>\n        </ul>\n\n        <div class="fileContent" data-bind="html: selectedFile().content"></div>\n    </div>\n\n    <div class="result">\n        <div class="title">Result</div>\n        <div class="samplePane" data-bind="pane: samplePane"></div>\n    </div>\n</div>\n</script>');
+$('head')
+    .append('<script type="text/template" id="template--Interface-table"><table>\n    <thead>\n        <tr data-bind="foreach: columns">\n            <th data-bind="text: $data"></th>\n        </tr>\n    </thead>\n    <tbody data-bind="foreach: rows">\n        <tr data-bind="foreach: $data">\n            <td data-bind="html: $data"></td>\n        </tr>\n    </tbody>\n</table></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-API-constructor"><div data-bind="pane: \'function\', data: func">\n</div></script>');
 $('head')

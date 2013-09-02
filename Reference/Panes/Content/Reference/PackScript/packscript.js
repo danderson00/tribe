@@ -51,14 +51,37 @@
         { name: 'data', type: 'Any', description: 'The data object passed in the configuration file, or an empty object if not specified.' }
     ],
     builtins: [
-    {
-        name: 'T.',
-        description: '',
-        arguments: [
-            { name: '', type: '', description: '' },
-        ],
-        returns: ''
-    },
+        {
+            Name: 'T.panes',
+            Description: 'Package models, templates and styles for panes from the specified path.'
+        },
+        {
+            Name: 'T.scripts',
+            Description: 'Package JavaScript files with an extension of \'js\' from the specified path.',
+        },
+        {
+            Name: 'T.templates',
+            Description: 'Package HTML templates with an extension of \'htm\' from the specified path.',
+        },
+        {
+            Name: 'T.styles',
+            Description: 'Package CSS styles files with an extension of \'css\' from the specified path.',
+        },
+        {
+            Name: 'T.models',
+            Description: 'Package pane models from the specified path.',
+        }
+    ],
+    builtinArguments: [
+        { name: 'pathOrOptions', type: 'String | Object', description: 'Either the path containing relevant files or an object containing options.' },
+        { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience.' }
+    ],
+    builtinOptions: [
+        { name: 'path', type: 'String', description: 'Can either be a directory name or filespec containing the appropriate extension.' },
+        { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience.' },
+        { name: 'prefix', type: 'String', description: 'Prefix the resource path applied to models and templates.' },
+        { name: 'domain', type: 'String', description: 'Specifies the domain to apply to each script in the debugger.' },
+        { name: 'protocol', type: 'String', description: 'Specifies the protocol to apply to each script in the debugger.' },
     ]
 };
 

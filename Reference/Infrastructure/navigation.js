@@ -55,7 +55,7 @@
             'Compressing': 'zip',
             'Including Files': 'includes',
             'Templates': 'templates',
-            'Tribe': 'builtins'
+            'Built-in': 'builtins'
         }
         //'Mobile': {},
         //'Forms': {},

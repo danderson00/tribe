@@ -1,32 +1,23 @@
 ﻿<div class="content block">
-    <h1>Built-in Tribe Functions and Templates</h1>
+    <h1>Built-in Functions and Templates</h1>
     <p>
         PackScript provides a number of built-in configuration functions and templates to make
         building and debugging your Tribe applications much easier.
     </p>
-</div>
-
-<div class="content block">
-    <h1>Building Tribe Applications</h1>
+    <div data-bind="pane: '/Interface/table', data: Reference.PackScript.builtins"></div>
     
-    <div class="child">
-        <h1>T.panes</h1>
-        <p>The T.panes function </p>
-    </div>
-
-    <div class="child">
-        <h1>T.scripts</h1>
-    </div>
-
-    <div class="child">
-        <h1>T.template</h1>
-    </div>
-</div>
-
-<div class="content block">
-    <h1>Embedding Content in JavaScript</h1>
-
-    <div class="child">
-        <h1>embedCss</h1>
-    </div>
+    <p>An object consisting of the following properties can be passed to these functions:</p>
+    <div data-bind="pane: '/Interface/API/propertyList', data: { properties: Reference.PackScript.builtinOptions }"></div>
+    
+    <h2>Examples</h2>
+    <p>A simple site structure.</p>
+    <pre class="example">
+pack({
+    to: 'Build/site.js',
+    include: [
+        T.panes('Panes'),
+        T.scripts('Infrastructure'),
+        T.styles('Css')
+    ]
+});</pre>
 </div>
