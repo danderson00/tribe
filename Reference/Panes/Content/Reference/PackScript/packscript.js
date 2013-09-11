@@ -1,9 +1,18 @@
 ﻿Reference.PackScript = {
+    options: [
+        { Name: 'watch', Type: 'Boolean', Description: 'Makes PackScript stay active and watch for file changes.', Default: 'false' },
+        { Name: 'logLevel', Type: 'String', Description: 'Logging verbosity. Can be debug, info, warn or error.', Default: 'debug' },
+        { Name: 'packFileFilter', Type: 'String', Description: 'A filespec pattern to match pack files.', Default: '*pack.js' },
+        { Name: 'configurationFileFilter', Type: 'String', Description: 'A filespec pattern to match configuration files.', Default: '*pack.config.js' },
+        { Name: 'templateFileExtension', Type: 'String', Description: 'The file extension for template files.', Default: '.template.*' },
+        { Name: 'resourcePath', Type: 'String', Description: 'An additional path to scan for templates and configuration files.', Default: 'undefined' },
+        { Name: 'rubyPath', Type: 'String', Description: 'The path to ruby.exe. Required for SASS integration.', Default: 'undefined' }
+    ],
     pack: [
         { name: 'to', type: 'String', description: 'Destination path and filename for the output file.' },
-        { name: 'include', type: 'include options', description: 'The set of files to include in the output. See below for more details.' },
+        { name: 'include', type: 'include options', description: 'The set of files to include in the output. See "Including Files" for more details.' },
         { name: 'exclude', type: 'include options', description: 'A set of files to explicitly exclude.' },
-        { name: 'template', type: 'template options', description: 'A template or array of templates to apply to each included file. See templates reference for more details.' },
+        { name: 'template', type: 'template options', description: 'A template or array of templates to apply to each included file. See "Templates" reference for more details.' },
         { name: 'outputTemplate', type: 'template options', description: 'A template or array of templates to apply to the output.' },
         { name: 'recursive', type: 'Boolean', description: 'Recurse through directories by default when including files.' },
         { name: 'prioritise', type: 'String | Array', description: 'Specified file(s) will be included at the top of the output file.' },
@@ -50,39 +59,45 @@
         { name: 'pathRelativeToInclude', type: 'String', description: 'The path of the included file relative to the path specified in the include option.' },
         { name: 'data', type: 'Any', description: 'The data object passed in the configuration file, or an empty object if not specified.' }
     ],
-    builtins: [
-        {
-            Name: 'T.panes',
-            Description: 'Package models, templates and styles for panes from the specified path.'
-        },
-        {
-            Name: 'T.scripts',
-            Description: 'Package JavaScript files with an extension of \'js\' from the specified path.',
-        },
-        {
-            Name: 'T.templates',
-            Description: 'Package HTML templates with an extension of \'htm\' from the specified path.',
-        },
-        {
-            Name: 'T.styles',
-            Description: 'Package CSS styles files with an extension of \'css\' from the specified path.',
-        },
-        {
-            Name: 'T.models',
-            Description: 'Package pane models from the specified path.',
-        }
-    ],
-    builtinArguments: [
-        { name: 'pathOrOptions', type: 'String | Object', description: 'Either the path containing relevant files or an object containing options.' },
-        { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience.' }
-    ],
-    builtinOptions: [
-        { name: 'path', type: 'String', description: 'Can either be a directory name or filespec containing the appropriate extension.' },
-        { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience.' },
-        { name: 'prefix', type: 'String', description: 'Prefix the resource path applied to models and templates.' },
-        { name: 'domain', type: 'String', description: 'Specifies the domain to apply to each script in the debugger.' },
-        { name: 'protocol', type: 'String', description: 'Specifies the protocol to apply to each script in the debugger.' },
-    ]
+    Builtin: {
+        functions: [
+            {
+                Name: 'T.panes',
+                Description: 'Package models, templates and styles for panes from the specified path.'
+            },
+            {
+                Name: 'T.scripts',
+                Description: 'Package JavaScript files with an extension of \'js\' from the specified path.',
+            },
+            {
+                Name: 'T.templates',
+                Description: 'Package HTML templates with an extension of \'htm\' from the specified path.',
+            },
+            {
+                Name: 'T.styles',
+                Description: 'Package CSS styles files with an extension of \'css\' from the specified path.',
+            },
+            {
+                Name: 'T.models',
+                Description: 'Package pane models from the specified path.',
+            }
+        ],
+        arguments: [
+            { Name: 'pathOrOptions', Type: 'String | Object', Description: 'Either the path containing relevant files or an object containing options.' },
+            { Name: 'debug', Type: 'Boolean', Description: 'Use debug templates to enhance the debugging experience.' }
+        ],
+        options: [
+            { name: 'path', type: 'String', description: 'Can either be a directory name or filespec containing the appropriate extension.' },
+            { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience. <br/>This can also be enabled by specifying the debug transform.' },
+            { name: 'prefix', type: 'String', description: 'Prefix the resource path applied to models and templates.' },
+            { name: 'domain', type: 'String', description: 'Specifies the domain to apply to each script in the debugger.' },
+            { name: 'protocol', type: 'String', description: 'Specifies the protocol to apply to each script in the debugger.' },
+        ],
+        helpers: [
+            { Name: 'T.webTargets', Returns: 'target options', Description: 'Pass to the \'to\' function. Creates .js, .min.js and .debug.js outputs.' },
+            { Name: 'T.webDependency', Returns: 'include options', Description: 'Returns an include with the appropriate extension, .js, .min.js or .debug.js.' }
+        ]
+    }
 };
 
 /*

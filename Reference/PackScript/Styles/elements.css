@@ -1,0 +1,44 @@
+﻿a, a:active, a:visited, a:link {
+    text-decoration: none;
+    cursor: pointer;
+    color: #1b50ba;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+table {
+    border-spacing:0;
+    border-collapse: collapse;
+}
+
+table.pointer tr:hover {
+    background: #103070;
+    color: white;
+}
+
+table.pointer tr {
+    cursor: pointer;    
+}
+
+th {
+    text-align: left;
+    background: #457ae4;
+    color: white;
+    padding: 2px 5px;
+}
+
+th, td {
+    border: 1px solid #457ae4;
+    padding: 2px 5px;
+}
+
+h1 {
+    background: #90afef;
+    color: black;
+    border: 1px solid #999;
+    border-radius: 8px;
+    padding: 2px 10px 5px 10px;
+    text-shadow: 1px 1px 0 #DDD;
+}

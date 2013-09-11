@@ -38,12 +38,9 @@
     <Content Include=".gitignore" />
     <Content Include="Build\Tests\Tribe.Composite.tests.js" />
     <Content Include="Build\Tests\Tribe.Composite.tests.mockjax.js" />
-    <Content Include="Build\Tribe.Composite.chrome.js" />
+    <Content Include="Build\Tribe.Composite.debug.js" />
     <Content Include="Build\Tribe.Composite.js" />
     <Content Include="Build\Tribe.Composite.min.js" />
-    <Content Include="Libraries\Tribe.PubSub.chrome.js" />
-    <Content Include="Libraries\Tribe.PubSub.js" />
-    <Content Include="Libraries\Tribe.PubSub.min.js" />
     <Content Include="Samples\Transitions\index.html" />
     <Content Include="Samples\Transitions\layout.css" />
     <Content Include="Samples\Transitions\layout.htm" />

@@ -38,7 +38,7 @@
     <Content Include="..\Tribe.js">
       <Link>Dependencies\Tribe.js</Link>
     </Content>
-    <Content Include="Build\Tribe.Mobile.chrome.js" />
+    <Content Include="Build\Tribe.Mobile.debug.js" />
     <Content Include="Build\Tribe.Mobile.js" />
     <Content Include="Build\Tribe.Mobile.min.js" />
     <Content Include="Samples\Basic\navigate.js" />

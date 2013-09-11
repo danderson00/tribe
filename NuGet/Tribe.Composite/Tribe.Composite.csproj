@@ -43,7 +43,7 @@
     <Folder Include="lib\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content\Scripts\Tribe.chrome.js" />
+    <Content Include="content\Scripts\Tribe.debug.js" />
     <Content Include="content\Scripts\Tribe.js" />
     <Content Include="content\Scripts\Tribe.min.js" />
     <Content Include="content\Tools\Noesis.Javascript.dll" />

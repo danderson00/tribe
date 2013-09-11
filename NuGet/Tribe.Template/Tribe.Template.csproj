@@ -42,7 +42,7 @@
     <Folder Include="lib\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content\Build\site.chrome.js" />
+    <Content Include="content\Build\site.debug.js" />
     <Content Include="content\Build\site.js" />
     <Content Include="content\Build\site.min.js" />
     <Content Include="content\chrome.html" />

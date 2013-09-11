@@ -1,6 +1,5 @@
 ﻿<div class="content block">
-    <h1>PackScript</h1>
-    <h2>Operation</h2>
+    <h1>Running PackScript</h1>
     <p>
         PackScript is distributed as a Windows console application. A node.js version will be released in
         the near future. PackScript binaries can be obtained from 
@@ -12,13 +11,14 @@
         PackScript.exe has the following command line syntax:
     </p>
 
-    <pre>PackScript.exe ["Directory\To\Process\"] [/watch]</pre>
+    <pre class="example">PackScript.exe ["Directory\To\Process"] [/option[:value]]</pre>
     
+    <p>The following options can be specified:</p>
+    <div data-bind="pane: '/Interface/API/table', data: Reference.PackScript.options"></div>
+    <p>If a value is not provided for an option, true will be used.</p>
     <p>If no directory is specified, the current working directory is used.</p>
-    <p>
-        /watch causes PackScript to remain active and keep all output files up to date as files change.
-        The console can also be used to interrogate or execute JavaScript members.
-    </p>
+    <p>Options can also be specified as appSettings in PackScript.exe.config.</p>
+    <p>When in watch mode, the console can also be used to interrogate or execute JavaScript members.</p>
 
     <h2>Configuration Files</h2>
     <p>
@@ -51,5 +51,4 @@
             </tr>
         </tbody>
     </table>
-
 </div>

@@ -8,6 +8,7 @@
             'Getting Started': 'getStarted',
             'Working With Panes': 'panes',
             'Webmail Tutorial': 'webmail',
+            'Deployment With PackScript': 'packscript'
         }
     },
     Reference: {
@@ -36,8 +37,7 @@
             'Embedded State': 'embeddedState',
             'Objects': 'objects',
             'Collections': 'collections',
-            'Miscellaneous': 'misc',
-            'PackScript': 'packScript'
+            'Miscellaneous': 'misc'
         },
         'PubSub': {
             'Core': 'core',

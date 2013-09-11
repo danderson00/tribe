@@ -30,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -112,10 +113,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Build\m.js" />
-    <Content Include="Build\site.chrome.js" />
+    <Content Include="Build\site.debug.js" />
     <Content Include="Build\site.js" />
     <Content Include="Build\site.min.js" />
+    <Content Include="Css\classes.css" />
     <Content Include="Images\download.png" />
+    <Content Include="Images\logo.packscript.gif" />
+    <Content Include="Libraries\Tribe.debug.js" />
+    <Content Include="Libraries\Tribe.Mobile.debug.js" />
+    <Content Include="PackScript\Images\logo.packscript.gif" />
+    <Content Include="PackScript\index.html" />
+    <Content Include="PackScript\Panes\intro.css" />
+    <Content Include="PackScript\Panes\layout.css" />
+    <Content Include="PackScript\Panes\layout.htm" />
+    <Content Include="PackScript\Panes\layout.js" />
+    <Content Include="PackScript\Panes\intro.htm" />
+    <Content Include="PackScript\pack.js" />
+    <Content Include="PackScript\Styles\classes.css" />
+    <Content Include="PackScript\Styles\elements.css" />
     <Content Include="Panes\Content\Reference\PackScript\builtins.htm" />
     <Content Include="Panes\Content\Reference\PackScript\includes.htm" />
     <Content Include="Panes\Content\Reference\PackScript\sync.htm" />
@@ -124,6 +139,8 @@
     <Content Include="Panes\Content\Reference\PackScript\pack.htm" />
     <Content Include="Panes\Content\Reference\PackScript\packscript.js" />
     <Content Include="Panes\Content\Reference\PackScript\templates.htm" />
+    <Content Include="Panes\Interface\API\table.htm" />
+    <Content Include="Panes\Interface\API\table.js" />
     <Content Include="unsupported.html" />
     <Content Include="Css\block.css" />
     <Content Include="Css\prettify.css" />
@@ -301,10 +318,8 @@
     <Content Include="Libraries\prettify.js" />
     <Content Include="Libraries\prettify.min.css" />
     <Content Include="Libraries\prettify.min.js" />
-    <Content Include="Libraries\Tribe.chrome.js" />
     <Content Include="Libraries\Tribe.js" />
     <Content Include="Libraries\Tribe.min.js" />
-    <Content Include="Libraries\Tribe.Mobile.chrome.js" />
     <Content Include="Libraries\Tribe.Mobile.js" />
     <Content Include="Libraries\Tribe.Mobile.min.js" />
     <Content Include="pack.js" />
@@ -454,6 +469,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="PackScript\Build\" />
+    <Folder Include="PackScript\Libraries\" />
     <Folder Include="Panes\Content\Reference\Components\" />
     <Folder Include="Panes\Content\Reference\Forms\" />
     <Folder Include="Panes\Content\Reference\Mobile\" />

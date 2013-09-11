@@ -3,6 +3,10 @@
 
 For guides, tutorials and API reference, visit http://tribejs.com.
 
+NOTE: When running on the local filesystem (i.e. file://index.html) using
+      Chrome, you must launch Chrome with the --allow-file-access-from-files
+      command line option.
+
 Three folders have been added to your project that you can add content to:
 
 Panes
@@ -23,7 +27,7 @@ site.js
   Panes, infrastructure and CSS embedded and combined into a single file. 
   Use this file for debugging on browsers other than Chrome.
 
-site.chrome.js 
+site.debug.js 
   A special debug version built to harness Chrome's excellent debugging 
   capabilities.
 
