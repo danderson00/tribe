@@ -466,4 +466,28 @@ Samples['Webmail/3-Content'].push({
     filename: 'viewMail.js',
     icon: 'Images/icon.js.png',
     content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n    \n    this.data = ko.observable();\n\n    this.initialise = function () {\n        $.getJSON(\'Data/mail/\' + pane.data.id, self.data);\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'contact.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div data-bind="textField: name, displayText: \'Name\'">&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'contact.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.name = ko.observable();\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'welcome.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;h1>Tribe Bank&lt;/h1>\n&lt;div>\n    Welcome to the credit card application portal.\n    Click start to begin.\n&lt;/div>\n&lt;button data-bind="click: start">Start&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'welcome.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.start = function() {\n        pane.navigate(\'contact\');\n    };\n});</pre>'
 });

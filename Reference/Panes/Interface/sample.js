@@ -10,6 +10,7 @@
         '/Samples/' + data.name + '/' + rootPane : rootPane;
     this.files = Samples[pane.data.name];
     this.selectedFile = ko.observable(initialSelection());
+    this.handleNavigation = data.handleNavigation;
     
     this.selectFile = function(file) {
         self.selectedFile(file);

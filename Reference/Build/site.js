@@ -567,6 +567,30 @@ Samples['Webmail/3-Content'].push({
     filename: 'viewMail.js',
     icon: 'Images/icon.js.png',
     content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var self = this;\n    \n    this.data = ko.observable();\n\n    this.initialise = function () {\n        $.getJSON(\'Data/mail/\' + pane.data.id, self.data);\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'contact.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div data-bind="textField: name, displayText: \'Name\'">&lt;/div></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'contact.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.name = ko.observable();\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'welcome.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;h1>Tribe Bank&lt;/h1>\n&lt;div>\n    Welcome to the credit card application portal.\n    Click start to begin.\n&lt;/div>\n&lt;button data-bind="click: start">Start&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'welcome.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.start = function() {\n        pane.navigate(\'contact\');\n    };\n});</pre>'
 });
 // Infrastructure/syntaxHighlightEvent.js
 TC.Events.syntaxHighlight = function(pane) {
@@ -1794,6 +1818,7 @@ TC.registerModel(function (pane) {
         '/Samples/' + data.name + '/' + rootPane : rootPane;
     this.files = Samples[pane.data.name];
     this.selectedFile = ko.observable(initialSelection());
+    this.handleNavigation = data.handleNavigation;
     
     this.selectFile = function(file) {
         self.selectedFile(file);
@@ -1997,6 +2022,12 @@ TC.registerModel(function(pane) {
     this.deleteTask = function() {
         pane.pubsub.publish('task.delete', self.task);
     };
+});
+
+// Panes/Samples/CreditCard/1-Personal/contact.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/contact' };
+TC.registerModel(function(pane) {
+    this.name = ko.observable();
 });
 
 // Panes/Samples/CreditCard/1-Personal/welcome.js
@@ -2325,7 +2356,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Interface-navigationContainer"><div class="navigationContainer">\n    <ul>\n        <li data-bind="click: back, visible: !atStart()">Back</li>\n        <li data-bind="click: next, visible: !atEnd()">Next</li>\n    </ul>\n    <div data-bind="pane: initialPane, handlesNavigation: \'fade\'"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Interface-sample"><div class="sample">\n    <div class="source">\n        <div class="title">Source</div>\n\n        <ul class="fileList" data-bind="foreach: files">\n            <li data-bind="click: $root.selectFile, css: { selectedFile: $root.selectedFile() === $data }">\n                <img data-bind="attr: { src: icon }" />\n                <span data-bind="text: filename"></span>\n            </li>\n        </ul>\n\n        <div class="fileContent" data-bind="html: selectedFile().content"></div>\n    </div>\n\n    <div class="result">\n        <div class="title">Result</div>\n        <div class="samplePane" data-bind="pane: samplePane"></div>\n    </div>\n</div>\n</script>');
+    .append('<script type="text/template" id="template--Interface-sample"><div class="sample">\n    <div class="source">\n        <div class="title">Source</div>\n\n        <ul class="fileList" data-bind="foreach: files">\n            <li data-bind="click: $root.selectFile, css: { selectedFile: $root.selectedFile() === $data }">\n                <img data-bind="attr: { src: icon }" />\n                <span data-bind="text: filename"></span>\n            </li>\n        </ul>\n\n        <div class="fileContent" data-bind="html: selectedFile().content"></div>\n    </div>\n\n    <div class="result">\n        <div class="title">Result</div>\n        <div class="samplePane">\n            <div data-bind="pane: samplePane, handlesNavigation: handleNavigation"></div>\n        </div>\n    </div>\n</div>\n</script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-API-constructor"><div data-bind="pane: \'function\', data: func">\n</div></script>');
 $('head')
@@ -2364,6 +2395,8 @@ $('head')
     .append('<script type="text/template" id="template--Samples-About-Tasks-list"><!--Decompose your UI in a way that makes sense.\n    Panes can be nested as deep as you need. -->\n\n<ul class="taskList" data-bind="foreach: tasks">\n    <li data-bind="pane: \'task\', data: $data"></li>\n</ul></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-About-Tasks-task"><!-- Familiar knockout bindings. Any properties or functions\n     declared in the JS model are available for use -->\n\n<button data-bind="click: deleteTask">x</button>\n<span data-bind="text: task"></span></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-1-Personal-contact"><div data-bind="textField: name, displayText: \'Name\'"></div></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-CreditCard-1-Personal-welcome"><h1>Tribe Bank</h1>\n<div>\n    Welcome to the credit card application portal.\n    Click start to begin.\n</div>\n<button data-bind="click: start">Start</button></script>');
 $('head')

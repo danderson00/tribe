@@ -14,6 +14,8 @@
 
     <div class="result">
         <div class="title">Result</div>
-        <div class="samplePane" data-bind="pane: samplePane"></div>
+        <div class="samplePane">
+            <div data-bind="pane: samplePane, handlesNavigation: handleNavigation"></div>
+        </div>
     </div>
 </div>

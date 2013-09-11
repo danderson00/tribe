@@ -1,6 +1,7 @@
 ﻿sync([
     '../Build/*.js',
-    '../Mobile/Build/*.js'
+    '../Mobile/Build/*.js',
+    '../Forms/Build/*.js'
 ]).to('Libraries');
 
 pack({
@@ -16,7 +17,8 @@ pack({
         sample('Panes/Navigating'),
         sample('Webmail/1-Folders'),
         sample('Webmail/2-Mails'),
-        sample('Webmail/3-Content')
+        sample('Webmail/3-Content'),
+        sample('CreditCard/1-Personal')
     ]
 });
 
