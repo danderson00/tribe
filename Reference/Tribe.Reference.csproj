@@ -396,7 +396,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CNAME" />
     <Content Include="Data\folder\Archive" />
     <Content Include="Data\folder\Inbox" />
     <Content Include="Data\folder\Sent" />
@@ -461,6 +460,7 @@
     <Content Include="Data\mail\7" />
     <Content Include="Data\mail\8" />
     <Content Include="Data\mail\9" />
+    <Content Include="diagnostics.wadcfg" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
