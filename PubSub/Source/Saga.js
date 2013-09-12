@@ -1,5 +1,6 @@
 ﻿Tribe.PubSub.Saga = function (pubsub, definition, args) {
     var self = this;
+    var utils = Tribe.PubSub.utils;
 
     pubsub = pubsub.createLifetime();
     this.pubsub = pubsub;
@@ -7,12 +8,12 @@
 
     if (definition.constructor === Function) {
         var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
-        definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
+        definition = utils.applyToConstructor(definition, definitionArgs);
     }
     var handlers = definition.handles || {};
 
     this.start = function (data) {
-        Tribe.PubSub.utils.each(handlers, attachHandler);
+        utils.each(handlers, attachHandler);
         if (handlers.onstart) handlers.onstart(data, self);
         return self;
     };

@@ -79,7 +79,9 @@ window.Tribe.PubSub = function (options) {
     };
 
     this.startSaga = function(definition, args) {
-
+        var constructorArgs = [self, definition].concat(Array.prototype.slice.call(arguments, 1));
+        var saga = utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
+        return saga.start();
     };
     
     function option(name) {

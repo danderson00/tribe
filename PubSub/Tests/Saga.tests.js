@@ -21,6 +21,16 @@
         }
     });
 
+    test("arguments passed to pubsub.startSaga are passed to definition constructor", function () {
+        expect(3);
+        var s = pubsub.startSaga(constructor, 'arg1', 'arg2');
+        function constructor(saga, arg1, arg2) {
+            equal(saga.pubsub.owner, pubsub);
+            equal(arg1, 'arg1');
+            equal(arg2, 'arg2');
+        }
+    });
+
     test("handler is executed with correct arguments when topic is published", function () {
         definition.handles = { 'testTopic': spy };
         var saga = new Tribe.PubSub.Saga(pubsub, definition).start();
