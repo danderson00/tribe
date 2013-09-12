@@ -21,7 +21,7 @@
     this.remove = function(token) {
         for (var m in subscribers)
             if (subscribers.hasOwnProperty(m))
-                for (var i = 0, j = subscribers[m].length; i < j; i++)
+                for (var i = 0, l = subscribers[m].length; i < l; i++)
                     if (subscribers[m][i].token === token) {
                         subscribers[m].splice(i, 1);
                         return token;

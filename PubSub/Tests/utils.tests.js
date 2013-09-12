@@ -50,4 +50,18 @@
         var ifnull = utils.map(null, function () { });
         ok(utils.isArray(ifnull) && ifnull.length === 0, 'handles a null properly');
     });
+
+    test('applyToConstructor', function () {
+        expect(3);
+        deepEqual(
+            utils.applyToConstructor(Date, [2008, 10, 8, 00, 16, 34, 254]),
+            new Date(2008, 10, 8, 00, 16, 34, 254));
+
+        utils.applyToConstructor(constructor, ['arg1', 'arg2']);
+        
+        function constructor(arg1, arg2) {
+            equal(arg1, 'arg1');
+            equal(arg2, 'arg2');
+        }
+    });
 })();

@@ -1,5 +1,6 @@
-﻿Tutorials.bankAccount = {
+﻿Tutorials.creditCard = {
     frames: [
-        'BankAccount/personal',
+        'CreditCard/personal',
+        'CreditCard/sagas'
     ]
 }

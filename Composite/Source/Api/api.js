@@ -18,7 +18,7 @@
             var context = TC.context();
 
             if ($.isArray(preload))
-                for (var i = 0; i < preload.length; i++)
+                for (var i = 0, l = preload.length; i < l; i++)
                     addPromise(preload[i]);
             else if(preload.constructor === String)
                 addPromise(preload);

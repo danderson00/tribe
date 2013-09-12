@@ -1,4 +1,4 @@
-// core.js
+// PubSub.js
 window.Tribe = window.Tribe || {};
 window.Tribe.PubSub = function (options) {
     var self = this;
@@ -14,7 +14,7 @@ window.Tribe.PubSub = function (options) {
         var messageSubscribers = subscribers.get(envelope.topic);
         var sync = envelope.sync === true || self.sync === true;
 
-        for (var i = 0; i < messageSubscribers.length; i++) {
+        for (var i = 0, l = messageSubscribers.length; i < l; i++) {
             if (sync)
                 executeSubscriber(messageSubscribers[i].handler);
             else {
@@ -67,7 +67,7 @@ window.Tribe.PubSub = function (options) {
     this.unsubscribe = function (tokens) {
         if (Tribe.PubSub.utils.isArray(tokens)) {
             var results = [];
-            for(var i = 0; i < tokens.length; i++)
+            for (var i = 0, l = tokens.length; i < l; i++)
                 results.push(subscribers.remove(tokens[i]));
             return results;
         }
@@ -77,6 +77,10 @@ window.Tribe.PubSub = function (options) {
 
     this.createLifetime = function() {
         return new Tribe.PubSub.Lifetime(self, self);
+    };
+
+    this.startSaga = function(definition, args) {
+
     };
     
     function option(name) {
@@ -137,6 +141,72 @@ window.Tribe.PubSub.options = {
         console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + e.message);
     }
 };
+// Saga.js
+Tribe.PubSub.Saga = function (pubsub, definition, args) {
+    var self = this;
+
+    pubsub = pubsub.createLifetime();
+    this.pubsub = pubsub;
+    this.children = [];
+
+    if (definition.constructor === Function) {
+        var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
+        definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
+    }
+    var handlers = definition.handles || {};
+
+    this.start = function (data) {
+        Tribe.PubSub.utils.each(handlers, attachHandler);
+        if (handlers.onstart) handlers.onstart(data, self);
+        return self;
+    };
+
+    this.startChild = function (child, data) {
+        self.children.push(new Tribe.PubSub.Saga(pubsub, child).start(data));
+    };
+
+    this.end = function (data) {
+        if (handlers.onend) handlers.onend(data, self);
+        pubsub.end();
+        endChildren(data);
+    };
+
+    function attachHandler(handler, topic) {
+        if (topic !== 'onstart' && topic !== 'onend')
+            if (!handler)
+                pubsub.subscribe(topic, endHandler());
+            else if (handler.constructor === Function)
+                pubsub.subscribe(topic, messageHandlerFor(handler));
+            else
+                pubsub.subscribe(topic, childHandlerFor(handler));
+    }
+
+    function messageHandlerFor(handler) {
+        return function (messageData, envelope) {
+            if (!definition.endsChildrenExplicitly)
+                endChildren(messageData);
+            handler(messageData, envelope, self);
+        };
+    }
+
+    function childHandlerFor(childHandlers) {
+        return function (messageData, envelope) {
+            self.startChild({ handles: childHandlers }, messageData);
+        };
+    }
+
+    function endHandler() {
+        return function (messageData) {
+            self.end(messageData);
+        };
+    }
+
+    function endChildren(data) {
+        Tribe.PubSub.utils.each(self.children, function(child) {
+             child.end(data);
+        });
+    }    
+};
 // subscribeOnce.js
 Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     var self = this;
@@ -195,7 +265,7 @@ Tribe.PubSub.SubscriberList = function() {
     this.remove = function(token) {
         for (var m in subscribers)
             if (subscribers.hasOwnProperty(m))
-                for (var i = 0, j = subscribers[m].length; i < j; i++)
+                for (var i = 0, l = subscribers[m].length; i < l; i++)
                     if (subscribers[m][i].token === token) {
                         subscribers[m].splice(i, 1);
                         return token;
@@ -220,6 +290,13 @@ Tribe.PubSub.utils = {};
     utils.isArray = function (source) {
         return source.constructor === Array;
     };
+
+    utils.applyToConstructor = function(constructor, argArray) {
+        var args = [null].concat(argArray);
+        var factoryFunction = constructor.bind.apply(constructor, args);
+        return new factoryFunction();
+    };
+
 
     // The following functions are taken from the underscore library, duplicated to avoid dependency. Licensing at http://underscorejs.org.
     var nativeForEach = Array.prototype.forEach;

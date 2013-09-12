@@ -8,7 +8,8 @@
             'Getting Started': 'getStarted',
             'Working With Panes': 'panes',
             'Webmail Tutorial': 'webmail',
-            'Deployment With PackScript': 'packscript'
+            'Deployment With PackScript': 'packscript',
+            'Modelling Processes': 'processes'
         }
     },
     Reference: {

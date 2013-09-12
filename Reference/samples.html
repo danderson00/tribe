@@ -7,7 +7,7 @@
         <script type="text/javascript" src="Libraries/knockout-2.3.0.debug.js"></script>
         <script type="text/javascript" src="Libraries/Tribe.debug.js"></script>
         <script type="text/javascript" src="Libraries/Tribe.Mobile.debug.js"></script>
-        <script type="text/javascript" src="Libraries/Tribe.Forms.debug.js"></script>
+        <!--<script type="text/javascript" src="Libraries/Tribe.Forms.debug.js"></script>-->
 
         <!--        <script type="text/javascript" src="Libraries/jquery.flot.min.js"></script>-->
         <script type="text/javascript" src="Libraries/prettify.js"></script>
@@ -21,6 +21,13 @@
 
                 ko.applyBindings();
             });
+
+            var tutorial = {
+                frames: [
+                    '../Guides/Guides/CreditCard/personal',
+                    '../Guides/Guides/CreditCard/sagas'
+                ]
+            };
         </script>
         <style>
             body {
@@ -30,7 +37,8 @@
     </head>
     <body>
         <div>
-            <div data-bind="pane: '/Interface/sample', data: { name: 'CreditCard/1-Personal', initialFile: 'welcome.htm', rootPane: 'welcome', handleNavigation: true }"></div>
+            <div data-bind="pane: '/Interface/sample', data: { name: 'CreditCard/2-Sagas', initialFile: 'welcome.htm', rootPane: 'layout', handleNavigation: true }"></div>
+            <!--<div data-bind="pane: '/Interface/navigationContainer', data: tutorial"></div>-->
         </div>
     </body>
 </html>

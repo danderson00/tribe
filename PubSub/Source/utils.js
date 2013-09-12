@@ -4,6 +4,13 @@
         return source.constructor === Array;
     };
 
+    utils.applyToConstructor = function(constructor, argArray) {
+        var args = [null].concat(argArray);
+        var factoryFunction = constructor.bind.apply(constructor, args);
+        return new factoryFunction();
+    };
+
+
     // The following functions are taken from the underscore library, duplicated to avoid dependency. Licensing at http://underscorejs.org.
     var nativeForEach = Array.prototype.forEach;
     var nativeMap = Array.prototype.map;

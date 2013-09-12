@@ -1,5 +1,5 @@
 /*! The Tribe platform is licensed under the MIT license. See http://tribejs.com/ for more information. */
-// core.js
+// PubSub.js
 window.Tribe = window.Tribe || {};
 window.Tribe.PubSub = function (options) {
     var self = this;
@@ -15,7 +15,7 @@ window.Tribe.PubSub = function (options) {
         var messageSubscribers = subscribers.get(envelope.topic);
         var sync = envelope.sync === true || self.sync === true;
 
-        for (var i = 0; i < messageSubscribers.length; i++) {
+        for (var i = 0, l = messageSubscribers.length; i < l; i++) {
             if (sync)
                 executeSubscriber(messageSubscribers[i].handler);
             else {
@@ -68,7 +68,7 @@ window.Tribe.PubSub = function (options) {
     this.unsubscribe = function (tokens) {
         if (Tribe.PubSub.utils.isArray(tokens)) {
             var results = [];
-            for(var i = 0; i < tokens.length; i++)
+            for (var i = 0, l = tokens.length; i < l; i++)
                 results.push(subscribers.remove(tokens[i]));
             return results;
         }
@@ -78,6 +78,10 @@ window.Tribe.PubSub = function (options) {
 
     this.createLifetime = function() {
         return new Tribe.PubSub.Lifetime(self, self);
+    };
+
+    this.startSaga = function(definition, args) {
+
     };
     
     function option(name) {
@@ -138,6 +142,72 @@ window.Tribe.PubSub.options = {
         console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + e.message);
     }
 };
+// Saga.js
+Tribe.PubSub.Saga = function (pubsub, definition, args) {
+    var self = this;
+
+    pubsub = pubsub.createLifetime();
+    this.pubsub = pubsub;
+    this.children = [];
+
+    if (definition.constructor === Function) {
+        var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
+        definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
+    }
+    var handlers = definition.handles || {};
+
+    this.start = function (data) {
+        Tribe.PubSub.utils.each(handlers, attachHandler);
+        if (handlers.onstart) handlers.onstart(data, self);
+        return self;
+    };
+
+    this.startChild = function (child, data) {
+        self.children.push(new Tribe.PubSub.Saga(pubsub, child).start(data));
+    };
+
+    this.end = function (data) {
+        if (handlers.onend) handlers.onend(data, self);
+        pubsub.end();
+        endChildren(data);
+    };
+
+    function attachHandler(handler, topic) {
+        if (topic !== 'onstart' && topic !== 'onend')
+            if (!handler)
+                pubsub.subscribe(topic, endHandler());
+            else if (handler.constructor === Function)
+                pubsub.subscribe(topic, messageHandlerFor(handler));
+            else
+                pubsub.subscribe(topic, childHandlerFor(handler));
+    }
+
+    function messageHandlerFor(handler) {
+        return function (messageData, envelope) {
+            if (!definition.endsChildrenExplicitly)
+                endChildren(messageData);
+            handler(messageData, envelope, self);
+        };
+    }
+
+    function childHandlerFor(childHandlers) {
+        return function (messageData, envelope) {
+            self.startChild({ handles: childHandlers }, messageData);
+        };
+    }
+
+    function endHandler() {
+        return function (messageData) {
+            self.end(messageData);
+        };
+    }
+
+    function endChildren(data) {
+        Tribe.PubSub.utils.each(self.children, function(child) {
+             child.end(data);
+        });
+    }    
+};
 // subscribeOnce.js
 Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     var self = this;
@@ -196,7 +266,7 @@ Tribe.PubSub.SubscriberList = function() {
     this.remove = function(token) {
         for (var m in subscribers)
             if (subscribers.hasOwnProperty(m))
-                for (var i = 0, j = subscribers[m].length; i < j; i++)
+                for (var i = 0, l = subscribers[m].length; i < l; i++)
                     if (subscribers[m][i].token === token) {
                         subscribers[m].splice(i, 1);
                         return token;
@@ -221,6 +291,13 @@ Tribe.PubSub.utils = {};
     utils.isArray = function (source) {
         return source.constructor === Array;
     };
+
+    utils.applyToConstructor = function(constructor, argArray) {
+        var args = [null].concat(argArray);
+        var factoryFunction = constructor.bind.apply(constructor, args);
+        return new factoryFunction();
+    };
+
 
     // The following functions are taken from the underscore library, duplicated to avoid dependency. Licensing at http://underscorejs.org.
     var nativeForEach = Array.prototype.forEach;
@@ -284,7 +361,6 @@ Tribe.PubSub.utils = {};
 TC.defaultOptions = function() {
     return {
         synchronous: false,
-        splitScripts: false,
         handleExceptions: true,
         basePath: '',
         loadStrategy: 'adhoc',
@@ -573,7 +649,7 @@ TC.Utils.removeItem = function (array, item) {
 };
 
 TC.Utils.inheritOptions = function(from, to, options) {
-    for (var i = 0; i < options.length; i++)
+    for (var i = 0, l = options.length; i < l; i++)
         to[options[i]] = from[options[i]];
     return to;
 };
@@ -583,7 +659,7 @@ TC.Utils.evaluateProperty = function(target, property) {
     var result = target;
     
     if (properties) {
-        for (var i = 0; i < properties.length; i++)
+        for (var i = 0, l = properties.length; i < l; i++)
             if (properties[i])
                 result = result[properties[i]];
     }
@@ -837,8 +913,7 @@ TC.Utils.evaluateProperty = function(target, property) {
         if ($.isArray(source)) {
             s = [];
             name = arrayKey ? name + '[]' : name;
-            l = source.length;
-            for (i = 0; i < l; i++) {
+            for (i = 0, l = source.length; i < l; i++) {
                 s.push(stringify(source[i], options, name, stack));
             }
 
@@ -871,6 +946,33 @@ TC.Utils.evaluateProperty = function(target, property) {
     };
 })();
 
+// Types/Flow.js
+TC.Types.Flow = function (navigationSource, definitionConstructor) {
+    var node = navigationNode();
+    var definition = definitionConstructor(this);
+    var saga = new TC.Types.Saga(definition);
+
+    this.start = function(data) {
+        saga.start(data);
+    };
+
+    this.end = function(data) {
+        saga.end(data);
+    };
+
+    this.navigates = function(pathOrOptions, data) {
+        return function() {
+            node.navigate(pathOrOptions, data);
+        };
+    };
+    
+    function navigationNode() {
+        if (navigationSource.constructor === TC.Types.Node)
+            return navigationSource.findNavigation();
+        if (navigationSource.constructor === TC.Types.Pane)
+            return navigationSource.node.findNavigation();
+    }
+}
 // Types/History.js
 TC.Types.History = function (history) {
     var currentState = 0;
@@ -1287,49 +1389,6 @@ TC.Types.Pipeline = function (events, context) {
         return promise;
     };
 };
-// Types/Saga.js
-TC.Types.Saga = function (pane, handlers, initialData) {
-    var self = this;
-    
-    this.pubsub = pane.pubsub.createLifetime();
-    this.pane = pane;
-    this.data = initialData || {};
-    this.children = [];
-
-    handlers = $.extend({}, handlers);
-    var startHandler = handlers.onstart;
-    delete handlers.onstart;
-    var endHandler = handlers.onend;
-    delete handlers.onend;
-
-    this.start = function() {
-        $.each(handlers, attachHandler);
-        if(startHandler) startHandler(self, initialData);
-        return self;
-    };
-    
-    function attachHandler(topic, handler) {
-        self.pubsub.subscribe(topic, messageHandlerFor(handler));
-    }
-    
-    function messageHandlerFor(handler) {
-        return function(messageData, envelope) {
-            handler(self, messageData, envelope);
-        };
-    }
-
-    this.startChild = function(childHandlers, childData) {
-        self.children.push(new TC.Types.Saga(pane, childHandlers, childData).start());
-    };
-
-    this.end = function () {
-        if (endHandler) endHandler(self);        
-        self.pubsub.end();
-        $.each(self.children, function(index, child) {
-            child.end();
-        });
-    };
-};
 // Types/Templates.js
 TC.Types.Templates = function () {
     var self = this;
@@ -1429,7 +1488,7 @@ TC.Events.renderPane = function (pane, context) {
 
     function applyBindings() {
         var elements = $(pane.element).children();
-        for (var i = 0; i < elements.length; i++)
+        for (var i = 0, l = elements.length; i < l; i++)
             ko.applyBindings(pane.model, elements[i]);
     }
 };
@@ -1440,25 +1499,9 @@ TC.LoadHandlers.js = function (url, resourcePath, context) {
         dataType: 'text',
         async: !context.options.synchronous,
         cache: false,
-        success: executeLoadedScripts
+        success: executeScript
     });
 
-    function executeLoadedScripts(scripts) {
-        if (shouldSplit(scripts)) {
-            var split = splitScripts(scripts);
-
-            if (split === null)
-                executeScript(appendSourceUrl(scripts));
-            else
-                for (var i = 0; i < split.length; i++)
-                    executeScript(split[i]);
-
-        } else
-            executeScript(appendSourceUrl(scripts));
-
-        TC.logger.debug('Loaded script from ' + url);
-    }
-    
     function executeScript(script) {
         TC.scriptEnvironment = {
             url: url,
@@ -1466,25 +1509,17 @@ TC.LoadHandlers.js = function (url, resourcePath, context) {
             context: context
         };
 
-        TC.Utils.tryCatch($.globalEval, [script], context.options.handleExceptions,
+        TC.Utils.tryCatch($.globalEval, [appendSourceUrl(script)], context.options.handleExceptions,
             'An error occurred executing script loaded from ' + url + (resourcePath ? ' for resource ' + resourcePath : ''));
 
         delete TC.scriptEnvironment;
+
+        TC.logger.debug('Loaded script from ' + url);
     }
 
     function appendSourceUrl(script) {
         return script + '\n//@ sourceURL=' + url.replace(/ /g, "_");
-    }
-    
-    function splitScripts(script) {
-        return script.match(/(.*(\r|\n))*?(.*\/{2}\@ sourceURL.*)/g);
-    }
-
-    function shouldSplit(script) {
-        if (context.options.splitScripts !== true) return false;
-        var tagMatches = script.match("(//@ sourceURL=)");
-        return tagMatches && tagMatches.length > 1;
-    }
+    }    
 };
 // LoadHandlers/stylesheets.js
 TC.LoadHandlers.css = function (url, resourcePath, context) {
@@ -1698,7 +1733,7 @@ TC.transition = function (target, transition, reverse) {
 
         // Tests for vendor specific prop
         property = property.charAt(0).toUpperCase() + property.substr(1);
-        for (var i = 0; i < vendors.length; i++) {
+        for (var i = 0, l = vendors.length; i < l; i++) {
             if (typeof style[vendors[i] + property] == 'string') { return true; }
         }
         
@@ -1733,7 +1768,7 @@ $('<style/>')
             var context = TC.context();
 
             if ($.isArray(preload))
-                for (var i = 0; i < preload.length; i++)
+                for (var i = 0, l = preload.length; i < l; i++)
                     addPromise(preload[i]);
             else if(preload.constructor === String)
                 addPromise(preload);

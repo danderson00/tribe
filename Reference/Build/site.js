@@ -37,7 +37,8 @@ Navigation = {
             'Getting Started': 'getStarted',
             'Working With Panes': 'panes',
             'Webmail Tutorial': 'webmail',
-            'Deployment With PackScript': 'packscript'
+            'Deployment With PackScript': 'packscript',
+            'Modelling Processes': 'processes'
         }
     },
     Reference: {
@@ -570,27 +571,111 @@ Samples['Webmail/3-Content'].push({
 });Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
+    filename: 'account.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div>\n    Card Limit:\n    &lt;input data-bind="value: details.limit" />\n&lt;/div>\n\n&lt;div>\n    Number of Cards Required:\n    &lt;input data-bind="value: details.cards" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'account.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.details = pane.data;    \n    this.details.limit = ko.observable();\n    this.details.cards = ko.observable();\n\n    this.next = function() {\n        pane.navigate(\'confirm\', self.details);\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'confirm.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;p>\n    Thanks, &lt;span data-bind="text: details.name">&lt;/span>,\n    you are about to apply for a credit card with a\n    $&lt;span data-bind="text: details.limit">&lt;/span> limit.\n&lt;/p>\n&lt;p>\n    Please click \'Apply\' below to submit your application.  \n&lt;/p>\n&lt;button data-bind="click: apply">Apply&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
+    filename: 'confirm.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.details = pane.data;\n\n    this.apply = function() {\n        // submit application!\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
+Samples['CreditCard/1-Personal'].push({
     filename: 'contact.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;div data-bind="textField: name, displayText: \'Name\'">&lt;/div></pre>'
+    content: '<pre class="prettyprint">&lt;div>\n    Name: &lt;input data-bind="value: details.name" />\n&lt;/div>\n\n&lt;div>\n    Email: &lt;input data-bind="value: details.email" />\n&lt;/div>\n\n&lt;div>\n    Phone: &lt;input data-bind="value: details.phone" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
 });Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'contact.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.name = ko.observable();\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.details = pane.data;\n    this.details.name = ko.observable();\n    this.details.email = ko.observable();\n    this.details.phone = ko.observable();\n\n    this.next = function() {\n        pane.navigate(\'account\', self.details);\n    };\n});</pre>'
 });Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'welcome.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;h1>Tribe Bank&lt;/h1>\n&lt;div>\n    Welcome to the credit card application portal.\n    Click start to begin.\n&lt;/div>\n&lt;button data-bind="click: start">Start&lt;/button></pre>'
+    content: '<pre class="prettyprint">&lt;h1>Bank of Tribe&lt;/h1>\n\n&lt;p>Welcome to the credit card application portal.&lt;/p>\n&lt;p>Click start to begin.&lt;/p>\n\n&lt;button data-bind="click: start">Start&lt;/button></pre>'
 });Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.start = function() {\n        pane.navigate(\'contact\');\n    };\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.start = function () {\n        // Navigate to the first pane in the flow,\n        // passing in an object that will capture\n        // the application details.\n        pane.navigate(\'contact\', {\n            type: \'personal\'\n        });\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'account.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div>\n    Card Limit:\n    &lt;input data-bind="value: limit" />\n&lt;/div>\n\n&lt;div>\n    Number of Cards Required:\n    &lt;input data-bind="value: cards" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'account.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.limit = ko.observable();\n    this.cards = ko.observable();\n\n    this.next = function() {\n        pane.pubsub.publish(\'CreditCard.addAccountDetails\', {\n            limit: self.limit(),\n            cards: self.cards()\n        });\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'confirm.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;p>\n    Thanks, &lt;span data-bind="text: details.contact.name">&lt;/span>,\n    you are about to apply for a credit card with a\n    $&lt;span data-bind="text: details.account.limit">&lt;/span> limit.\n&lt;/p>\n&lt;p>\n    Please click \'Apply\' below to submit your application.  \n&lt;/p>\n&lt;button data-bind="click: apply">Apply&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'confirm.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.details = pane.data;\n\n    this.apply = function() {\n        // submit application!\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'contact.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div>\n    Name:\n    &lt;input data-bind="value: name" />\n&lt;/div>\n\n&lt;div>\n    Email:\n    &lt;input data-bind="value: email" />\n&lt;/div>\n\n&lt;div>\n    Phone:\n    &lt;input data-bind="value: phone" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'contact.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.name = ko.observable();\n    this.email = ko.observable();\n    this.phone = ko.observable();\n\n    this.next = function () {\n        pane.pubsub.publish(\'CreditCard.addContact\', {\n            name: self.name(),\n            email: self.email(),\n            phone: self.phone()\n        });\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'CreditCardSaga.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">CreditCardSaga = function(pane) {\n    var details = { };\n\n    this.handles = {\n        onstart: function() {\n            pane.navigate(\'welcome\');\n        },\n        \'CreditCard.setType\': function (type) {\n            details.type = type;\n            pane.navigate(\'contact\');\n        },\n        \'CreditCard.addContact\': function(contact) {\n            details.contact = contact;\n            pane.navigate(\'account\');\n        },\n        \'CreditCard.addAccountDetails\': function(account) {\n            details.account = account;\n            pane.navigate(\'confirm\', details);\n        }\n    };\n\n    this.pubsub = pane.pubsub;\n};</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'layout.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    new TC.Types.Saga(new CreditCardSaga(pane)).start();\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'welcome.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;h1>Bank of Tribe&lt;/h1>\n\n&lt;p>Welcome to the credit card application portal.&lt;/p>\n&lt;p>Click start to begin.&lt;/p>\n\n&lt;button data-bind="click: start">Start&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
+Samples['CreditCard/2-Sagas'].push({
+    filename: 'welcome.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.start = function () {\n        pane.pubsub.publish(\'CreditCard.setType\', \'personal\');\n    };\n});</pre>'
 });
 // Infrastructure/syntaxHighlightEvent.js
 TC.Events.syntaxHighlight = function(pane) {
@@ -598,9 +683,10 @@ TC.Events.syntaxHighlight = function(pane) {
 };
 // Panes/Content/Guides/Guides/CreditCard/tutorial.js
 TC.scriptEnvironment = { resourcePath: '/Content/Guides/Guides/CreditCard/tutorial' };
-Tutorials.bankAccount = {
+Tutorials.creditCard = {
     frames: [
-        'BankAccount/personal',
+        'CreditCard/personal',
+        'CreditCard/sagas'
     ]
 }
 
@@ -2024,17 +2110,139 @@ TC.registerModel(function(pane) {
     };
 });
 
+// Panes/Samples/CreditCard/1-Personal/account.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/account' };
+TC.registerModel(function(pane) {
+    var self = this;
+    
+    this.details = pane.data;    
+    this.details.limit = ko.observable();
+    this.details.cards = ko.observable();
+
+    this.next = function() {
+        pane.navigate('confirm', self.details);
+    };
+});
+
+// Panes/Samples/CreditCard/1-Personal/confirm.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/confirm' };
+TC.registerModel(function(pane) {
+    this.details = pane.data;
+
+    this.apply = function() {
+        // submit application!
+    };
+});
+
 // Panes/Samples/CreditCard/1-Personal/contact.js
 TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/contact' };
 TC.registerModel(function(pane) {
-    this.name = ko.observable();
+    var self = this;
+    
+    this.details = pane.data;
+    this.details.name = ko.observable();
+    this.details.email = ko.observable();
+    this.details.phone = ko.observable();
+
+    this.next = function() {
+        pane.navigate('account', self.details);
+    };
 });
 
 // Panes/Samples/CreditCard/1-Personal/welcome.js
 TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/welcome' };
 TC.registerModel(function(pane) {
-    this.start = function() {
-        pane.navigate('contact');
+    this.start = function () {
+        // Navigate to the first pane in the flow,
+        // passing in an object that will capture
+        // the application details.
+        pane.navigate('contact', {
+            type: 'personal'
+        });
+    };
+});
+
+// Panes/Samples/CreditCard/2-Sagas/account.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/account' };
+TC.registerModel(function(pane) {
+    var self = this;
+    
+    this.limit = ko.observable();
+    this.cards = ko.observable();
+
+    this.next = function() {
+        pane.pubsub.publish('CreditCard.addAccountDetails', {
+            limit: self.limit(),
+            cards: self.cards()
+        });
+    };
+});
+
+// Panes/Samples/CreditCard/2-Sagas/confirm.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/confirm' };
+TC.registerModel(function(pane) {
+    this.details = pane.data;
+
+    this.apply = function() {
+        // submit application!
+    };
+});
+
+// Panes/Samples/CreditCard/2-Sagas/contact.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/contact' };
+TC.registerModel(function(pane) {
+    var self = this;
+    
+    this.name = ko.observable();
+    this.email = ko.observable();
+    this.phone = ko.observable();
+
+    this.next = function () {
+        pane.pubsub.publish('CreditCard.addContact', {
+            name: self.name(),
+            email: self.email(),
+            phone: self.phone()
+        });
+    };
+});
+
+// Panes/Samples/CreditCard/2-Sagas/CreditCardSaga.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/CreditCardSaga' };
+CreditCardSaga = function(pane) {
+    var details = { };
+
+    this.handles = {
+        onstart: function() {
+            pane.navigate('welcome');
+        },
+        'CreditCard.setType': function (type) {
+            details.type = type;
+            pane.navigate('contact');
+        },
+        'CreditCard.addContact': function(contact) {
+            details.contact = contact;
+            pane.navigate('account');
+        },
+        'CreditCard.addAccountDetails': function(account) {
+            details.account = account;
+            pane.navigate('confirm', details);
+        }
+    };
+
+    this.pubsub = pane.pubsub;
+};
+
+// Panes/Samples/CreditCard/2-Sagas/layout.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/layout' };
+TC.registerModel(function(pane) {
+    new TC.Types.Saga(new CreditCardSaga(pane)).start();
+});
+
+// Panes/Samples/CreditCard/2-Sagas/welcome.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/welcome' };
+TC.registerModel(function(pane) {
+    this.start = function () {
+        pane.pubsub.publish('CreditCard.setType', 'personal');
     };
 });
 
@@ -2242,15 +2450,13 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-About-features"><div class="block">\n    <h1>Key Features</h1>\n    <div class="features">\n        <div>\n            <img src="Images/Features/composite.jpg" />\n            <strong>Composite UI</strong>\n            <span>Simple, powerful UI decomposition.</span>\n        </div>\n        <div>\n            <img src="Images/Features/resources.jpg" />\n            <strong>Resource Management</strong>\n            <span>Full lifecycle management. Powerful load optimisation.</span>\n        </div>\n        <div>\n            <img src="Images/Features/communication.jpg" />\n            <strong>Seamless Communication</strong>\n            <span>Broadcast messages to other users and internal services in real time.</span>\n        </div>\n        <div>\n            <img src="Images/Features/mobile.jpg" />\n            <strong>Mobile Devices</strong>\n            <span>Effortlessly target web and mobile platforms with a shared codebase.</span>\n        </div>\n        <div>\n            <img src="Images/Features/simple.jpg" />\n            <strong>Simple and Intuitive</strong>\n            <span>Flexible, intuitive file structure. No complex configuration.</span>\n        </div>\n    </div>\n    <div>\n        <a data-bind="click: Article.show(\'Guides\', \'Guides/features\')">Read more...</a>\n    </div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-About-guides"><div class="guides content block">\n    <h1>Guides</h1>\n    <ul>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/features\')">\n            <h2>Features</h2>\n            <p>Describes the individual components of Tribe and the features they offer.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/getStarted\')">\n            <h2>Get Started</h2>\n            <p>How to obtain the Tribe libraries and start your project.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/panes\')">\n            <h2>Working With Panes</h2>\n            <p>How to create panes, communicate between them and navigate around.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/webmail\')">\n            <h2>Webmail Tutorial</h2>\n            <p>A step by step tutorial for building a simple webmail app.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/packscript\')">\n            <h2>Deployment - Packing Your Apps for Maximum Performance</h2>\n            <p>How to use PackScript to combine and minify your resources for deployment.</p>\n        </li>\n        \n        <h1>Coming Soon!</h1>\n        <li> <!--data-bind="click: Article.show(\'Guides\', \'Guides/sagas\')">-->\n            <h2>Modelling Your Navigation Flow and Business Processes</h2>\n            <p>Using sagas to model your navigation and business processes seperately to promote loose coupling.</p>\n        </li>\n        <li> <!--data-bind="click: Article.show(\'Guides\', \'Guides/nservicebus\')">-->\n            <h2>NServiceBus Integration</h2>\n            <p>Transparently send messages from the client to internal services and publish internal events to client channels.</p>\n        </li>\n    </ul>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-About-guides"><div class="guides content block">\n    <h1>Guides</h1>\n    <ul>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/features\')">\n            <h2>Features</h2>\n            <p>Describes the individual components of Tribe and the features they offer.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/getStarted\')">\n            <h2>Get Started</h2>\n            <p>How to obtain the Tribe libraries and start your project.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/panes\')">\n            <h2>Working With Panes</h2>\n            <p>How to create panes, communicate between them and navigate around.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/webmail\')">\n            <h2>Webmail Tutorial</h2>\n            <p>A step by step tutorial for building a simple webmail app.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/packscript\')">\n            <h2>Deployment - Packing Your Apps for Maximum Performance</h2>\n            <p>How to use PackScript to combine and minify your resources for deployment.</p>\n        </li>\n        <li data-bind="click: Article.show(\'Guides\', \'Guides/processes\')">\n            <h2>Modelling Your Navigation Flow and Business Processes</h2>\n            <p>Using sagas to model your navigation and business processes seperately to promote loose coupling.</p>\n        </li>\n        \n        <h1>Coming Soon!</h1>\n        <li> <!--data-bind="click: Article.show(\'Guides\', \'Guides/nservicebus\')">-->\n            <h2>NServiceBus Integration</h2>\n            <p>Transparently send messages from the client to internal services and publish internal events to client channels.</p>\n        </li>\n    </ul>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-About-home"><div>\n    <div data-bind="pane: \'masthead\'"></div>\n\n    <div class="content">\n        <div data-bind="pane: \'knockout\'"></div>\n        <div data-bind="pane: \'features\'"></div>\n        <div data-bind="pane: \'example1\'"></div>\n        <div data-bind="pane: \'example2\'"></div>\n        <div data-bind="pane: \'example3\'"></div>\n\n        <!--<ul>\n                <li>Tribe comes with a set of UI components but integrates easily with others, like jQuery UI.</li>\n            </ul>-->\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-About-knockout"><div class="padded knockout block">\n    <div class="logo">\n        <span>Built with the power of</span>\n        <img src="Images/knockout/logo.png"/>\n    </div>\n    <div class="small padded features block">\n        <div>\n            <img src="Images/knockout/bindings.png" />\n            <span>Declarative Bindings</span>\n        </div>\n        <div>\n            <img src="Images/knockout/refresh.png" />\n            <span>Automatic UI Refresh</span>\n        </div>\n        <div>\n            <img src="Images/knockout/dependencies.png" />\n            <span>Dependency Tracking</span>\n        </div>\n        <div>\n            <img src="Images/knockout/templating.png" />\n            <span>Templating</span>\n        </div>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-About-masthead"><div class="masthead">\n    <h1 class="logo">tribe</h1>            \n    <h2>Easy to build, fast, integrated web and mobile <span class="underline">systems</span>.</h2>\n    \n    <iframe src="http://ghbtns.com/github-btn.html?user=danderson00&repo=Tribe&type=watch" allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>\n    <iframe src="http://ghbtns.com/github-btn.html?user=danderson00&repo=Tribe&type=fork" allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>\n    <a href="https://twitter.com/tribejs" class="twitter-follow-button" data-show-count="false">Follow @tribejs</a>\n    <script src="http://platform.twitter.com/widgets.js"></script>    \n</div>\n</script>');
-$('head')
-    .append('<script type="text/template" id="template--Content-Guides-Guides-creditCard"><div class="webmail content block">\n    <h1>Webmail Tutorial</h1>\n    <div data-bind="pane: \'/Interface/navigationContainer\', data: Tutorials.webmail"></div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-features"><div class="content block">\n    <h1>Features</h1>\n\n    <div class="child">\n        <h1>Composite</h1>\n        <img src="Images/Features/composite.jpg" />\n        <ul>\n            <li>Built on the power of <a href="http://knockoutjs.com/" target="_blank">knockout</a> - <b>declarative data binding</b>, <b>observables</b> and more.</li>\n            <li>Break your UI down into reusable pieces in a way that makes sense to you.</li>\n            <li>Simply and easily model <b>navigation flow</b> and <b>business processes</b>.</li>\n            <li>Smooth, <b>hardware accelerated transitions</b> - a core part of Tribe.Composite.</li>\n            <li>Full <b>resource lifecycle management</b> - Tribe manages the lifecycle of panes from load through to disposal.</li>\n            <li><b>Simple and intuitive</b> - structure your project how you need <b>without complex configuration</b>.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>MessageBus</h1>\n        <img src="Images/Features/communication.jpg" />\n        <ul>\n            <li>Built on <b>reliable</b>, <b>highly scalable</b>, proven technology (Microsoft SignalR)</li>\n            <li><b>Transparently broadcast messages</b> to other users on both web and mobile devices.</li>\n            <li>Seamlessly translate messages into server side messaging technology, like <b>NServiceBus</b> or <b>Azure queues</b>.</li>\n            <li>Built in <b>record and replay semantics</b> - event sourcing out of the box.</li>\n            <li><b>Secure channels</b> with simple and extensible authorisation.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Mobile</h1>\n        <img src="Images/Features/mobile.jpg" />\n        <ul>\n            <li>Target <b>mobile devices</b> with the <b>same codebase</b> as your web application.</li>\n            <li>Easily customisable <b>pre-built themes</b> and <b>UI components</b> - focus on building your app.</li>\n        </ul>\n        <br/><br/>\n    </div>\n\n    <div class="child">\n        <h1>PackScript</h1>\n        <img src="Images/Features/simple.jpg" />\n        <ul>\n            <li>Powerful resource building system for combining and minifying resources.</li>\n            <li><b>Combine, minify, transform, template, compile</b> and more.</li>\n            <li>Simple <b>JavaScript configuration</b> API.</li>\n            <li><b>"Watch" mode</b> to update your build every time you save a file.</li>\n            <li>Easily integrates with <b>continuous integration</b> tools.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Forms</h1>\n        <ul>\n            <li>Simple, themable set of templates for creating forms.</li>\n            <li>Model-based validation without any additional markup.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Components</h1>\n        <ul>\n            <li>A basic set of reusable user interface components including:\n                <ul>\n                    <li>Grid</li>\n                    <li>Graph</li>\n                    <li>Dialog</li>\n                    <li>Expander</li>\n                    <li>Tab panel</li>\n                    <li>Tooltip</li>\n                    <li>Google Map</li>\n                </ul>\n            </li>\n        </ul>\n    </div>\n</div>\n</script>');
 $('head')
@@ -2264,9 +2470,13 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-panes"><div class="content block">\n    <h1>Creating Panes</h1>\n    \n    <p>\n        Panes can consist of a JavaScript model, HTML template and CSS stylesheet. Creating new panes is as\n        simple as creating files with corresponding extensions and referring to them by name.\n    </p>\n    \n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Creating\', initialFile: \'index.html\', rootPane: { path: \'/Samples/Panes/Creating/helloWorld\', data: { message: \'Test message.\' } } }"></div>\n    \n    <h2>Dynamically Injecting Panes</h2>\n    <p>Panes can be injected into the DOM dynamically. Here, we are creating a new pane every time the button is clicked.</p>\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Dynamic\', initialFile: \'create.js\', rootPane: \'create\' }"></div>\n    <p>For a full list of API functions, check out the <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">API reference</a>.</p>\n</div>\n\n<div class="content block">\n    <h1>Communicating</h1>\n    <p>\n        Tribe provides a publish / subscribe engine for communication between panes and other components.\n    </p>\n    <p>\n        Using messages to communicate allows you to create autonomous, loosely decoupled components that\n        are extensible and easy to maintain.\n    </p>\n    <p>\n        You can also share observable objects between panes.\n    </p>\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Communicating\', initialFile: \'sender.js\', rootPane: \'layout\' }"></div>\n    <p>\n        TIP: Use "namespaces" in your message topics to prevent collisions as your app expands.\n    </p>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>Each pane goes through a defined set of steps from ensuring resources are loaded, rendering and binding panes through to disposal.</p>\n    <p>You can perform actions when some of these events occur by declaring functions on your model.</p>\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Lifecycle\', initialFile: \'item.js\', rootPane: \'create\' }"></div>\n    <p>\n        For a full description of the pane lifecycle and events you can hook in to, check out the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">panes reference</a>.\n    </p>\n</div>\n\n<div class="content block">\n    <h1>Navigating</h1>\n    <p>The Tribe navigation mechanism gives you a simple way to transition panes using smooth, hardware accelerated CSS transitions.</p>\n    <p>A navigation stack is maintained, allowing you to navigate back and forth through the stack.</p>\n    <div data-bind="pane: \'/Interface/sample\', data: { name: \'Panes/Navigating\', initialFile: \'layout.htm\', rootPane: \'layout\' }"></div>\n    <p>\n        You can easily hook into the browser history and provide custom URLs. See the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">panes reference</a> for more information.\n    </p>\n    <p>\n        Any element or pane can be transitioned. See the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/transitions\')">transitions reference</a> for more information.\n    </p>\n</div>\n\n</script>');
 $('head')
+    .append('<script type="text/template" id="template--Content-Guides-Guides-processes"><div class="content block">\n    <h1>Modelling Navigation and Business Processes</h1>\n    <div data-bind="pane: \'/Interface/navigationContainer\', data: Tutorials.creditCard"></div>\n</div></script>');
+$('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-webmail"><div class="webmail content block">\n    <h1>Webmail Tutorial</h1>\n    <div data-bind="pane: \'/Interface/navigationContainer\', data: Tutorials.webmail"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Guides-Guides-CreditCard-personal"><p>In this tutorial, we will model a simple credit card application process for both personal and business customers.</p>\n<p>We\'ll show you how to keep your navigation flow and business processes neatly separated while maximising reuse of your panes.</p>\n\n<p>\n    We\'re assuming you\'re familiar with the basics of Tribe. Have a quick run through the \n    <a data-bind="click: Article.show(\'Guides\', \'Guides/webmail\')">webmail tutorial</a>\n    if you haven\'t already.\n</p>\n\n\n<div data-bind="pane: \'/Interface/sample\', data: { name: \'CreditCard/1-Personal\', initialFile: \'folders.js\', rootPane: \'folders\' }"></div></script>');
+    .append('<script type="text/template" id="template--Content-Guides-Guides-CreditCard-personal"><p>\n    In this tutorial, we\'ll show you a simple and elegant way to model your navigation flow and business <br/>\n    processes while maximising reuse of your panes.\n</p>\n\n<p>\n    We recommend you have a quick run through the \n    <a data-bind="click: Article.show(\'Guides\', \'Guides/webmail\')">webmail tutorial</a>\n    if you haven\'t already.\n</p>\n\n<p>To demonstrate, we\'re going to build a simple UI for handling credit card applications. Let\'s have a crack at creating something for personal customers.</p>\n\n<div data-bind="pane: \'/Interface/sample\', data: { name: \'CreditCard/1-Personal\', initialFile: \'welcome.js\', rootPane: \'welcome\', handleNavigation: true }"></div>\n\n<p>\n    Seems like a reasonable start. Build up an object with the application details and pass it to our confirmation pane.\n</p>\n<p>\n    Let\'s look at adding an alternate flow for business customers. We\'d really like to reuse that contact pane, but\n    the navigate call takes us to a pane that doesn\'t collect the data we need for business customers.\n</p>\n<p>\n    Passing an object around and adding properties to it makes me a little uneasy too.\n    How do we know we\'re not overwriting an existing property?\n</p>\n<p>\n    Let\'s have another crack. Click the next button in the top right corner.\n</p></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Guides-Guides-CreditCard-sagas"><div data-bind="pane: \'/Interface/sample\', data: { name: \'CreditCard/2-Sagas\', initialFile: \'welcome.js\', rootPane: \'welcome\', handleNavigation: true }"></div>\n</script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Guides-Webmail-content"><h2>Navigating to Mail Content</h2>\n<p>Let\'s add a pane for displaying mail content that is displayed when an email is clicked.</p>\n<div class="fixedHeight" data-bind="pane: \'/Interface/sample\', data: { name: \'Webmail/3-Content\', initialFile: \'mails.js\', rootPane: \'layout\' }"></div></script>');
 $('head')
@@ -2276,7 +2486,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-api"><div class="content block">\n    <h1>Core API</h1>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.API }"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the TC.options object.</p>\n    <pre class="example">TC.options.basePath = \'Panes\';</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>splitScripts</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Split loaded scripts on each sourceURL tag and execute individually</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the TC.options object.</p>\n    <pre class="example">TC.options.basePath = \'Panes\';</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-panes"><div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n\n    <p>TIP: When running from a local filesystem and loading ad-hoc panes, Google Chrome must be launched with the --allow-file-access-from-files option.</p>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
@@ -2290,7 +2500,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-PackScript-includes"><div class="content block">\n    <h1>Including and Excluding Sets of Files</h1>\n    <p>\n        The include and exclude options are available when using the pack, sync or zip commands.\n        Files can be specified as simple string specifications, as an object or an array of both.\n        Options available are:\n    </p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PackScript.includeOptions }"></div>\n    <p>Options such as recursive and template override the values set in the main configuration.</p>\n\n    <h2>Examples</h2>\n    <p>A simple string specification.</p>\n    <pre class="example">\ninclude: \'Scripts/*.js\'</pre>\n\n    <p>As an object that specifies additional options.</p>\n    <pre class="example">\ninclude: { files: \'Templates/*.htm\', template: \'embedTemplate\' }</pre>\n\n    <p>A more complex example.</p>\n    <pre class="example">\npack({\n    to: \'Build/site.js\',\n    include: [\n        { \n            files: \'Scripts/*.js\', \n            template: { name: \'sourceUrl\', data: { prefix: \'/Source/\' } },\n            first: \'intro.js\',\n            last: \'outro.js\',\n            recursive: false\n        }, {\n        { \n            files: \'Templates/*.htm\', \n            template: \'embedTemplate\' \n        }, {\n            files: \'Styles/*.css\',\n            template: \'embedCss\'\n        }\n    ],\n    exclude: \'*.debug.js\',\n    outputTemplate: \'license\',\n    recursive: true,\n    minify: true\n});</pre>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-PackScript-operation"><div class="content block">\n    <h1>Running PackScript</h1>\n    <p>\n        PackScript is distributed as a Windows console application. A node.js version will be released in\n        the near future. PackScript binaries can be obtained from \n        <a href="https://github.com/danderson00/PackScript" target="_blank">github</a> and\n        are included in the Tribe <a href="http://danderson00.github.io/Tribe/Tribe.zip">download</a>.\n    </p>\n    \n    <p>\n        PackScript.exe has the following command line syntax:\n    </p>\n\n    <pre class="example">PackScript.exe ["Directory\\To\\Process"] [/option[:value]]</pre>\n    \n    <p>The following options can be specified:</p>\n    <div data-bind="pane: \'/Interface/API/table\', data: Reference.PackScript.options"></div>\n    <p>If a value is not provided for an option, true will be used.</p>\n    <p>If no directory is specified, the current working directory is used.</p>\n    <p>Options can also be specified as appSettings in PackScript.exe.config.</p>\n    <p>When in watch mode, the console can also be used to interrogate or execute JavaScript members.</p>\n\n    <h2>Configuration Files</h2>\n    <p>\n        PackScript scans recursively through the target directory structure and finds all files \n        fitting the following specifications:\n    </p>\n    <table>\n        <tbody>\n            <tr>\n                <td>*pack.config.js</td>\n                <td>JavaScript configuration files. These are executed before any other file is processed.</td>\n            </tr>\n            <tr>\n                <td>*pack.js</td>\n                <td>JavaScript configuration files.</td>\n            </tr>\n            <tr>\n                <td>*.template.*</td>\n                <td>These files are loaded as templates and can be accessed by name using the template option.</td>\n            </tr>\n        </tbody>\n    </table>\n    \n    <p>Create output files by executing the following functions in your configuration files:</p>\n    <table class="pointer">\n        <tbody data-bind="foreach: Reference.PackScript.functions">\n            <tr data-bind="click: Article.show(\'Reference\', \'PackScript/\' + name)">\n                <td data-bind="text: name"></td>\n                <td data-bind="text: description"></td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-PackScript-operation"><div class="content block">\n    <h1>Running PackScript</h1>\n    <p>\n        PackScript is distributed as a Windows console application. A node.js version will be released in\n        the near future. PackScript binaries can be obtained from \n        <a href="https://github.com/danderson00/PackScript" target="_blank">github</a> and\n        are included in the Tribe <a href="http://danderson00.github.io/Tribe/Tribe.zip">download</a>.\n    </p>\n    \n    <p>\n        PackScript.exe has the following command line syntax:\n    </p>\n\n    <pre class="example">PackScript.exe ["Directory\\To\\Process"] [/option[:value]]</pre>\n    \n    <p>The following options can be specified:</p>\n    <div data-bind="pane: \'/Interface/API/table\', data: Reference.PackScript.options"></div>\n    <p>If a value is not provided for an option, true will be used.</p>\n    <p>If no directory is specified, the current working directory is used.</p>\n    <p>Options can also be specified as appSettings in PackScript.exe.config.</p>\n    <p>All options specified are available in JavaScript through the pack.options object.</p>\n    <p>When in watch mode, the console can also be used to interrogate or execute JavaScript members.</p>\n\n    <h2>Configuration Files</h2>\n    <p>\n        PackScript scans recursively through the target directory structure and finds all files \n        fitting the following specifications:\n    </p>\n    <table>\n        <tbody>\n            <tr>\n                <td>*pack.config.js</td>\n                <td>JavaScript configuration files. These are executed before any other file is processed.</td>\n            </tr>\n            <tr>\n                <td>*pack.js</td>\n                <td>JavaScript configuration files.</td>\n            </tr>\n            <tr>\n                <td>*.template.*</td>\n                <td>These files are loaded as templates and can be accessed by name using the template option.</td>\n            </tr>\n        </tbody>\n    </table>\n    \n    <p>Create output files by executing the following functions in your configuration files:</p>\n    <table class="pointer">\n        <tbody data-bind="foreach: Reference.PackScript.functions">\n            <tr data-bind="click: Article.show(\'Reference\', \'PackScript/\' + name)">\n                <td data-bind="text: name"></td>\n                <td data-bind="text: description"></td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-PackScript-pack"><div class="content block">\n    <h1>pack(options[, options, ...])</h1>\n    <p>\n        The pack function is used to combine and transform sets of files into a single output.\n        The following options can be used:\n    </p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.PackScript.pack }"></div>\n\n    <pre class="example">\npack({\n    to: \'Build/site.min.js\',\n    include: \'*.js\',\n    exclude: \'debug.js\',\n    minify: true\n});</pre>\n\n    <p>You can also pass the pack function a string or an array. These are translated into the include option specified above.</p>\n    <p>The pack function returns an object that exposes a function called \'to\'.</p>\n\n    <h2>to(options)</h2>\n    <p>\n        The to function attaches options to outputs defined by the preceding call to the pack function.\n        It has two formats:\n    </p>\n    \n    <pre class="example">\npack(\'*.js\').to(\'combined.js\');</pre>\n    <p>Passing a string simply attaches a \'to\' option to the existing output.</p>\n    \n    <pre class="example">\npack(\'*.js\').to({\n    \'combined.js\': { },\n    \'combined.min.js\': { minify: true }\n});</pre>\n    <p>\n        Passing a hashtable of paths and additional options creates multiple outputs. \n        The additional options are merged with those specified in the call to pack.\n    </p>\n\n    <h2>Examples</h2>\n    <p>\n        This example combines JavaScript files from the Scripts and Libraries folder into two files, \n        one simply combined and the other prepared for production. A template called license is applied\n        to each file.\n    </p>\n    <pre class="example">\npack({\n    include: [\n        { files: \'Scripts/*.js\', recursive: true },\n        \'Libraries/*.min.js\'\n    ],\n    outputTemplate: \'license\'\n}).to({\n    \'Build/site.js\': { },\n    \'Build/site.min.js\': { minify: true, exclude: \'*debug.js\' }\n});</pre>\n\n    <p>\n        This example embeds all panes, infrastructure scripts, additional templates and styles\n        from their respective folders into a set of three files, combined, minified and a\n        special debug mode.\n    </p>\n    <pre class="example">\npack({\n    include: [\n        T.panes(\'Panes\'),\n        T.scripts(\'Infrastructure\'),\n        T.templates(\'Templates\'),\n        T.styles(\'Styles\')\n    ],\n    recursive: true\n}).to({\n    \'Build/site.js\': { },\n    \'Build/site.min.js\': { minify: true }\n    \'Build/site.debug.js\': { debug: true }\n});</pre>\n    <p>\n        See the \n        <a data-bind="click: Article.show(\'Reference\', \'PackScript/builtins\')">\n            built-in templates reference\n        </a>\n        for more information.\n    </p>\n</div></script>');
 $('head')
@@ -2396,9 +2606,21 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Samples-About-Tasks-task"><!-- Familiar knockout bindings. Any properties or functions\n     declared in the JS model are available for use -->\n\n<button data-bind="click: deleteTask">x</button>\n<span data-bind="text: task"></span></script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-CreditCard-1-Personal-contact"><div data-bind="textField: name, displayText: \'Name\'"></div></script>');
+    .append('<script type="text/template" id="template--Samples-CreditCard-1-Personal-account"><div>\n    Card Limit:\n    <input data-bind="value: details.limit" />\n</div>\n\n<div>\n    Number of Cards Required:\n    <input data-bind="value: details.cards" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-CreditCard-1-Personal-welcome"><h1>Tribe Bank</h1>\n<div>\n    Welcome to the credit card application portal.\n    Click start to begin.\n</div>\n<button data-bind="click: start">Start</button></script>');
+    .append('<script type="text/template" id="template--Samples-CreditCard-1-Personal-confirm"><p>\n    Thanks, <span data-bind="text: details.name"></span>,\n    you are about to apply for a credit card with a\n    $<span data-bind="text: details.limit"></span> limit.\n</p>\n<p>\n    Please click \'Apply\' below to submit your application.  \n</p>\n<button data-bind="click: apply">Apply</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-1-Personal-contact"><div>\n    Name: <input data-bind="value: details.name" />\n</div>\n\n<div>\n    Email: <input data-bind="value: details.email" />\n</div>\n\n<div>\n    Phone: <input data-bind="value: details.phone" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-1-Personal-welcome"><h1>Bank of Tribe</h1>\n\n<p>Welcome to the credit card application portal.</p>\n<p>Click start to begin.</p>\n\n<button data-bind="click: start">Start</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-2-Sagas-account"><div>\n    Card Limit:\n    <input data-bind="value: limit" />\n</div>\n\n<div>\n    Number of Cards Required:\n    <input data-bind="value: cards" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-2-Sagas-confirm"><p>\n    Thanks, <span data-bind="text: details.contact.name"></span>,\n    you are about to apply for a credit card with a\n    $<span data-bind="text: details.account.limit"></span> limit.\n</p>\n<p>\n    Please click \'Apply\' below to submit your application.  \n</p>\n<button data-bind="click: apply">Apply</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-2-Sagas-contact"><div>\n    Name:\n    <input data-bind="value: name" />\n</div>\n\n<div>\n    Email:\n    <input data-bind="value: email" />\n</div>\n\n<div>\n    Phone:\n    <input data-bind="value: phone" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-2-Sagas-welcome"><h1>Bank of Tribe</h1>\n\n<p>Welcome to the credit card application portal.</p>\n<p>Click start to begin.</p>\n\n<button data-bind="click: start">Start</button></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-Panes-Communicating-layout"><div class="panels">\n    <!-- Pass the shared observable to child panes -->\n\n    <div data-bind="pane: \'sender\',\n                    data: observable"></div>\n\n    <div data-bind="pane: \'receiver\',\n                    data: observable"></div>\n</div></script>');
 $('head')

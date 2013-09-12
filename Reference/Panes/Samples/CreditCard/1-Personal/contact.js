@@ -1,3 +1,12 @@
 ﻿TC.registerModel(function(pane) {
-    this.name = ko.observable();
+    var self = this;
+    
+    this.details = pane.data;
+    this.details.name = ko.observable();
+    this.details.email = ko.observable();
+    this.details.phone = ko.observable();
+
+    this.next = function() {
+        pane.navigate('account', self.details);
+    };
 });

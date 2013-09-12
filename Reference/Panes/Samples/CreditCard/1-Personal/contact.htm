@@ -1,1 +1,13 @@
-﻿<div data-bind="textField: name, displayText: 'Name'"></div>
+﻿<div>
+    Name: <input data-bind="value: details.name" />
+</div>
+
+<div>
+    Email: <input data-bind="value: details.email" />
+</div>
+
+<div>
+    Phone: <input data-bind="value: details.phone" />
+</div>
+
+<button data-bind="click: next">Next</button>

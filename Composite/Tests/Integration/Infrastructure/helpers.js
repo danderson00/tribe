@@ -19,7 +19,7 @@
     helpers.testEventsUntil = function(event) {
         var events = [];
         var defaultEvents = TC.defaultOptions().events;
-        for (var i = 0; i < defaultEvents.length; i++) {
+        for (var i = 0, l = defaultEvents.length; i < l; i++) {
             events.push(defaultEvents[i]);
             if (defaultEvents[i] === event)
                 break;

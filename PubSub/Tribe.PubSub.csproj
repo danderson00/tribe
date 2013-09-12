@@ -37,13 +37,14 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="Build\Tests\Tribe.PubSub.tests.js" />
-    <Content Include="Build\Tribe.PubSub.chrome.js" />
+    <Content Include="Build\Tribe.PubSub.debug.js" />
     <Content Include="Build\Tribe.PubSub.js" />
     <Content Include="Build\Tribe.PubSub.min.js" />
     <Content Include="Source\options.js" />
     <Content Include="Source\Lifetime.js" />
     <Content Include="Source\core.js" />
     <Content Include="Source\pack.js" />
+    <Content Include="Source\Saga.js" />
     <Content Include="Source\subscribeOnce.js" />
     <Content Include="Source\SubscriberList.js" />
     <Content Include="Source\utils.js" />
@@ -54,6 +55,7 @@
     <Content Include="Tests\pack.js" />
     <Content Include="Tests\Resources\debug.pack.js" />
     <Content Include="Tests\Resources\debug.template.js" />
+    <Content Include="Tests\Saga.tests.js" />
     <Content Include="Tests\subscribeOnce.tests.js" />
     <Content Include="Tests\index.html" />
     <Content Include="Tests\core.unsubscribe.tests.js" />
@@ -61,7 +63,6 @@
     <Content Include="Tests\Resources\qunit.js" />
     <Content Include="Tests\Resources\sinon.js" />
     <Content Include="Tests\SubscriberList.tests.js" />
-    <Content Include="Tests\tests.js" />
     <Content Include="Tests\tests.min.js" />
     <Content Include="Tests\utils.tests.js" />
   </ItemGroup>

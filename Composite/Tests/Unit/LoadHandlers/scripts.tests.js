@@ -37,16 +37,6 @@
         equal($.globalEval.firstCall.args[0].substring(response.length + 1), "//@ sourceURL=test.js");
     });
 
-    test("script handler splits scripts on sourceURL tag if option is set", function() {
-        $.globalEval = sinon.spy();
-        response = "test\n//@ sourceURL=test.js\ntest2\n//@ sourceURL=test2.js";
-        TC.LoadHandlers.js(url, resourcePath, context);
-
-        ok($.globalEval.calledTwice);
-        equal($.globalEval.firstCall.args[0].substring(0, 4), "test");
-        equal($.globalEval.secondCall.args[0].substring(1, 6), "test2"); // leading /n - should fix
-    });
-
     test("script handler sets TC.scriptEnvironment before executing scripts", function () {
         expect(1);
         response = "equal(TC.scriptEnvironment.resourcePath, '" + resourcePath + "');";

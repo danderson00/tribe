@@ -13,7 +13,7 @@ window.Tribe.PubSub = function (options) {
         var messageSubscribers = subscribers.get(envelope.topic);
         var sync = envelope.sync === true || self.sync === true;
 
-        for (var i = 0; i < messageSubscribers.length; i++) {
+        for (var i = 0, l = messageSubscribers.length; i < l; i++) {
             if (sync)
                 executeSubscriber(messageSubscribers[i].handler);
             else {
@@ -66,7 +66,7 @@ window.Tribe.PubSub = function (options) {
     this.unsubscribe = function (tokens) {
         if (Tribe.PubSub.utils.isArray(tokens)) {
             var results = [];
-            for(var i = 0; i < tokens.length; i++)
+            for (var i = 0, l = tokens.length; i < l; i++)
                 results.push(subscribers.remove(tokens[i]));
             return results;
         }
@@ -76,6 +76,10 @@ window.Tribe.PubSub = function (options) {
 
     this.createLifetime = function() {
         return new Tribe.PubSub.Lifetime(self, self);
+    };
+
+    this.startSaga = function(definition, args) {
+
     };
     
     function option(name) {

@@ -1465,7 +1465,7 @@ ko.validation.rules['date'] = {
     },
     message: 'Please enter a proper date'
 };
-// Binding Handlers/fields.js
+// BindingHandlers/fields.js
 (function () {
     addBindingHandler('display');
     addBindingHandler('textField');
@@ -1537,7 +1537,7 @@ ko.validation.rules['date'] = {
         }
     };
 })();
-// Binding Handlers/focus.js
+// BindingHandlers/focus.js
 ko.bindingHandlers.focus = {
     update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         var context = viewModel.__context || bindingContext.$root.__context;
@@ -1549,7 +1549,7 @@ ko.bindingHandlers.focus = {
             });
     }
 };
-// Binding Handlers/select.js
+// BindingHandlers/select.js
 (function () {
     ko.bindingHandlers.select = {
         update: function (element, valueAccessor, allBindingsAccessor) {
@@ -1583,7 +1583,7 @@ ko.bindingHandlers.focus = {
         }
     };
 })();
-// Binding Handlers/validatedClick.js
+// BindingHandlers/validatedClick.js
 (function() {
     ko.bindingHandlers.validatedClick = {
         'init': function (element, valueAccessor, allBindingsAccessor, viewModel) {
@@ -1604,7 +1604,7 @@ ko.bindingHandlers.focus = {
         }
     };
 })();
-// Binding Handlers/validationMessage.tooltip.js
+// BindingHandlers/validationMessage.tooltip.js
 //ko.bindingHandlers['validationMessage'] = {
 //    init: function (element, valueAccessor) {
 //        var id = uuid.v4();
@@ -1635,25 +1635,25 @@ ko.bindingHandlers.focus = {
 //};
 
 $('head')
-    .append('<script type="text/template" id="template--booleanField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="checkbox" data-bind="checked: value" />\n    </div>\n    <div style="clear: both"></div>\n</div>\n</script>');
+    .append('<script type="text/template" id="template--Forms-booleanField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="checkbox" data-bind="checked: value" />\n    </div>\n    <div style="clear: both"></div>\n</div>\n</script>');
 $('head')
-    .append('<script type="text/template" id="template--dateField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="text" class="datePicker" data-bind="value: value, restrictKeys: \'[^0-9\\/]+\'" />\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
+    .append('<script type="text/template" id="template--Forms-dateField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="text" class="datePicker" data-bind="value: value, restrictKeys: \'[^0-9\\/]+\'" />\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--display"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <span data-bind="text: value"></span>\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
+    .append('<script type="text/template" id="template--Forms-display"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <span data-bind="text: value"></span>\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--passwordField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="password" data-bind="value: value"></input>\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
+    .append('<script type="text/template" id="template--Forms-passwordField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="password" data-bind="value: value"></input>\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--radioField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display" data-bind="foreach: items">\n        <label>\n            <input type="radio" data-bind="value: $data, checked: $parent.value, attr: { group: $parent.displayText.replace(/ /g, \'_\') }" />\n            <span data-bind="text: $data"></span>\n        </label>\n        &nbsp;\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
+    .append('<script type="text/template" id="template--Forms-radioField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display" data-bind="foreach: items">\n        <label>\n            <input type="radio" data-bind="value: $data, checked: $parent.value, attr: { group: $parent.displayText.replace(/ /g, \'_\') }" />\n            <span data-bind="text: $data"></span>\n        </label>\n        &nbsp;\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--select"><select data-bind="foreach: source">\n    <optgroup data-bind="label: group, foreach: list">\n        <option data-bind="text: $data"></option>\n    </optgroup>\n</select></script>');
+    .append('<script type="text/template" id="template--Forms-select"><select data-bind="foreach: source">\n    <optgroup data-bind="label: group, foreach: list">\n        <option data-bind="text: $data"></option>\n    </optgroup>\n</select></script>');
 $('head')
-    .append('<script type="text/template" id="template--select"><select data-bind="foreach: source, event: { change: change }">\n    <option data-bind="text: $data"></option>\n</select></script>');
+    .append('<script type="text/template" id="template--Forms-select"><select data-bind="foreach: source, event: { change: change }">\n    <option data-bind="text: $data"></option>\n</select></script>');
 $('head')
-    .append('<script type="text/template" id="template--selectField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display" data-bind="pane: \'/Common/dropDown\', data: $data"></div>\n    <div style="clear: both"></div>\n</div></script>');
+    .append('<script type="text/template" id="template--Forms-selectField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display" data-bind="pane: \'/Common/dropDown\', data: $data"></div>\n    <div style="clear: both"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--textField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="text" data-bind="value: value" />\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
+    .append('<script type="text/template" id="template--Forms-textField"><div class="field">\n    <div class="label">\n        <span data-bind="text: displayText"></span>\n    </div>\n    <div class="display">\n        <input type="text" data-bind="value: value" />\n    </div>\n    <div style="clear: both"></div>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--validationMessage"><div data-bind="pane: \'/Common/tooltip\', data: { html: $data.field.error, autoShow: true, position: \'right\' }"></div></script>');
+    .append('<script type="text/template" id="template--Forms-validationMessage"><div data-bind="pane: \'/Common/tooltip\', data: { html: $data.field.error, autoShow: true, position: \'right\' }"></div></script>');
 $('<style/>')
     .attr('class', '__tribe')
     .text('.lw-dp{position:absolute;z-index:100;overflow:hidden;cursor:default;width:141px;border-width:1px;border-style:solid;padding:4px;margin:5.5px;background:#45484d;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQ1NDg0ZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(69,72,77,1)),color-stop(100%,rgba(0,0,0,1)));background:-webkit-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:-o-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:-ms-linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);background:linear-gradient(top,rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#45484d\',endColorstr=\'#000000\',GradientType=0);border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px;box-shadow:3px 3px 3px rgba(0,0,0,.3);-moz-box-shadow:3px 3px 3px rgba(0,0,0,.3);-webkit-box-shadow:3px 3px 3px rgba(0,0,0,.3);-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;user-select:none}.lw-dp-hidden{display:none;box-shadow:none}.lw-dp-toolbar{text-align:center;overflow:hidden;font-size:12px;line-height:18px;color:#ddd;padding:0 0 2.2px}.lw-dp-month{display:inline-block;width:103px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lw-dp-previous,.lw-dp-next{position:absolute;overflow:hidden;top:8px;width:0;height:0;color:#ddd;cursor:pointer;border-top:5.938px solid transparent;border-bottom:5.938px solid transparent}.lw-dp-previous{left:8px;border-right:11.875px solid #ddd}.lw-dp-next{right:8px;border-left:11.875px solid #ddd}.lw-dp-previous:hover{border-right-color:#797979}.lw-dp-next:hover{border-left-color:#797979}.lw-dp-previous:active{border-right-color:#acacac}.lw-dp-next:active{border-left-color:#acacac}.lw-dp-dows{padding:0;margin:0;overflow:hidden}.lw-dp-dows li,.lw-dp-week li{display:block;float:left;padding:0;margin:0;text-align:center;color:#fff}.lw-dp-dows li{font-size:9px;line-height:7.7px;width:20px;height:10px;padding:0;margin:0}.lw-dp-week{padding:0;margin:0;overflow:hidden}.lw-dp-week li{padding:0;margin:0;border-width:0;font-size:11px;color:#000;width:19px;height:19px;line-height:19px;background:#e0e0e0;border-left-width:1px;border-top-width:1px;border-style:solid;border-color:#f9f9f9;cursor:pointer}.lw-dp-dows-last-column,.lw-dp-week-last-column{border-right-width:1px}.lw-dp-lastweek li{padding:0;margin:0;border-bottom-width:1px}.lw-dp-firstweek li:first-child{-moz-border-radius:4px 0 0 0;-webkit-border-radius:4px 0 0 0;-o-border-radius:4px 0 0 0;-ms-border-radius:4px 0 0 0;-khtml-border-radius:4px 0 0 0;border-radius:4px 0 0 0}.lw-dp-firstweek li:last-child{-moz-border-radius:0 4px 0 0;-webkit-border-radius:0 4px 0 0;-o-border-radius:0 4px 0 0;-ms-border-radius:0 4px 0 0;-khtml-border-radius:0 4px 0 0;border-radius:0 4px 0 0}.lw-dp-lastweek li:first-child{-moz-border-radius:0 0 0 4px;-webkit-border-radius:0 0 0 4px;-o-border-radius:0 0 0 4px;-ms-border-radius:0 0 0 4px;-khtml-border-radius:0 0 0 4px;border-radius:0 0 0 4px}.lw-dp-lastweek li:last-child{-moz-border-radius:0 0 4px 0;-webkit-border-radius:0 0 4px 0;-o-border-radius:0 0 4px 0;-ms-border-radius:0 0 4px 0;-khtml-border-radius:0 0 4px 0;border-radius:0 0 4px 0}.lw-dp-week li:hover{background:#f4f4f4}li.lw-dp-weekend{background:#d0d0d0}li.lw-dp-today{-moz-border-radius:2px;-webkit-border-radius:2px;-o-border-radius:2px;-ms-border-radius:2px;-khtml-border-radius:2px;border-radius:2px}li.lw-dp-today span{display:block;width:17px;height:17px;line-height:17px;border:1px solid #acacac;-moz-border-radius:2px;-webkit-border-radius:2px;-o-border-radius:2px;-ms-border-radius:2px;-khtml-border-radius:2px;border-radius:2px}li.lw-dp-today:hover span{color:#797979}li.lw-dp-active-day,li.lw-dp-active-day:hover{position:relative;color:#f9f9f9;background:#797979}li.lw-dp-active-day:nth-child(n),li.lw-dp-active-day:hover:nth-child(n){background:none}li.lw-dp-active-day::before,li.lw-dp-active-day:hover::before{position:absolute;left:0;top:0;bottom:0;right:0;content:\'\';-moz-border-radius:2px;-webkit-border-radius:2px;-o-border-radius:2px;-ms-border-radius:2px;-khtml-border-radius:2px;border-radius:2px;background:#797979;z-index:-1}li.lw-dp-active-day:hover span{background:#e0e0e0}li.lw-dp-neighbour-month-day{color:#b9b9b9}li.lw-dp-out-of-interval,li.lw-dp-out-of-interval:hover{background:#ececec;cursor:default}')

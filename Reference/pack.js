@@ -18,7 +18,8 @@ pack({
         sample('Webmail/1-Folders'),
         sample('Webmail/2-Mails'),
         sample('Webmail/3-Content'),
-        sample('CreditCard/1-Personal')
+        sample('CreditCard/1-Personal'),
+        sample('CreditCard/2-Sagas')
     ]
 });
 

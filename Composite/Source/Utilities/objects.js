@@ -33,7 +33,7 @@ TC.Utils.removeItem = function (array, item) {
 };
 
 TC.Utils.inheritOptions = function(from, to, options) {
-    for (var i = 0; i < options.length; i++)
+    for (var i = 0, l = options.length; i < l; i++)
         to[options[i]] = from[options[i]];
     return to;
 };
@@ -43,7 +43,7 @@ TC.Utils.evaluateProperty = function(target, property) {
     var result = target;
     
     if (properties) {
-        for (var i = 0; i < properties.length; i++)
+        for (var i = 0, l = properties.length; i < l; i++)
             if (properties[i])
                 result = result[properties[i]];
     }

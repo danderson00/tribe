@@ -39,11 +39,11 @@
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Binding Handlers\fields.js" />
-    <Content Include="Binding Handlers\focus.js" />
-    <Content Include="Binding Handlers\select.js" />
-    <Content Include="Binding Handlers\validatedClick.js" />
-    <Content Include="Binding Handlers\validationMessage.tooltip.js" />
+    <Content Include="BindingHandlers\fields.js" />
+    <Content Include="BindingHandlers\focus.js" />
+    <Content Include="BindingHandlers\select.js" />
+    <Content Include="BindingHandlers\validatedClick.js" />
+    <Content Include="BindingHandlers\validationMessage.tooltip.js" />
     <Content Include="Build\Tribe.Forms.chrome.js" />
     <Content Include="Build\Tribe.Forms.js" />
     <Content Include="Build\Tribe.Forms.min.js" />

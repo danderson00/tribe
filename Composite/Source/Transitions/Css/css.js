@@ -61,7 +61,7 @@
 
         // Tests for vendor specific prop
         property = property.charAt(0).toUpperCase() + property.substr(1);
-        for (var i = 0; i < vendors.length; i++) {
+        for (var i = 0, l = vendors.length; i < l; i++) {
             if (typeof style[vendors[i] + property] == 'string') { return true; }
         }
         

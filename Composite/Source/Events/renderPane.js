@@ -13,7 +13,7 @@
 
     function applyBindings() {
         var elements = $(pane.element).children();
-        for (var i = 0; i < elements.length; i++)
+        for (var i = 0, l = elements.length; i < l; i++)
             ko.applyBindings(pane.model, elements[i]);
     }
 };

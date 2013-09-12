@@ -120,6 +120,9 @@
     <Content Include="Images\download.png" />
     <Content Include="Images\logo.packscript.gif" />
     <Content Include="Libraries\Tribe.debug.js" />
+    <Content Include="Libraries\Tribe.Forms.debug.js" />
+    <Content Include="Libraries\Tribe.Forms.js" />
+    <Content Include="Libraries\Tribe.Forms.min.js" />
     <Content Include="Libraries\Tribe.Mobile.debug.js" />
     <Content Include="PackScript\Images\logo.packscript.gif" />
     <Content Include="PackScript\index.html" />
@@ -131,6 +134,9 @@
     <Content Include="PackScript\pack.js" />
     <Content Include="PackScript\Styles\classes.css" />
     <Content Include="PackScript\Styles\elements.css" />
+    <Content Include="Panes\Content\Guides\Guides\creditCard.htm" />
+    <Content Include="Panes\Content\Guides\Guides\CreditCard\personal.htm" />
+    <Content Include="Panes\Content\Guides\Guides\CreditCard\tutorial.js" />
     <Content Include="Panes\Content\Reference\PackScript\builtins.htm" />
     <Content Include="Panes\Content\Reference\PackScript\includes.htm" />
     <Content Include="Panes\Content\Reference\PackScript\sync.htm" />
@@ -141,6 +147,10 @@
     <Content Include="Panes\Content\Reference\PackScript\templates.htm" />
     <Content Include="Panes\Interface\API\table.htm" />
     <Content Include="Panes\Interface\API\table.js" />
+    <Content Include="Panes\Samples\CreditCard\1-Personal\contact.htm" />
+    <Content Include="Panes\Samples\CreditCard\1-Personal\contact.js" />
+    <Content Include="Panes\Samples\CreditCard\1-Personal\welcome.htm" />
+    <Content Include="Panes\Samples\CreditCard\1-Personal\welcome.js" />
     <Content Include="unsupported.html" />
     <Content Include="Css\block.css" />
     <Content Include="Css\prettify.css" />

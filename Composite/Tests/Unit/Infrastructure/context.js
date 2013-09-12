@@ -9,7 +9,6 @@
         },
         options: {
             synchronous: true,
-            splitScripts: true,
             basePath: '',
             events: ['test']
         },

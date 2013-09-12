@@ -31,8 +31,7 @@
         if ($.isArray(source)) {
             s = [];
             name = arrayKey ? name + '[]' : name;
-            l = source.length;
-            for (i = 0; i < l; i++) {
+            for (i = 0, l = source.length; i < l; i++) {
                 s.push(stringify(source[i], options, name, stack));
             }
 

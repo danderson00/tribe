@@ -7,7 +7,6 @@
 Test.defaultOptions = function() {
     return {
         synchronous: true,
-        splitScripts: true,
         handleExceptions: false,
         basePath: 'Integration/Panes/',
         loadStrategy: 'adhoc',

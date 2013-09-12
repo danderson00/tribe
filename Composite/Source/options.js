@@ -1,7 +1,6 @@
 ﻿TC.defaultOptions = function() {
     return {
         synchronous: false,
-        splitScripts: false,
         handleExceptions: true,
         basePath: '',
         loadStrategy: 'adhoc',
