@@ -1,26 +1,42 @@
-﻿TC.Types.Flow = function (navigationSource, definitionConstructor) {
-    var node = navigationNode();
-    var definition = definitionConstructor(this);
-    var saga = new TC.Types.Saga(definition);
+﻿TC.Types.Flow = function(navigationSource, definition, args) {
+    var self = this;
+
+    this.node = navigationNode();
+    var pubsub = this.node.pane.pubsub;
+
+    if (definition.constructor === Function) {
+        var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
+        definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
+    }
+
+    var saga = new Tribe.PubSub.Saga(pubsub, definition);
 
     this.start = function(data) {
         saga.start(data);
+        return self;
     };
 
     this.end = function(data) {
         saga.end(data);
+        return self;
     };
 
-    this.navigates = function(pathOrOptions, data) {
-        return function() {
-            node.navigate(pathOrOptions, data);
-        };
-    };
-    
     function navigationNode() {
         if (navigationSource.constructor === TC.Types.Node)
             return navigationSource.findNavigation();
         if (navigationSource.constructor === TC.Types.Pane)
             return navigationSource.node.findNavigation();
+        throw new Error("navigationSource must be either TC.Types.Pane or TC.Types.Node");
     }
-}
+};
+
+TC.Types.Flow.prototype.navigate = function (pathOrOptions, data) {
+    this.node.navigate(pathOrOptions, data);
+};
+
+TC.Types.Flow.prototype.navigatesTo = function (pathOrOptions, data) {
+    var node = this.node;
+    return function () {
+        node.navigate(pathOrOptions, data);
+    };
+};
