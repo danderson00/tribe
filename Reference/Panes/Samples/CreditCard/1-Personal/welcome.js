@@ -3,7 +3,7 @@
         // Navigate to the first pane in the flow,
         // passing in an object that will capture
         // the application details.
-        pane.navigate('contact', {
+        pane.navigate('account', {
             type: 'personal'
         });
     };

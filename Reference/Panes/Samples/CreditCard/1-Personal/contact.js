@@ -7,6 +7,6 @@
     this.details.phone = ko.observable();
 
     this.next = function() {
-        pane.navigate('account', self.details);
+        pane.navigate('confirm', self.details);
     };
 });

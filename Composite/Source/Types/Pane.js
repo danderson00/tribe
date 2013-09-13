@@ -58,3 +58,5 @@ TC.Types.Pane.prototype.endRender = function () {
 TC.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
 };
+
+TC.Types.Pane.prototype.startFlow = TC.Types.Flow.startFlow;

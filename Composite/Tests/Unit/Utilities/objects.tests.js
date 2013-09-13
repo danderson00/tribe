@@ -55,6 +55,24 @@
         equal(utils.evaluateProperty(target, '.test1'), target.test1);
         equal(utils.evaluateProperty(target, 'test1.'), target.test1);
         equal(utils.evaluateProperty(target, 'test1..test11'), 'test');
+    });
 
+    test("cloneData", function() {
+        var object = {};
+        var result = utils.cloneData({
+            func: function() { },
+            string: 'string',
+            object: object,
+            observable: ko.observable('test'),
+            except1: 'except1',
+            except2: 'except2'
+        }, 'except1', 'except2');
+
+        equal(result.func, undefined);
+        equal(result.string, 'string');
+        equal(result.object, object);
+        equal(result.observable, 'test');
+        equal(result.except1, undefined);
+        equal(result.except2, undefined);
     });
 })();

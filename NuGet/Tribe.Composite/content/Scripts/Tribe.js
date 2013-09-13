@@ -617,16 +617,6 @@ TC.Utils.cleanElement = function (element) {
     $.cleanData = func;
 };
 // Utilities/objects.js
-////namespace('TC.Utils');
-////category('Objects');
-
-////func({
-////    name: 'arguments',
-////    description: "Wraps an array or arguments object, providing access by constructor",
-////    arguments: [
-////        { name: 'args', type: 'Array | arguments', description: '' }
-////    ],
-////});
 TC.Utils.arguments = function (args) {
     var byConstructor = {};
     $.each(args, function (index, arg) {
@@ -651,20 +641,33 @@ TC.Utils.removeItem = function (array, item) {
         array.splice(index, 1);
 };
 
-TC.Utils.inheritOptions = function(from, to, options) {
+TC.Utils.inheritOptions = function (from, to, options) {
     for (var i = 0, l = options.length; i < l; i++)
         to[options[i]] = from[options[i]];
     return to;
 };
 
-TC.Utils.evaluateProperty = function(target, property) {
+TC.Utils.evaluateProperty = function (target, property) {
     var properties = property.match(/[^\.]+/g);
     var result = target;
-    
+
     if (properties) {
         for (var i = 0, l = properties.length; i < l; i++)
             if (properties[i])
                 result = result[properties[i]];
+    }
+    return result;
+};
+
+TC.Utils.cloneData = function(from, except) {
+    var result = {};
+    for (var property in from) {
+        var value = from[property];
+        if (from.hasOwnProperty(property) &&
+            (!except || Array.prototype.indexOf.call(arguments, property) === -1) &&
+            (value.constructor !== Function || ko.isObservable(value)))
+            
+            result[property] = ko.utils.unwrapObservable(value);
     }
     return result;
 };
@@ -950,48 +953,56 @@ TC.Utils.evaluateProperty = function(target, property) {
 })();
 
 // Types/Flow.js
-TC.Types.Flow = function(navigationSource, definition, args) {
-    var self = this;
+(function () {
+    TC.Types.Flow = function (navigationSource, definition, args) {
+        var self = this;
 
-    this.node = navigationNode();
-    var pubsub = this.node.pane.pubsub;
+        this.node = navigationNode();
+        var pubsub = this.node.pane.pubsub.owner;
 
-    if (definition.constructor === Function) {
-        var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
-        definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
-    }
+        if (definition.constructor === Function) {
+            var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
+            definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
+        }
 
-    var saga = new Tribe.PubSub.Saga(pubsub, definition);
+        var saga = new Tribe.PubSub.Saga(pubsub, definition);
 
-    this.start = function(data) {
-        saga.start(data);
-        return self;
+        this.start = function(data) {
+            saga.start(data);
+            return self;
+        };
+
+        this.end = function(data) {
+            saga.end(data);
+            return self;
+        };
+
+        function navigationNode() {
+            if (navigationSource.constructor === TC.Types.Node)
+                return navigationSource.findNavigation().node;
+            if (navigationSource.constructor === TC.Types.Pane)
+                return navigationSource.node.findNavigation().node;
+            throw new Error("navigationSource must be either TC.Types.Pane or TC.Types.Node");
+        }
     };
 
-    this.end = function(data) {
-        saga.end(data);
-        return self;
+    TC.Types.Flow.prototype.navigate = function (pathOrOptions, data) {
+        this.node.navigate(pathOrOptions, data);
     };
 
-    function navigationNode() {
-        if (navigationSource.constructor === TC.Types.Node)
-            return navigationSource.findNavigation();
-        if (navigationSource.constructor === TC.Types.Pane)
-            return navigationSource.node.findNavigation();
-        throw new Error("navigationSource must be either TC.Types.Pane or TC.Types.Node");
-    }
-};
-
-TC.Types.Flow.prototype.navigate = function (pathOrOptions, data) {
-    this.node.navigate(pathOrOptions, data);
-};
-
-TC.Types.Flow.prototype.navigatesTo = function (pathOrOptions, data) {
-    var node = this.node;
-    return function () {
-        node.navigate(pathOrOptions, data);
+    TC.Types.Flow.prototype.navigatesTo = function (pathOrOptions, data) {
+        var node = this.node;
+        return function () {
+            node.navigate(pathOrOptions, data);
+        };
     };
-};
+
+    TC.Types.Flow.startFlow = function(definition, args) {
+        var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
+        var flow = Tribe.PubSub.utils.applyToConstructor(TC.Types.Flow, constructorArgs);
+        return flow.start();
+    };
+})();
 // Types/History.js
 TC.Types.History = function (history) {
     var currentState = 0;
@@ -1292,6 +1303,9 @@ TC.Types.Node.prototype.dispose = function() {
         this.pane.dispose();
     }
 };
+
+TC.Types.Node.prototype.startFlow = TC.Types.Flow.startFlow;
+
 // Types/Operation.js
 TC.Types.Operation = function () {
     var self = this;
@@ -1371,6 +1385,9 @@ TC.Types.Pane.prototype.endRender = function () {
 TC.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
 };
+
+TC.Types.Pane.prototype.startFlow = TC.Types.Flow.startFlow;
+
 // Types/Pipeline.js
 TC.Types.Pipeline = function (events, context) {
     this.execute = function (eventsToExecute, target) {

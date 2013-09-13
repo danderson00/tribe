@@ -6,6 +6,6 @@
     this.details.cards = ko.observable();
 
     this.next = function() {
-        pane.navigate('confirm', self.details);
+        pane.navigate('contact', self.details);
     };
 });

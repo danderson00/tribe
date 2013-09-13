@@ -5,9 +5,7 @@
     this.cards = ko.observable();
 
     this.next = function() {
-        pane.pubsub.publish('CreditCard.addAccountDetails', {
-            limit: self.limit(),
-            cards: self.cards()
-        });
+        pane.pubsub.publish('CC.addAccountDetails', 
+            TC.Utils.cloneData(self));
     };
 });

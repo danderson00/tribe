@@ -6,10 +6,7 @@
     this.phone = ko.observable();
 
     this.next = function () {
-        pane.pubsub.publish('CreditCard.addContact', {
-            name: self.name(),
-            email: self.email(),
-            phone: self.phone()
-        });
+        pane.pubsub.publish('CC.addContact',
+            TC.Utils.cloneData(self));
     };
 });

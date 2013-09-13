@@ -10,13 +10,31 @@
             pubsub = new Tribe.PubSub({ sync: true });
             pane = new TC.Types.Pane({ pubsub: pubsub });
             node = new TC.Types.Node(null, pane);
-            node.findNavigation = function() { return { navigate: spy, pane: pane }; };
+            node.findNavigation = function () { return { node: { navigate: spy, pane: pane } }; };
         }
     });
     
     test("constructor arguments are passed to definition constructor", function () {
         expect(2);
         var f = new TC.Types.Flow(node, constructor, 'arg1', 'arg2');
+        function constructor(flow, arg1, arg2) {
+            equal(arg1, 'arg1');
+            equal(arg2, 'arg2');
+        }
+    });
+
+    test("arguments to Node.startFlow are passed to definition constructor", function () {
+        expect(2);
+        var f = node.startFlow(constructor, 'arg1', 'arg2');
+        function constructor(flow, arg1, arg2) {
+            equal(arg1, 'arg1');
+            equal(arg2, 'arg2');
+        }
+    });
+
+    test("arguments to Pane.startFlow are passed to definition constructor", function () {
+        expect(2);
+        var f = pane.startFlow(constructor, 'arg1', 'arg2');
         function constructor(flow, arg1, arg2) {
             equal(arg1, 'arg1');
             equal(arg2, 'arg2');

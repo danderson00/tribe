@@ -579,7 +579,7 @@ Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'account.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.details = pane.data;    \n    this.details.limit = ko.observable();\n    this.details.cards = ko.observable();\n\n    this.next = function() {\n        pane.navigate(\'confirm\', self.details);\n    };\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.details = pane.data;    \n    this.details.limit = ko.observable();\n    this.details.cards = ko.observable();\n\n    this.next = function() {\n        pane.navigate(\'contact\', self.details);\n    };\n});</pre>'
 });Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
@@ -603,7 +603,7 @@ Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'contact.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.details = pane.data;\n    this.details.name = ko.observable();\n    this.details.email = ko.observable();\n    this.details.phone = ko.observable();\n\n    this.next = function() {\n        pane.navigate(\'account\', self.details);\n    };\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.details = pane.data;\n    this.details.name = ko.observable();\n    this.details.email = ko.observable();\n    this.details.phone = ko.observable();\n\n    this.next = function() {\n        pane.navigate(\'confirm\', self.details);\n    };\n});</pre>'
 });Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
@@ -615,67 +615,151 @@ Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.start = function () {\n        // Navigate to the first pane in the flow,\n        // passing in an object that will capture\n        // the application details.\n        pane.navigate(\'contact\', {\n            type: \'personal\'\n        });\n    };\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.start = function () {\n        // Navigate to the first pane in the flow,\n        // passing in an object that will capture\n        // the application details.\n        pane.navigate(\'account\', {\n            type: \'personal\'\n        });\n    };\n});</pre>'
 });Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
+Samples['CreditCard/2-Flows'] = Samples['CreditCard/2-Flows'] || [];
+Samples['CreditCard/2-Flows'].push({
     filename: 'account.htm',
     icon: 'Images/icon.htm.png',
     content: '<pre class="prettyprint">&lt;div>\n    Card Limit:\n    &lt;input data-bind="value: limit" />\n&lt;/div>\n\n&lt;div>\n    Number of Cards Required:\n    &lt;input data-bind="value: cards" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
 });Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
+Samples['CreditCard/2-Flows'] = Samples['CreditCard/2-Flows'] || [];
+Samples['CreditCard/2-Flows'].push({
     filename: 'account.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.limit = ko.observable();\n    this.cards = ko.observable();\n\n    this.next = function() {\n        pane.pubsub.publish(\'CreditCard.addAccountDetails\', {\n            limit: self.limit(),\n            cards: self.cards()\n        });\n    };\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.limit = ko.observable();\n    this.cards = ko.observable();\n\n    this.next = function() {\n        pane.pubsub.publish(\'CC.addAccountDetails\', \n            TC.Utils.cloneData(self));\n    };\n});</pre>'
 });Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
+Samples['CreditCard/2-Flows'] = Samples['CreditCard/2-Flows'] || [];
+Samples['CreditCard/2-Flows'].push({
     filename: 'confirm.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;p>\n    Thanks, &lt;span data-bind="text: details.contact.name">&lt;/span>,\n    you are about to apply for a credit card with a\n    $&lt;span data-bind="text: details.account.limit">&lt;/span> limit.\n&lt;/p>\n&lt;p>\n    Please click \'Apply\' below to submit your application.  \n&lt;/p>\n&lt;button data-bind="click: apply">Apply&lt;/button></pre>'
+    content: '<pre class="prettyprint">&lt;p>\n    Thanks, \n    &lt;span data-bind="text: details.contact.name">&lt;/span>,\n    you are about to apply for a \n    &lt;span data-bind="text: details.type">&lt;/span> \n    credit card with a \n    $&lt;span data-bind="text: details.account.limit">&lt;/span> \n    limit.\n&lt;/p>\n&lt;p>\n    Please click \'Apply\' below to submit your application.  \n&lt;/p>\n&lt;button data-bind="click: apply">Apply&lt;/button></pre>'
 });Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
+Samples['CreditCard/2-Flows'] = Samples['CreditCard/2-Flows'] || [];
+Samples['CreditCard/2-Flows'].push({
     filename: 'confirm.js',
     icon: 'Images/icon.js.png',
     content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.details = pane.data;\n\n    this.apply = function() {\n        // submit application!\n    };\n});</pre>'
 });Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
+Samples['CreditCard/2-Flows'] = Samples['CreditCard/2-Flows'] || [];
+Samples['CreditCard/2-Flows'].push({
     filename: 'contact.htm',
     icon: 'Images/icon.htm.png',
-    content: '<pre class="prettyprint">&lt;div>\n    Name:\n    &lt;input data-bind="value: name" />\n&lt;/div>\n\n&lt;div>\n    Email:\n    &lt;input data-bind="value: email" />\n&lt;/div>\n\n&lt;div>\n    Phone:\n    &lt;input data-bind="value: phone" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
+    content: '<pre class="prettyprint">&lt;div>\n    Name: &lt;input data-bind="value: name" />\n&lt;/div>\n\n&lt;div>\n    Email: &lt;input data-bind="value: email" />\n&lt;/div>\n\n&lt;div>\n    Phone: &lt;input data-bind="value: phone" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
 });Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
+Samples['CreditCard/2-Flows'] = Samples['CreditCard/2-Flows'] || [];
+Samples['CreditCard/2-Flows'].push({
     filename: 'contact.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.name = ko.observable();\n    this.email = ko.observable();\n    this.phone = ko.observable();\n\n    this.next = function () {\n        pane.pubsub.publish(\'CreditCard.addContact\', {\n            name: self.name(),\n            email: self.email(),\n            phone: self.phone()\n        });\n    };\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.name = ko.observable();\n    this.email = ko.observable();\n    this.phone = ko.observable();\n\n    this.next = function () {\n        pane.pubsub.publish(\'CC.addContact\',\n            TC.Utils.cloneData(self));\n    };\n});</pre>'
 });Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
-    filename: 'CreditCardSaga.js',
+Samples['CreditCard/2-Flows'] = Samples['CreditCard/2-Flows'] || [];
+Samples['CreditCard/2-Flows'].push({
+    filename: 'CreditCardFlow.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">CreditCardSaga = function(pane) {\n    var details = { };\n\n    this.handles = {\n        onstart: function() {\n            pane.navigate(\'welcome\');\n        },\n        \'CreditCard.setType\': function (type) {\n            details.type = type;\n            pane.navigate(\'contact\');\n        },\n        \'CreditCard.addContact\': function(contact) {\n            details.contact = contact;\n            pane.navigate(\'account\');\n        },\n        \'CreditCard.addAccountDetails\': function(account) {\n            details.account = account;\n            pane.navigate(\'confirm\', details);\n        }\n    };\n\n    this.pubsub = pane.pubsub;\n};</pre>'
+    content: '<pre class="prettyprint">CreditCardFlow = function(flow, type) {\n    var details = { type: type };\n\n    this.handles = {\n        onstart: flow.navigatesTo(\'account\'),\n        \n        \'CC.addAccountDetails\': function(account) {\n            details.account = account;\n            flow.navigate(\'contact\');\n        },\n        \'CC.addContact\': function(contact) {\n            details.contact = contact;\n            flow.navigate(\'confirm\', details);\n        },\n    };\n};</pre>'
 });Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
-    filename: 'layout.js',
-    icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    new TC.Types.Saga(new CreditCardSaga(pane)).start();\n});</pre>'
-});Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
+Samples['CreditCard/2-Flows'] = Samples['CreditCard/2-Flows'] || [];
+Samples['CreditCard/2-Flows'].push({
     filename: 'welcome.htm',
     icon: 'Images/icon.htm.png',
     content: '<pre class="prettyprint">&lt;h1>Bank of Tribe&lt;/h1>\n\n&lt;p>Welcome to the credit card application portal.&lt;/p>\n&lt;p>Click start to begin.&lt;/p>\n\n&lt;button data-bind="click: start">Start&lt;/button></pre>'
 });Samples = window.Samples || {};
-Samples['CreditCard/2-Sagas'] = Samples['CreditCard/2-Sagas'] || [];
-Samples['CreditCard/2-Sagas'].push({
+Samples['CreditCard/2-Flows'] = Samples['CreditCard/2-Flows'] || [];
+Samples['CreditCard/2-Flows'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.start = function () {\n        pane.pubsub.publish(\'CreditCard.setType\', \'personal\');\n    };\n});</pre>'
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.start = function () {\n        pane.startFlow(CreditCardFlow, \'personal\');\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'businessAccount.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div>\n    Card Limit:\n    &lt;input data-bind="value: limit" />\n&lt;/div>\n\n&lt;div>\n    Number of Cards Required:\n    &lt;input data-bind="value: cards" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'businessAccount.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.limit = ko.observable();\n    this.cards = ko.observable();\n\n    this.next = function() {\n        pane.pubsub.publish(\'CC.addAccountDetails\', \n            TC.Utils.cloneData(self));\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'businessDetails.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div>\n    Business Name: &lt;input data-bind="value: name" />\n&lt;/div>\n\n&lt;div>\n    ABN: &lt;input data-bind="value: abn" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'businessDetails.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.name = ko.observable();\n    this.abn = ko.observable();\n\n    this.next = function() {\n        pane.pubsub.publish(\'CC.addBusinessDetails\', \n            TC.Utils.cloneData(self));\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'confirm.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;p>\n    Thanks, \n    &lt;span data-bind="text: details.contact.name">&lt;/span>,\n    you are about to apply for a \n    &lt;span data-bind="text: details.type">&lt;/span> \n    credit card with a \n    $&lt;span data-bind="text: details.account.limit">&lt;/span> \n    limit.\n&lt;/p>\n&lt;p>\n    Please click \'Apply\' below to submit your application.  \n&lt;/p>\n&lt;button data-bind="click: apply">Apply&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'confirm.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    this.details = pane.data;\n\n    this.apply = function() {\n        // submit application!\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'contact.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div>\n    Name: &lt;input data-bind="value: name" />\n&lt;/div>\n\n&lt;div>\n    Email: &lt;input data-bind="value: email" />\n&lt;/div>\n\n&lt;div>\n    Phone: &lt;input data-bind="value: phone" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'contact.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.name = ko.observable();\n    this.email = ko.observable();\n    this.phone = ko.observable();\n\n    this.next = function () {\n        pane.pubsub.publish(\'CC.addContact\',\n            TC.Utils.cloneData(self));\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'CreditCardFlow.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">CreditCardFlow = function(flow, details) {\n    this.handles = {\n        onstart: flow.navigatesTo(\'welcome\'),\n        \'CC.startPersonal\': {\n            onstart: flow.navigatesTo(\'personal\'),\n            \'CC.addAccountDetails\': flow.navigatesTo(\'contact\')\n        },\n        \'CC.startBusiness\': {\n            onstart: flow.navigatesTo(\'businessDetails\'),\n            \'CC.addBusinessDetails\': flow.navigatesTo(\'businessAccount\'),\n            \'CC.addAccountDetails\': flow.navigatesTo(\'contact\')\n        },\n        \'CC.addContact\': flow.navigatesTo(\'confirm\', details)\n    };\n};</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'CreditCardSaga.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">CreditCardSaga = function (saga, details) {\n    this.handles = {\n        \'CC.startPersonal\': function () {\n            details.type = \'personal\';\n        },\n        \'CC.startBusiness\': function () {\n            details.type = \'business\';\n        },\n        \'CC.addAccountDetails\': function (account) {\n            details.account = account;\n        },\n        \'CC.addBusinessDetails\': function(business) {\n            details.business = business;\n        },\n        \'CC.addContact\': function(contact) {\n            details.contact = contact;\n        }\n    };\n};</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'layout.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function (pane) {\n    var details = {};\n    pane.pubsub.owner.startSaga(CreditCardSaga, details);\n    pane.startFlow(CreditCardFlow, details);\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'personal.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;div>\n    Card Limit:\n    &lt;input data-bind="value: limit" />\n&lt;/div>\n\n&lt;div>\n    Number of Cards Required:\n    &lt;input data-bind="value: cards" />\n&lt;/div>\n\n&lt;button data-bind="click: next">Next&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'personal.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    var self = this;\n    \n    this.limit = ko.observable();\n    this.cards = ko.observable();\n\n    this.next = function() {\n        pane.pubsub.publish(\'CC.addAccountDetails\', \n            TC.Utils.cloneData(self));\n    };\n});</pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'welcome.htm',
+    icon: 'Images/icon.htm.png',
+    content: '<pre class="prettyprint">&lt;h1>Bank of Tribe&lt;/h1>\n\n&lt;p>Welcome to the credit card application portal.&lt;/p>\n&lt;p>Click the required account type to begin.&lt;/p>\n\n&lt;button data-bind="click: personal">Personal&lt;/button>\n&lt;button data-bind="click: business">Business&lt;/button></pre>'
+});Samples = window.Samples || {};
+Samples['CreditCard/3-Business'] = Samples['CreditCard/3-Business'] || [];
+Samples['CreditCard/3-Business'].push({
+    filename: 'welcome.js',
+    icon: 'Images/icon.js.png',
+    content: '<pre class="prettyprint">TC.registerModel(function(pane) {\n    \n    this.personal = function () {\n        pane.pubsub.publish(\'CC.startPersonal\');\n    };\n\n    this.business = function () {\n        pane.pubsub.publish(\'CC.startBusiness\');\n    };\n});</pre>'
 });
 // Infrastructure/syntaxHighlightEvent.js
 TC.Events.syntaxHighlight = function(pane) {
@@ -1660,7 +1744,8 @@ Reference.Utilities.Objects = [
     { name: 'TC.Utils.arguments', description: '', arguments: [{ name: 'args' }] },
     { name: 'TC.Utils.removeItem', description: '', arguments: [{ name: 'array' }, { name: 'item' }] },
     { name: 'TC.Utils.inheritOptions', description: '', arguments: [{ name: 'from' }, { name: 'to' }, { name: 'options' }] },
-    { name: 'TC.Utils.evaluateProperty', description: '', arguments: [{ name: 'target' }, { name: 'property' }] }
+    { name: 'TC.Utils.evaluateProperty', description: '', arguments: [{ name: 'target' }, { name: 'property' }] },
+    { name: 'TC.Utils.cloneData', description: '', arguments: [{ name: 'from' }, { name: 'except' }] }
 ];
 
 
@@ -2120,7 +2205,7 @@ TC.registerModel(function(pane) {
     this.details.cards = ko.observable();
 
     this.next = function() {
-        pane.navigate('confirm', self.details);
+        pane.navigate('contact', self.details);
     };
 });
 
@@ -2145,7 +2230,7 @@ TC.registerModel(function(pane) {
     this.details.phone = ko.observable();
 
     this.next = function() {
-        pane.navigate('account', self.details);
+        pane.navigate('confirm', self.details);
     };
 });
 
@@ -2156,14 +2241,14 @@ TC.registerModel(function(pane) {
         // Navigate to the first pane in the flow,
         // passing in an object that will capture
         // the application details.
-        pane.navigate('contact', {
+        pane.navigate('account', {
             type: 'personal'
         });
     };
 });
 
-// Panes/Samples/CreditCard/2-Sagas/account.js
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/account' };
+// Panes/Samples/CreditCard/2-Flows/account.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Flows/account' };
 TC.registerModel(function(pane) {
     var self = this;
     
@@ -2171,15 +2256,13 @@ TC.registerModel(function(pane) {
     this.cards = ko.observable();
 
     this.next = function() {
-        pane.pubsub.publish('CreditCard.addAccountDetails', {
-            limit: self.limit(),
-            cards: self.cards()
-        });
+        pane.pubsub.publish('CC.addAccountDetails', 
+            TC.Utils.cloneData(self));
     };
 });
 
-// Panes/Samples/CreditCard/2-Sagas/confirm.js
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/confirm' };
+// Panes/Samples/CreditCard/2-Flows/confirm.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Flows/confirm' };
 TC.registerModel(function(pane) {
     this.details = pane.data;
 
@@ -2188,8 +2271,8 @@ TC.registerModel(function(pane) {
     };
 });
 
-// Panes/Samples/CreditCard/2-Sagas/contact.js
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/contact' };
+// Panes/Samples/CreditCard/2-Flows/contact.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Flows/contact' };
 TC.registerModel(function(pane) {
     var self = this;
     
@@ -2198,51 +2281,163 @@ TC.registerModel(function(pane) {
     this.phone = ko.observable();
 
     this.next = function () {
-        pane.pubsub.publish('CreditCard.addContact', {
-            name: self.name(),
-            email: self.email(),
-            phone: self.phone()
-        });
+        pane.pubsub.publish('CC.addContact',
+            TC.Utils.cloneData(self));
     };
 });
 
-// Panes/Samples/CreditCard/2-Sagas/CreditCardSaga.js
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/CreditCardSaga' };
-CreditCardSaga = function(pane) {
-    var details = { };
+// Panes/Samples/CreditCard/2-Flows/CreditCardFlow.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Flows/CreditCardFlow' };
+CreditCardFlow = function(flow, type) {
+    var details = { type: type };
 
     this.handles = {
-        onstart: function() {
-            pane.navigate('welcome');
-        },
-        'CreditCard.setType': function (type) {
-            details.type = type;
-            pane.navigate('contact');
-        },
-        'CreditCard.addContact': function(contact) {
-            details.contact = contact;
-            pane.navigate('account');
-        },
-        'CreditCard.addAccountDetails': function(account) {
+        onstart: flow.navigatesTo('account'),
+        
+        'CC.addAccountDetails': function(account) {
             details.account = account;
-            pane.navigate('confirm', details);
-        }
+            flow.navigate('contact');
+        },
+        'CC.addContact': function(contact) {
+            details.contact = contact;
+            flow.navigate('confirm', details);
+        },
     };
-
-    this.pubsub = pane.pubsub;
 };
 
-// Panes/Samples/CreditCard/2-Sagas/layout.js
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/layout' };
-TC.registerModel(function(pane) {
-    new TC.Types.Saga(new CreditCardSaga(pane)).start();
-});
-
-// Panes/Samples/CreditCard/2-Sagas/welcome.js
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Sagas/welcome' };
+// Panes/Samples/CreditCard/2-Flows/welcome.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Flows/welcome' };
 TC.registerModel(function(pane) {
     this.start = function () {
-        pane.pubsub.publish('CreditCard.setType', 'personal');
+        pane.startFlow(CreditCardFlow, 'personal');
+    };
+});
+
+// Panes/Samples/CreditCard/3-Business/businessAccount.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Business/businessAccount' };
+TC.registerModel(function(pane) {
+    var self = this;
+    
+    this.limit = ko.observable();
+    this.cards = ko.observable();
+
+    this.next = function() {
+        pane.pubsub.publish('CC.addAccountDetails', 
+            TC.Utils.cloneData(self));
+    };
+});
+
+// Panes/Samples/CreditCard/3-Business/businessDetails.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Business/businessDetails' };
+TC.registerModel(function(pane) {
+    var self = this;
+    
+    this.name = ko.observable();
+    this.abn = ko.observable();
+
+    this.next = function() {
+        pane.pubsub.publish('CC.addBusinessDetails', 
+            TC.Utils.cloneData(self));
+    };
+});
+
+// Panes/Samples/CreditCard/3-Business/confirm.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Business/confirm' };
+TC.registerModel(function(pane) {
+    this.details = pane.data;
+
+    this.apply = function() {
+        // submit application!
+    };
+});
+
+// Panes/Samples/CreditCard/3-Business/contact.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Business/contact' };
+TC.registerModel(function(pane) {
+    var self = this;
+    
+    this.name = ko.observable();
+    this.email = ko.observable();
+    this.phone = ko.observable();
+
+    this.next = function () {
+        pane.pubsub.publish('CC.addContact',
+            TC.Utils.cloneData(self));
+    };
+});
+
+// Panes/Samples/CreditCard/3-Business/CreditCardFlow.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Business/CreditCardFlow' };
+CreditCardFlow = function(flow, details) {
+    this.handles = {
+        onstart: flow.navigatesTo('welcome'),
+        'CC.startPersonal': {
+            onstart: flow.navigatesTo('personal'),
+            'CC.addAccountDetails': flow.navigatesTo('contact')
+        },
+        'CC.startBusiness': {
+            onstart: flow.navigatesTo('businessDetails'),
+            'CC.addBusinessDetails': flow.navigatesTo('businessAccount'),
+            'CC.addAccountDetails': flow.navigatesTo('contact')
+        },
+        'CC.addContact': flow.navigatesTo('confirm', details)
+    };
+};
+
+// Panes/Samples/CreditCard/3-Business/CreditCardSaga.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Business/CreditCardSaga' };
+CreditCardSaga = function (saga, details) {
+    this.handles = {
+        'CC.startPersonal': function () {
+            details.type = 'personal';
+        },
+        'CC.startBusiness': function () {
+            details.type = 'business';
+        },
+        'CC.addAccountDetails': function (account) {
+            details.account = account;
+        },
+        'CC.addBusinessDetails': function(business) {
+            details.business = business;
+        },
+        'CC.addContact': function(contact) {
+            details.contact = contact;
+        }
+    };
+};
+
+// Panes/Samples/CreditCard/3-Business/layout.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Business/layout' };
+TC.registerModel(function (pane) {
+    var details = {};
+    pane.pubsub.owner.startSaga(CreditCardSaga, details);
+    pane.startFlow(CreditCardFlow, details);
+});
+
+// Panes/Samples/CreditCard/3-Business/personal.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Business/personal' };
+TC.registerModel(function(pane) {
+    var self = this;
+    
+    this.limit = ko.observable();
+    this.cards = ko.observable();
+
+    this.next = function() {
+        pane.pubsub.publish('CC.addAccountDetails', 
+            TC.Utils.cloneData(self));
+    };
+});
+
+// Panes/Samples/CreditCard/3-Business/welcome.js
+TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Business/welcome' };
+TC.registerModel(function(pane) {
+    
+    this.personal = function () {
+        pane.pubsub.publish('CC.startPersonal');
+    };
+
+    this.business = function () {
+        pane.pubsub.publish('CC.startBusiness');
     };
 });
 
@@ -2614,13 +2809,25 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Samples-CreditCard-1-Personal-welcome"><h1>Bank of Tribe</h1>\n\n<p>Welcome to the credit card application portal.</p>\n<p>Click start to begin.</p>\n\n<button data-bind="click: start">Start</button></script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-CreditCard-2-Sagas-account"><div>\n    Card Limit:\n    <input data-bind="value: limit" />\n</div>\n\n<div>\n    Number of Cards Required:\n    <input data-bind="value: cards" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
+    .append('<script type="text/template" id="template--Samples-CreditCard-2-Flows-account"><div>\n    Card Limit:\n    <input data-bind="value: limit" />\n</div>\n\n<div>\n    Number of Cards Required:\n    <input data-bind="value: cards" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-CreditCard-2-Sagas-confirm"><p>\n    Thanks, <span data-bind="text: details.contact.name"></span>,\n    you are about to apply for a credit card with a\n    $<span data-bind="text: details.account.limit"></span> limit.\n</p>\n<p>\n    Please click \'Apply\' below to submit your application.  \n</p>\n<button data-bind="click: apply">Apply</button></script>');
+    .append('<script type="text/template" id="template--Samples-CreditCard-2-Flows-confirm"><p>\n    Thanks, \n    <span data-bind="text: details.contact.name"></span>,\n    you are about to apply for a \n    <span data-bind="text: details.type"></span> \n    credit card with a \n    $<span data-bind="text: details.account.limit"></span> \n    limit.\n</p>\n<p>\n    Please click \'Apply\' below to submit your application.  \n</p>\n<button data-bind="click: apply">Apply</button></script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-CreditCard-2-Sagas-contact"><div>\n    Name:\n    <input data-bind="value: name" />\n</div>\n\n<div>\n    Email:\n    <input data-bind="value: email" />\n</div>\n\n<div>\n    Phone:\n    <input data-bind="value: phone" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
+    .append('<script type="text/template" id="template--Samples-CreditCard-2-Flows-contact"><div>\n    Name: <input data-bind="value: name" />\n</div>\n\n<div>\n    Email: <input data-bind="value: email" />\n</div>\n\n<div>\n    Phone: <input data-bind="value: phone" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
 $('head')
-    .append('<script type="text/template" id="template--Samples-CreditCard-2-Sagas-welcome"><h1>Bank of Tribe</h1>\n\n<p>Welcome to the credit card application portal.</p>\n<p>Click start to begin.</p>\n\n<button data-bind="click: start">Start</button></script>');
+    .append('<script type="text/template" id="template--Samples-CreditCard-2-Flows-welcome"><h1>Bank of Tribe</h1>\n\n<p>Welcome to the credit card application portal.</p>\n<p>Click start to begin.</p>\n\n<button data-bind="click: start">Start</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-3-Business-businessAccount"><div>\n    Card Limit:\n    <input data-bind="value: limit" />\n</div>\n\n<div>\n    Number of Cards Required:\n    <input data-bind="value: cards" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-3-Business-businessDetails"><div>\n    Business Name: <input data-bind="value: name" />\n</div>\n\n<div>\n    ABN: <input data-bind="value: abn" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-3-Business-confirm"><p>\n    Thanks, \n    <span data-bind="text: details.contact.name"></span>,\n    you are about to apply for a \n    <span data-bind="text: details.type"></span> \n    credit card with a \n    $<span data-bind="text: details.account.limit"></span> \n    limit.\n</p>\n<p>\n    Please click \'Apply\' below to submit your application.  \n</p>\n<button data-bind="click: apply">Apply</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-3-Business-contact"><div>\n    Name: <input data-bind="value: name" />\n</div>\n\n<div>\n    Email: <input data-bind="value: email" />\n</div>\n\n<div>\n    Phone: <input data-bind="value: phone" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-3-Business-personal"><div>\n    Card Limit:\n    <input data-bind="value: limit" />\n</div>\n\n<div>\n    Number of Cards Required:\n    <input data-bind="value: cards" />\n</div>\n\n<button data-bind="click: next">Next</button></script>');
+$('head')
+    .append('<script type="text/template" id="template--Samples-CreditCard-3-Business-welcome"><h1>Bank of Tribe</h1>\n\n<p>Welcome to the credit card application portal.</p>\n<p>Click the required account type to begin.</p>\n\n<button data-bind="click: personal">Personal</button>\n<button data-bind="click: business">Business</button></script>');
 $('head')
     .append('<script type="text/template" id="template--Samples-Panes-Communicating-layout"><div class="panels">\n    <!-- Pass the shared observable to child panes -->\n\n    <div data-bind="pane: \'sender\',\n                    data: observable"></div>\n\n    <div data-bind="pane: \'receiver\',\n                    data: observable"></div>\n</div></script>');
 $('head')

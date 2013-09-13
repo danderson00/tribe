@@ -27,7 +27,7 @@ TC.registerModel(function (pane) {
 
     this.links = [
         link('GitHub', 'https://github.com/danderson00/PackScript'),
-        link('Tests', 'http://danderson00.github.io/PackScript/PackScript.Tests/Core/Resources/runner.htm')
+        link('Tests', 'http://danderson00.github.io/PackScript/PackScript.Tests/index.html')
     ];
     
     function section(name, pane) {

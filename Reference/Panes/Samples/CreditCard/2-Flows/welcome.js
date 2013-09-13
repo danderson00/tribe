@@ -1,5 +1,5 @@
 ﻿TC.registerModel(function(pane) {
     this.start = function () {
-        pane.pubsub.publish('CreditCard.setType', 'personal');
+        pane.startFlow(CreditCardFlow, 'personal');
     };
 });
