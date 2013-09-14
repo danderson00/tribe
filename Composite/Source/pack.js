@@ -10,6 +10,7 @@
     T.scripts(options('LoadStrategies')),
     T.scripts(options('Transitions')),
     T.scripts(options('Api')),
+    T.scripts(options('BindingHandlers')),
     T.scripts(options('Loggers'))
 ]).to(T.webTargets('../Build/Tribe.Composite'));
     

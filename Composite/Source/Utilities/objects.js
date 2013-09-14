@@ -27,3 +27,25 @@ TC.Utils.inheritOptions = function (from, to, options) {
         to[options[i]] = from[options[i]];
     return to;
 };
+
+TC.Utils.cloneData = function (from, except) {
+    var result = {};
+    for (var property in from) {
+        var value = from[property];
+        if (from.hasOwnProperty(property) &&
+            (!except || Array.prototype.indexOf.call(arguments, property) === -1) &&
+            (!value || (value.constructor !== Function || ko.isObservable(value))))
+
+            result[property] = ko.utils.unwrapObservable(value);
+    }
+    return result;
+};
+
+TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
+    var data = allBindingsAccessor();
+    data.value = valueAccessor();
+    if (!ko.isObservable(data.value) && $.isFunction(data.value))
+        data.value = data.value();
+    return data;
+};
+

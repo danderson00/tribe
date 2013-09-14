@@ -1,9 +1,5 @@
-﻿<div>
-    Business Name: <input data-bind="value: name" />
+﻿<div data-bind="form: {}, create: true">
+    <div data-bind="textField: 'name', displayText: 'Business name', validate: { required: true }"></div>
+    <div data-bind="textField: 'abn', displayText: 'ABN'"></div>
+    <button data-bind="publish: 'CC.setBusiness'">Next</button>
 </div>
-
-<div>
-    ABN: <input data-bind="value: abn" />
-</div>
-
-<button data-bind="click: next">Next</button>

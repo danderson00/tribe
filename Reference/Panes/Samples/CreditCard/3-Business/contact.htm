@@ -1,13 +1,6 @@
-﻿<div>
-    Name: <input data-bind="value: name" />
+﻿<div data-bind="form: {}, create: true">
+    <div data-bind="textField: 'name', displayText: 'Name', validate: { required: true }"></div>
+    <div data-bind="textField: 'email', displayText: 'Email', validate: { email: true }"></div>
+    <div data-bind="textField: 'phone', displayText: 'Phone'"></div>
+    <button data-bind="publish: 'CC.setContact'">Next</button>
 </div>
-
-<div>
-    Email: <input data-bind="value: email" />
-</div>
-
-<div>
-    Phone: <input data-bind="value: phone" />
-</div>
-
-<button data-bind="click: next">Next</button>

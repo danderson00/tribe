@@ -786,14 +786,6 @@ TF.renderTemplate = function (name, target) {
 TF = window.TF || {};
 TF.Utils = {};
 
-TF.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
-    var data = allBindingsAccessor();
-    data.value = valueAccessor();
-    if (!ko.isObservable(data.value) && $.isFunction(data.value))
-        data.value = data.value();
-    return data;
-};
-
 TF.Utils.evaluateProperty = function (target, property, defaultValue) {
     var properties = property.match(/[^\.]+/g);
     var result = target;
@@ -813,18 +805,7 @@ TF.Utils.evaluateProperty = function (target, property, defaultValue) {
     return result;
 };
 
-TF.Utils.cloneData = function (from, except) {
-    var result = {};
-    for (var property in from) {
-        var value = from[property];
-        if (from.hasOwnProperty(property) &&
-            (!except || Array.prototype.indexOf.call(arguments, property) === -1) &&
-            (!value || (value.constructor !== Function || ko.isObservable(value))))
 
-            result[property] = ko.utils.unwrapObservable(value);
-    }
-    return result;
-};
 // Infrastructure/validationRules.js
 ko.validation.rules['date'] = {
     validator: function (value, validate) {
@@ -859,7 +840,7 @@ ko.validation.rules['date'] = {
     }
 
     function renderFieldTemplate(templateName, element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var data = TF.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         if(bindingContext.__create) resolveStringValue();
 
         var innerBindingContext = bindingContext.extend(data);
@@ -936,7 +917,7 @@ ko.bindingHandlers.focus = {
 // BindingHandlers/form.js
 ko.bindingHandlers.form = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var data = TF.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         data.value = data.value || {};
         
         if (data.value.constructor === String) {
@@ -949,38 +930,6 @@ ko.bindingHandlers.form = {
         ko.applyBindingsToDescendants(childContext, element);
 
         return { controlsDescendantBindings: true };
-    }
-};
-// BindingHandlers/navigate.js
-ko.bindingHandlers.navigate = {
-    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        if (!TC) return;
-        var node = TC.nodeFor(element);
-        if (!node) return;
-
-        ko.bindingHandlers.validatedClick.init(element, navigate, allBindingsAccessor, viewModel);
-
-        function navigate() {
-            return function() {
-                node.navigate(valueAccessor(), TF.Utils.cloneData(viewModel));
-            };
-        }
-    }
-};
-// BindingHandlers/publish.js
-ko.bindingHandlers.publish = {
-    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        if (!TC) return;
-        var pubsub = TC.nodeFor(element).pane.pubsub;
-        if (!pubsub) return;
-
-        ko.bindingHandlers.validatedClick.init(element, publishAccessor, allBindingsAccessor, viewModel);
-
-        function publishAccessor() {
-            return function() {
-                pubsub.publish(valueAccessor(), TF.Utils.cloneData(viewModel));
-            };
-        }
     }
 };
 // BindingHandlers/select.js

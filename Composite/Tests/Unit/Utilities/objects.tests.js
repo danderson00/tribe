@@ -35,4 +35,33 @@
         equal(TC.Utils.inheritOptions(source, {}, ['test2']).test2, 2);
         equal(TC.Utils.inheritOptions(source, {}, ['test1', 'test2', 'test3']).test3, undefined);
     });
+    
+    test("cloneData", function () {
+        var object = {};
+        var result = utils.cloneData({
+            func: function () { },
+            string: 'string',
+            object: object,
+            observable: ko.observable('test'),
+            except1: 'except1',
+            except2: 'except2'
+        }, 'except1', 'except2');
+
+        equal(result.func, undefined);
+        equal(result.string, 'string');
+        equal(result.object, object);
+        equal(result.observable, 'test');
+        equal(result.except1, undefined);
+        equal(result.except2, undefined);
+    });
+    
+    test("normaliseBindings evaluates function passed as value", function () {
+        equal(utils.normaliseBindings(value, function () { return {}; }).value, 'test');
+
+        function value() {
+            return function () {
+                return 'test';
+            };
+        }
+    });
 })();

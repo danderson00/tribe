@@ -1,6 +1,6 @@
 ﻿ko.bindingHandlers.form = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var data = TF.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         data.value = data.value || {};
         
         if (data.value.constructor === String) {

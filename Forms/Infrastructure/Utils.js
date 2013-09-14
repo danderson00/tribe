@@ -1,14 +1,6 @@
 ﻿TF = window.TF || {};
 TF.Utils = {};
 
-TF.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
-    var data = allBindingsAccessor();
-    data.value = valueAccessor();
-    if (!ko.isObservable(data.value) && $.isFunction(data.value))
-        data.value = data.value();
-    return data;
-};
-
 TF.Utils.evaluateProperty = function (target, property, defaultValue) {
     var properties = property.match(/[^\.]+/g);
     var result = target;
@@ -28,15 +20,3 @@ TF.Utils.evaluateProperty = function (target, property, defaultValue) {
     return result;
 };
 
-TF.Utils.cloneData = function (from, except) {
-    var result = {};
-    for (var property in from) {
-        var value = from[property];
-        if (from.hasOwnProperty(property) &&
-            (!except || Array.prototype.indexOf.call(arguments, property) === -1) &&
-            (!value || (value.constructor !== Function || ko.isObservable(value))))
-
-            result[property] = ko.utils.unwrapObservable(value);
-    }
-    return result;
-};

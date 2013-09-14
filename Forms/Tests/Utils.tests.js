@@ -3,16 +3,6 @@
 
     var utils = TF.Utils;
 
-    test("normaliseBindings evaluates function passed as value", function () {
-        equal(utils.normaliseBindings(value, function () { return {}; }).value, 'test');
-
-        function value() {
-            return function () {
-                return 'test';
-            };
-        }
-    });
-
     test("evaluateProperty", function () {
         var target = {
             test1: {
@@ -44,24 +34,5 @@
 
         utils.evaluateProperty(target, 'test4.test5.test6', 'test');
         equal(target.test4.test5.test6, 'test');
-    });
-
-    test("cloneData", function () {
-        var object = {};
-        var result = utils.cloneData({
-            func: function () { },
-            string: 'string',
-            object: object,
-            observable: ko.observable('test'),
-            except1: 'except1',
-            except2: 'except2'
-        }, 'except1', 'except2');
-
-        equal(result.func, undefined);
-        equal(result.string, 'string');
-        equal(result.object, object);
-        equal(result.observable, 'test');
-        equal(result.except1, undefined);
-        equal(result.except2, undefined);
     });
 })();

@@ -5,16 +5,14 @@
     <script type="text/javascript" src="../../Libraries/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="../../Libraries/knockout-2.3.0.debug.js"></script>
     <script type="text/javascript" src="../../Libraries/knockout.validation.js"></script>
-    <script type="text/javascript" src="../../Build/Tribe.Forms.debug.js"></script>
-
-    <!-- Tribe is not a strict dependency. It's only used here for the cloneData method. -->
     <script type="text/javascript" src="../../Libraries/Tribe.debug.js"></script>
+    <script type="text/javascript" src="../../Build/Tribe.Forms.debug.js"></script>
 
     <script type="text/javascript">
         $(ko.applyBindings);
 
         function show(model) {
-            window.alert(JSON.stringify(TF.Utils.cloneData(model)));
+            window.alert(JSON.stringify(TC.Utils.cloneData(model)));
         }
 
     </script>

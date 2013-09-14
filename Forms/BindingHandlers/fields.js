@@ -24,7 +24,7 @@
     }
 
     function renderFieldTemplate(templateName, element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var data = TF.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         if(bindingContext.__create) resolveStringValue();
 
         var innerBindingContext = bindingContext.extend(data);

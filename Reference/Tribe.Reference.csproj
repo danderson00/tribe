@@ -122,6 +122,8 @@
     <Content Include="Images\logo.packscript.gif" />
     <Content Include="Libraries\jquery.mockjax.js" />
     <Content Include="Libraries\jquery.mockjax.min.js" />
+    <Content Include="Libraries\knockout.validation.js" />
+    <Content Include="Libraries\knockout.validation.min.js" />
     <Content Include="Libraries\qunit.css" />
     <Content Include="Libraries\qunit.js" />
     <Content Include="Libraries\sinon.js" />

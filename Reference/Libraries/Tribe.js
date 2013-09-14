@@ -647,6 +647,28 @@ TC.Utils.inheritOptions = function (from, to, options) {
     return to;
 };
 
+TC.Utils.cloneData = function (from, except) {
+    var result = {};
+    for (var property in from) {
+        var value = from[property];
+        if (from.hasOwnProperty(property) &&
+            (!except || Array.prototype.indexOf.call(arguments, property) === -1) &&
+            (!value || (value.constructor !== Function || ko.isObservable(value))))
+
+            result[property] = ko.utils.unwrapObservable(value);
+    }
+    return result;
+};
+
+TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
+    var data = allBindingsAccessor();
+    data.value = valueAccessor();
+    if (!ko.isObservable(data.value) && $.isFunction(data.value))
+        data.value = data.value();
+    return data;
+};
+
+
 // Utilities/panes.js
 (function () {
     var utils = TC.Utils;
@@ -1794,21 +1816,6 @@ $('<style/>')
             ko.applyBindings(model);
     };
 })(); 
-// Api/bindingHandler.js
-(function() {
-    ko.bindingHandlers.pane = { init: updateBinding };
-
-    function updateBinding(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        TC.createNode(element, constructPaneOptions(), TC.Utils.extractNode(bindingContext), TC.Utils.extractContext(bindingContext));
-
-        return { controlsDescendantBindings: true };
-
-        function constructPaneOptions() {
-            return TC.Utils.getPaneOptions(ko.utils.unwrapObservable(valueAccessor()), allBindingsAccessor());
-        }
-    }
-})();
-
 // Api/context.js
 (function () {
     var staticState;
@@ -1867,6 +1874,53 @@ TC.options.defaultUrlProvider = {
     };
 })();
 
+// BindingHandlers/navigate.js
+ko.bindingHandlers.navigate = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var node = TC.nodeFor(element);
+        if (!node) return;
+
+        var handler = ko.bindingHandlers.validatedClick || ko.bindingHandlers.click;
+        handler.init(element, navigate, allBindingsAccessor, viewModel);
+
+        function navigate() {
+            return function () {
+                node.navigate(valueAccessor(), TC.Utils.cloneData(viewModel));
+            };
+        }
+    }
+};
+// BindingHandlers/pane.js
+(function() {
+    ko.bindingHandlers.pane = { init: updateBinding };
+
+    function updateBinding(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        TC.createNode(element, constructPaneOptions(), TC.Utils.extractNode(bindingContext), TC.Utils.extractContext(bindingContext));
+
+        return { controlsDescendantBindings: true };
+
+        function constructPaneOptions() {
+            return TC.Utils.getPaneOptions(ko.utils.unwrapObservable(valueAccessor()), allBindingsAccessor());
+        }
+    }
+})();
+
+// BindingHandlers/publish.js
+ko.bindingHandlers.publish = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var pubsub = TC.nodeFor(element).pane.pubsub;
+        if (!pubsub) return;
+
+        var handler = ko.bindingHandlers.validatedClick || ko.bindingHandlers.click;
+        handler.init(element, publishAccessor, allBindingsAccessor, viewModel);
+
+        function publishAccessor() {
+            return function () {
+                pubsub.publish(valueAccessor(), TC.Utils.cloneData(viewModel));
+            };
+        }
+    }
+};
 // Loggers/console.js
 TC.Loggers.console = function(level, message) {
     if (window.console && window.console.log)

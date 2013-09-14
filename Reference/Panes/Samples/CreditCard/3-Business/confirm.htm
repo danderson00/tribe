@@ -1,13 +1,13 @@
-﻿<p>
+﻿<p data-bind="with: pane.data">
     Thanks, 
-    <span data-bind="text: details.contact.name"></span>,
+    <span data-bind="text: contact.name"></span>,
     you are about to apply for a 
-    <span data-bind="text: details.type"></span> 
+    <span data-bind="text: type"></span> 
     credit card with a 
-    $<span data-bind="text: details.account.limit"></span> 
+    $<span data-bind="text: account.limit"></span> 
     limit.
 </p>
 <p>
     Please click 'Apply' below to submit your application.  
 </p>
-<button data-bind="click: apply">Apply</button>
+<button data-bind="click: function () { }">Apply</button>

@@ -1,11 +1,5 @@
-﻿<div>
-    Card Limit:
-    <input data-bind="value: limit" />
+﻿<div data-bind="form: {}, create: true">
+    <div data-bind="textField: 'limit', displayText: 'Card limit', validate: { required: true }"></div>
+    <div data-bind="textField: 'cards', displayText: '# cards required'"></div>
+    <button data-bind="publish: 'CC.setAccount'">Next</button>
 </div>
-
-<div>
-    Number of Cards Required:
-    <input data-bind="value: cards" />
-</div>
-
-<button data-bind="click: next">Next</button>
