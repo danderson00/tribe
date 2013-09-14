@@ -128,7 +128,8 @@
       this.input.bind('keydown', this._handleKeyDown);
       this.input.bind('change', this._onChange);
       this.input.bind('click', this._onClick);
-      this.isIE = $.browser.msie && parseInt($.browser.version, 10) <= 8;
+        //this.isIE = $.browser.msie && parseInt($.browser.version, 10) <= 8;
+      this.isIE = (window.attachEvent && !window.addEventListener);
       this.input.data(lw_dp_data_key, this);
       this.settings = {
         startDate: settings['startDate'],

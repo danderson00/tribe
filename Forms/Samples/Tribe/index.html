@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Tribe Forms</title>
+    <script type="text/javascript" src="../../Libraries/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../../Libraries/knockout-2.3.0.debug.js"></script>
+    <script type="text/javascript" src="../../Libraries/knockout.validation.js"></script>
+    <script type="text/javascript" src="../../Build/Tribe.Forms.debug.js"></script>
+    <script type="text/javascript" src="../../Libraries/Tribe.debug.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            ko.applyBindings();
+            $('.datePicker').lwDatepicker({ parseDate: TF.Dates.tryParseDate, formatDate: TF.Dates.formatDate, autoHideAfterClick: true });
+        });
+    </script>
+</head>
+<body data-bind="pane: 'form'">
+</body>
+</html>

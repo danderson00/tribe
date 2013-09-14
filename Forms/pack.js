@@ -7,3 +7,6 @@
         T.styles('Css')
     ]
 }).to(T.webTargets('Build/Tribe.Forms'));
+
+sync('../Libraries/*.*').to('Libraries');
+sync('../Build/*.*').to('Libraries');

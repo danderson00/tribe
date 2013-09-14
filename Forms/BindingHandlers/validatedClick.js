@@ -7,8 +7,13 @@
             return ko.bindingHandlers.click.init(element, newValueAccessor, allBindingsAccessor, viewModel);
 
             function validatedClick(arg) {
-                // ignore the embedded properties or they cause the validator to loop infinitely
-                var target = $.extend(this, { __context: null, __node: null });
+                // knockout validation adds some properties to the object, clone so we don't affect the original
+                var target = $.extend({}, arg);
+                
+                // we also want to ignore Tribe embedded properties or they cause the validator to loop infinitely
+                delete target.__context;
+                delete target.__node;
+                
                 var errors = ko.validation.group(target, { deep: true });
                 if (errors().length > 0)
                     errors.showAllMessages();

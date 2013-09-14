@@ -1,5 +1,5 @@
 ﻿(function () {
-    module('Integration.nodes');
+    module('Integration.nodes', { teardown: Test.Integration.teardown });
 
     test("createNode binds pane to target element", function() {
         TC.createNode('#qunit-fixture', { path: 'Utilities/parent' });

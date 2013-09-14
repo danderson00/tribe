@@ -1,5 +1,5 @@
 ﻿(function() {
-    module('Integration.Events.dispose');
+    module('Integration.Events.dispose', { teardown: Test.Integration.teardown });
 
     var events = Test.Integration.testEventsUntil('dispose');
 

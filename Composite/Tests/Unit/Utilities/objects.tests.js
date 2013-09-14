@@ -35,44 +35,4 @@
         equal(TC.Utils.inheritOptions(source, {}, ['test2']).test2, 2);
         equal(TC.Utils.inheritOptions(source, {}, ['test1', 'test2', 'test3']).test3, undefined);
     });
-
-    test("evaluateProperty", function() {
-        var target = {
-            test1: {
-                test11: 'test',
-                test12: {
-                    test121: 'test'
-                }
-            },
-            test2: 'test'
-        };
-
-        equal(utils.evaluateProperty(target, ''), target);
-        equal(utils.evaluateProperty(target, 'test1'), target.test1);
-        equal(utils.evaluateProperty(target, 'test2'), 'test');
-        equal(utils.evaluateProperty(target, 'test1.test11'), 'test');
-        equal(utils.evaluateProperty(target, 'test1.test12.test121'), 'test');
-        equal(utils.evaluateProperty(target, '.test1'), target.test1);
-        equal(utils.evaluateProperty(target, 'test1.'), target.test1);
-        equal(utils.evaluateProperty(target, 'test1..test11'), 'test');
-    });
-
-    test("cloneData", function() {
-        var object = {};
-        var result = utils.cloneData({
-            func: function() { },
-            string: 'string',
-            object: object,
-            observable: ko.observable('test'),
-            except1: 'except1',
-            except2: 'except2'
-        }, 'except1', 'except2');
-
-        equal(result.func, undefined);
-        equal(result.string, 'string');
-        equal(result.object, object);
-        equal(result.observable, 'test');
-        equal(result.except1, undefined);
-        equal(result.except2, undefined);
-    });
 })();

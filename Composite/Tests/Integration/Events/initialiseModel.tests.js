@@ -1,5 +1,5 @@
 ﻿(function() {
-    module('Integration.Events.initialiseModel');
+    module('Integration.Events.initialiseModel', { teardown: Test.Integration.teardown });
 
     test("initialise function is called on model", function () {
         Test.Integration.executeEvents(Test.Integration.testEventsUntil('initialiseModel'), 'Events/basic');

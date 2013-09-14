@@ -1,5 +1,5 @@
 ﻿(function () {
-    module("Integration.api");
+    module("Integration.api", { teardown: Test.Integration.teardown });
 
     test("arguments can be passed to registerModel in any order", function () {
         var path = 'path';

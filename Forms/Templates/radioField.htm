@@ -1,10 +1,10 @@
 ﻿<div class="field">
     <div class="label">
-        <span data-bind="text: displayText"></span>
+        <span data-bind="text: $data.displayText"></span>
     </div>
     <div class="display" data-bind="foreach: items">
         <label>
-            <input type="radio" data-bind="value: $data, checked: $parent.value, attr: { group: $parent.displayText.replace(/ /g, '_') }" />
+            <input type="radio" data-bind="value: $data, checked: $parent.value, attr: { name: $parent.displayText.replace(/ /g, '_') }" />
             <span data-bind="text: $data"></span>
         </label>
         &nbsp;

@@ -34,7 +34,7 @@
         response = "test";
         TC.LoadHandlers.js(url, resourcePath, context);
         ok($.globalEval.calledOnce);
-        equal($.globalEval.firstCall.args[0].substring(response.length + 1), "//@ sourceURL=test.js");
+        equal($.globalEval.firstCall.args[0].substring(response.length + 1), "//@ sourceURL=tribe://Application/test.js");
     });
 
     test("script handler sets TC.scriptEnvironment before executing scripts", function () {

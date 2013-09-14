@@ -1,4 +1,5 @@
 ﻿sync([
+    '../Libraries/*.*',
     '../Build/*.js',
     '../Mobile/Build/*.js',
     '../Forms/Build/*.js'
@@ -24,19 +25,27 @@ pack({
     ]
 });
 
-pack({
-    to: 'Build/site.js',
-    include: [
+pack([
         T.scripts('Infrastructure'),
         T.panes('Panes'),
         T.styles('Css')
-    ]
-}).to(T.webTargets('Build/site'));
+    ]).to(T.webTargets('Build/site'));
 
 pack({
     to: 'Build/m.js',
     include: T.panes('Panes/Samples'),
     minify: true
+});
+
+pack({
+    to: 'Build/tests.js',
+    include: [
+        '../Build/Components/Tests/Tribe.Composite.tests.mockjax.js',
+        { files: '../Build/Components/Tests/Tribe.Forms.tests.js', template: TR.testModule('Tribe.Forms') },
+        { files: '../Build/Components/Tests/Tribe.Composite.tests.js', template: TR.testModule('Tribe.Composite') },
+        { files: '../Build/Components/Tests/Tribe.MessageHub.tests.js', template: TR.testModule('Tribe.MessageHub') },
+        { files: '../Build/Components/Tests/Tribe.PubSub.tests.js', template: TR.testModule('Tribe.PubSub') }
+    ]
 });
 
 function sample(name) {

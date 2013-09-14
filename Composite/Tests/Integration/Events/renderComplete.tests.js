@@ -1,5 +1,5 @@
 ﻿(function() {
-    module('Integration.Events.renderComplete');
+    module('Integration.Events.renderComplete', { teardown: Test.Integration.teardown });
 
     var events = Test.Integration.testEventsUntil('renderComplete');
 

@@ -16,13 +16,11 @@ Test.defaultOptions = function() {
 };
 TC.options = Test.defaultOptions();
 
-sinon.spy(ko, 'applyBindings');
 
 QUnit.testDone(function () {
-    $('.__tribe').remove();
+    ko.cleanNode(document.getElementById('qunit-fixture'));
     Test.state = {};
     TC.options = Test.defaultOptions();
-    ko.applyBindings.reset();
 });
 
 TC.history.dispose();

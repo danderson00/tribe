@@ -34,29 +34,48 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Samples\Composite\" />
-    <Folder Include="Tests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="BindingHandlers\fields.js" />
     <Content Include="BindingHandlers\focus.js" />
+    <Content Include="BindingHandlers\form.js" />
+    <Content Include="BindingHandlers\navigate.js" />
+    <Content Include="BindingHandlers\publish.js" />
     <Content Include="BindingHandlers\select.js" />
     <Content Include="BindingHandlers\validatedClick.js" />
     <Content Include="BindingHandlers\validationMessage.tooltip.js" />
-    <Content Include="Build\Tribe.Forms.chrome.js" />
+    <Content Include="Build\Tests\Tribe.Forms.tests.js" />
+    <Content Include="Build\Tribe.Forms.debug.js" />
     <Content Include="Build\Tribe.Forms.js" />
     <Content Include="Build\Tribe.Forms.min.js" />
     <Content Include="Css\datepicker.css" />
     <Content Include="Css\desktop.css" />
     <Content Include="Css\mobile.css" />
     <Content Include="Dependencies\jquery.lw-datepicker.js" />
-    <Content Include="Dependencies\knockout.validation.js" />
+    <Content Include="Libraries\knockout.validation.js" />
+    <Content Include="Infrastructure\Dates.js" />
     <Content Include="Infrastructure\observableExtensions.js" />
     <Content Include="Infrastructure\templates.js" />
+    <Content Include="Infrastructure\Utils.js" />
     <Content Include="Infrastructure\validationRules.js" />
+    <Content Include="Libraries\jquery-1.9.1.js" />
+    <Content Include="Libraries\jquery-1.9.1.min.js" />
+    <Content Include="Libraries\jquery.mockjax.js" />
+    <Content Include="Libraries\jquery.mockjax.min.js" />
+    <Content Include="Libraries\knockout-2.3.0.debug.js" />
+    <Content Include="Libraries\knockout-2.3.0.js" />
+    <Content Include="Libraries\qunit.css" />
+    <Content Include="Libraries\qunit.js" />
+    <Content Include="Libraries\sinon.js" />
+    <Content Include="Libraries\Tribe.debug.js" />
+    <Content Include="Libraries\Tribe.js" />
+    <Content Include="Libraries\Tribe.min.js" />
     <Content Include="pack.js" />
     <Content Include="Samples\Basic\index.html" />
+    <Content Include="Samples\Tribe\form.htm" />
+    <Content Include="Samples\Tribe\index.html" />
+    <Content Include="Samples\Tribe\result.htm" />
+    <Content Include="Samples\Tribe\target.js" />
     <Content Include="Templates\booleanField.htm" />
     <Content Include="Templates\dateField.htm" />
     <Content Include="Templates\display.htm" />
@@ -67,6 +86,9 @@
     <Content Include="Templates\selectField.htm" />
     <Content Include="Templates\textField.htm" />
     <Content Include="Templates\validationMessage.htm" />
+    <Content Include="Tests\index.html" />
+    <Content Include="Tests\pack.js" />
+    <Content Include="Tests\Utils.tests.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

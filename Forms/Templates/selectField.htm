@@ -1,7 +1,9 @@
 ﻿<div class="field">
     <div class="label">
-        <span data-bind="text: displayText"></span>
+        <span data-bind="text: $data.displayText"></span>
     </div>
-    <div class="display" data-bind="pane: '/Common/dropDown', data: $data"></div>
+    <div class="display">
+        <select data-bind="options: items, value: value, optionsText: $data.optionsText"></select>
+    </div>
     <div style="clear: both"></div>
 </div>

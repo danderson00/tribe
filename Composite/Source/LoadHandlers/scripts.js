@@ -23,6 +23,6 @@
     }
 
     function appendSourceUrl(script) {
-        return script + '\n//@ sourceURL=' + url.replace(/ /g, "_");
+        return script + '\n//@ sourceURL=tribe://Application/' + url.replace(/ /g, "_");
     }    
 };

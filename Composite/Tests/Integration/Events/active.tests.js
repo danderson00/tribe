@@ -1,6 +1,7 @@
 ﻿(function() {
     module('Integration.Events.active', {
-        setup: function() { TC.Events.spy = sinon.spy(); }
+        setup: function () { TC.Events.spy = sinon.spy(); },
+        teardown: Test.Integration.teardown
     });
 
     var events = Test.Integration.testEventsUntil('active');

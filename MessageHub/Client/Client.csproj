@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Build\Tests\Tribe.MessageHub.tests.js" />
-    <Content Include="Build\Tribe.MessageHub.chrome.js" />
+    <Content Include="Build\Tribe.MessageHub.debug.js" />
     <Content Include="Build\Tribe.MessageHub.js" />
     <Content Include="Build\Tribe.MessageHub.min.js" />
     <Content Include="Source\Client.js" />

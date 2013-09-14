@@ -4,8 +4,10 @@
     helpers.executeEvents = function (events, pane, data) {
         TC.options.events = events;
         TC.options.basePath = 'Integration/Panes';
-        $('#qunit-fixture').append('<div data-bind="pane: \'' + pane + '\', data: \'' + data + '\'"></div>');
-        ko.applyBindings();
+
+        var $element = $('#qunit-fixture');
+        $element.append('<div data-bind="pane: \'' + pane + '\', data: \'' + data + '\'"></div>');
+        ko.applyBindings(null, $element.children()[0]);
     };
 
     helpers.executeDefaultEvents = function (pane) {
@@ -27,5 +29,9 @@
         TC.Events.spy = sinon.spy();
         events.push('spy');
         return events;
+    };
+
+    helpers.teardown = function() {
+        $('.__tribe').remove();
     };
 })();

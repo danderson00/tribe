@@ -1,0 +1,17 @@
+﻿<div class="existing" data-bind="form: data">
+    <div data-bind="textField: text"></div>
+</div>
+
+<div class="createProperties" data-bind="form: data, create: true">
+    <div data-bind="textField: 'text2', defaultValue: 'test'"></div>    
+</div>
+
+<div class="createObject" data-bind="form: 'data.created', create: true">
+    <div data-bind="textField: 'text3', defaultValue: 'test'"></div>        
+</div>
+
+<div class="newObject" data-bind="form: {}, create: true">
+    <div data-bind="textField: 'text4', defaultValue: 'test'"></div>
+    <div data-bind="textField: 'text5.text6', defaultValue: 'test'"></div>
+    <button id="testButton" data-bind="click: testCreatedObject"></button>
+</div>

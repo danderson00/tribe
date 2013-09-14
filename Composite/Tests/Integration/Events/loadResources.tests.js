@@ -1,6 +1,7 @@
 ﻿(function() {
     module('Integration.Events.loadResources', {
-        setup: function () { Test.Integration.executeEvents(['loadResources'], 'Events/basic'); }
+        setup: function () { Test.Integration.executeEvents(['loadResources'], 'Events/basic'); },
+        teardown: Test.Integration.teardown
     });
 
     test("loadResources loads model", function () {

@@ -1,5 +1,6 @@
 ﻿module('Integration.Paths', {
-    setup: Test.Integration.createTestElement
+    setup: Test.Integration.createTestElement,
+    teardown: Test.Integration.teardown
 });
 
 test("panes created with skipPath true inherit pane path from their parent", function() {

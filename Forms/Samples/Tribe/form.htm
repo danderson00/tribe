@@ -1,0 +1,8 @@
+﻿<div data-bind="form: {}, create: true">
+    <div data-bind="textField: 'string', displayText: 'A string', validate: { required: true }"></div>
+    <div data-bind="textField: 'child.email', displayText: 'An email', validate: { email: 'This' }"></div>
+    <div data-bind="dateField: 'child.date', displayText: 'A date', validate: { date: true }"></div>
+    <button data-bind="publish: 'testMessage'">Publish</button>
+    <button data-bind="navigate: 'result'">Navigate</button>
+</div>
+<div data-bind="pane: 'target'"></div>

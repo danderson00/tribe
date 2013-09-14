@@ -43,6 +43,6 @@ function mockPublisher() {
     return { publishToServer: sinon.spy() };
 }
 
-Tribe = window.Tribe || {};
-Tribe.PubSub = function() { };
-Tribe.PubSub.Lifetime = function() { };
+//Tribe = window.Tribe || {};
+//Tribe.PubSub = function() { };
+//Tribe.PubSub.Lifetime = function() { };

@@ -42,15 +42,15 @@
     <Content Include="Build\Tribe.PubSub.min.js" />
     <Content Include="Source\options.js" />
     <Content Include="Source\Lifetime.js" />
-    <Content Include="Source\core.js" />
+    <Content Include="Source\PubSub.js" />
     <Content Include="Source\pack.js" />
     <Content Include="Source\Saga.js" />
     <Content Include="Source\subscribeOnce.js" />
     <Content Include="Source\SubscriberList.js" />
     <Content Include="Source\utils.js" />
     <Content Include="Tests\exceptions.tests.js" />
-    <Content Include="Tests\core.subscribe.tests.js" />
-    <Content Include="Tests\core.publish.tests.js" />
+    <Content Include="Tests\PubSub.subscribe.tests.js" />
+    <Content Include="Tests\PubSub.publish.tests.js" />
     <Content Include="Tests\Lifetime.tests.js" />
     <Content Include="Tests\pack.js" />
     <Content Include="Tests\Resources\debug.pack.js" />
@@ -58,7 +58,7 @@
     <Content Include="Tests\Saga.tests.js" />
     <Content Include="Tests\subscribeOnce.tests.js" />
     <Content Include="Tests\index.html" />
-    <Content Include="Tests\core.unsubscribe.tests.js" />
+    <Content Include="Tests\PubSub.unsubscribe.tests.js" />
     <Content Include="Tests\Resources\qunit.css" />
     <Content Include="Tests\Resources\qunit.js" />
     <Content Include="Tests\Resources\sinon.js" />

@@ -1,5 +1,6 @@
 ﻿module('Integration.Navigate', {
-    setup: Test.Integration.createTestElement
+    setup: Test.Integration.createTestElement,
+    teardown: Test.Integration.teardown
 });
 
 test("navigating child pane transitions node marked with handlesNavigation", function () {

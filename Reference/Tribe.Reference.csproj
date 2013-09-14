@@ -116,9 +116,15 @@
     <Content Include="Build\site.debug.js" />
     <Content Include="Build\site.js" />
     <Content Include="Build\site.min.js" />
+    <Content Include="Build\tests.js" />
     <Content Include="Css\classes.css" />
     <Content Include="Images\download.png" />
     <Content Include="Images\logo.packscript.gif" />
+    <Content Include="Libraries\jquery.mockjax.js" />
+    <Content Include="Libraries\jquery.mockjax.min.js" />
+    <Content Include="Libraries\qunit.css" />
+    <Content Include="Libraries\qunit.js" />
+    <Content Include="Libraries\sinon.js" />
     <Content Include="Libraries\Tribe.debug.js" />
     <Content Include="Libraries\Tribe.Forms.debug.js" />
     <Content Include="Libraries\Tribe.Forms.js" />
@@ -134,6 +140,8 @@
     <Content Include="PackScript\pack.js" />
     <Content Include="PackScript\Styles\classes.css" />
     <Content Include="PackScript\Styles\elements.css" />
+    <Content Include="Pack\TR.testModule.pack.config.js" />
+    <Content Include="Pack\TR.testModule.template.js" />
     <Content Include="Panes\Content\Guides\Guides\processes.htm" />
     <Content Include="Panes\Content\Guides\Guides\CreditCard\personal.htm" />
     <Content Include="Panes\Content\Guides\Guides\CreditCard\sagas.htm" />
@@ -148,6 +156,7 @@
     <Content Include="Panes\Content\Reference\PackScript\templates.htm" />
     <Content Include="Panes\Interface\API\table.htm" />
     <Content Include="Panes\Interface\API\table.js" />
+    <Content Include="Panes\Samples\About\Tasks\layout.htm" />
     <Content Include="Panes\Samples\CreditCard\1-Personal\confirm.js" />
     <Content Include="Panes\Samples\CreditCard\1-Personal\contact.htm" />
     <Content Include="Panes\Samples\CreditCard\1-Personal\contact.js" />
@@ -169,6 +178,8 @@
     <Content Include="Panes\Samples\CreditCard\3-Business\businessDetails.js" />
     <Content Include="Panes\Samples\CreditCard\3-Business\businessAccount.htm" />
     <Content Include="Panes\Samples\CreditCard\3-Business\businessAccount.js" />
+    <Content Include="Panes\Samples\CreditCard\3-Business\CreditCardSaga.js" />
+    <Content Include="Panes\Samples\CreditCard\3-Business\layout.js" />
     <Content Include="Panes\Samples\CreditCard\3-Business\personal.htm" />
     <Content Include="Panes\Samples\CreditCard\3-Business\personal.js" />
     <Content Include="Panes\Samples\CreditCard\3-Business\confirm.htm" />
@@ -178,6 +189,7 @@
     <Content Include="Panes\Samples\CreditCard\3-Business\CreditCardFlow.js" />
     <Content Include="Panes\Samples\CreditCard\3-Business\welcome.htm" />
     <Content Include="Panes\Samples\CreditCard\3-Business\welcome.js" />
+    <Content Include="tests.html" />
     <Content Include="unsupported.html" />
     <Content Include="Css\block.css" />
     <Content Include="Css\prettify.css" />
@@ -414,7 +426,6 @@
     <Content Include="Panes\Samples\About\Tasks\create.htm" />
     <Content Include="Panes\Samples\About\Tasks\create.js" />
     <Content Include="Panes\Samples\About\Tasks\index.html" />
-    <Content Include="Panes\Samples\About\Tasks\layout.htm" />
     <Content Include="Panes\Samples\About\Tasks\list.css" />
     <Content Include="Panes\Samples\About\Tasks\list.htm" />
     <Content Include="Panes\Samples\About\Tasks\list.js" />

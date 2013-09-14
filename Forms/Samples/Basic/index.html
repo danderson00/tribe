@@ -2,26 +2,29 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Basic Forms</title>
-    <script type="text/javascript" src="../../../Libraries/jquery.js"></script>
-    <script type="text/javascript" src="../../../Libraries/knockout.js"></script>
-    <script type="text/javascript" src="../../Build/Tribe.Forms.desktop.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            var model = {
-                string: ko.observable().extend({ required: true }),
-                email: ko.observable().extend({ email: 'This' }),
-                date: ko.observable().extend({ date: true }),
-                test: function () { }
-            };
+    <script type="text/javascript" src="../../Libraries/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../../Libraries/knockout-2.3.0.debug.js"></script>
+    <script type="text/javascript" src="../../Libraries/knockout.validation.js"></script>
+    <script type="text/javascript" src="../../Build/Tribe.Forms.debug.js"></script>
 
-            ko.applyBindings(model);
-        });
+    <!-- Tribe is not a strict dependency. It's only used here for the cloneData method. -->
+    <script type="text/javascript" src="../../Libraries/Tribe.debug.js"></script>
+
+    <script type="text/javascript">
+        $(ko.applyBindings);
+
+        function show(model) {
+            window.alert(JSON.stringify(TF.Utils.cloneData(model)));
+        }
+
     </script>
 </head>
-<body>
-    <div data-bind="textField: string, displayText: 'A string'"></div>
-    <div data-bind="textField: email, displayText: 'An email'"></div>
-    <div data-bind="dateField: date, displayText: 'A date'"></div>
-    <button data-bind="validatedClick: test">Test</button>
-</body>
+    <body>
+        <div data-bind="form: {}, create: true">
+            <div data-bind="textField: 'string', displayText: 'A string', validate: { required: true }"></div>
+            <div data-bind="textField: 'email', displayText: 'An email', validate: { email: 'This' }"></div>
+            <div data-bind="dateField: 'date', displayText: 'A date', validate: { date: true }"></div>
+            <button data-bind="validatedClick: show">Show JSON</button>
+        </div>
+    </body>
 </html>

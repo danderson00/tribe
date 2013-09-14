@@ -27,28 +27,3 @@ TC.Utils.inheritOptions = function (from, to, options) {
         to[options[i]] = from[options[i]];
     return to;
 };
-
-TC.Utils.evaluateProperty = function (target, property) {
-    var properties = property.match(/[^\.]+/g);
-    var result = target;
-
-    if (properties) {
-        for (var i = 0, l = properties.length; i < l; i++)
-            if (properties[i])
-                result = result[properties[i]];
-    }
-    return result;
-};
-
-TC.Utils.cloneData = function(from, except) {
-    var result = {};
-    for (var property in from) {
-        var value = from[property];
-        if (from.hasOwnProperty(property) &&
-            (!except || Array.prototype.indexOf.call(arguments, property) === -1) &&
-            (value.constructor !== Function || ko.isObservable(value)))
-            
-            result[property] = ko.utils.unwrapObservable(value);
-    }
-    return result;
-};

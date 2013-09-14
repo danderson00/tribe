@@ -3,7 +3,7 @@
         setup: function() {
             TC.Events.spy = sinon.spy();
             TC.options.events = ['spy'];
-        }
+        }, teardown: Test.Integration.teardown
     });
 
     test("pane path is set from string binding value", function() {

@@ -16,12 +16,6 @@
         ok(context.templates.render.calledWithExactly(pane.element, 'test'));
     });
 
-    test("bindings are applied to child elements of pane element", function () {
-        TC.Events.renderPane(pane, context);
-        ok(ko.applyBindings.calledOnce);
-        ok(ko.applyBindings.calledWithExactly(pane.model, $('#qunit-fixture').children()[0]));
-    });
-
     test("paneRendered function is called on the model", function () {
         TC.Events.renderPane(pane, context);
         ok(pane.model.paneRendered.calledOnce);

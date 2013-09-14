@@ -5,7 +5,7 @@
         setup: function() {
              Test.Integration.executeDefaultEvents('Tree/1');
              root = Test.state.pane.node.root;
-        }
+        }, teardown: Test.Integration.teardown
     });
 
     test("tree renders", function () {

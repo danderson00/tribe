@@ -1,6 +1,7 @@
 ﻿(function () {
     module('Integration.Transition', {
-        setup: Test.Integration.createTestElement
+        setup: Test.Integration.createTestElement,
+        teardown: Test.Integration.teardown
     });
 
     test("transitioning node replaces pane with specified pane", function () {

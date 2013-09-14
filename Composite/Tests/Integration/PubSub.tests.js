@@ -2,7 +2,7 @@
     setup: function () {
         Test.Integration.pubsubAsTribe();
         Test.Integration.createTestElement();
-    } 
+    }, teardown: Test.Integration.teardown
 });
 
 test("subscription in pane is executed", function() {

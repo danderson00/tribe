@@ -647,30 +647,6 @@ TC.Utils.inheritOptions = function (from, to, options) {
     return to;
 };
 
-TC.Utils.evaluateProperty = function (target, property) {
-    var properties = property.match(/[^\.]+/g);
-    var result = target;
-
-    if (properties) {
-        for (var i = 0, l = properties.length; i < l; i++)
-            if (properties[i])
-                result = result[properties[i]];
-    }
-    return result;
-};
-
-TC.Utils.cloneData = function(from, except) {
-    var result = {};
-    for (var property in from) {
-        var value = from[property];
-        if (from.hasOwnProperty(property) &&
-            (!except || Array.prototype.indexOf.call(arguments, property) === -1) &&
-            (value.constructor !== Function || ko.isObservable(value)))
-            
-            result[property] = ko.utils.unwrapObservable(value);
-    }
-    return result;
-};
 // Utilities/panes.js
 (function () {
     var utils = TC.Utils;
@@ -1523,9 +1499,7 @@ TC.Events.renderPane = function (pane, context) {
     return renderOperation.promise;
 
     function applyBindings() {
-        var elements = $(pane.element).children();
-        for (var i = 0, l = elements.length; i < l; i++)
-            ko.applyBindings(pane.model, elements[i]);
+        ko.applyBindingsToDescendants(pane.model, pane.element);
     }
 };
 // LoadHandlers/scripts.js
@@ -1554,7 +1528,7 @@ TC.LoadHandlers.js = function (url, resourcePath, context) {
     }
 
     function appendSourceUrl(script) {
-        return script + '\n//@ sourceURL=' + url.replace(/ /g, "_");
+        return script + '\n//@ sourceURL=tribe://Application/' + url.replace(/ /g, "_");
     }    
 };
 // LoadHandlers/stylesheets.js
