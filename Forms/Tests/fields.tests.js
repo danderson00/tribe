@@ -15,8 +15,8 @@
 
     test("Labels are rendered correctly", function () {
         expect(8);
-        $.each($('.label'), function () {
-            equal(this.innerText, 'label');
+        $.each($('.label span'), function () {
+            equal($(this).text(), 'label');
         });
     });
 
