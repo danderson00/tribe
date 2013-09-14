@@ -3,9 +3,11 @@
         return article && article.section === 'About' && article.topic === 'home';
     },
     Guides: {
-        'Guides': {
+        'Introduction': {
             'Features': 'features',
-            'Getting Started': 'getStarted',
+            'Getting Started': 'getStarted'
+        },
+        'Tutorials': {
             'Working With Panes': 'panes',
             'Webmail Tutorial': 'webmail',
             'Deployment With PackScript': 'packscript',

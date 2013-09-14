@@ -7,4 +7,8 @@
     this.submit = function() {
         self.ccJson(JSON.stringify(pane.data));
     };
+
+    this.restart = function() {
+        pane.startFlow(CreditCardFlow);
+    };
 });

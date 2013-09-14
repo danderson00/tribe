@@ -10,16 +10,10 @@
 
 .creditcard .sample .fileContent {
     width: 740px;
-    height: 350px;
-}
-
-.creditcard .sample > * {
-    height: 355px;
 }
 
 .creditcard .sample .fileList {
     width: 180px;
-    height: 350px;
 }
 
 .creditcard .fixedHeight .samplePane {
