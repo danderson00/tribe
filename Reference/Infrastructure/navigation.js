@@ -9,7 +9,7 @@
             'Working With Panes': 'panes',
             'Webmail Tutorial': 'webmail',
             'Deployment With PackScript': 'packscript',
-            'Modelling Processes': 'processes'
+            'Modelling Processes': 'creditcard'
         }
     },
     Reference: {

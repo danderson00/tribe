@@ -29,6 +29,7 @@ TC.Utils.inheritOptions = function (from, to, options) {
 };
 
 TC.Utils.cloneData = function (from, except) {
+    if (!from) return;
     var result = {};
     for (var property in from) {
         var value = from[property];

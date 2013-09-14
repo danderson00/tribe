@@ -1,0 +1,9 @@
+﻿<div data-bind="form: {}, create: true">
+    <div data-bind="textField: 'limit',
+                    displayText: 'Card limit',
+                    validate: { required: true }"></div>
+    <div data-bind="textField: 'cards',
+                    displayText: '# cards required',
+                    defaultValue: 5"></div>
+    <button data-bind="publish: 'CC.setAccount', data: $data">Next</button>
+</div>

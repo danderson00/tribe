@@ -64,3 +64,13 @@
         });
     }    
 };
+
+Tribe.PubSub.Saga.startSaga = function (definition, args) {
+    var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
+    var saga = Tribe.PubSub.utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
+    return saga.start();
+};
+
+
+Tribe.PubSub.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
+Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.Saga.startSaga;

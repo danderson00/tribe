@@ -9,21 +9,4 @@
     if you haven't already.
 </p>
 
-<p>To demonstrate, we're going to build a simple UI for handling credit card applications. Let's have a crack at creating something for personal customers.</p>
-
 <div data-bind="pane: '/Interface/sample', data: { name: 'CreditCard/1-Personal', initialFile: 'welcome.js', rootPane: 'welcome', handleNavigation: true }"></div>
-
-<p>
-    Seems like a reasonable start. Build up an object with the application details and pass it to our confirmation pane.
-</p>
-<p>
-    Let's look at adding an alternate flow for business customers. We'd really like to reuse that contact pane, but
-    the navigate call takes us to a pane that doesn't collect the data we need for business customers.
-</p>
-<p>
-    Passing an object around and adding properties to it makes me a little uneasy too.
-    How do we know we're not overwriting an existing property?
-</p>
-<p>
-    Let's have another crack. Click the next button in the top right corner.
-</p>

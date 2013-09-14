@@ -1,7 +1,7 @@
 /*! The Tribe platform is licensed under the MIT license. See http://tribejs.com/ for more information. */
 // PubSub.js
 window.Tribe = window.Tribe || {};
-window.Tribe.PubSub = function (options) {
+Tribe.PubSub = function (options) {
     var self = this;
     var utils = Tribe.PubSub.utils;
 
@@ -79,17 +79,12 @@ window.Tribe.PubSub = function (options) {
     this.createLifetime = function() {
         return new Tribe.PubSub.Lifetime(self, self);
     };
-
-    this.startSaga = function(definition, args) {
-        var constructorArgs = [self, definition].concat(Array.prototype.slice.call(arguments, 1));
-        var saga = utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
-        return saga.start();
-    };
     
     function option(name) {
         return (options && options.hasOwnProperty(name)) ? options[name] : Tribe.PubSub.options[name];
     }
 };
+
 // Lifetime.js
 Tribe.PubSub.Lifetime = function (parent, owner) {
     var self = this;
@@ -211,6 +206,16 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
         });
     }    
 };
+
+Tribe.PubSub.Saga.startSaga = function (definition, args) {
+    var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
+    var saga = Tribe.PubSub.utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
+    return saga.start();
+};
+
+
+Tribe.PubSub.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
+Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
 // subscribeOnce.js
 Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     var self = this;
@@ -648,6 +653,7 @@ TC.Utils.inheritOptions = function (from, to, options) {
 };
 
 TC.Utils.cloneData = function (from, except) {
+    if (!from) return;
     var result = {};
     for (var property in from) {
         var value = from[property];
@@ -956,22 +962,26 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
         var self = this;
 
         this.node = navigationNode();
-        var pubsub = this.node.pane.pubsub.owner;
+        this.pubsub = this.node.pane.pubsub.owner;
+        this.sagas = [];
 
         if (definition.constructor === Function) {
             var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
             definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
         }
 
-        var saga = new Tribe.PubSub.Saga(pubsub, definition);
+        this.saga = new Tribe.PubSub.Saga(this.pubsub, definition);
 
         this.start = function(data) {
-            saga.start(data);
+            self.saga.start(data);
             return self;
         };
 
         this.end = function(data) {
-            saga.end(data);
+            self.saga.end(data);
+            TC.Utils.each(self.sagas, function(saga) {
+                saga.end(data);
+            });
             return self;
         };
 
@@ -988,14 +998,31 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
         this.node.navigate(pathOrOptions, data);
     };
 
-    TC.Types.Flow.prototype.navigatesTo = function (pathOrOptions, data) {
+    TC.Types.Flow.prototype.to = function (pathOrOptions, data) {
         var node = this.node;
         return function () {
             node.navigate(pathOrOptions, data);
         };
     };
 
-    TC.Types.Flow.startFlow = function(definition, args) {
+    TC.Types.Flow.prototype.endsAt = function (pathOrOptions, data) {
+        var flow = this;
+        return function () {
+            flow.node.navigate(pathOrOptions, data);
+            flow.end();
+        };
+    };
+
+    // This keeps a separate collection of sagas bound to this flow's lifetime
+    // It would be nice to make them children of the underlying saga, but
+    // then they would end any time a message was executed.
+    TC.Types.Flow.prototype.startSaga = function (definition, args) {
+        var saga = this.pubsub.startSaga.apply(this.pubsub, arguments);
+        this.sagas.push(saga);
+        return saga;
+    };
+
+    TC.Types.Flow.startFlow = function (definition, args) {
         var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
         var flow = Tribe.PubSub.utils.applyToConstructor(TC.Types.Flow, constructorArgs);
         return flow.start();
@@ -1880,12 +1907,13 @@ ko.bindingHandlers.navigate = {
         var node = TC.nodeFor(element);
         if (!node) return;
 
+        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         var handler = ko.bindingHandlers.validatedClick || ko.bindingHandlers.click;
         handler.init(element, navigate, allBindingsAccessor, viewModel);
 
         function navigate() {
             return function () {
-                node.navigate(valueAccessor(), TC.Utils.cloneData(viewModel));
+                node.navigate(data.value, TC.Utils.cloneData(data.data));
             };
         }
     }
@@ -1911,12 +1939,13 @@ ko.bindingHandlers.publish = {
         var pubsub = TC.nodeFor(element).pane.pubsub;
         if (!pubsub) return;
 
+        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         var handler = ko.bindingHandlers.validatedClick || ko.bindingHandlers.click;
         handler.init(element, publishAccessor, allBindingsAccessor, viewModel);
 
         function publishAccessor() {
             return function () {
-                pubsub.publish(valueAccessor(), TC.Utils.cloneData(viewModel));
+                pubsub.publish(data.value, TC.Utils.cloneData(data.data));
             };
         }
     }

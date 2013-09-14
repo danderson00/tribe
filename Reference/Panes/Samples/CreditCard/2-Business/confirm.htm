@@ -1,4 +1,4 @@
-﻿<p data-bind="with: pane.data">
+﻿<p data-bind="with: data">
     Thanks, 
     <span data-bind="text: contact.name"></span>,
     you are about to apply for a 
@@ -8,6 +8,8 @@
     limit.
 </p>
 <p>
-    Please click 'Apply' below to submit your application.  
+    Please click 'Submit' below to submit your application.  
 </p>
-<button data-bind="click: function () { }">Apply</button>
+<button data-bind="click: submit">Submit</button>
+<button data-bind="navigate: 'welcome'">Restart</button>
+<div data-bind="text: ccJson"></div>

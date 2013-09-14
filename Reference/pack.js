@@ -20,8 +20,9 @@ pack({
         sample('Webmail/2-Mails'),
         sample('Webmail/3-Content'),
         sample('CreditCard/1-Personal'),
-        sample('CreditCard/2-Flows'),
-        sample('CreditCard/3-Business')
+        sample('CreditCard/2-Business'),
+        sample('CreditCard/3-Saga'),
+        sample('CreditCard/4-Combined')
     ]
 });
 

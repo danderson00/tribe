@@ -39,8 +39,6 @@
     <Content Include="BindingHandlers\fields.js" />
     <Content Include="BindingHandlers\focus.js" />
     <Content Include="BindingHandlers\form.js" />
-    <Content Include="BindingHandlers\navigate.js" />
-    <Content Include="BindingHandlers\publish.js" />
     <Content Include="BindingHandlers\select.js" />
     <Content Include="BindingHandlers\validatedClick.js" />
     <Content Include="BindingHandlers\validationMessage.tooltip.js" />
@@ -81,13 +79,16 @@
     <Content Include="Templates\display.htm" />
     <Content Include="Templates\passwordField.htm" />
     <Content Include="Templates\radioField.htm" />
-    <Content Include="Templates\select.grouped.htm" />
-    <Content Include="Templates\select.list.htm" />
     <Content Include="Templates\selectField.htm" />
     <Content Include="Templates\textField.htm" />
     <Content Include="Templates\validationMessage.htm" />
+    <Content Include="Tests\forms.tests.js" />
+    <Content Include="Tests\forms.htm" />
+    <Content Include="Tests\Infrastructure\helpers.js" />
+    <Content Include="Tests\fields.tests.js" />
     <Content Include="Tests\index.html" />
     <Content Include="Tests\pack.js" />
+    <Content Include="Tests\fields.htm" />
     <Content Include="Tests\Utils.tests.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

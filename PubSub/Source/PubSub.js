@@ -1,5 +1,5 @@
 ﻿window.Tribe = window.Tribe || {};
-window.Tribe.PubSub = function (options) {
+Tribe.PubSub = function (options) {
     var self = this;
     var utils = Tribe.PubSub.utils;
 
@@ -76,12 +76,6 @@ window.Tribe.PubSub = function (options) {
 
     this.createLifetime = function() {
         return new Tribe.PubSub.Lifetime(self, self);
-    };
-
-    this.startSaga = function(definition, args) {
-        var constructorArgs = [self, definition].concat(Array.prototype.slice.call(arguments, 1));
-        var saga = utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
-        return saga.start();
     };
     
     function option(name) {

@@ -41,17 +41,17 @@
         }
     });
 
-    test("Flow calls navigate on navigation pane when navigatesTo is called", function () {
+    test("Flow calls navigate on navigation pane when to is called", function () {
         var f = new TC.Types.Flow(node, TestFlow).start();
-        f.navigatesTo('path', 'data')();
+        f.to('path', 'data')();
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'path');
         equal(spy.firstCall.args[1], 'data');
     });
 
-    test("Flow calls navigate on navigation pane when message is received for navigatesTo event", function () {
+    test("Flow calls navigate on navigation pane when message is received for to event", function () {
         var f = new TC.Types.Flow(node, TestFlow).start();
-        pubsub.publish('navigatesTo');
+        pubsub.publish('to');
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'path');
         equal(spy.firstCall.args[1], 'data');
@@ -59,17 +59,17 @@
 
     test("No handlers are executed after flow ends", function () {
         var f = new TC.Types.Flow(node, TestFlow).start();
-        pubsub.publish('navigatesTo');
+        pubsub.publish('to');
         pubsub.publish('end');
-        pubsub.publish('navigatesTo');
+        pubsub.publish('to');
         ok(spy.calledOnce);
     });
 
     test("No handlers are executed after flow ends with null handler", function () {
         var f = new TC.Types.Flow(node, TestFlow).start();
-        pubsub.publish('navigatesTo');
+        pubsub.publish('to');
         pubsub.publish('null');
-        pubsub.publish('navigatesTo');
+        pubsub.publish('to');
         ok(spy.calledOnce);
     });
 
@@ -106,12 +106,23 @@
         ok(spy.calledTwice);
     });
 
+    test("Sagas started with startSaga end when this flow ends", function() {
+        var f = new TC.Types.Flow(node, TestFlow).start();
+        var sagaHandler = sinon.spy();
+        f.startSaga({ handles: { 'sagaMessage': sagaHandler } });
+        pubsub.publish('sagaMessage');
+        ok(sagaHandler.calledOnce);
+        f.end();
+        pubsub.publish('sagaMessage');
+        ok(sagaHandler.calledOnce);
+    });
+
     function TestFlow(flow) {
         this.handles = {
-            'navigatesTo': flow.navigatesTo('path', 'data'),
+            'to': flow.to('path', 'data'),
             'startChild': {
-                onstart: flow.navigatesTo('child'),
-                'navigateChild': flow.navigatesTo('child2'),
+                onstart: flow.to('child'),
+                'navigateChild': flow.to('child2'),
                 'endChild': null
             },
             'end': flow.end,

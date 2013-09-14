@@ -1,6 +1,6 @@
 // PubSub.js
 window.Tribe = window.Tribe || {};
-window.Tribe.PubSub = function (options) {
+Tribe.PubSub = function (options) {
     var self = this;
     var utils = Tribe.PubSub.utils;
 
@@ -78,17 +78,12 @@ window.Tribe.PubSub = function (options) {
     this.createLifetime = function() {
         return new Tribe.PubSub.Lifetime(self, self);
     };
-
-    this.startSaga = function(definition, args) {
-        var constructorArgs = [self, definition].concat(Array.prototype.slice.call(arguments, 1));
-        var saga = utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
-        return saga.start();
-    };
     
     function option(name) {
         return (options && options.hasOwnProperty(name)) ? options[name] : Tribe.PubSub.options[name];
     }
 };
+
 // Lifetime.js
 Tribe.PubSub.Lifetime = function (parent, owner) {
     var self = this;
@@ -210,6 +205,16 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
         });
     }    
 };
+
+Tribe.PubSub.Saga.startSaga = function (definition, args) {
+    var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
+    var saga = Tribe.PubSub.utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
+    return saga.start();
+};
+
+
+Tribe.PubSub.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
+Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
 // subscribeOnce.js
 Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     var self = this;

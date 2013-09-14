@@ -1,6 +1,8 @@
 ﻿Tutorials.creditCard = {
     frames: [
         'CreditCard/personal',
-        'CreditCard/sagas'
+        'CreditCard/business',
+        'CreditCard/saga',
+        'CreditCard/combined'
     ]
 }
