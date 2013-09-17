@@ -2036,6 +2036,42 @@ TC.registerModel(function (pane) {
     }
 });
 
+// Panes/Interface/feedback.js
+TC.scriptEnvironment = { resourcePath: '/Interface/feedback' };
+TC.registerModel(function (pane) {
+    var self = this;
+    
+    this.email = ko.observable().extend({ email: 'This' });
+    this.comments = ko.observable().extend({ required: true });
+    this.success = ko.observable();
+    
+    this.paneRendered = function() {
+        $('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>')
+            .insertAfter(pane.find('.twitter-mention-button'));
+    };
+
+    this.submit = function() {
+        $.post('Feedback/Send', {
+            url: window.location.href,
+            email: self.email(),
+            content: self.comments()
+        }).done(done).fail(fail);
+    };
+
+    this.close = function() {
+        pane.remove();
+    };
+    
+    function done() {
+        self.success(true);
+        setTimeout(self.close, 3000);
+    }
+    
+    function fail() {
+        self.success(false);
+    }
+});
+
 // Panes/Interface/header.js
 TC.scriptEnvironment = { resourcePath: '/Interface/header' };
 TC.registerModel(function (pane) {
@@ -2061,6 +2097,12 @@ TC.registerModel(function (pane) {
         if ($('.header .logo').is(':visible'))
             TC.transition('.header .logo', 'fade').out(false);
     }
+
+    this.feedback = function () {
+        TC.transition(
+            TC.appendNode('body', { path: '/Interface/feedback' }),
+            'fade').in();
+    };
 
     this.dispose = function () {
         window.removeEventListener('navigating', navigating);
@@ -2863,7 +2905,7 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Introduction-features"><div class="content block">\n    <h1>Features</h1>\n\n    <div class="child">\n        <h1>Composite</h1>\n        <img src="Images/Features/composite.jpg" />\n        <ul>\n            <li>Built on the power of <a href="http://knockoutjs.com/" target="_blank">knockout</a> - <b>declarative data binding</b>, <b>observables</b> and more.</li>\n            <li>Break your UI down into reusable pieces in a way that makes sense to you.</li>\n            <li>Simply and easily model <b>navigation flow</b> and <b>business processes</b>.</li>\n            <li>Smooth, <b>hardware accelerated transitions</b> - a core part of Tribe.Composite.</li>\n            <li>Full <b>resource lifecycle management</b> - Tribe manages the lifecycle of panes from load through to disposal.</li>\n            <li><b>Simple and intuitive</b> - structure your project how you need <b>without complex configuration</b>.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>MessageBus</h1>\n        <img src="Images/Features/communication.jpg" />\n        <ul>\n            <li>Built on <b>reliable</b>, <b>highly scalable</b>, proven technology (Microsoft SignalR)</li>\n            <li><b>Transparently broadcast messages</b> to other users on both web and mobile devices.</li>\n            <li>Seamlessly translate messages into server side messaging technology, like <b>NServiceBus</b> or <b>Azure queues</b>.</li>\n            <li>Built in <b>record and replay semantics</b> - event sourcing out of the box.</li>\n            <li><b>Secure channels</b> with simple and extensible authorisation.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Mobile</h1>\n        <img src="Images/Features/mobile.jpg" />\n        <ul>\n            <li>Target <b>mobile devices</b> with the <b>same codebase</b> as your web application.</li>\n            <li>Easily customisable <b>pre-built themes</b> and <b>UI components</b> - focus on building your app.</li>\n        </ul>\n        <br/><br/>\n    </div>\n\n    <div class="child">\n        <h1>PackScript</h1>\n        <img src="Images/Features/simple.jpg" />\n        <ul>\n            <li>Powerful resource building system for combining and minifying resources.</li>\n            <li><b>Combine, minify, transform, template, compile</b> and more.</li>\n            <li>Simple <b>JavaScript configuration</b> API.</li>\n            <li><b>"Watch" mode</b> to update your build every time you save a file.</li>\n            <li>Easily integrates with <b>continuous integration</b> tools.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Forms</h1>\n        <ul>\n            <li>Simple, themable set of templates for creating forms.</li>\n            <li>Model-based validation without any additional markup.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Components</h1>\n        <ul>\n            <li>A basic set of reusable user interface components including:\n                <ul>\n                    <li>Grid</li>\n                    <li>Graph</li>\n                    <li>Dialog</li>\n                    <li>Expander</li>\n                    <li>Tab panel</li>\n                    <li>Tooltip</li>\n                    <li>Google Map</li>\n                </ul>\n            </li>\n        </ul>\n    </div>\n</div>\n</script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Guides-Introduction-getStarted"><div class="content block">\n    <h1>Get Started</h1>\n    <p>There are three easy ways to get started with the Tribe platform.</p>\n\n    <div class="tip">\n        <img src="Images/icon.tip.64.png"/>\n        <p>\n            If you\'re using Chrome and running Tribe from a \n            <span class="filename">file://</span> URL, you must start Chrome with the\n            <span class="filename">--allow-file-access-from-files</span> options.\n        </p>\n        <div class="clear"></div>\n    </div>\n\n    <div class="child">\n        <h1>Online Resources</h1>\n        <p>Use the following HTML for your bootstrapper:</p>\n        <div class="example">\n            <pre>\n&lt;!DOCTYPE HTML>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">&lt;/script>        \n        &lt;script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js">&lt;/script>\n        &lt;script src="http://danderson00.github.io/Tribe/Build/Tribe.min.js">&lt;/script>\n        &lt;script>$(TC.run)&lt;/script>\n    &lt;/head>\n    &lt;body data-bind="pane: \'layout\'">&lt;/body>\n&lt;/html></pre>\n        </div>\n        <p>Replace \'layout\' with the path to your starting pane.</p>\n    </div>\n\n    <div class="child">\n        <h1>NuGet Packages</h1>\n        <img class="topRight" style="margin-top: 10px !important" src="Images/Features/nuget.jpg"/>\n        <p>If you\'re a Visual Studio user, the easiest way to get started is to install one of the Tribe NuGet packages.</p>\n        <ul>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe.Composite/" target="_blank">Tribe</a>\n                 - Everything you need for complete Composite and MessageHub functionality.\n            </li>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe/" target="_blank">Tribe.Template</a>\n                 - Everything in the Tribe package plus a basic starter template.\n            </li>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe.Template/" target="_blank">Tribe.Composite</a>\n                 - Tribe.Composite, Mobile, Forms and Components.\n            </li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Download</h1>\n        <a href="http://danderson00.github.io/Tribe/Tribe.zip"><img class="topRight" src="Images/download.png" /></a>\n        <p><a href="http://danderson00.github.io/Tribe/Tribe.zip">Download a ZIP file</a> containing</p>\n        <ul>\n            <li>Production, uncompressed and debug versions of the Tribe libraries</li>\n            <li>Tribe.MessageHub binaries (currently requires IIS, self-hosting server coming soon!)</li>\n            <li>The Tribe test suite</li>\n            <!--<li>A starter template</li>-->\n        </ul>\n    </div>\n</div></script>');
+    .append('<script type="text/template" id="template--Content-Guides-Introduction-getStarted"><div class="content block">\n    <h1>Get Started</h1>\n    <p>There are three easy ways to get started with the Tribe platform.</p>\n\n    <div class="tip">\n        <img src="Images/icon.tip.64.png"/>\n        <p>\n            If you\'re using Chrome and running Tribe from a \n            <span class="filename">file://</span> URL, you must start Chrome with the\n            <span class="filename">--allow-file-access-from-files</span> option.\n        </p>\n        <div class="clear"></div>\n    </div>\n\n    <div class="child">\n        <h1>Online Resources</h1>\n        <p>Use the following HTML for your bootstrapper:</p>\n        <div class="example">\n            <pre>\n&lt;!DOCTYPE HTML>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">&lt;/script>        \n        &lt;script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js">&lt;/script>\n        &lt;script src="http://danderson00.github.io/Tribe/Build/Tribe.min.js">&lt;/script>\n        &lt;script>$(TC.run)&lt;/script>\n    &lt;/head>\n    &lt;body data-bind="pane: \'layout\'">&lt;/body>\n&lt;/html></pre>\n        </div>\n        <p>Replace \'layout\' with the path to your starting pane.</p>\n    </div>\n\n    <div class="child">\n        <h1>NuGet Packages</h1>\n        <img class="topRight" style="margin-top: 10px !important" src="Images/Features/nuget.jpg"/>\n        <p>If you\'re a Visual Studio user, the easiest way to get started is to install one of the Tribe NuGet packages.</p>\n        <ul>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe.Composite/" target="_blank">Tribe</a>\n                 - Everything you need for complete Composite and MessageHub functionality.\n            </li>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe/" target="_blank">Tribe.Template</a>\n                 - Everything in the Tribe package plus a basic starter template.\n            </li>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe.Template/" target="_blank">Tribe.Composite</a>\n                 - Tribe.Composite, Mobile, Forms and Components.\n            </li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Download</h1>\n        <a href="http://danderson00.github.io/Tribe/Tribe.zip"><img class="topRight" src="Images/download.png" /></a>\n        <p><a href="http://danderson00.github.io/Tribe/Tribe.zip">Download a ZIP file</a> containing</p>\n        <ul>\n            <li>Production, uncompressed and debug versions of the Tribe libraries</li>\n            <li>Tribe.MessageHub binaries (currently requires IIS, self-hosting server coming soon!)</li>\n            <li>The Tribe test suite</li>\n            <!--<li>A starter template</li>-->\n        </ul>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Guides-Tutorials-creditcard"><div class="creditcard content block">\n    <h1>Modelling Navigation and Business Processes</h1>\n    <div data-bind="pane: \'/Interface/navigationContainer\', data: Tutorials.creditCard"></div>\n</div></script>');
 $('head')
@@ -2965,9 +3007,11 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Interface-content"><div data-bind="pane: panePath">\n</div></script>');
 $('head')
+    .append('<script type="text/template" id="template--Interface-feedback"><div class="dialogBackgroundFilter"></div>\n<div class="feedback block">\n    <div class="success" data-bind="visible: success">\n        <div><div><h1>Thanks!</h1></div></div>\n    </div>\n\n    <h1>Feedback</h1>\n    <p>You can \n        <a href="https://twitter.com/intent/tweet?screen_name=tribejs" class="twitter-mention-button">Tweet to @tribejs</a>,\n        email <a href="mailto: tribejs@gmail.com">tribejs@gmail.com</a>,\n        or enter your comments in the text box below. If you provide an email address, we will endeavour to respond within 48 hours.\n    </p>\n    \n    <div>\n        <span>Email:</span>\n        <input data-bind="value: email" />\n    </div>\n    \n    <textarea data-bind="value: comments"></textarea>\n    \n    <div>\n        <button data-bind="validatedClick: submit">Submit</button>\n        <button data-bind="click: close">Close</button>\n    </div>\n    \n    <div class="failure" data-bind="visible: success() === false">The feedback could not be sent.</div>\n</div></script>');
+$('head')
     .append('<script type="text/template" id="template--Interface-footer"><div class="footer content">\n    The Tribe platform and all resources on this website are licensed under the <a target="_blank" href="http://opensource.org/licenses/mit-license.php">MIT license</a>, except where specified, and portions\n    copyright <a href="knockoutjs.com" target="_blank">knockoutjs.com</a>.\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Interface-header"><div class="header">\n    <div class="background"></div>\n    \n    <div class="content">\n        <div class="logo" data-bind="click: Article.show(\'About\', \'home\')">tribe</div>\n        <div class="buttons">\n            <span data-bind="click: Article.show(\'Guides\', \'Introduction/getStarted\')">Get Started</span>\n            <span data-bind="click: Article.show(\'About\', \'guides\')">Guides</span>\n            <span data-bind="click: Article.show(\'Reference\', \'Core/panes\')">Reference</span>\n            <a href="http://danderson00.github.io/Tribe/Reference/tests.html" target="_blank"><span>Tests</span></a>\n            <a href="https://github.com/danderson00/Tribe" target="_blank"><span>Source</span></a>\n        </div>\n    </div>\n</div></script>');
+    .append('<script type="text/template" id="template--Interface-header"><div class="header">\n    <div class="background"></div>\n    \n    <div class="content">\n        <div class="logo" data-bind="click: Article.show(\'About\', \'home\')">tribe</div>\n        <div class="buttons">\n            <span data-bind="click: Article.show(\'Guides\', \'Introduction/getStarted\')">Get Started</span>\n            <span data-bind="click: Article.show(\'About\', \'guides\')">Guides</span>\n            <span data-bind="click: Article.show(\'Reference\', \'Core/panes\')">Reference</span>\n            <!--<a href="http://danderson00.github.io/Tribe/Reference/tests.html" target="_blank"><span>Tests</span></a>-->\n            <a href="https://github.com/danderson00/Tribe" target="_blank"><span>Source</span></a>\n            <span data-bind="click: feedback">Feedback</span>\n        </div>\n    </div>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Interface-layout"><div data-bind="pane: \'header\'"></div>\n<div data-bind="pane: \'main\'"></div>\n<div data-bind="pane: \'footer\'"></div></script>');
 $('head')
@@ -3133,6 +3177,10 @@ $('<style/>')
 $('<style/>')
     .attr('class', '__tribe')
     .text('.content{width:980px;position:relative;left:50%;margin-left:-490px!important}.logo{font-weight:bold;font-family:\'Cambria\'}')
+    .appendTo('head');
+$('<style/>')
+    .attr('class', '__tribe')
+    .text('div.feedback{position:fixed;background:#fff;z-index:200;overflow:hidden;width:600px;top:50%;left:50%;margin:-160px 0 0 -250px}.feedback .twitter-mention-button{margin-bottom:-3px}.feedback textarea{width:100%;height:110px;box-sizing:border-box}.feedback .success{position:absolute;top:0;bottom:0;left:0;right:0;background:#fff;z-index:201}.feedback .success div{position:absolute;left:50%;top:50%}.feedback .success div div{position:relative;left:-50%;top:-20px}.feedback .failure{color:#fa8072}.dialogBackgroundFilter{position:fixed;top:0;bottom:0;left:0;right:0;overflow:hidden;padding:0;margin:0;background-color:gray;filter:alpha(opacity=60);opacity:.6;z-index:199}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')

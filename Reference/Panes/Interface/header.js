@@ -22,6 +22,12 @@
             TC.transition('.header .logo', 'fade').out(false);
     }
 
+    this.feedback = function () {
+        TC.transition(
+            TC.appendNode('body', { path: '/Interface/feedback' }),
+            'fade').in();
+    };
+
     this.dispose = function () {
         window.removeEventListener('navigating', navigating);
     };

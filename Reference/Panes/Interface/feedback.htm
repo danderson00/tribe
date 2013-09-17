@@ -1,0 +1,27 @@
+﻿<div class="dialogBackgroundFilter"></div>
+<div class="feedback block">
+    <div class="success" data-bind="visible: success">
+        <div><div><h1>Thanks!</h1></div></div>
+    </div>
+
+    <h1>Feedback</h1>
+    <p>You can 
+        <a href="https://twitter.com/intent/tweet?screen_name=tribejs" class="twitter-mention-button">Tweet to @tribejs</a>,
+        email <a href="mailto: tribejs@gmail.com">tribejs@gmail.com</a>,
+        or enter your comments in the text box below. If you provide an email address, we will endeavour to respond within 48 hours.
+    </p>
+    
+    <div>
+        <span>Email:</span>
+        <input data-bind="value: email" />
+    </div>
+    
+    <textarea data-bind="value: comments"></textarea>
+    
+    <div>
+        <button data-bind="validatedClick: submit">Submit</button>
+        <button data-bind="click: close">Close</button>
+    </div>
+    
+    <div class="failure" data-bind="visible: success() === false">The feedback could not be sent.</div>
+</div>
