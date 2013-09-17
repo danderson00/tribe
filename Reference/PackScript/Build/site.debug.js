@@ -56,7 +56,7 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.filename{font-family:monospace;white-space:nowrap}.example{position:relative;background:#eed;padding:10px;margin:10px 0;font-family:monospace;overflow:hidden;border-radius:8px}.example .filename{display:block;position:absolute;top:0;right:0;font-size:8pt;color:gray!important;padding:0 5px}span.example{border-radius:0;margin:inherit;padding:inherit}.tip{background:#ded;padding:0 10px;margin:10px 0;border-radius:8px}.tip p{display:table-cell;vertical-align:middle;height:70px}.tip img{float:left;border:none;margin:5px 10px 5px -10px;padding:0}')
+    .text('.filename{font-family:monospace;white-space:nowrap}.example{position:relative;background:#eed;padding:10px;margin:10px 0;font-family:monospace;overflow:hidden;border-radius:8px}.example .filename{display:block;position:absolute;top:0;right:0;font-size:8pt;color:gray!important;padding:0 5px}span.example{border-radius:0;margin:inherit;padding:inherit}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
