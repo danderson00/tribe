@@ -75,7 +75,7 @@ Navigation = {
             'Core': 'core',
             'Message Envelopes': 'envelopes',
             'Global Options': 'options',
-            'Sagas': 'saga'
+            'Sagas': 'Saga'
             },
         'MessageHub': {
             'Configuration': 'configuration',
@@ -1260,84 +1260,160 @@ Reference.PubSub.Envelopes = [
 
 // Panes/Content/Reference/PubSub/Saga.js
 TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/Saga' };
-Reference.Types.Saga = {
-    name: 'TC.Types.Saga',
+Reference.PubSub.Saga = {
+    name: 'Tribe.PubSub.Saga',
     description: 'Manages a long running process by maintaining state and handling specific messages.',
     constructor: {
         arguments: [
-            { name: 'pane', type: 'TC.Types.Pane', description: 'A Pane object to serve as the saga\'s "parent". The lifetime of the saga is tied to the pane.' },
-            { name: 'handlers', type: 'Object', description: 'A hashtable of message handlers, keyed by the message topic.' },
-            { name: 'initialData', type: 'Any', description: 'Initial value for the saga\'s data property.' }
+            { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Saga definition or its constructor.' },
+            { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
         ]
     },
     functions: [
         {
             name: 'start',
             description: 'Subscribes provided message handlers to messages published on the pane\'s pubsub engine.',
-            returns: 'undefined'
+            arguments: [
+                { name: 'data', type: 'Constructor', description: 'Data that is passed to the onstart handler.' }
+            ],
+            returns: 'Tribe.PubSub.Saga'
         },
         {
             name: 'startChild',
             description: 'Starts a new saga. The lifetime of the new saga is bound to the current saga.',
             arguments: [
-                { name: 'childHandlers', type: 'Object', description: 'A hashtable of message handlers, keyed by the message topic.' },
-                { name: 'childData', type: 'Any', description: 'Initial value for the saga\'s data property.' }
+                { name: 'child', type: 'Object | Constructor', description: 'The object that contains the Saga definition or its constructor.' },
+                { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'undefined'
+            returns: 'Tribe.PubSub.Saga'
         },
         {
             name: 'end',
             description: 'Unsubscribes message handlers for this and all child sagas.',
-            returns: 'undefined'
+            arguments: [
+                { name: 'data', type: 'Any', description: 'Data that is passed to the onend handler.' }
+            ],
+            returns: 'Tribe.PubSub.Saga'
         }
     ],
     properties: [
-        { name: 'pubsub', type: 'Tribe.PubSub' },
-        { name: 'pane', type: 'TC.Types.Pane' },
-        { name: 'data', type: 'Any' },
-        { name: 'children', type: '[TC.Types.Saga]' }
-    ]
+        { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub instance used for subscriptions.' },
+        { name: 'children', type: '[TC.Types.Saga]', description: 'An array of sagas added through handler definitions or startChild.' }
+    ],
+    Definition: {
+        arguments: [
+            { Argument: 'saga', Type: 'TC.Types.Flow', Description: 'The Saga object that is consuming the definition.' },
+            { Argument: 'args, ...', Type: 'Any', Description: 'The additional arguments that were passed to the Saga constructor.' }
+        ],
+        properties: [
+            { Argument: 'handles', Type: 'Object', Description: 'A hashtable pairing message topics with handler functions. Can be nested.' },
+            { Argument: 'endsChildrenExplicitly', Type: 'Boolean', Description: 'Setting to true causes child sagas to remain active if a message is received on the parent saga.' }
+        ]
+    }
 };
 
 // Panes/Content/Reference/Types/Flow.js
 TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Flow' };
-Reference.Types.Saga = {
-    name: 'TC.Types.Saga',
-    description: 'Manages a long running process by maintaining state and handling specific messages.',
+Reference.Types.Flow = {
+    name: 'TC.Types.Flow',
+    description: 'Manages a navigation flow by maintaining state and handling specific messages.',
     constructor: {
         arguments: [
-            { name: 'pane', type: 'TC.Types.Pane', description: 'A Pane object to serve as the saga\'s "parent". The lifetime of the saga is tied to the pane.' },
-            { name: 'handlers', type: 'Object', description: 'A hashtable of message handlers, keyed by the message topic.' },
-            { name: 'initialData', type: 'Any', description: 'Initial value for the saga\'s data property.' }
+            { name: 'navigationSource', type: 'TC.Types.Pane | TC.Types.Node', description: 'The flow attaches to the navigation node of the pane or node specified.' },
+            { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
+            { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
         ]
     },
     functions: [
         {
             name: 'start',
             description: 'Subscribes provided message handlers to messages published on the pane\'s pubsub engine.',
-            returns: 'undefined'
+            arguments: [
+                { name: 'data', type: 'Constructor', description: 'Data that is passed to the onstart handler.' }
+            ],
+            returns: 'TC.Types.Flow'
         },
         {
             name: 'startChild',
             description: 'Starts a new saga. The lifetime of the new saga is bound to the current saga.',
             arguments: [
-                { name: 'childHandlers', type: 'Object', description: 'A hashtable of message handlers, keyed by the message topic.' },
-                { name: 'childData', type: 'Any', description: 'Initial value for the saga\'s data property.' }
+                { name: 'definition', type: 'Constructor', description: 'The constructor for the object that contains the Flow definition.' },
+                { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'undefined'
+            returns: 'TC.Types.Flow'
         },
         {
             name: 'end',
             description: 'Unsubscribes message handlers for this and all child sagas.',
+            arguments: [
+                { name: 'data', type: 'Constructor', description: 'Data that is passed to the onend handler.' }
+            ],
+            returns: 'TC.Types.Flow'
+        },
+        {
+            name: 'startSaga',
+            description: 'Creates a Saga that is bound to the flow\'s lifetime.',
+            arguments: [
+                { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Saga definition or its constructor.' },
+                { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
+            ],
+            returns: 'Tribe.PubSub.Saga'
+        },
+        {
+            name: 'navigate',
+            description: 'Perform a navigation operation on the stored navigation node.',
+            arguments: [
+                { name: 'pathOrOptions', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
+                { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
+            ],
             returns: 'undefined'
         }
     ],
+    helpers: [
+        {
+            name: 'to',
+            description: 'Navigate to the specified pane when the specified message is received.',
+            arguments: [
+                { name: 'pathOrOptions', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
+                { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
+            ],
+            returns: 'function () { }'
+        },
+        {
+            name: 'endsAt',
+            description: 'Navigate to the specified pane and end the flow when the specified message is received.',
+            arguments: [
+                { name: 'pathOrOptions', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
+                { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
+            ],
+            returns: 'function () { }'
+        },
+        {
+            name: 'start',
+            description: 'Start a child flow when the specified message is received.',
+            arguments: [
+                { name: 'flow', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
+                { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
+            ],
+            returns: 'function () { }'
+        }
+    ],
     properties: [
-        { name: 'pubsub', type: 'Tribe.PubSub' },
-        { name: 'pane', type: 'TC.Types.Pane' },
-        { name: 'data', type: 'Any' },
-        { name: 'children', type: '[TC.Types.Saga]' }
-    ]
+        { name: 'node', type: 'TC.Types.Node', description: 'The node being used for navigation.' },
+        { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub instance used for subscriptions.' },
+        { name: 'saga', type: 'Tribe.PubSub.Saga', description: 'The underlying Saga instance.' },
+        { name: 'sagas', type: '[TC.Types.Saga]', description: 'Array of Sagas started with the startSaga function.' }
+    ],
+    Definition: {
+        arguments: [
+            { Argument: 'flow', Type: 'TC.Types.Flow', Description: 'The Flow object that is consuming the definition.' },
+            { Argument: 'args, ...', Type: 'Any', Description: 'The additional arguments that were passed to the Flow constructor.' }
+        ],
+        properties: [
+            { Argument: 'handles', Type: 'Object', Description: 'A hashtable pairing message topics with handler functions. Can be nested.' },
+            { Argument: 'endsChildrenExplicitly', Type: 'Boolean', Description: 'Setting to true causes child flows to remain active if a message is received on the parent flow.' }
+        ]
+    }
 };
 
 // Panes/Content/Reference/Types/History.js
@@ -1494,7 +1570,7 @@ Reference.Types.Node = {
             name: 'navigate',
             description: 'Find the navigation node for the current node and transition it to the specified pane, updating the history stack.',
             arguments: [
-                { name: 'pathOrPane', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
+                { name: 'pathOrOptions', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
                 { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
             ],
             returns: 'undefined'
@@ -1621,7 +1697,7 @@ Reference.Types.Pane = {
             name: 'navigate',
             description: 'Navigate the node containing the pane to the specified pane.',
             arguments: [
-                { name: 'pathOrPane', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
+                { name: 'pathOrOptions', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
                 { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
             ],
             returns: 'undefined'
@@ -2795,9 +2871,9 @@ $('head')
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-PubSub-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the Tribe.PubSub.options object.</p>\n    <pre class="example">Tribe.PubSub.options.sync = true;</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>sync</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Execute message handlers synchronously.</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Wrap handler functions in a try..catch block.</td>\n            </tr>\n            <tr>\n                <td>exceptionHandler</td>\n                <td>Function(error, envelope)</td>\n                <td>undefined</td>\n                <td>A function to execute when exceptions occur. Only executed if handleExceptions is false.</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-PubSub-Saga"><div data-bind="pane: \'/Interface/API/type\', data: Reference.Types.Saga"></div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-PubSub-Saga"><div data-bind="pane: \'/Interface/API/type\', data: Reference.PubSub.Saga"></div>\n\n<div class="content block">\n    <h1>Saga Definitions</h1>\n    <p>Sagas are defined by creating a constructor function:</p>\n    <pre class="example">\nfunction MySaga(saga, args, ...) { }</pre>\n    <div data-bind="pane: \'/Interface/API/table\', data: Reference.PubSub.Saga.Definition.arguments"></div>\n    \n    <p>The object can expose the following properties:</p>\n    <div data-bind="pane: \'/Interface/API/table\', data: Reference.PubSub.Saga.Definition.properties"></div>\n    \n    <pre class="example">\nfunction MySaga(saga, argument1, argument2) {\n    var details = { property1: argument1, property2: argument2 };\n    this.handles = {\n        \'messageTopic1\': function(messageData) {\n            details.property3 = messageData.property;\n        },\n        \'startChildTopic\': {\n            \'messageTopic2\': messageTopic2Handler\n        },\n        \'endSagaTopic\': saga.end\n    };\n        \n    this.endsChildrenExplicitly = true;\n        \n    function messageTopic2Handler(messageData)\n    {\n        details.property4 = messageData.property;\n    }\n}\n</pre>\n</div></script>');
 $('head')
-    .append('<script type="text/template" id="template--Content-Reference-Types-Flow"><div data-bind="pane: \'/Interface/API/type\', data: Reference.Types.Saga"></div></script>');
+    .append('<script type="text/template" id="template--Content-Reference-Types-Flow"><div data-bind="pane: \'/Interface/API/type\', data: Reference.Types.Flow"></div>\n\n<div class="content block">\n    <h1>Flow Helpers</h1>\n    \n    <p>The Flow object exposes a number of functions to simplify handler definitions.</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.Types.Flow.helpers }"></div>\n</div>\n\n<div class="content block">\n    <h1>Flow Definitions</h1>\n    <p>Flows are defined by creating a constructor function:</p>\n    <pre class="example">\nfunction MyNavigationFlow(flow, args, ...) { }</pre>\n    <div data-bind="pane: \'/Interface/API/table\', data: Reference.Types.Flow.Definition.arguments"></div>\n\n    <p>The object can expose the following properties:</p>\n    <div data-bind="pane: \'/Interface/API/table\', data: Reference.Types.Flow.Definition.properties"></div>\n    \n    <pre class="example">\nfunction MyNavigationFlow(flow, argument1, argument2) {\n    this.handles = {\n        onstart: flow.to(\'startPane\'),\n        \'messageTopic\': flow.to(\'anotherPane\', argument1),\n        \'startChildTopic\': {\n            \'customHandler\': function(messageData) {\n                flow.navigate(\'anotherPane\', messageData.property);\n            }\n        },\n        \'endFlowTopic\': flow.endsAt(\'endPane\')\n    };\n        \n    this.endsChildrenExplicitly = true;\n}\n</pre>\n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Types-History"><div data-bind="pane: \'/Interface/API/type\', data: Reference.Types.History"></div></script>');
 $('head')

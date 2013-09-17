@@ -100,11 +100,18 @@
         equal(saga.children.length, 1);
     });
 
-    test("startChild calls onstart with data passed", function () {
-        var child = createDefinition({ onstart: spy });
+    test("startChild passes arguments to definition constructor", function () {
+        expect(2);
+        var child = function(childSaga, arg1, arg2) {
+            this.handles = {
+                onstart: function() {
+                    equal(arg1, 'arg1');
+                    equal(arg2, 2);
+                }
+            };
+        };
         var saga = new Tribe.PubSub.Saga(pubsub, definition);
-        saga.startChild(child, 'arg');
-        ok(spy.firstCall.args[0], 'arg');
+        saga.startChild(child, 'arg1', 2);
     });
 
     test("end calls end on any children with data passed", function () {

@@ -162,12 +162,14 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
 
     this.startChild = function (child, data) {
         self.children.push(new Tribe.PubSub.Saga(pubsub, child).start(data));
+        return self;
     };
 
     this.end = function (data) {
         if (handlers.onend) handlers.onend(data, self);
         pubsub.end();
         endChildren(data);
+        return self;
     };
 
     function attachHandler(handler, topic) {
@@ -993,12 +995,23 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
     TC.Types.Flow.prototype.startChild = function(definition, args) {
         definition = createDefinition(this, definition, Array.prototype.slice.call(arguments, 1));
         this.saga.startChild(definition);
+        return this;
     };
 
     TC.Types.Flow.prototype.navigate = function (pathOrOptions, data) {
         this.node.navigate(pathOrOptions, data);
     };
+    
+    // This keeps a separate collection of sagas bound to this flow's lifetime
+    // It would be nice to make them children of the underlying saga, but
+    // then they would end any time a message was executed.
+    TC.Types.Flow.prototype.startSaga = function (definition, args) {
+        var saga = this.pubsub.startSaga.apply(this.pubsub, arguments);
+        this.sagas.push(saga);
+        return saga;
+    };
 
+    // flow helpers
     TC.Types.Flow.prototype.to = function (pathOrOptions, data) {
         var node = this.node;
         return function () {
@@ -1022,14 +1035,6 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
         };
     };
 
-    // This keeps a separate collection of sagas bound to this flow's lifetime
-    // It would be nice to make them children of the underlying saga, but
-    // then they would end any time a message was executed.
-    TC.Types.Flow.prototype.startSaga = function (definition, args) {
-        var saga = this.pubsub.startSaga.apply(this.pubsub, arguments);
-        this.sagas.push(saga);
-        return saga;
-    };
 
     // This is reused by Node and Pane
     TC.Types.Flow.startFlow = function (definition, args) {

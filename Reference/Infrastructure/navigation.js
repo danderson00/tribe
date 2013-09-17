@@ -46,7 +46,7 @@
             'Core': 'core',
             'Message Envelopes': 'envelopes',
             'Global Options': 'options',
-            'Sagas': 'saga'
+            'Sagas': 'Saga'
             },
         'MessageHub': {
             'Configuration': 'configuration',

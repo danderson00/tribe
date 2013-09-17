@@ -1,1 +1,34 @@
-﻿<div data-bind="pane: '/Interface/API/type', data: Reference.Types.Saga"></div>
+﻿<div data-bind="pane: '/Interface/API/type', data: Reference.PubSub.Saga"></div>
+
+<div class="content block">
+    <h1>Saga Definitions</h1>
+    <p>Sagas are defined by creating a constructor function:</p>
+    <pre class="example">
+function MySaga(saga, args, ...) { }</pre>
+    <div data-bind="pane: '/Interface/API/table', data: Reference.PubSub.Saga.Definition.arguments"></div>
+    
+    <p>The object can expose the following properties:</p>
+    <div data-bind="pane: '/Interface/API/table', data: Reference.PubSub.Saga.Definition.properties"></div>
+    
+    <pre class="example">
+function MySaga(saga, argument1, argument2) {
+    var details = { property1: argument1, property2: argument2 };
+    this.handles = {
+        'messageTopic1': function(messageData) {
+            details.property3 = messageData.property;
+        },
+        'startChildTopic': {
+            'messageTopic2': messageTopic2Handler
+        },
+        'endSagaTopic': saga.end
+    };
+        
+    this.endsChildrenExplicitly = true;
+        
+    function messageTopic2Handler(messageData)
+    {
+        details.property4 = messageData.property;
+    }
+}
+</pre>
+</div>

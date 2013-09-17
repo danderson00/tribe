@@ -6,10 +6,7 @@
     this.pubsub = pubsub;
     this.children = [];
 
-    if (definition.constructor === Function) {
-        var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
-        definition = utils.applyToConstructor(definition, definitionArgs);
-    }
+    definition = createDefinition(definition, Array.prototype.slice.call(arguments, 2));
     var handlers = definition.handles || {};
 
     this.start = function (data) {
@@ -18,14 +15,17 @@
         return self;
     };
 
-    this.startChild = function (child, data) {
-        self.children.push(new Tribe.PubSub.Saga(pubsub, child).start(data));
+    this.startChild = function (child, args) {
+        self.children.push(new Tribe.PubSub.Saga(pubsub, createDefinition(child, Array.prototype.slice.call(arguments, 1)))
+            .start());
+        return self;
     };
 
     this.end = function (data) {
         if (handlers.onend) handlers.onend(data, self);
         pubsub.end();
         endChildren(data);
+        return self;
     };
 
     function attachHandler(handler, topic) {
@@ -62,7 +62,15 @@
         Tribe.PubSub.utils.each(self.children, function(child) {
              child.end(data);
         });
-    }    
+    }
+    
+    function createDefinition(constructor, argsToApply) {
+        if (constructor.constructor === Function) {
+            var definitionArgs = [self].concat(argsToApply);
+            constructor = utils.applyToConstructor(constructor, definitionArgs);
+        }
+        return constructor;
+    }
 };
 
 Tribe.PubSub.Saga.startSaga = function (definition, args) {

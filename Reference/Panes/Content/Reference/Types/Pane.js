@@ -11,7 +11,7 @@
             name: 'navigate',
             description: 'Navigate the node containing the pane to the specified pane.',
             arguments: [
-                { name: 'pathOrPane', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
+                { name: 'pathOrOptions', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
                 { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
             ],
             returns: 'undefined'

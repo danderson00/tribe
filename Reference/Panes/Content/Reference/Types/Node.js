@@ -12,7 +12,7 @@
             name: 'navigate',
             description: 'Find the navigation node for the current node and transition it to the specified pane, updating the history stack.',
             arguments: [
-                { name: 'pathOrPane', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
+                { name: 'pathOrOptions', type: 'String | Object', description: 'An object containing path and data properties, or the path to the target pane.' },
                 { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
             ],
             returns: 'undefined'
