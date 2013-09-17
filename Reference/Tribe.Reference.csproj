@@ -152,6 +152,8 @@
     <Content Include="Panes\Content\Guides\Tutorials\CreditCard\personal.htm" />
     <Content Include="Panes\Content\Guides\Tutorials\CreditCard\saga.htm" />
     <Content Include="Panes\Content\Guides\Tutorials\CreditCard\tutorial.js" />
+    <Content Include="Panes\Content\Reference\Core\bindingHandlers.htm" />
+    <Content Include="Panes\Content\Reference\Core\bindingHandlers.js" />
     <Content Include="Panes\Content\Reference\PackScript\builtins.htm" />
     <Content Include="Panes\Content\Reference\PackScript\includes.htm" />
     <Content Include="Panes\Content\Reference\PackScript\sync.htm" />
@@ -160,6 +162,8 @@
     <Content Include="Panes\Content\Reference\PackScript\pack.htm" />
     <Content Include="Panes\Content\Reference\PackScript\packscript.js" />
     <Content Include="Panes\Content\Reference\PackScript\templates.htm" />
+    <Content Include="Panes\Content\Reference\Types\Flow.htm" />
+    <Content Include="Panes\Content\Reference\Types\Flow.js" />
     <Content Include="Panes\Interface\API\table.htm" />
     <Content Include="Panes\Interface\API\table.js" />
     <Content Include="Panes\Samples\About\Tasks\layout.htm" />
@@ -265,8 +269,8 @@
     <Content Include="Panes\Content\Reference\Types\Pane.js" />
     <Content Include="Panes\Content\Reference\Types\Pipeline.htm" />
     <Content Include="Panes\Content\Reference\Types\Pipeline.js" />
-    <Content Include="Panes\Content\Reference\Types\Saga.htm" />
-    <Content Include="Panes\Content\Reference\Types\Saga.js" />
+    <Content Include="Panes\Content\Reference\PubSub\Saga.htm" />
+    <Content Include="Panes\Content\Reference\PubSub\Saga.js" />
     <Content Include="Panes\Content\Reference\Types\Templates.htm" />
     <Content Include="Panes\Content\Reference\Types\Templates.js" />
     <Content Include="Panes\Content\Reference\Types\Logger.htm" />
@@ -520,6 +524,7 @@
     <Content Include="Data\mail\8" />
     <Content Include="Data\mail\9" />
     <Content Include="diagnostics.wadcfg" />
+    <Content Include="PackScript\PackScript.zip" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
