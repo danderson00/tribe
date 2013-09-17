@@ -117,6 +117,20 @@
         ok(sagaHandler.calledOnce);
     });
 
+    test("Child flows are constructed with same flow object", function () {
+        expect(1);
+        var f = new TC.Types.Flow(node, ParentFlow).start();
+        pubsub.publish('assertFlowEqual', f);
+    });
+
+    test("Child flows end when a parent message is published", function () {
+        expect(1);
+        var f = new TC.Types.Flow(node, ParentFlow).start();
+        pubsub.publish('assertFlowEqual', f);
+        f.end();
+        pubsub.publish('assertFlowEqual', f);
+    });
+
     function TestFlow(flow) {
         this.handles = {
             'to': flow.to('path', 'data'),
@@ -127,6 +141,21 @@
             },
             'end': flow.end,
             'null': null
+        };
+    }
+
+    function ParentFlow(flow) {
+        this.handles = {
+            onstart: flow.start(ChildFlow),
+            parentMessage: function () { }
+        };
+    }
+
+    function ChildFlow(flow) {
+        this.handles = {
+            'assertFlowEqual': function(otherFlow) {
+                equal(otherFlow, flow);
+            }
         };
     }
 })();

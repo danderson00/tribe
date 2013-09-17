@@ -245,7 +245,7 @@ $('<style/>')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')
-    .text('.filename{font-family:monospace}.example{position:relative;background:#eed;padding:10px;margin:10px 0;font-family:monospace;overflow:hidden;border-radius:8px}.example .filename{display:block;position:absolute;top:0;right:0;font-size:8pt;color:gray!important;padding:0 5px}')
+    .text('.filename{font-family:monospace}.example{position:relative;background:#eed;padding:10px;margin:10px 0;font-family:monospace;overflow:hidden;border-radius:8px}.example .filename{display:block;position:absolute;top:0;right:0;font-size:8pt;color:gray!important;padding:0 5px}span.example{border-radius:0;margin:inherit;padding:inherit}')
     .appendTo('head');
 $('<style/>')
     .attr('class', '__tribe')

@@ -1,2 +1,33 @@
-﻿<h2></h2>
+﻿<h2>Child Flows</h2>
+<p>Tribe gives us a neat way of expressing alternate flows.</p>
+
 <div data-bind="pane: '/Interface/sample', data: { name: 'CreditCard/4-Combined', initialFile: 'CreditCardFlow.js', rootPane: 'host', handleNavigation: true }"></div>
+
+<p>
+    Our flow now encapsulates the entire navigation flow for the 
+    application proces, started in the
+    <span class="filename">host</span> pane.
+</p>
+<p>
+    The new
+    <span class="filename">startBusiness</span> and
+    <span class="filename">startPersonal</span> messages,
+    published from the
+    <span class="filename">welcome</span> pane,
+    trigger alternate child flows within our main flow.
+    By default, these child flows will be ended whenever messages
+    are handled in the main flow.
+</p>
+
+<p>
+    We could also have modelled our main navigation flow this way
+    and kept our child flows separate by using the
+    <span class="filename">start</span> flow helper:
+</p>
+
+<div class="example"><span class="str">'startBusiness'</span><span class="pun">:</span><span class="pln"> flow</span><span class="pun">.</span><span class="pln">start</span><span class="pun">(</span><span class="typ">BusinessFlow</span><span class="pun">,</span><span class="pln"> details</span><span class="pun">)</span></div>
+
+<p>That's it for now! For more information, check out the
+    <a data-bind="click: Article.show('Reference', 'PubSub/Saga')">Saga</a> and
+    <a data-bind="click: Article.show('Reference', 'Types/Flow')">Flow</a> reference pages.
+</p>

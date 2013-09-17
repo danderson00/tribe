@@ -21,3 +21,8 @@
     color: gray !important;
     padding: 0 5px;
 }
+span.example {
+    border-radius: 0;
+    margin: inherit;
+    padding: inherit;
+}

@@ -180,6 +180,7 @@
     <Content Include="Panes\Samples\CreditCard\2-Business\PersonalFlow.js" />
     <Content Include="Panes\Samples\CreditCard\2-Business\welcome.htm" />
     <Content Include="Panes\Samples\CreditCard\2-Business\welcome.js" />
+    <Content Include="Panes\Samples\CreditCard\3-Saga\businessAccount.htm" />
     <Content Include="Panes\Samples\CreditCard\3-Saga\businessDetails.htm" />
     <Content Include="Panes\Samples\CreditCard\3-Saga\BusinessFlow.js" />
     <Content Include="Panes\Samples\CreditCard\3-Saga\confirm.htm" />
@@ -200,7 +201,6 @@
     <Content Include="Panes\Samples\CreditCard\4-Combined\host.js" />
     <Content Include="Panes\Samples\CreditCard\4-Combined\personal.htm" />
     <Content Include="Panes\Samples\CreditCard\4-Combined\welcome.htm" />
-    <Content Include="Panes\Samples\CreditCard\3-Saga\businessAccount.htm" />
     <Content Include="tests.html" />
     <Content Include="unsupported.html" />
     <Content Include="Css\block.css" />

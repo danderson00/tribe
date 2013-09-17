@@ -1,2 +1,16 @@
-﻿<h2></h2>
-<div data-bind="pane: '/Interface/sample', data: { name: 'CreditCard/2-Business', initialFile: 'welcome.js', rootPane: 'welcome', handleNavigation: true }"></div>
+﻿<h2>Adding a Flow for Business Customers</h2>
+<p>Let's follow the same pattern we did for personal customers. It sure would be nice to reuse that contact pane!</p>
+
+<div data-bind="pane: '/Interface/sample', data: { name: 'CreditCard/2-Business', initialFile: 'BusinessFlow.js', rootPane: 'welcome', handleNavigation: true }"></div>
+
+<p>
+    Success! Our business customer flow simply navigates to the <span class="filename">contact</span> pane and
+    handles the message it publishes.
+</p>
+
+<p>
+    Things are starting to look a little messy though, and we're clearly dealing with two separate concerns in our flows -
+    maintaining our business object and navigation.
+</p>
+
+<p>Next, we'll look at separating those concerns with some elegant results.</p>

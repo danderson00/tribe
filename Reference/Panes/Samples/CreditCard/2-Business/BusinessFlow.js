@@ -3,15 +3,15 @@
     
     this.handles = {
         onstart: flow.to('businessDetails'),
-        'CC.setBusiness': function(business) {
+        'setBusiness': function(business) {
             details.business = business;
             flow.navigate('businessAccount');
         },
-        'CC.setAccount': function(account) {
+        'setAccount': function(account) {
             details.account = account;
             flow.navigate('contact');
         },
-        'CC.setContact': function(contact) {
+        'setContact': function(contact) {
             details.contact = contact;
             flow.navigate('confirm', details);
             flow.end();

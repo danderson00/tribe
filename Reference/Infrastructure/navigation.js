@@ -22,6 +22,7 @@
             'Global Options': 'options',
         },
         'Types': {
+            'Flow': 'Flow',
             'History': 'History',
             'Loader': 'Loader',
             'Logger': 'Logger',
@@ -30,7 +31,6 @@
             'Operation': 'Operation',
             'Pane': 'Pane',
             'Pipeline': 'Pipeline',
-            'Saga': 'Saga',
             'Templates': 'Templates'
         },
         'Utilities': {
@@ -46,6 +46,7 @@
             'Core': 'core',
             'Message Envelopes': 'envelopes',
             'Global Options': 'options',
+            'Sagas': 'saga'
             },
         'MessageHub': {
             'Configuration': 'configuration',

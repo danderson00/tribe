@@ -1,2 +1,30 @@
-﻿<h2></h2>
-<div data-bind="pane: '/Interface/sample', data: { name: 'CreditCard/1-Personal', initialFile: 'welcome.js', rootPane: 'welcome', handleNavigation: true }"></div>
+﻿<h2>Our First Flow - Handling Personal Customers</h2>
+<p>For our first iteration, we'll have a go at adding a basic flow for personal customers.</p>
+
+<div data-bind="pane: '/Interface/sample', data: { name: 'CreditCard/1-Personal', initialFile: 'PersonalFlow.js', rootPane: 'welcome', handleNavigation: true }"></div>
+
+<p>
+    Our application consists of our flow and a number of simple panes for 
+    capturing and displaying data. The flow is relatively simple - handle
+    messages published by the data capture panes, attach the data to an 
+    object and flow to the next pane in the process.
+</p>
+<p>
+    You'll notice the fourth line of code in PersonalFlow.js, 
+    <span class="example">onstart: flow.to('personal')</span>.    
+    flow.to is a special function called a <strong>flow helper</strong> 
+    that you can use when defining your handlers. It delays a call to 
+    navigate until the specified message is received. onstart and onend 
+    are special properties you can add to your handlers. We'll see more 
+    of these later. 
+</p>
+<p>
+    You'll also notice in our two data collection panes, 
+    <span class="filename">personal</span> and
+    <span class="filename">contact</span>, don't have a JavaScript model. 
+    Tribe.Forms allows us to create forms that construct objects and 
+    publish the result, complete with validation.
+</p>
+<p>
+    Next up, let's add a flow for business customers.
+</p>

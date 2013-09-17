@@ -2,9 +2,10 @@
     var self = this;
 
     this.data = pane.data;
-    this.ccJson = ko.observable();
+    this.json = ko.observable();
 
-    this.submit = function() {
-        self.ccJson(JSON.stringify(pane.data));
+    this.submit = function () {
+        // Dump the details object on screen for our viewer's pleasure.
+        self.json(JSON.stringify(pane.data));
     };
 });

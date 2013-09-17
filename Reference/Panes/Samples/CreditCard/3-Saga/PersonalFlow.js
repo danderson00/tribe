@@ -4,7 +4,7 @@
 
     this.handles = {
         onstart: flow.to('personal'),
-        'CC.setAccount': flow.to('contact'),
-        'CC.setContact': flow.endsAt('confirm', details)
+        'setAccount': flow.to('contact'),
+        'setContact': flow.endsAt('confirm', details)
     };
 };
