@@ -17,6 +17,15 @@
             returns: 'undefined'
         },
         {
+            name: 'startFlow',
+            description: 'Start a flow with the specified definition.',
+            arguments: [
+                { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
+                { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
+            ],
+            returns: 'TC.Types.Flow'
+        },
+        {
             name: 'remove',
             description: 'Remove the pane from the DOM.',
             returns: 'undefined'

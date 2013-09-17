@@ -1228,7 +1228,17 @@ Reference.PubSub = {
             name: 'createLifetime',
             description: 'Create a child PubSub object where all subscriptions can be removed by calling .end().',
             returns: 'Object'
+        },
+        {
+            name: 'startSaga',
+            description: 'Start a saga with the specified definition.',
+            arguments: [
+                { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Saga definition or its constructor.' },
+                { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
+            ],
+            returns: 'TC.Types.Saga'
         }
+
     ],
     properties: [
         {
@@ -1596,6 +1606,15 @@ Reference.Types.Node = {
             returns: 'undefined'
         },
         {
+            name: 'startFlow',
+            description: 'Start a flow with the specified definition.',
+            arguments: [
+                { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
+                { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
+            ],
+            returns: 'TC.Types.Flow'
+        },
+        {
             name: 'setPane',
             description: 'Sets the pane on the current node.',
             arguments: [
@@ -1701,6 +1720,15 @@ Reference.Types.Pane = {
                 { name: 'data', type: 'Any', description: 'Data to pass to the target pane.' }
             ],
             returns: 'undefined'
+        },
+        {
+            name: 'startFlow',
+            description: 'Start a flow with the specified definition.',
+            arguments: [
+                { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
+                { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
+            ],
+            returns: 'TC.Types.Flow'
         },
         {
             name: 'remove',
