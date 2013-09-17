@@ -48,6 +48,7 @@ Navigation = {
             'Panes': 'panes',
             'Transitions': 'transitions',
             'API': 'api',
+            'Binding Handlers': 'bindingHandlers',
             'Global Options': 'options',
         },
         'Types': {
@@ -888,6 +889,29 @@ Reference.API = [
             { name: 'resourcePath', type: 'String' }
         ],
         returns: 'undefined'
+    }
+];
+
+// Panes/Content/Reference/Core/bindingHandlers.js
+TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/bindingHandlers' };
+Reference.BindingHandlers = [
+    {
+        name: 'publish',
+        description: 'Publishes the specified message and data when the bound element is clicked.',
+        bindings: [
+            { Binding: 'publish', Type: 'String', Description: 'The message topic to publish.' },
+            { Binding: 'data', Type: 'Any', Description: 'The data to publish.' }
+        ],
+        example: '<button data-bind="publish: \'messageTopic\', data: model.property">Click Me</button>'
+    },
+    {
+        name: 'navigate',
+        description: 'Navigates to the specified pane with the specified data when the bound element is clicked.',
+        bindings: [
+            { Binding: 'navigate', Type: 'String | Object', Description: 'The pane path or options to navigate to.' },
+            { Binding: 'data', Type: 'Any', Description: 'The data to pass the target pane.' },
+        ],
+        example: '<button data-bind="navigate: \'/target/pane\', data: model.property">Click Me</button>'
     }
 ];
 
@@ -2868,6 +2892,8 @@ $('head')
     .append('<script type="text/template" id="template--Content-Guides-Tutorials-Webmail-mails"><h2>Adding a List of Mail</h2>\n<p>Let\'s add a pane called \'mails\' to display the list of mails in the selected folder and a layout pane.</p>\n<div class="fixedHeight" data-bind="pane: \'/Interface/sample\', data: { name: \'Webmail/2-Mails\', initialFile: \'layout.htm\', rootPane: \'layout\' }"></div>\n</script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-api"><div class="content block">\n    <h1>Core API</h1>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.API }"></div>\n</div></script>');
+$('head')
+    .append('<script type="text/template" id="template--Content-Reference-Core-bindingHandlers"><div class="content block">\n    <h1>Binding Handlers</h1>\n    <p>As well as the <span class="filename">pane</span> binding handler, Tribe provides the following additional handlers:</p>\n\n    <div data-bind="foreach: Reference.BindingHandlers">\n        <div class="child">\n            <h1 data-bind="text: name"></h1>\n            <p data-bind="text: description"></p>\n            <div data-bind="pane: \'/Interface/API/table\', data: bindings"></div>\n            <h2>Example</h2>\n            <pre class="example" data-bind="text: example"></pre>\n        </div>\n    </div>    \n</div></script>');
 $('head')
     .append('<script type="text/template" id="template--Content-Reference-Core-options"><div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the TC.options object.</p>\n    <pre class="example">TC.options.basePath = \'Panes\';</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div></script>');
 $('head')

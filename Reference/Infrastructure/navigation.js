@@ -19,6 +19,7 @@
             'Panes': 'panes',
             'Transitions': 'transitions',
             'API': 'api',
+            'Binding Handlers': 'bindingHandlers',
             'Global Options': 'options',
         },
         'Types': {
