@@ -14,7 +14,7 @@
     };
     var currentAction = popActions.raiseEvent;
 
-    window.addEventListener('popstate', executeCurrentAction);
+    TC.Utils.handleDocumentEvent('popstate', executeCurrentAction);
 
     function executeCurrentAction(e) {
         if (e.state !== null) currentAction(e);
@@ -35,7 +35,7 @@
     };
 
     this.dispose = function () {
-        window.removeEventListener('popstate', executeCurrentAction);
+        TC.Utils.detachDocumentEvent('popstate', executeCurrentAction);
     };
 };
 

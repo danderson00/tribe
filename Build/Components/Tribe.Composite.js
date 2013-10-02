@@ -148,10 +148,7 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
     this.pubsub = pubsub;
     this.children = [];
 
-    if (definition.constructor === Function) {
-        var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
-        definition = utils.applyToConstructor(definition, definitionArgs);
-    }
+    definition = createDefinition(definition, Array.prototype.slice.call(arguments, 2));
     var handlers = definition.handles || {};
 
     this.start = function (data) {
@@ -160,8 +157,9 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
         return self;
     };
 
-    this.startChild = function (child, data) {
-        self.children.push(new Tribe.PubSub.Saga(pubsub, child).start(data));
+    this.startChild = function (child, args) {
+        self.children.push(new Tribe.PubSub.Saga(pubsub, createDefinition(child, Array.prototype.slice.call(arguments, 1)))
+            .start());
         return self;
     };
 
@@ -206,7 +204,15 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
         Tribe.PubSub.utils.each(self.children, function(child) {
              child.end(data);
         });
-    }    
+    }
+    
+    function createDefinition(constructor, argsToApply) {
+        if (constructor.constructor === Function) {
+            var definitionArgs = [self].concat(argsToApply);
+            constructor = utils.applyToConstructor(constructor, definitionArgs);
+        }
+        return constructor;
+    }
 };
 
 Tribe.PubSub.Saga.startSaga = function (definition, args) {
@@ -507,28 +513,42 @@ TC.options = TC.defaultOptions();
         return promise;
     };
 
-    TC.Utils.raiseDocumentEvent = function (name, data) {
-        var event = document.createEvent("Event");
-        event.initEvent(name, true, false);
+    TC.Utils.raiseDocumentEvent = function (name, data, state) {
+        var event;
+        if (document.createEvent) {
+            event = document.createEvent("Event");
+            event.initEvent(name, true, false);
+        } else {
+            event = document.createEventObject();
+            event.eventType = name;
+        }
+
+        event.eventName = name;
         event.data = data;
-        document.dispatchEvent(event);
+        event.state = state;
+
+        if (document.createEvent) {
+            document.dispatchEvent(event);
+        } else {
+            document.fireEvent("on" + event.eventType, event);
+        }
     };
 
     TC.Utils.handleDocumentEvent = function (name, handler) {
-        document.addEventListener(name, internalHandler);
+        if (document.addEventListener)
+            document.addEventListener(name, handler, false);
+        else if (document.attachEvent)
+            document.attachEvent('on' + name, handler);
+    };
 
-        return {
-            dispose: dispose
-        };
-
-        function internalHandler(e) {
-            handler(e.data, e);
-        }
-
-        function dispose() {
-            document.removeEventListener(name, internalHandler);
-        }
-    };    
+    TC.Utils.detachDocumentEvent = function(name, handler) {
+        if (document.removeEventListener)
+            document.removeEventListener(name, handler);
+        else if (document.detachEvent)
+            document.detachEvent("on" + name, handler);
+        else
+            document["on" + name] = null;
+    };
 })();
 // Utilities/exceptions.js
 TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
@@ -1068,7 +1088,7 @@ TC.Types.History = function (history) {
     };
     var currentAction = popActions.raiseEvent;
 
-    window.addEventListener('popstate', executeCurrentAction);
+    TC.Utils.handleDocumentEvent('popstate', executeCurrentAction);
 
     function executeCurrentAction(e) {
         if (e.state !== null) currentAction(e);
@@ -1089,7 +1109,7 @@ TC.Types.History = function (history) {
     };
 
     this.dispose = function () {
-        window.removeEventListener('popstate', executeCurrentAction);
+        TC.Utils.detachDocumentEvent('popstate', executeCurrentAction);
     };
 };
 
@@ -1225,7 +1245,7 @@ TC.Types.Navigation = function (node, options) {
         if (options.browser) TC.history.update(frameCount);
     };
     
-    if(options.browser) document.addEventListener('browser.go', onBrowserGo);
+    if(options.browser) TC.Utils.handleDocumentEvent('browser.go', onBrowserGo);
     function onBrowserGo(e) {
         go(e.data.count);
     }
@@ -1543,7 +1563,11 @@ TC.Events.loadResources = function (pane, context) {
 };
 // Events/renderComplete.js
 TC.Events.renderComplete = function (pane, context) {
-    $.when(TC.transition(pane, pane.transition, pane.reverseTransitionIn).in()).done(executeRenderComplete);
+    $.when(
+        TC.transition(pane, pane.transition, pane.reverseTransitionIn)
+          .in())
+     .done(executeRenderComplete);
+    
     setTimeout(function() {
         pane.endRender();
     });

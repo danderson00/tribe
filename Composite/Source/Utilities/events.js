@@ -25,26 +25,40 @@
         return promise;
     };
 
-    TC.Utils.raiseDocumentEvent = function (name, data) {
-        var event = document.createEvent("Event");
-        event.initEvent(name, true, false);
+    TC.Utils.raiseDocumentEvent = function (name, data, state) {
+        var event;
+        if (document.createEvent) {
+            event = document.createEvent("Event");
+            event.initEvent(name, true, false);
+        } else {
+            event = document.createEventObject();
+            event.eventType = name;
+        }
+
+        event.eventName = name;
         event.data = data;
-        document.dispatchEvent(event);
+        event.state = state;
+
+        if (document.createEvent) {
+            document.dispatchEvent(event);
+        } else {
+            document.fireEvent("on" + event.eventType, event);
+        }
     };
 
     TC.Utils.handleDocumentEvent = function (name, handler) {
-        document.addEventListener(name, internalHandler);
+        if (document.addEventListener)
+            document.addEventListener(name, handler, false);
+        else if (document.attachEvent)
+            document.attachEvent('on' + name, handler);
+    };
 
-        return {
-            dispose: dispose
-        };
-
-        function internalHandler(e) {
-            handler(e.data, e);
-        }
-
-        function dispose() {
-            document.removeEventListener(name, internalHandler);
-        }
-    };    
+    TC.Utils.detachDocumentEvent = function(name, handler) {
+        if (document.removeEventListener)
+            document.removeEventListener(name, handler);
+        else if (document.detachEvent)
+            document.detachEvent("on" + name, handler);
+        else
+            document["on" + name] = null;
+    };
 })();

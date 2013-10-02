@@ -144,8 +144,11 @@
     <Content Include="Build\site.js" />
     <Content Include="Build\site.min.js" />
     <Content Include="Build\tests.js" />
+    <Content Include="ie.html" />
     <Content Include="Css\classes.css" />
     <Content Include="Images\download.png" />
+    <Content Include="Images\icon.tip.256.png" />
+    <Content Include="Images\icon.tip.64.png" />
     <Content Include="Images\logo.packscript.gif" />
     <Content Include="Libraries\jquery.mockjax.js" />
     <Content Include="Libraries\jquery.mockjax.min.js" />
@@ -196,6 +199,8 @@
     <Content Include="Panes\Interface\feedback.css" />
     <Content Include="Panes\Interface\feedback.htm" />
     <Content Include="Panes\Interface\feedback.js" />
+    <Content Include="Panes\Interface\tip.css" />
+    <Content Include="Panes\Interface\tip.htm" />
     <Content Include="Panes\Samples\About\Tasks\layout.htm" />
     <Content Include="Panes\Samples\CreditCard\1-Personal\confirm.htm" />
     <Content Include="Panes\Samples\CreditCard\1-Personal\confirm.js" />

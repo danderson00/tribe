@@ -1,7 +1,7 @@
 ﻿TR = this.TR || {};
 TR.testModule = function (prefix) {
     return {
-        name: 'T.testModule',
+        name: 'TR.testModule',
         data: { prefix: prefix }
     };
 };

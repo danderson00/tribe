@@ -28,7 +28,7 @@
         if (options.browser) TC.history.update(frameCount);
     };
     
-    if(options.browser) document.addEventListener('browser.go', onBrowserGo);
+    if(options.browser) TC.Utils.handleDocumentEvent('browser.go', onBrowserGo);
     function onBrowserGo(e) {
         go(e.data.count);
     }

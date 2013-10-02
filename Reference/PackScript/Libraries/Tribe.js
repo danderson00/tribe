@@ -1,7 +1,7 @@
 /*! The Tribe platform is licensed under the MIT license. See http://tribejs.com/ for more information. */
 // PubSub.js
 window.Tribe = window.Tribe || {};
-window.Tribe.PubSub = function (options) {
+Tribe.PubSub = function (options) {
     var self = this;
     var utils = Tribe.PubSub.utils;
 
@@ -79,17 +79,12 @@ window.Tribe.PubSub = function (options) {
     this.createLifetime = function() {
         return new Tribe.PubSub.Lifetime(self, self);
     };
-
-    this.startSaga = function(definition, args) {
-        var constructorArgs = [self, definition].concat(Array.prototype.slice.call(arguments, 1));
-        var saga = utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
-        return saga.start();
-    };
     
     function option(name) {
         return (options && options.hasOwnProperty(name)) ? options[name] : Tribe.PubSub.options[name];
     }
 };
+
 // Lifetime.js
 Tribe.PubSub.Lifetime = function (parent, owner) {
     var self = this;
@@ -153,10 +148,7 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
     this.pubsub = pubsub;
     this.children = [];
 
-    if (definition.constructor === Function) {
-        var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
-        definition = utils.applyToConstructor(definition, definitionArgs);
-    }
+    definition = createDefinition(definition, Array.prototype.slice.call(arguments, 2));
     var handlers = definition.handles || {};
 
     this.start = function (data) {
@@ -165,14 +157,17 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
         return self;
     };
 
-    this.startChild = function (child, data) {
-        self.children.push(new Tribe.PubSub.Saga(pubsub, child).start(data));
+    this.startChild = function (child, args) {
+        self.children.push(new Tribe.PubSub.Saga(pubsub, createDefinition(child, Array.prototype.slice.call(arguments, 1)))
+            .start());
+        return self;
     };
 
     this.end = function (data) {
         if (handlers.onend) handlers.onend(data, self);
         pubsub.end();
         endChildren(data);
+        return self;
     };
 
     function attachHandler(handler, topic) {
@@ -209,8 +204,26 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
         Tribe.PubSub.utils.each(self.children, function(child) {
              child.end(data);
         });
-    }    
+    }
+    
+    function createDefinition(constructor, argsToApply) {
+        if (constructor.constructor === Function) {
+            var definitionArgs = [self].concat(argsToApply);
+            constructor = utils.applyToConstructor(constructor, definitionArgs);
+        }
+        return constructor;
+    }
 };
+
+Tribe.PubSub.Saga.startSaga = function (definition, args) {
+    var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
+    var saga = Tribe.PubSub.utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
+    return saga.start();
+};
+
+
+Tribe.PubSub.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
+Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
 // subscribeOnce.js
 Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     var self = this;
@@ -500,28 +513,42 @@ TC.options = TC.defaultOptions();
         return promise;
     };
 
-    TC.Utils.raiseDocumentEvent = function (name, data) {
-        var event = document.createEvent("Event");
-        event.initEvent(name, true, false);
+    TC.Utils.raiseDocumentEvent = function (name, data, state) {
+        var event;
+        if (document.createEvent) {
+            event = document.createEvent("Event");
+            event.initEvent(name, true, false);
+        } else {
+            event = document.createEventObject();
+            event.eventType = name;
+        }
+
+        event.eventName = name;
         event.data = data;
-        document.dispatchEvent(event);
+        event.state = state;
+
+        if (document.createEvent) {
+            document.dispatchEvent(event);
+        } else {
+            document.fireEvent("on" + event.eventType, event);
+        }
     };
 
     TC.Utils.handleDocumentEvent = function (name, handler) {
-        document.addEventListener(name, internalHandler);
+        if (document.addEventListener)
+            document.addEventListener(name, handler, false);
+        else if (document.attachEvent)
+            document.attachEvent('on' + name, handler);
+    };
 
-        return {
-            dispose: dispose
-        };
-
-        function internalHandler(e) {
-            handler(e.data, e);
-        }
-
-        function dispose() {
-            document.removeEventListener(name, internalHandler);
-        }
-    };    
+    TC.Utils.detachDocumentEvent = function(name, handler) {
+        if (document.removeEventListener)
+            document.removeEventListener(name, handler);
+        else if (document.detachEvent)
+            document.detachEvent("on" + name, handler);
+        else
+            document["on" + name] = null;
+    };
 })();
 // Utilities/exceptions.js
 TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
@@ -646,6 +673,29 @@ TC.Utils.inheritOptions = function (from, to, options) {
         to[options[i]] = from[options[i]];
     return to;
 };
+
+TC.Utils.cloneData = function (from, except) {
+    if (!from) return;
+    var result = {};
+    for (var property in from) {
+        var value = from[property];
+        if (from.hasOwnProperty(property) &&
+            (!except || Array.prototype.indexOf.call(arguments, property) === -1) &&
+            (!value || (value.constructor !== Function || ko.isObservable(value))))
+
+            result[property] = ko.utils.unwrapObservable(value);
+    }
+    return result;
+};
+
+TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
+    var data = allBindingsAccessor();
+    data.value = valueAccessor();
+    if (!ko.isObservable(data.value) && $.isFunction(data.value))
+        data.value = data.value();
+    return data;
+};
+
 
 // Utilities/panes.js
 (function () {
@@ -934,22 +984,22 @@ TC.Utils.inheritOptions = function (from, to, options) {
         var self = this;
 
         this.node = navigationNode();
-        var pubsub = this.node.pane.pubsub.owner;
+        this.pubsub = this.node.pane.pubsub.owner;
+        this.sagas = [];
 
-        if (definition.constructor === Function) {
-            var definitionArgs = [self].concat(Array.prototype.slice.call(arguments, 2));
-            definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
-        }
-
-        var saga = new Tribe.PubSub.Saga(pubsub, definition);
+        definition = createDefinition(self, definition, Array.prototype.slice.call(arguments, 2));
+        this.saga = new Tribe.PubSub.Saga(this.pubsub, definition);
 
         this.start = function(data) {
-            saga.start(data);
+            self.saga.start(data);
             return self;
         };
 
         this.end = function(data) {
-            saga.end(data);
+            self.saga.end(data);
+            TC.Utils.each(self.sagas, function(saga) {
+                saga.end(data);
+            });
             return self;
         };
 
@@ -962,22 +1012,64 @@ TC.Utils.inheritOptions = function (from, to, options) {
         }
     };
 
+    TC.Types.Flow.prototype.startChild = function(definition, args) {
+        definition = createDefinition(this, definition, Array.prototype.slice.call(arguments, 1));
+        this.saga.startChild(definition);
+        return this;
+    };
+
     TC.Types.Flow.prototype.navigate = function (pathOrOptions, data) {
         this.node.navigate(pathOrOptions, data);
     };
+    
+    // This keeps a separate collection of sagas bound to this flow's lifetime
+    // It would be nice to make them children of the underlying saga, but
+    // then they would end any time a message was executed.
+    TC.Types.Flow.prototype.startSaga = function (definition, args) {
+        var saga = this.pubsub.startSaga.apply(this.pubsub, arguments);
+        this.sagas.push(saga);
+        return saga;
+    };
 
-    TC.Types.Flow.prototype.navigatesTo = function (pathOrOptions, data) {
+    // flow helpers
+    TC.Types.Flow.prototype.to = function (pathOrOptions, data) {
         var node = this.node;
         return function () {
             node.navigate(pathOrOptions, data);
         };
     };
 
-    TC.Types.Flow.startFlow = function(definition, args) {
+    TC.Types.Flow.prototype.endsAt = function (pathOrOptions, data) {
+        var flow = this;
+        return function () {
+            flow.node.navigate(pathOrOptions, data);
+            flow.end();
+        };
+    };
+
+    TC.Types.Flow.prototype.start = function(flow, args) {
+        var thisFlow = this;
+        var childArguments = arguments;
+        return function() {
+            thisFlow.startChild.apply(thisFlow, childArguments);
+        };
+    };
+
+
+    // This is reused by Node and Pane
+    TC.Types.Flow.startFlow = function (definition, args) {
         var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
         var flow = Tribe.PubSub.utils.applyToConstructor(TC.Types.Flow, constructorArgs);
         return flow.start();
     };
+    
+    function createDefinition(flow, definition, argsToApply) {
+        if (definition.constructor === Function) {
+            var definitionArgs = [flow].concat(argsToApply);
+            definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
+        }
+        return definition;
+    }
 })();
 // Types/History.js
 TC.Types.History = function (history) {
@@ -996,7 +1088,7 @@ TC.Types.History = function (history) {
     };
     var currentAction = popActions.raiseEvent;
 
-    window.addEventListener('popstate', executeCurrentAction);
+    TC.Utils.handleDocumentEvent('popstate', executeCurrentAction);
 
     function executeCurrentAction(e) {
         if (e.state !== null) currentAction(e);
@@ -1017,7 +1109,7 @@ TC.Types.History = function (history) {
     };
 
     this.dispose = function () {
-        window.removeEventListener('popstate', executeCurrentAction);
+        TC.Utils.detachDocumentEvent('popstate', executeCurrentAction);
     };
 };
 
@@ -1153,7 +1245,7 @@ TC.Types.Navigation = function (node, options) {
         if (options.browser) TC.history.update(frameCount);
     };
     
-    if(options.browser) document.addEventListener('browser.go', onBrowserGo);
+    if(options.browser) TC.Utils.handleDocumentEvent('browser.go', onBrowserGo);
     function onBrowserGo(e) {
         go(e.data.count);
     }
@@ -1471,7 +1563,11 @@ TC.Events.loadResources = function (pane, context) {
 };
 // Events/renderComplete.js
 TC.Events.renderComplete = function (pane, context) {
-    $.when(TC.transition(pane, pane.transition, pane.reverseTransitionIn).in()).done(executeRenderComplete);
+    $.when(
+        TC.transition(pane, pane.transition, pane.reverseTransitionIn)
+          .in())
+     .done(executeRenderComplete);
+    
     setTimeout(function() {
         pane.endRender();
     });
@@ -1794,21 +1890,6 @@ $('<style/>')
             ko.applyBindings(model);
     };
 })(); 
-// Api/bindingHandler.js
-(function() {
-    ko.bindingHandlers.pane = { init: updateBinding };
-
-    function updateBinding(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        TC.createNode(element, constructPaneOptions(), TC.Utils.extractNode(bindingContext), TC.Utils.extractContext(bindingContext));
-
-        return { controlsDescendantBindings: true };
-
-        function constructPaneOptions() {
-            return TC.Utils.getPaneOptions(ko.utils.unwrapObservable(valueAccessor()), allBindingsAccessor());
-        }
-    }
-})();
-
 // Api/context.js
 (function () {
     var staticState;
@@ -1867,6 +1948,70 @@ TC.options.defaultUrlProvider = {
     };
 })();
 
+// BindingHandlers/navigate.js
+ko.bindingHandlers.navigate = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var node = TC.nodeFor(element);
+        if (!node) return;
+
+        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var handler = ko.bindingHandlers.validatedClick || ko.bindingHandlers.click;
+        handler.init(element, navigate, allBindingsAccessor, viewModel);
+
+        function navigate() {
+            return function () {
+                node.navigate(data.value, TC.Utils.cloneData(data.data));
+            };
+        }
+    }
+};
+// BindingHandlers/navigateBack.js
+ko.bindingHandlers.navigateBack = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var node = TC.nodeFor(element);
+        if (!node) return;
+
+        ko.bindingHandlers.click.init(element, navigateBack, allBindingsAccessor, viewModel);
+
+        function navigateBack() {
+            return function () {
+                node.navigateBack();
+            };
+        }
+    }
+};
+// BindingHandlers/pane.js
+(function() {
+    ko.bindingHandlers.pane = { init: updateBinding };
+
+    function updateBinding(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        TC.createNode(element, constructPaneOptions(), TC.Utils.extractNode(bindingContext), TC.Utils.extractContext(bindingContext));
+
+        return { controlsDescendantBindings: true };
+
+        function constructPaneOptions() {
+            return TC.Utils.getPaneOptions(ko.utils.unwrapObservable(valueAccessor()), allBindingsAccessor());
+        }
+    }
+})();
+
+// BindingHandlers/publish.js
+ko.bindingHandlers.publish = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var pubsub = TC.nodeFor(element).pane.pubsub;
+        if (!pubsub) return;
+
+        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var handler = ko.bindingHandlers.validatedClick || ko.bindingHandlers.click;
+        handler.init(element, publishAccessor, allBindingsAccessor, viewModel);
+
+        function publishAccessor() {
+            return function () {
+                pubsub.publish(data.value, TC.Utils.cloneData(data.data));
+            };
+        }
+    }
+};
 // Loggers/console.js
 TC.Loggers.console = function(level, message) {
     if (window.console && window.console.log)

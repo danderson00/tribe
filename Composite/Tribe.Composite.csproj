@@ -47,6 +47,9 @@
     <Content Include="Samples\Transitions\target2.htm" />
     <Content Include="Samples\Transitions\target3.htm" />
     <Content Include="Source\Api\defaultUrlProvider.js" />
+    <Content Include="Source\BindingHandlers\navigateBack.js" />
+    <Content Include="Source\BindingHandlers\navigate.js" />
+    <Content Include="Source\BindingHandlers\publish.js" />
     <Content Include="Source\license.js" />
     <Content Include="Source\Transitions\Css\slide.css" />
     <Content Include="Source\Types\Flow.js" />
@@ -70,7 +73,7 @@
     <Content Include="Samples\FileBrowser\layout.htm" />
     <Content Include="Samples\Transitions\target1.htm" />
     <Content Include="Source\Api\api.js" />
-    <Content Include="Source\Api\bindingHandler.js" />
+    <Content Include="Source\BindingHandlers\pane.js" />
     <Content Include="Source\Events\active.js" />
     <Content Include="Source\Events\dispose.js" />
     <Content Include="Source\Events\renderComplete.js" />

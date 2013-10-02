@@ -12,15 +12,15 @@ namespace Reference
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            ConfigureHub.With()
+                        .Unity()
+                        .StartHub();
+
             RouteTable.Routes.MapRoute(
                 "Default",                                              
                 "{controller}/{action}/{id}",                           
                 new { controller = "Home", action = "Index", id = "" }  
             );
-
-            ConfigureHub.With()
-                        .Unity()
-                        .StartHub();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

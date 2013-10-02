@@ -15,9 +15,9 @@
     test("browser.go is raised when popstate event is raised normally", function () {
         expect(1);
 
-        document.addEventListener('browser.go', assert);
+        TC.Utils.handleDocumentEvent('browser.go', assert);
         raisePopstate();
-        document.removeEventListener('browser.go', assert);
+        TC.Utils.detachDocumentEvent('browser.go', assert);
 
         function assert(e) {
             equal(e.data.count, 1);
@@ -27,10 +27,10 @@
     test("browser.go is not raised when update is called and popstate is raised", function () {
         expect(0);
         
-        document.addEventListener('browser.go', assert);
+        TC.Utils.handleDocumentEvent('browser.go', assert);
         history.update(1);
         raisePopstate();
-        document.removeEventListener('browser.go', assert);
+        TC.Utils.detachDocumentEvent('browser.go', assert);
 
         function assert(e) {
             equal(e.data.count, 1);
@@ -62,9 +62,6 @@
     }
 
     function raisePopstate() {
-        var event = document.createEvent("Event");
-        event.initEvent('popstate', true, false);
-        event.state = 1;
-        window.dispatchEvent(event);
+        TC.Utils.raiseDocumentEvent('popstate', null, 1);
     }
 })();
