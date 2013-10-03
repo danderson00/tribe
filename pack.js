@@ -12,7 +12,7 @@ sync({
 
 sync({
     to: 'Build/Binaries',
-    include: 'MessageHub/Build/Debug/*.*'
+    include: 'MessageHub/Build/Debug/Tribe.MessageHub.*.dll'
 });
 
 zip({

@@ -6,6 +6,7 @@
         { Name: 'configurationFileFilter', Type: 'String', Description: 'A filespec pattern to match configuration files.', Default: '*pack.config.js' },
         { Name: 'templateFileExtension', Type: 'String', Description: 'The file extension for template files.', Default: '.template.*' },
         { Name: 'resourcePath', Type: 'String', Description: 'An additional path to scan for templates and configuration files.', Default: 'undefined' },
+        { Name: 'excludedDirectories', Type: 'String', Description: 'A semi-colon delimited list of folder names to exclude.', Default: 'csx;bin;obj' },
         { Name: 'rubyPath', Type: 'String', Description: 'The path to ruby.exe. Required for SASS integration.', Default: 'undefined' }
     ],
     pack: [

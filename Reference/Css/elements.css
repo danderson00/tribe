@@ -32,23 +32,23 @@ a, a:active, a:visited, a:link {
     color: #1b50ba;
 }
 
-a:hover {
-    text-decoration: underline;
-}
+    a:hover {
+        text-decoration: underline;
+    }
 
 table {
-    border-spacing:0;
+    border-spacing: 0;
     border-collapse: collapse;
 }
 
-table.pointer tr:hover {
-    background: #103070;
-    color: white;
-}
+    table.pointer tr:hover {
+        background: #103070;
+        color: white;
+    }
 
-table.pointer tr {
-    cursor: pointer;    
-}
+    table.pointer tr {
+        cursor: pointer;
+    }
 
 th {
     text-align: left;
@@ -64,4 +64,35 @@ th, td {
 
 pre.inline {
     display: inline-block;
+}
+
+button {
+    text-decoration: none;
+    text-align: center;
+    padding: 11px 32px;
+    border: solid 1px #004F72;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font: 18px Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #e5ffff;
+    background-color: #103070;
+    background-image: -moz-linear-gradient(top, #103070 0%, #1b50ba 100%);
+    background-image: -webkit-linear-gradient(top, #103070 0%, #1b50ba 100%);
+    background-image: -o-linear-gradient(top, #103070 0%, #1b50ba 100%);
+    background-image: -ms-linear-gradient(top, #103070 0%,#1b50ba 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b50ba', endColorstr='#1b50ba',GradientType=0 );
+    background-image: linear-gradient(top, #103070 0%,#1b50ba 100%);
+    -webkit-box-shadow: 0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
+    -moz-box-shadow: 0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
+    box-shadow: 0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
+}
+
+button:hover {
+    background: #103070;
+}
+
+button:active {
+    background: #1b50ba;
 }
