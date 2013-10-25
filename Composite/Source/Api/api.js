@@ -5,7 +5,7 @@
         var context = environment.context || TC.context();
         var args = TC.Utils.arguments(arguments);
         
-        var constructor = args.function;
+        var constructor = args.func;
         var options = args.object;
         var path = args.string || environment.resourcePath;
         

@@ -12,15 +12,15 @@
             }
 
             var eventName = eventsToExecute[currentEvent];
-            var event = events[eventName];
+            var thisEvent = events[eventName];
 
-            if (!event) {
+            if (!thisEvent) {
                 TC.logger.warn("No event defined for " + eventName);
                 executeNextEvent();
                 return;
             }
 
-            $.when(event(target, context))
+            $.when(thisEvent(target, context))
                 .done(executeNextEvent)
                 .fail(handleFailure);
 

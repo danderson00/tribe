@@ -49,6 +49,18 @@ pack({
     ]
 });
 
+// we need the ability to refactor this duplicated code
+pack({
+    to: 'Build/tests.ie.js',
+    include: [
+        '../Build/Components/Tests/Tribe.Composite.tests.mockjax.js',
+        { files: '../Build/Components/Tests/Tribe.Forms.tests.ie.js', template: TR.testModule('Tribe.Forms') },
+        { files: '../Build/Components/Tests/Tribe.Composite.tests.ie.js', template: TR.testModule('Tribe.Composite') },
+        { files: '../Build/Components/Tests/Tribe.MessageHub.tests.ie.js', template: TR.testModule('Tribe.MessageHub') },
+        { files: '../Build/Components/Tests/Tribe.PubSub.tests.ie.js', template: TR.testModule('Tribe.PubSub') }
+    ]
+});
+
 function sample(name) {
     return {
         files: 'Panes/Samples/' + name + '/*.*',

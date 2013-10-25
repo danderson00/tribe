@@ -20,7 +20,7 @@
             'Transitions': 'transitions',
             'API': 'api',
             'Binding Handlers': 'bindingHandlers',
-            'Global Options': 'options',
+            'Global Options': 'options'
         },
         'Types': {
             'Flow': 'Flow',
@@ -51,7 +51,7 @@
             },
         'MessageHub': {
             'Configuration': 'configuration',
-            'Client API': 'client',
+            'Client API': 'client'
         },
         'PackScript': {
             'Operation': 'operation',

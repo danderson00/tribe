@@ -30,7 +30,7 @@
                 return Path('/' + path);
             },
             makeRelative: function() {
-                return Path(path[0] === '/' ? path.substring(1) : path);
+                return Path(path.charAt(0) === '/' ? path.substring(1) : path);
             },
             asMarkupIdentifier: function() {
                 return this.withoutExtension().toString().replace(/\//g, '-').replace(/\./g, '');

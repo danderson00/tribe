@@ -18,7 +18,7 @@
     width: 365px;
     height: 721px;
     border: none;
-    background: url('../Images/device.mobile.png');
+    background: url('Images/device.mobile.png');
     margin-left: 15px;
 }
 .example3 .sample .fileList {

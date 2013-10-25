@@ -136,7 +136,7 @@ window.Tribe.PubSub.options = {
     sync: false,
     handleExceptions: true,
     exceptionHandler: function(e, envelope) {
-        console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + e.message);
+        window.console && console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + e.message);
     }
 };
 // Saga.js
@@ -308,12 +308,36 @@ Tribe.PubSub.utils = {};
         return source.constructor === Array;
     };
 
-    utils.applyToConstructor = function(constructor, argArray) {
-        var args = [null].concat(argArray);
-        var factoryFunction = constructor.bind.apply(constructor, args);
-        return new factoryFunction();
-    };
+    // these implementations from http://stackoverflow.com/questions/3362471/how-can-i-call-a-javascript-constructor-using-call-or-apply
+    
+    // far simpler, but doesn't support IE8.
+    //utils.applyToConstructor = function(constructor, argArray) {
+    //    var args = [null].concat(argArray);
+    //    var factoryFunction = constructor.bind.apply(constructor, args);
+    //    return new factoryFunction();
+    //};
 
+    // this does not support Date
+    utils.applyToConstructor = function(Constructor, args) {
+        var Temp = function() {
+        }, // temporary constructor
+            inst, ret; // other vars
+
+        // Give the Temp constructor the Constructor's prototype
+        Temp.prototype = Constructor.prototype;
+
+        // Create a new instance
+        inst = new Temp;
+
+        // Call the original Constructor with the temp
+        // instance as its context (i.e. its 'this' value)
+        ret = Constructor.apply(inst, args);
+
+        // If an object has been returned then return it otherwise
+        // return the original instance.
+        // (consistent with behaviour of the new operator)
+        return Object(ret) === ret ? ret : inst;
+    };
 
     // The following functions are taken from the underscore library, duplicated to avoid dependency. Licensing at http://underscorejs.org.
     var nativeForEach = Array.prototype.forEach;
@@ -513,53 +537,42 @@ TC.options = TC.defaultOptions();
         return promise;
     };
 
-    TC.Utils.raiseDocumentEvent = function (name, data, state) {
-        var event;
-        if (document.createEvent) {
-            event = document.createEvent("Event");
-            event.initEvent(name, true, false);
-        } else {
-            event = document.createEventObject();
-            event.eventType = name;
-        }
-
-        event.eventName = name;
-        event.data = data;
-        event.state = state;
-
-        if (document.createEvent) {
-            document.dispatchEvent(event);
-        } else {
-            document.fireEvent("on" + event.eventType, event);
-        }
+    // this used to use DOM functions to raise events, but IE8 doesn't support custom events
+    // we'll use jQuery, but expose the originalEvent for DOM events and the jQuery event
+    // for custom events (originalEvent is null for custom events).
+    TC.Utils.raiseDocumentEvent = function (name, eventData) {
+        var e = $.Event(name);
+        e.eventData = eventData;
+        $(document).trigger(e);
     };
 
+    var handlers = {};
+
+    // if a handler is used for more than one event, a leak will occur
     TC.Utils.handleDocumentEvent = function (name, handler) {
-        if (document.addEventListener)
-            document.addEventListener(name, handler, false);
-        else if (document.attachEvent)
-            document.attachEvent('on' + name, handler);
+        $(document).on(name, internalHandler);
+        handlers[handler] = internalHandler;
+        
+        function internalHandler(e) {
+            handler(e.originalEvent || e);
+        }
     };
 
-    TC.Utils.detachDocumentEvent = function(name, handler) {
-        if (document.removeEventListener)
-            document.removeEventListener(name, handler);
-        else if (document.detachEvent)
-            document.detachEvent("on" + name, handler);
-        else
-            document["on" + name] = null;
+    TC.Utils.detachDocumentEvent = function (name, handler) {
+        $(document).off(name, handlers[handler]);
+        delete handlers[handler];
     };
 })();
 // Utilities/exceptions.js
 TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
     if (handleExceptions)
         try {
-            func.apply(func, args);
+            func.apply(this, args || []);
         } catch (ex) {
             TC.logger.error(message, ex);
         }
     else
-        func.apply(func, args);
+        func.apply(this, args || []);
 };
 // Utilities/idGenerator.js
 (function () {
@@ -583,6 +596,39 @@ TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
         return generator.next();
     };
 })();
+// Utilities/indexOf.js
+if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function (searchElement /*, fromIndex */) {
+        'use strict';
+        if (this == null) {
+            throw new TypeError();
+        }
+        var n, k, t = Object(this),
+            len = t.length >>> 0;
+
+        if (len === 0) {
+            return -1;
+        }
+        n = 0;
+        if (arguments.length > 1) {
+            n = Number(arguments[1]);
+            if (n != n) { // shortcut for verifying if it's NaN
+                n = 0;
+            } else if (n != 0 && n != Infinity && n != -Infinity) {
+                n = (n > 0 || -1) * Math.floor(Math.abs(n));
+            }
+        }
+        if (n >= len) {
+            return -1;
+        }
+        for (k = n >= 0 ? n : Math.max(len - Math.abs(n), 0) ; k < len; k++) {
+            if (k in t && t[k] === searchElement) {
+                return k;
+            }
+        }
+        return -1;
+    };
+}
 // Utilities/jquery.complete.js
 (function ($) {
     $.complete = function (deferreds) {
@@ -656,7 +702,7 @@ TC.Utils.arguments = function (args) {
         },
         object: byConstructor[Object],
         string: byConstructor[String],
-        'function': byConstructor[Function],
+        func: byConstructor[Function],
         array: byConstructor[Array],
         number: byConstructor[Number]
     };
@@ -758,7 +804,7 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
                 return Path('/' + path);
             },
             makeRelative: function() {
-                return Path(path[0] === '/' ? path.substring(1) : path);
+                return Path(path.charAt(0) === '/' ? path.substring(1) : path);
             },
             asMarkupIdentifier: function() {
                 return this.withoutExtension().toString().replace(/\//g, '-').replace(/\./g, '');
@@ -827,7 +873,7 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
         );
 
         function stripLeadIn() {
-            if(source.length > 0 && source[0] === '?')
+            if(source.length > 0 && source.charAt(0) === '?')
                 source = source.substring(1);
         }
     };
@@ -1247,7 +1293,7 @@ TC.Types.Navigation = function (node, options) {
     
     if(options.browser) TC.Utils.handleDocumentEvent('browser.go', onBrowserGo);
     function onBrowserGo(e) {
-        go(e.data.count);
+        go(e.eventData.count);
     }
 
     function go(frameCount) {
@@ -1271,7 +1317,7 @@ TC.Types.Navigation = function (node, options) {
     }
 
     this.dispose = function() {
-        document.removeEventListener('browser.go', onBrowserGo);
+        TC.Utils.detachDocumentEvent('browser.go', onBrowserGo)
     };
     
     function normaliseOptions() {
@@ -1471,15 +1517,15 @@ TC.Types.Pipeline = function (events, context) {
             }
 
             var eventName = eventsToExecute[currentEvent];
-            var event = events[eventName];
+            var thisEvent = events[eventName];
 
-            if (!event) {
+            if (!thisEvent) {
                 TC.logger.warn("No event defined for " + eventName);
                 executeNextEvent();
                 return;
             }
 
-            $.when(event(target, context))
+            $.when(thisEvent(target, context))
                 .done(executeNextEvent)
                 .fail(handleFailure);
 
@@ -1499,13 +1545,18 @@ TC.Types.Templates = function () {
 
     this.store = function (template, path) {
         var id = TC.Path(path).asMarkupIdentifier().toString();
-        var $template = $(template);
-        if ($template.is("script"))
-            $('head').append($template.filter('script'));
-        else
-            $('<script type="text/template" class="__tribe" id="template-' + id + '"></script>').text(template).appendTo('head');
+        embedTemplate(template, 'template-' + id);
     };
-
+    
+    function embedTemplate(template, id) {
+        var element = document.createElement('script');
+        element.className = '__tribe';
+        element.setAttribute('type', 'text/template');
+        element.id = id;
+        element.text = template;
+        document.getElementsByTagName('head')[0].appendChild(element);
+    }
+    
     this.loaded = function(path) {
         return $('head script#template-' + TC.Path(path).asMarkupIdentifier()).length > 0;
     };
@@ -1564,8 +1615,7 @@ TC.Events.loadResources = function (pane, context) {
 // Events/renderComplete.js
 TC.Events.renderComplete = function (pane, context) {
     $.when(
-        TC.transition(pane, pane.transition, pane.reverseTransitionIn)
-          .in())
+        TC.transition(pane, pane.transition, pane.reverseTransitionIn)['in']())
      .done(executeRenderComplete);
     
     setTimeout(function() {
@@ -1629,6 +1679,8 @@ TC.LoadHandlers.js = function (url, resourcePath, context) {
 };
 // LoadHandlers/stylesheets.js
 TC.LoadHandlers.css = function (url, resourcePath, context) {
+    var supportsTextNodes = true;
+    
     return $.ajax({
         url: url,
         dataType: 'text',
@@ -1638,11 +1690,27 @@ TC.LoadHandlers.css = function (url, resourcePath, context) {
     });
 
     function renderStylesheet(stylesheet) {
-        $('<style/>')
-            .attr('id', resourcePath ? 'style-' + TC.Path(resourcePath).asMarkupIdentifier() : null)
-            .attr('class', '__tribe')
-            .text(stylesheet)
-            .appendTo('head');
+        var element = document.getElementById('__tribeStyles');
+        if (!element) {
+            element = document.createElement('style');
+            element.className = '__tribe';
+            element.id = '__tribeStyles';
+            document.getElementsByTagName('head')[0].appendChild(element);
+        }
+
+        if(supportsTextNodes)
+            try {
+                element.appendChild(document.createTextNode(stylesheet));
+            } catch(ex) {
+                supportsTextNodes = false;
+            }
+
+        if (!supportsTextNodes)
+            if (element.styleSheet) {
+                // using styleSheet.cssText is required for IE8 support
+                // IE8 also has a limit on the number of <style/> elements, so append it to the same node
+                element.styleSheet.cssText += stylesheet;
+            } else throw new Error('Unable to append stylesheet for ' + resourcePath + ' to document.');
     }
 };
 // LoadHandlers/templates.js
@@ -1710,9 +1778,9 @@ TC.transition = function (target, transition, reverse) {
         implementation = TC.Transitions[implementation.reverse];
 
     return {
-        in: function () {
+        'in': function () {
             $(element).show();
-            return implementation && implementation.in(element);
+            return implementation && implementation['in'](element);
         },
         
         out: function (remove) {
@@ -1789,7 +1857,7 @@ TC.transition = function (target, transition, reverse) {
 
     function createCssTransition(transition, reverse) {
         TC.Transitions[transition] = {
-            in: function (element) {
+            'in': function (element) {
                 if (!supported) return null;
                 
                 var promise = $.Deferred();
@@ -1848,11 +1916,22 @@ TC.transition = function (target, transition, reverse) {
 })();
 
 // Transitions/Css/style.css.js
-$('<style/>')
-    .attr('class', '__tribe')
-    .text('.trigger{-webkit-transition:all 250ms ease-in-out;transition:all 250ms ease-in-out}.fade.in.prepare{opacity:0}.fade.in.trigger{opacity:1}.fade.out.prepare{opacity:1}.fade.out.trigger{opacity:0}.slideRight.in.prepare{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideRight.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideRight.out.trigger{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.prepare{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideLeft.out.trigger{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideDown.in.prepare{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.slideDown.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideDown.out.trigger{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.prepare{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideUp.out.trigger{-webkit-transform:translateY(-100%);transform:translateY(-100%)}')
-    .appendTo('head');
+//
+window.__appendStyle = function (content) {
+    var element = document.getElementById('__tribeStyles');
+    if (!element) {
+        element = document.createElement('style');
+        element.className = '__tribe';
+        element.id = '__tribeStyles';
+        document.getElementsByTagName('head')[0].appendChild(element);
+    }
 
+    if(element.styleSheet)
+        element.styleSheet.cssText += content;
+    else
+        element.appendChild(document.createTextNode(content));
+};//
+window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transition:all 250ms ease-in-out}.fade.in.prepare{opacity:0}.fade.in.trigger{opacity:1}.fade.out.prepare{opacity:1}.fade.out.trigger{opacity:0}.slideRight.in.prepare{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideRight.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideRight.out.trigger{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.prepare{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideLeft.out.trigger{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideDown.in.prepare{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.slideDown.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideDown.out.trigger{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.prepare{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideUp.out.trigger{-webkit-transform:translateY(-100%);transform:translateY(-100%)}');
 // Api/api.js
 (function () {
     TC.registerModel = function () {
@@ -1861,7 +1940,7 @@ $('<style/>')
         var context = environment.context || TC.context();
         var args = TC.Utils.arguments(arguments);
         
-        var constructor = args.function;
+        var constructor = args.func;
         var options = args.object;
         var path = args.string || environment.resourcePath;
         

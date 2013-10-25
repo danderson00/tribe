@@ -41,25 +41,29 @@
     });
 
     test("publish should publish asynchronously", function () {
-        var setTimeout = sinon.stub(window, 'setTimeout');
-        var spy = sinon.spy();
+        var setTimeout = stubSetTimeout();
+        if (setTimeout) {
+            var spy = sinon.spy();
 
-        pubsub.subscribe("0", spy);
-        pubsub.publish("0", "1");
-        ok(setTimeout.calledOnce);
+            pubsub.subscribe("0", spy);
+            pubsub.publish("0", "1");
+            ok(setTimeout.calledOnce);
 
-        setTimeout.restore();
+            setTimeout.restore();
+        } else ok(true, "Unable to spy on window.setTimeout.");
     });
 
     test("publishSync should publish synchronously", function () {
-        var setTimeout = sinon.stub(window, 'setTimeout');
-        var spy = sinon.spy();
+        var setTimeout = stubSetTimeout();
+        if (setTimeout) {
+            var spy = sinon.spy();
 
-        pubsub.subscribe("0", spy);
-        pubsub.publishSync("0", "1");
-        ok(setTimeout.notCalled);
+            pubsub.subscribe("0", spy);
+            pubsub.publishSync("0", "1");
+            ok(setTimeout.notCalled);
 
-        setTimeout.restore();
+            setTimeout.restore();
+        } else ok(true, "Unable to spy on window.setTimeout.");
     });
 
     test("publish accepts evelope as first parameter", function () {
@@ -70,4 +74,10 @@
 
         ok(spy.calledWith('test'));
     });
+    
+    function stubSetTimeout() {
+        try {
+            return sinon.stub(window, 'setTimeout');
+        } catch (ex) { }
+    }
 })();

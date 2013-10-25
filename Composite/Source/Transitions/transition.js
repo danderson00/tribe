@@ -10,9 +10,9 @@
         implementation = TC.Transitions[implementation.reverse];
 
     return {
-        in: function () {
+        'in': function () {
             $(element).show();
-            return implementation && implementation.in(element);
+            return implementation && implementation['in'](element);
         },
         
         out: function (remove) {

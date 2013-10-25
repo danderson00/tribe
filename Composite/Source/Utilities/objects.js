@@ -10,7 +10,7 @@
         },
         object: byConstructor[Object],
         string: byConstructor[String],
-        'function': byConstructor[Function],
+        func: byConstructor[Function],
         array: byConstructor[Array],
         number: byConstructor[Number]
     };

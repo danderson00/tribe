@@ -152,6 +152,7 @@
     <Content Include="Images\logo.packscript.gif" />
     <Content Include="Libraries\jquery.mockjax.js" />
     <Content Include="Libraries\jquery.mockjax.min.js" />
+    <Content Include="Libraries\json2.js" />
     <Content Include="Libraries\knockout.validation.js" />
     <Content Include="Libraries\knockout.validation.min.js" />
     <Content Include="Libraries\qunit.css" />
@@ -174,6 +175,7 @@
     <Content Include="PackScript\Styles\elements.css" />
     <Content Include="Pack\TR.testModule.pack.config.js" />
     <Content Include="Pack\TR.testModule.template.js" />
+    <Content Include="Panes\Content\About\contribute.htm" />
     <Content Include="Panes\Content\Guides\Tutorials\creditcard.css" />
     <Content Include="Panes\Content\Guides\Tutorials\CreditCard\combined.htm" />
     <Content Include="Panes\Content\Guides\Tutorials\CreditCard\business.htm" />

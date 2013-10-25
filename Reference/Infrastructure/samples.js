@@ -675,7 +675,7 @@ Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
 Samples['CreditCard/4-Combined'].push({
     filename: 'CreditCardFlow.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint">CreditCardFlow = function (flow) {\n    var details = { };\n    flow.startSaga(CreditCard, details);\n\n    this.handles = {\n        onstart: flow.to(\'welcome\'),\n        \'startBusiness\': {\n            onstart: flow.to(\'businessDetails\'),\n            \'setBusiness\': flow.to(\'businessAccount\'),\n            \'setAccount\': flow.to(\'contact\'),\n        },\n        \'startPersonal\': {\n            onstart: flow.to(\'personal\'),\n            \'setAccount\': flow.to(\'contact\'),\n        },\n        \'setContact\': flow.endsAt(\'confirm\', details)\n    };\n};</pre>'
+    content: '<pre class="prettyprint">CreditCardFlow = function (flow) {\n    var details = { };\n    flow.startSaga(CreditCard, details);\n\n    this.handles = {\n        onstart: flow.to(\'welcome\'),\n        \'startBusiness\': {\n            onstart: flow.to(\'businessDetails\'),\n            \'setBusiness\': flow.to(\'businessAccount\'),\n            \'setAccount\': flow.to(\'contact\')\n        },\n        \'startPersonal\': {\n            onstart: flow.to(\'personal\'),\n            \'setAccount\': flow.to(\'contact\')\n        },\n        \'setContact\': flow.endsAt(\'confirm\', details)\n    };\n};</pre>'
 });Samples = window.Samples || {};
 Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
 Samples['CreditCard/4-Combined'].push({

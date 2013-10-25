@@ -25,40 +25,29 @@
         return promise;
     };
 
-    TC.Utils.raiseDocumentEvent = function (name, data, state) {
-        var event;
-        if (document.createEvent) {
-            event = document.createEvent("Event");
-            event.initEvent(name, true, false);
-        } else {
-            event = document.createEventObject();
-            event.eventType = name;
-        }
-
-        event.eventName = name;
-        event.data = data;
-        event.state = state;
-
-        if (document.createEvent) {
-            document.dispatchEvent(event);
-        } else {
-            document.fireEvent("on" + event.eventType, event);
-        }
+    // this used to use DOM functions to raise events, but IE8 doesn't support custom events
+    // we'll use jQuery, but expose the originalEvent for DOM events and the jQuery event
+    // for custom events (originalEvent is null for custom events).
+    TC.Utils.raiseDocumentEvent = function (name, eventData) {
+        var e = $.Event(name);
+        e.eventData = eventData;
+        $(document).trigger(e);
     };
 
+    var handlers = {};
+
+    // if a handler is used for more than one event, a leak will occur
     TC.Utils.handleDocumentEvent = function (name, handler) {
-        if (document.addEventListener)
-            document.addEventListener(name, handler, false);
-        else if (document.attachEvent)
-            document.attachEvent('on' + name, handler);
+        $(document).on(name, internalHandler);
+        handlers[handler] = internalHandler;
+        
+        function internalHandler(e) {
+            handler(e.originalEvent || e);
+        }
     };
 
-    TC.Utils.detachDocumentEvent = function(name, handler) {
-        if (document.removeEventListener)
-            document.removeEventListener(name, handler);
-        else if (document.detachEvent)
-            document.detachEvent("on" + name, handler);
-        else
-            document["on" + name] = null;
+    TC.Utils.detachDocumentEvent = function (name, handler) {
+        $(document).off(name, handlers[handler]);
+        delete handlers[handler];
     };
 })();

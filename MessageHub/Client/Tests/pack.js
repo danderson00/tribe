@@ -1,7 +1,7 @@
-﻿pack({
-    to: '../Build/Tests/Tribe.MessageHub.tests.js',
-    include: [
-        T.scripts('Resources/helpers.js', true),
-        T.scripts('*.tests.js', true)
-    ]
+﻿pack([
+        T.scripts('Resources/helpers.js'),
+        T.scripts('*.tests.js')
+]).to({
+    '../Build/Tests/Tribe.MessageHub.tests.js': { debug: true },
+    '../Build/Tests/Tribe.MessageHub.tests.ie.js': { }
 });

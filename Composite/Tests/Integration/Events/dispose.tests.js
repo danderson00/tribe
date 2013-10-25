@@ -12,11 +12,14 @@
 
     // it seems DOMNodeRemoved sometimes fires asynchronously, this should probably be async - this will probably fail on other browsers
     test("dispose is called once on model when pane element is removed from DOM using native functions", function () {
-        Test.Integration.executeEvents(events, 'Events/dispose');
-        ok(!Test.state.disposeCalled);
-        var element = document.querySelector('.dispose').parentNode;
-        element.parentNode.removeChild(element);
-        equal(Test.state.disposeCallCount, 1);
+        if (Test.supportsMutationEvents) {
+            Test.Integration.executeEvents(events, 'Events/dispose');
+            ok(!Test.state.disposeCalled);
+            var element = document.querySelector('.dispose').parentNode;
+            element.parentNode.removeChild(element);
+            equal(Test.state.disposeCallCount, 1);
+        } else
+            ok(true, "Browser does not support DOM mutation events. Only elements removed with jQuery will be properly cleaned in this browser.");
     });
 
     test("dispose calls end on pubsub lifetime for each pane", function () {

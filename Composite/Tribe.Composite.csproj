@@ -36,11 +36,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="Build\Tests\Tribe.Composite.tests.ie.js" />
     <Content Include="Build\Tests\Tribe.Composite.tests.js" />
     <Content Include="Build\Tests\Tribe.Composite.tests.mockjax.js" />
     <Content Include="Build\Tribe.Composite.debug.js" />
     <Content Include="Build\Tribe.Composite.js" />
     <Content Include="Build\Tribe.Composite.min.js" />
+    <Content Include="Libraries\knockout-2.3.0.debug.js" />
+    <Content Include="Libraries\knockout-2.3.0.js" />
     <Content Include="Samples\Transitions\index.html" />
     <Content Include="Samples\Transitions\layout.css" />
     <Content Include="Samples\Transitions\layout.htm" />
@@ -57,14 +60,15 @@
     <Content Include="Source\Types\Navigation.js" />
     <Content Include="Source\Utilities\bindingHandlers.js" />
     <Content Include="Source\Utilities\collections.js" />
+    <Content Include="Source\Utilities\indexOf.js" />
     <Content Include="Source\Utilities\querystring.parse.js" />
     <Content Include="Source\Utilities\events.js" />
     <Content Include="Source\Utilities\idGenerator.js" />
     <Content Include="Source\Utilities\panes.js" />
+    <Content Include="Tests\ie.html" />
+    <Content Include="Tests\Integration\Infrastructure\supportsTransitions.js" />
     <Content Include="Tests\pack.js" />
     <Content Include="Libraries\jquery-1.9.1.js" />
-    <Content Include="Libraries\knockout-2.2.1.debug.js" />
-    <Content Include="Libraries\knockout-2.2.1.js" />
     <Content Include="Source\pack.js" />
     <Content Include="Samples\Transitions\controls.htm" />
     <Content Include="Samples\Transitions\controls.js" />
@@ -176,9 +180,10 @@
     <Content Include="Tests\Integration\Panes\Tree\1.htm" />
     <Content Include="Tests\Integration\Panes\Tree\1.js" />
     <Content Include="Tests\Integration\Tree.tests.js" />
-    <Content Include="Tests\Unit\api.tests.js" />
+    <Content Include="Tests\Unit\Api\api.tests.js" />
     <Content Include="Tests\Unit\Events\renderComplete.tests.js" />
     <Content Include="Tests\Unit\Events\createModel.tests.js" />
+    <Content Include="Tests\Unit\Infrastructure\featureDetection.js" />
     <Content Include="Tests\Unit\Infrastructure\node.js" />
     <Content Include="Tests\setup.js" />
     <Content Include="Tests\Unit\Infrastructure\pane.js" />
@@ -202,6 +207,7 @@
     <Content Include="Tests\Unit\Infrastructure\context.js" />
     <Content Include="Tests\Unit\Utilities\bindingHandlers.tests.js" />
     <Content Include="Tests\Unit\Utilities\collections.tests.js" />
+    <Content Include="Tests\Unit\Utilities\events.tests.js" />
     <Content Include="Tests\Unit\Utilities\objects.tests.js" />
     <Content Include="Tests\Unit\Utilities\elementDestroyed.tests.js" />
     <Content Include="Tests\Unit\Utilities\idGenerator.tests.js" />
@@ -228,6 +234,9 @@
   <ItemGroup>
     <None Include="README.md" />
     <Content Include="Tests\Integration\Paths.tests.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tests\Unit\Infrastructure\events.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

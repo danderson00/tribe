@@ -1,7 +1,7 @@
 ﻿TC.registerModel(function (pane) {
-    window.addEventListener('navigating', navigating);
+    TC.Utils.handleDocumentEvent('navigating', navigating);
     function navigating(e) {
-        if (Navigation.isHome(e.data.options.data))
+        if (Navigation.isHome(e.eventData.options.data))
             hide();
         else
             show();
@@ -14,7 +14,7 @@
 
     function show() {
         if (!$('.header .logo').is(':visible'))
-            TC.transition('.header .logo', 'fade').in();
+            TC.transition('.header .logo', 'fade')['in']();
     }
 
     function hide() {
@@ -25,7 +25,7 @@
     this.feedback = function () {
         TC.transition(
             TC.appendNode('body', { path: '/Interface/feedback' }),
-            'fade').in();
+            'fade')['in']();
     };
 
     this.dispose = function () {

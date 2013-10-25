@@ -23,9 +23,9 @@
 
     // it would be nice to use the article.show message for this,
     // but that won't work with browser back and forward buttons
-    window.addEventListener('navigating', navigating);
+    TC.Utils.handleDocumentEvent('navigating', navigating);
     function navigating(e) {
-        var data = e.data.options.data || {};
+        var data = e.eventData.options.data || {};
         updateCurrentArticle(data);
     }
     
@@ -53,7 +53,7 @@
 
     function show() {
         if (!$('.navigation').is(':visible'))
-            TC.transition('.navigation', 'slideRight').in();
+            TC.transition('.navigation', 'slideRight')['in']();
     }
 
     function hide() {

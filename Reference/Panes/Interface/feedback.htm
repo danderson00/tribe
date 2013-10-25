@@ -19,8 +19,8 @@
     <textarea data-bind="value: comments"></textarea>
     
     <div>
-        <button data-bind="validatedClick: submit">Submit</button>
-        <button data-bind="click: close">Close</button>
+        <button class="large" data-bind="validatedClick: submit">Submit</button>
+        <button class="large" data-bind="click: close">Close</button>
     </div>
     
     <div class="failure" data-bind="visible: success() === false">The feedback could not be sent.</div>

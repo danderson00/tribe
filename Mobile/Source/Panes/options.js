@@ -3,8 +3,8 @@
     this.options = pane.data.options;
 
     this.paneRendered = function() {
-        TC.transition('.modalBackground', 'fade').in();
-        TC.transition('.optionsList', 'slideDown').in();
+        TC.transition('.modalBackground', 'fade')['in']();
+        TC.transition('.optionsList', 'slideDown')['in']();
     };
 
     this.itemClick = function (item) {

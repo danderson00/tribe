@@ -13,7 +13,7 @@
     });
 
     test("loadResources loads style", function () {
-        equal($('#style--Events-basic').length, 1);
+        notEqual($('#__tribeStyles').html().indexOf('.basic'), -1);
     });
 
 })();

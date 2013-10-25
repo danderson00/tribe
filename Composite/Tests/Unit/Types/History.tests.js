@@ -13,28 +13,32 @@
     });
 
     test("browser.go is raised when popstate event is raised normally", function () {
-        expect(1);
+        if (Test.supportsHistory) {
+            expect(1);
 
-        TC.Utils.handleDocumentEvent('browser.go', assert);
-        raisePopstate();
-        TC.Utils.detachDocumentEvent('browser.go', assert);
+            function assert(e) {
+                equal(e.eventData.count, 1);
+            }
 
-        function assert(e) {
-            equal(e.data.count, 1);
-        }
+            TC.Utils.handleDocumentEvent('browser.go', assert);
+            raisePopstate();
+            TC.Utils.detachDocumentEvent('browser.go', assert);
+        } else ok(true, "Test skipped - History API is not supported.");
     });
 
     test("browser.go is not raised when update is called and popstate is raised", function () {
-        expect(0);
-        
-        TC.Utils.handleDocumentEvent('browser.go', assert);
-        history.update(1);
-        raisePopstate();
-        TC.Utils.detachDocumentEvent('browser.go', assert);
+        if (Test.supportsHistory) {
+            expect(0);
 
-        function assert(e) {
-            equal(e.data.count, 1);
-        }
+            function assert(e) {
+                equal(e.eventData.count, 1);
+            }
+
+            TC.Utils.handleDocumentEvent('browser.go', assert);
+            history.update(1);
+            raisePopstate();
+            TC.Utils.detachDocumentEvent('browser.go', assert);
+        } else ok(true, "Test skipped - History API is not supported.");
     });
 
     test("window.history.go is called when go is called", function () {
@@ -62,6 +66,6 @@
     }
 
     function raisePopstate() {
-        TC.Utils.raiseDocumentEvent('popstate', null, 1);
+        Test.raiseDocumentEvent('popstate', null, 1);
     }
 })();

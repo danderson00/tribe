@@ -30,7 +30,7 @@
     
     if(options.browser) TC.Utils.handleDocumentEvent('browser.go', onBrowserGo);
     function onBrowserGo(e) {
-        go(e.data.count);
+        go(e.eventData.count);
     }
 
     function go(frameCount) {
@@ -54,7 +54,7 @@
     }
 
     this.dispose = function() {
-        document.removeEventListener('browser.go', onBrowserGo);
+        TC.Utils.detachDocumentEvent('browser.go', onBrowserGo)
     };
     
     function normaliseOptions() {

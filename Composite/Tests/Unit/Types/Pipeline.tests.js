@@ -61,7 +61,7 @@
         return {
             null1: sinon.spy(),
             null2: sinon.spy(),
-            deferred: sinon.stub().returns(eventDeferred),
+            deferred: sinon.stub().returns(eventDeferred)
         };
     }
 })();

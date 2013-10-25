@@ -18,7 +18,7 @@
         );
 
         function stripLeadIn() {
-            if(source.length > 0 && source[0] === '?')
+            if(source.length > 0 && source.charAt(0) === '?')
                 source = source.substring(1);
         }
     };

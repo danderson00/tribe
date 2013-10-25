@@ -69,12 +69,12 @@
 
     test("document navigating event is raised when navigating", function () {
         expect(1);
-        document.addEventListener('navigating', assert);
+        TC.Utils.handleDocumentEvent('navigating', assert);
         nav.navigate({ path: 'test2' });
-        document.removeEventListener('navigating', assert);
+        TC.Utils.detachDocumentEvent('navigating', assert);
         
         function assert(e) {
-            equal(e.data.options.path, 'test2');
+            equal(e.eventData.options.path, 'test2');
         }
     });
 

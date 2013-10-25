@@ -4,7 +4,7 @@
     module('forms', {
         setup: function () {
             model = {
-                data: { text: ko.observable('test') },
+                data: { text: ko.observable('test') }
             };
             TF.Tests.renderTemplate('forms', model);
         }
@@ -25,7 +25,7 @@
     test("new objects are created", function () {
         expect(2);
         $('#testButton').click();
-        delete window.testCreatedObject;
+        window.testCreatedObject = undefined;
     });
 
     window.testCreatedObject = function (model) {

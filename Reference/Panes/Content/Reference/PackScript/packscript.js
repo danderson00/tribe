@@ -58,7 +58,9 @@
         { name: 'pathRelativeToConfig', type: 'String', description: 'The path of the included file relative to the configuration file.' },
         { name: 'includePath', type: 'String', description: 'The full path to the path specified in the include option.' },
         { name: 'pathRelativeToInclude', type: 'String', description: 'The path of the included file relative to the path specified in the include option.' },
-        { name: 'data', type: 'Any', description: 'The data object passed in the configuration file, or an empty object if not specified.' }
+        { name: 'data', type: 'Any', description: 'The data object passed in the configuration file, or an empty object if not specified.' },
+        { name: 'output', type: 'Output', description: 'The output configuration.' },
+        { name: 'target', type: 'Container', description: 'The current output target.' }
     ],
     Builtin: {
         functions: [
@@ -68,31 +70,31 @@
             },
             {
                 Name: 'T.scripts',
-                Description: 'Package JavaScript files with an extension of \'js\' from the specified path.',
+                Description: 'Package JavaScript files with an extension of \'js\' from the specified path.'
             },
             {
                 Name: 'T.templates',
-                Description: 'Package HTML templates with an extension of \'htm\' from the specified path.',
+                Description: 'Package HTML templates with an extension of \'htm\' from the specified path.'
             },
             {
                 Name: 'T.styles',
-                Description: 'Package CSS styles files with an extension of \'css\' from the specified path.',
+                Description: 'Package CSS styles files with an extension of \'css\' from the specified path.'
             },
             {
                 Name: 'T.models',
-                Description: 'Package pane models from the specified path.',
+                Description: 'Package pane models from the specified path.'
             }
         ],
         arguments: [
             { Name: 'pathOrOptions', Type: 'String | Object', Description: 'Either the path containing relevant files or an object containing options.' },
-            { Name: 'debug', Type: 'Boolean', Description: 'Use debug templates to enhance the debugging experience.' }
+            { Name: 'debug', Type: 'Boolean', Description: 'Use debug templates to enhance the debugging experience. You can also specify this using debug: true in your output configuration.' }
         ],
         options: [
             { name: 'path', type: 'String', description: 'Can either be a directory name or filespec containing the appropriate extension.' },
-            { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience. <br/>This can also be enabled by specifying the debug transform.' },
+            { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience.' },
             { name: 'prefix', type: 'String', description: 'Prefix the resource path applied to models and templates.' },
             { name: 'domain', type: 'String', description: 'Specifies the domain to apply to each script in the debugger.' },
-            { name: 'protocol', type: 'String', description: 'Specifies the protocol to apply to each script in the debugger.' },
+            { name: 'protocol', type: 'String', description: 'Specifies the protocol to apply to each script in the debugger.' }
         ],
         helpers: [
             { Name: 'T.webTargets', Returns: 'target options', Description: 'Pass to the \'to\' function. Creates .js, .min.js and .debug.js outputs.' },
@@ -100,10 +102,3 @@
         ]
     }
 };
-
-/*
-T.panes(folderOrOptions, chrome)
-T.scripts(folderOrOptions, chrome)
-T.templates(folderOrOptions)
-T.styles(folderOrOptions)
-*/

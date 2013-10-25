@@ -10,7 +10,7 @@
     
     this.renderComplete = function () {
         element = $(pane.element).find('.overlay').show();
-        TC.transition(element, data.transition || 'slideDown').in();
+        TC.transition(element, data.transition || 'slideDown')['in']();
 
         TC.nodeFor(element.children()).pane.remove = close;
     };

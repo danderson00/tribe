@@ -10,7 +10,7 @@
             var args = utils.arguments(arguments);
             equal(args.string, argsToPass[0]);
             equal(args.object, argsToPass[1]);
-            equal(args.function, argsToPass[2]);
+            equal(args.func, argsToPass[2]);
             equal(args.array, argsToPass[3]);
             equal(args.number, argsToPass[4]);
 

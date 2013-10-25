@@ -33,10 +33,10 @@ TC.registerModel(function (pane) {
         TC.toolbar.visible(defaults.visible);
     }
 
-    document.addEventListener('renderComplete', renderComplete);
-    document.addEventListener('navigating', navigating);
+    TC.Utils.handleDocumentEvent('renderComplete', renderComplete);
+    TC.Utils.handleDocumentEvent('navigating', navigating);
     this.dispose = function () {
-        document.removeEventListener('renderComplete', renderComplete);
-        document.removeEventListener('navigating', navigating);
+        TC.Utils.detachDocumentEvent('renderComplete', renderComplete);
+        TC.Utils.detachDocumentEvent('navigating', navigating);
     };
 });

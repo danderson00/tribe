@@ -11,7 +11,7 @@
 
     function createCssTransition(transition, reverse) {
         TC.Transitions[transition] = {
-            in: function (element) {
+            'in': function (element) {
                 if (!supported) return null;
                 
                 var promise = $.Deferred();

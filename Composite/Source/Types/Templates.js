@@ -3,13 +3,18 @@
 
     this.store = function (template, path) {
         var id = TC.Path(path).asMarkupIdentifier().toString();
-        var $template = $(template);
-        if ($template.is("script"))
-            $('head').append($template.filter('script'));
-        else
-            $('<script type="text/template" class="__tribe" id="template-' + id + '"></script>').text(template).appendTo('head');
+        embedTemplate(template, 'template-' + id);
     };
-
+    
+    function embedTemplate(template, id) {
+        var element = document.createElement('script');
+        element.className = '__tribe';
+        element.setAttribute('type', 'text/template');
+        element.id = id;
+        element.text = template;
+        document.getElementsByTagName('head')[0].appendChild(element);
+    }
+    
     this.loaded = function(path) {
         return $('head script#template-' + TC.Path(path).asMarkupIdentifier()).length > 0;
     };

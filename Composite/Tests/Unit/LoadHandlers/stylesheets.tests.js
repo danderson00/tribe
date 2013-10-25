@@ -15,14 +15,8 @@
     });
 
     test("stylesheet handler adds stylesheet to page header", function () {
-        response = "body{}";
+        response = ".test{}";
         TC.LoadHandlers.css(url, resourcePath, Test.Unit.context());
-        equal($('head style').last().text(), response);
-    });
-
-    test("stylesheet is added with id of resource", function () {
-        response = "body{}";
-        TC.LoadHandlers.css(url, resourcePath, Test.Unit.context());
-        equal($('head style#style--test').last().text(), response);
+        notEqual($('#__tribeStyles').html().indexOf(".test"), -1);
     });
 })();

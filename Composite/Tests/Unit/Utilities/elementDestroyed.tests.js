@@ -10,11 +10,17 @@ test("promise resolves when element is removed using jQuery", function () {
 });
 
 asyncTest("promise resolves when element is removed using native functions", function () {
-    expect(1);
-    var element = $('<div/>').appendTo('#qunit-fixture');
-    $.when(TC.Utils.elementDestroyed(element)).done(function () {
-        ok(true);
+    if (Test.supportsMutationEvents) {
+        expect(1);
+        var element = $('<div/>').appendTo('#qunit-fixture');
+        $.when(TC.Utils.elementDestroyed(element)).done(function() {
+            ok(true);
+            start();
+        });
+        element[0].parentNode.removeChild(element[0]);
+    } else {
+        // this should really be a warning
+        ok(true, "Browser does not support DOM mutation events. Only elements removed with jQuery will be properly cleaned in this browser.");
         start();
-    });
-    element[0].parentNode.removeChild(element[0]);
+    }
 });
