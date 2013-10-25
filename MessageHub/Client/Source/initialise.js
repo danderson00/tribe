@@ -10,7 +10,7 @@
 
     window.TMH = {
         initialise: function (pubsub, url) {
-            initialiseSignalR(url || '/signalr');
+            initialiseSignalR(url || 'signalr');
             $.extend(TMH, new Tribe.MessageHub.Client(
                 pubsub,
                 $.connection.hubImplementation,

@@ -1,0 +1,46 @@
+﻿h1 {
+    font-size: 1em;
+}
+
+.features > *, .knockout .features, .knockout .logo {
+    float: left;
+}
+
+.masthead h1 {
+    height: auto !important;
+}
+
+.block h1 {
+    height: auto !important;
+}
+
+.sample > * {
+    float: left;
+}
+
+.sample .title {
+    width: auto !important;
+}
+
+.header .background {
+    position: relative !important;
+}
+
+.header .content {
+    top: -45px !important;
+}
+
+.navigation {
+    width: 980px !important;
+    position: relative !important;
+    left: 50% !important;
+    margin-left: -490px !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 10px !important;
+    padding-top: 10px;
+}
+
+body {
+    overflow-y: auto !important;
+}

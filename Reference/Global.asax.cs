@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -25,7 +26,8 @@ namespace Reference
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            if (Context.Request.FilePath == "/") Context.RewritePath("index.html");
+
+            if (Path.GetFileName(Context.Request.FilePath) == "") Context.RewritePath("index.html");
         }
     }
 }

@@ -42,6 +42,7 @@
     <Content Include="BindingHandlers\select.js" />
     <Content Include="BindingHandlers\validatedClick.js" />
     <Content Include="BindingHandlers\validationMessage.tooltip.js" />
+    <Content Include="Build\Tests\Tribe.Forms.tests.ie.js" />
     <Content Include="Build\Tests\Tribe.Forms.tests.js" />
     <Content Include="Build\Tribe.Forms.debug.js" />
     <Content Include="Build\Tribe.Forms.js" />

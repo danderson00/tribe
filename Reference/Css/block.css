@@ -74,7 +74,6 @@ img.topRight {
     background: -o-linear-gradient(top,  #103070 0%,#457ae4 100%); /* Opera 11.10+ */
     background: -ms-linear-gradient(top,  #103070 0%,#457ae4 100%); /* IE10+ */
     background: linear-gradient(to bottom,  #103070 0%,#457ae4 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#103070', endColorstr='#457ae4',GradientType=0 ); /* IE6-9 */
 }
 
 .block h2 {
