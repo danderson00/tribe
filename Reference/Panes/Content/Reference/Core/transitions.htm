@@ -6,20 +6,30 @@
 
     <p>The returned object can be used to transition the target in, out or to another pane:</p>
     <div data-bind="pane: '/Interface/API/functionList', data: { functions: Reference.Transition.Functions }"></div>
+    
+    <div class="tip">
+        <img src="Images/icon.tip.64.png"/>
+        <p>To support Internet Explorer 8 and below, the <span class="filename">in</span> function must be called using the syntax in the example below.</p>
+        <div class="clear"></div>
+    </div>
 
     <div class="child">
         <h1>Examples</h1>
 
         <p>Fade the first element with a class of "target" out of view and remove it from the DOM</p>
         <pre class="example">
-    TC.transition('.target', 'fade').out();</pre>
+TC.transition('.target', 'fade').out();</pre>
 
         <p>Transition the node containing the element with a class of "target" to a new pane</p>
         <pre class="example">
-    TC.transition(TC.nodeFor('.target')).to('path/to/pane');</pre>
+TC.transition(TC.nodeFor('.target')).to('path/to/pane');</pre>
 
         <p>This can also be expressed as:</p>
         <pre class="example">
-    TC.nodeFor('.target').transitionTo('path/to/pane');</pre>
+TC.nodeFor('.target').transitionTo('path/to/pane');</pre>
+
+        <p>Supporting IE8 and below:</p>
+        <pre class="example">
+TC.transition('.target')['in']();</pre>
     </div>
 </div>
