@@ -1,7 +1,7 @@
 ﻿(function (global) {
-    if (!jQuery)
+    if (typeof (jQuery) === 'undefined')
         throw 'jQuery must be loaded before knockout.composite can initialise';
-    if (!ko)
+    if (typeof (ko) === 'undefined')
         throw 'knockout.js must be loaded before knockout.composite can initialise';
 
     global.Tribe = global.Tribe || {};

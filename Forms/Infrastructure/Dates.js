@@ -1,5 +1,4 @@
 ﻿(function () {
-    TF = window.TF || {};
     TF.Dates = {};
     var dates = TF.Dates;
 

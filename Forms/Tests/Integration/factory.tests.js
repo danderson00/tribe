@@ -1,24 +1,20 @@
 ﻿(function () {
     var model;
     
-    module('forms', {
+    module('Integration.factory', {
         setup: function () {
             model = {
                 data: { text: ko.observable('test') }
             };
-            TF.Tests.renderTemplate('forms', model);
+            TF.Tests.renderTemplate('factory', model);
         }
     });
 
-    test("Existing field renders", function () {
-        equal($('.existing input').val(), 'test');
-    });
-    
-    test("properties are created on existing objects in create mode", function() {
+    test("properties are created on target", function() {
         equal(model.data.text2(), 'test');
     });
 
-    test("objects are created on existing objects in create mode", function() {
+    test("objects are created on target", function() {
         equal(model.data.created.text3(), 'test');
     });
     

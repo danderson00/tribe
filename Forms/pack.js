@@ -1,5 +1,6 @@
 ﻿pack({
     include: [
+        T.scripts({ path: 'namespaces.js', domain: 'Tribe.Forms' }),
         T.scripts({ path: 'Dependencies', domain: 'Tribe.Forms' }),
         T.scripts({ path: 'Infrastructure', domain: 'Tribe.Forms' }),
         T.scripts({ path: 'BindingHandlers', domain: 'Tribe.Forms' }),

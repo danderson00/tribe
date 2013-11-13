@@ -1180,7 +1180,8 @@ Reference.PackScript = {
             { name: 'debug', type: 'Boolean', description: 'Use debug templates to enhance the debugging experience.' },
             { name: 'prefix', type: 'String', description: 'Prefix the resource path applied to models and templates.' },
             { name: 'domain', type: 'String', description: 'Specifies the domain to apply to each script in the debugger.' },
-            { name: 'protocol', type: 'String', description: 'Specifies the protocol to apply to each script in the debugger.' }
+            { name: 'protocol', type: 'String', description: 'Specifies the protocol to apply to each script in the debugger.' },
+            { name: 'recursive', type: 'Boolean', description: 'Set to false to override the default behaviour.' }
         ],
         helpers: [
             { Name: 'T.webTargets', Returns: 'target options', Description: 'Pass to the \'to\' function. Creates .js, .min.js and .debug.js outputs.' },

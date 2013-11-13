@@ -1,5 +1,4 @@
-﻿TF = window.TF || {};
-TF.Utils = {};
+﻿TF.Utils = {};
 
 TF.Utils.evaluateProperty = function (target, property, defaultValue) {
     var properties = property.match(/[^\.]+/g);

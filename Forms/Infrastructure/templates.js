@@ -1,4 +1,7 @@
-﻿TF = window.TF || {};
-TF.renderTemplate = function (name, target) {
-    $(target).empty().append($('head script#template--Forms-' + name).html());
-};
+﻿(function() {
+    TF.renderTemplate = function (name, target) {
+        var rendered = $($('head script#template--Forms-' + name).html());
+        $(target).append(rendered);
+        return rendered;
+    };
+})();

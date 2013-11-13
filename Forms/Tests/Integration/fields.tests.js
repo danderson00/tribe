@@ -6,7 +6,7 @@
         { value: 3, text: 'Three' }
     ];
 
-    module('fields', {
+    module('Integration.fields', {
         setup: function () {
             model = createModel();
             TF.Tests.renderTemplate('fields', model);
