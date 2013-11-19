@@ -36,9 +36,10 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="BindingHandlers\scaffold.js" />
     <Content Include="BindingHandlers\fields.js" />
     <Content Include="BindingHandlers\focus.js" />
-    <Content Include="BindingHandlers\form.js" />
+    <Content Include="BindingHandlers\factory.js" />
     <Content Include="BindingHandlers\select.js" />
     <Content Include="BindingHandlers\validatedClick.js" />
     <Content Include="BindingHandlers\validationMessage.tooltip.js" />
@@ -51,9 +52,12 @@
     <Content Include="Css\desktop.css" />
     <Content Include="Css\mobile.css" />
     <Content Include="Dependencies\jquery.lw-datepicker.js" />
+    <Content Include="Infrastructure\extenders.js" />
+    <Content Include="Infrastructure\render.js" />
+    <Content Include="Infrastructure\scaffold.js" />
     <Content Include="Libraries\knockout.validation.js" />
     <Content Include="Infrastructure\Dates.js" />
-    <Content Include="Infrastructure\observableExtensions.js" />
+    <Content Include="Infrastructure\setWithoutValidation.js" />
     <Content Include="Infrastructure\templates.js" />
     <Content Include="Infrastructure\Utils.js" />
     <Content Include="Infrastructure\validationRules.js" />
@@ -69,27 +73,33 @@
     <Content Include="Libraries\Tribe.debug.js" />
     <Content Include="Libraries\Tribe.js" />
     <Content Include="Libraries\Tribe.min.js" />
+    <Content Include="namespaces.js" />
     <Content Include="pack.js" />
     <Content Include="Samples\Basic\index.html" />
     <Content Include="Samples\Tribe\form.htm" />
     <Content Include="Samples\Tribe\index.html" />
     <Content Include="Samples\Tribe\result.htm" />
     <Content Include="Samples\Tribe\target.js" />
-    <Content Include="Templates\booleanField.htm" />
-    <Content Include="Templates\dateField.htm" />
+    <Content Include="Templates\boolean.htm" />
+    <Content Include="Templates\date.htm" />
     <Content Include="Templates\display.htm" />
-    <Content Include="Templates\passwordField.htm" />
-    <Content Include="Templates\radioField.htm" />
-    <Content Include="Templates\selectField.htm" />
-    <Content Include="Templates\textField.htm" />
+    <Content Include="Templates\password.htm" />
+    <Content Include="Templates\radio.htm" />
+    <Content Include="Templates\select.htm" />
+    <Content Include="Templates\text.htm" />
     <Content Include="Templates\validationMessage.htm" />
-    <Content Include="Tests\forms.tests.js" />
-    <Content Include="Tests\forms.htm" />
+    <Content Include="Tests\extenders.tests.js" />
+    <Content Include="Tests\Integration\factory.tests.js" />
+    <Content Include="Tests\Integration\factory.htm" />
     <Content Include="Tests\Infrastructure\helpers.js" />
-    <Content Include="Tests\fields.tests.js" />
+    <Content Include="Tests\Integration\fields.tests.js" />
     <Content Include="Tests\index.html" />
+    <Content Include="Tests\Integration\scaffold.htm" />
+    <Content Include="Tests\Integration\scaffold.tests.js" />
     <Content Include="Tests\pack.js" />
-    <Content Include="Tests\fields.htm" />
+    <Content Include="Tests\Integration\fields.htm" />
+    <Content Include="Tests\render.tests.js" />
+    <Content Include="Tests\scaffold.tests.js" />
     <Content Include="Tests\Utils.tests.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

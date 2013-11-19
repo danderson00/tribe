@@ -66,6 +66,8 @@
     }
 
     function raisePopstate() {
-        Test.raiseDocumentEvent('popstate', null, 1);
+        var e = new Event("popstate");
+        e.state = 1;
+        window.dispatchEvent(e);
     }
 })();

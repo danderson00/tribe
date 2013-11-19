@@ -761,39 +761,54 @@ window.TF = {};
     };
 })();
 
-// Infrastructure/observableExtensions.js
+// Infrastructure/extenders.js
 (function () {
-    // adds setWithoutValidation to observables
-    var oldExtender = ko.extenders['validatable'];
-    ko.extenders['validatable'] = function (observable, enable) {
-        oldExtender(observable, enable);
-        observable.setWithoutValidation = setWithoutValidation;
-    };
+    addMetadataExtender('type');
+    addMetadataExtender('displayText');
+    addMetadataExtender('listSource');
+    addMetadataExtender('displayProperty');
 
-    function setWithoutValidation(value) {
-        var rules = observable.rules();
-        observable.rules([]);
-        observable(value);
-        observable.isModified(false);
-        observable.rules(rules);
+    function addMetadataExtender(name) {
+        ko.extenders[name] = function(target, value) {
+            target.metadata = target.metadata || {};
+            target.metadata[name] = value;
+            return target;
+        };
     }
 })();
+
 // Infrastructure/render.js
 TF.render = function (name, element, options) {
-    options = options || {};
-    if (options.create) resolveStringValue();
-
-    TF.renderTemplate(name, element);
+    if (!options || !options.hasOwnProperty('value')) throw new Error('You must provide at least a value property on the options object');
+    
+    element = $(element)[0];
+    if (options.target) resolveTargetProperty();
+    
+    bind();
     fieldSpecificSetup();
-    ko.applyBindingsToDescendants(options, element);
 
     var input = $(element).find('input:eq(0)');
     if (options.id) setIdAttribute();
     if (options.isDefault) setFocus();
 
-    function resolveStringValue() {
+    function resolveTargetProperty() {
         var defaultValue = ko.observable(options.defaultValue).extend(options.validate);
         options.value = TF.Utils.evaluateProperty(options.target, options.value, defaultValue);
+    }
+
+    function bind() {
+        $.each(TF.renderTemplate(name, element), function (index, child) {
+            ko.applyBindings(options, child);
+        });
+    }
+
+    // yeh, this is pretty nasty... If more code is added here, this should be refactored.
+    function fieldSpecificSetup() {
+        switch (name) {
+            case 'date':
+                $('.datePicker').lwDatepicker({ parseDate: TF.Dates.tryParseDate, formatDate: TF.Dates.formatDate, autoHideAfterClick: true });
+                break;
+        }
     }
 
     function setFocus() {
@@ -805,15 +820,6 @@ TF.render = function (name, element, options) {
     function setIdAttribute() {
         input.attr('id', options.id);
     }
-
-    // yeh, this is pretty nasty... If more code is added here, this should be refactored.
-    function fieldSpecificSetup() {
-        switch (name) {
-            case 'date':
-                $('.datePicker').lwDatepicker({ parseDate: TF.Dates.tryParseDate, formatDate: TF.Dates.formatDate, autoHideAfterClick: true });
-                break;
-        }
-    }
 };
 
 // Infrastructure/scaffold.js
@@ -821,28 +827,43 @@ TF.scaffold = function(source) {
     return {
         to: function(element) {
             for (var property in source)
-                if (source.hasOwnProperty(property) && ko.isObservable(source[property]))
-                    renderTemplate(source[property]);
+                if (source.hasOwnProperty(property) && ko.isObservable(source[property])) {
+                    var value = source[property];
+                    var metadata = value.metadata || {};
+                    TF.render(metadata.type || 'text', element, {
+                        value: value,
+                        displayText: metadata.displayText || property,
+                        items: metadata.listSource,
+                        optionsText: metadata.displayProperty
+                    });
+                }
         }
     };
-    
-    function renderTemplate(observable) {
-        
-    }
 };
+// Infrastructure/setWithoutValidation.js
+(function () {
+    var oldExtender = ko.extenders['validatable'];
+    if(oldExtender)
+        ko.extenders['validatable'] = function (observable, enable) {
+            oldExtender(observable, enable);
+            observable.setWithoutValidation = setWithoutValidation;
+        };
+
+    function setWithoutValidation(value) {
+        var rules = observable.rules();
+        observable.rules([]);
+        observable(value);
+        observable.isModified(false);
+        observable.rules(rules);
+    }
+})();
 // Infrastructure/templates.js
 (function() {
     TF.renderTemplate = function (name, target) {
-        $(target).empty().append($(selector(name)).html());
+        var rendered = $($('head script#template--Forms-' + name).html());
+        $(target).append(rendered);
+        return rendered;
     };
-
-    TF.appendTemplate = function(name, target) {
-        $(target).append($(selector(name)).html());
-    };
-    
-    function selector(name) {
-        return 'head script#template--Forms-' + name;
-    }
 })();
 
 // Infrastructure/Utils.js
@@ -876,6 +897,22 @@ if(ko.validation)
         },
         message: 'Please enter a proper date'
     };
+// BindingHandlers/factory.js
+ko.bindingHandlers.factory = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        data.value = data.value || {};
+        
+        if (data.value.constructor === String)
+            data.value = TF.Utils.evaluateProperty(viewModel, data.value, {});
+
+        var childContext = bindingContext.createChildContext(data.value);
+        childContext.__factory = true;
+        ko.applyBindingsToDescendants(childContext, element);
+
+        return { controlsDescendantBindings: true };
+    }
+};
 // BindingHandlers/fields.js
 (function () {
     addBindingHandler('display');
@@ -886,18 +923,13 @@ if(ko.validation)
     addBindingHandler('radio');
     addBindingHandler('boolean');
 
-    ko.bindingHandlers.field = {
-        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-            var properties = valueAccessor();
-            render(properties.type + '', element, function () { return properties.value; }, valueAccessor, viewModel, bindingContext);
-        }
-    };
-
     function addBindingHandler(name) {
         ko.bindingHandlers[name + 'Field'] = {
             init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
                 var options = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
-                TF.render(name, element, options, bindingContext.__create);
+                if (bindingContext.__factory)
+                    options.target = viewModel;
+                TF.render(name, element, options);
                 return { controlsDescendantBindings: true };
             }
         };
@@ -915,21 +947,13 @@ ko.bindingHandlers.focus = {
             });
     }
 };
-// BindingHandlers/form.js
-ko.bindingHandlers.form = {
+// BindingHandlers/scaffold.js
+ko.bindingHandlers.scaffold = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         data.value = data.value || {};
-        
-        if (data.value.constructor === String) {
-            var defaultValue = data.create ? {} : undefined;
-            data.value = TF.Utils.evaluateProperty(viewModel, data.value, defaultValue);
-        }
 
-        var childContext = bindingContext.createChildContext(data.value);
-        if (data.create) childContext.__create = true;
-        ko.applyBindingsToDescendants(childContext, element);
-
+        TF.scaffold(data.value).to(element);
         return { controlsDescendantBindings: true };
     }
 };
@@ -1050,7 +1074,7 @@ window.__appendTemplate('<div class="field">\n    <div class="label">\n        <
 window.__appendTemplate('<div class="field">\n    <div class="label">\n        <span data-bind="text: $data.displayText"></span>\n    </div>\n    <div class="display">\n        <input type="password" data-bind="value: value"></input>\n    </div>\n    <div style="clear: both"></div>\n</div>', 'template--Forms-password');//
 window.__appendTemplate('<div class="field">\n    <div class="label">\n        <span data-bind="text: $data.displayText"></span>\n    </div>\n    <div class="display" data-bind="foreach: items">\n        <label>\n            <input type="radio" data-bind="value: $data, checked: $parent.value, attr: { name: $parent.displayText.replace(/ /g, \'_\') }" />\n            <span data-bind="text: $data"></span>\n        </label>\n        &nbsp;\n    </div>\n    <div style="clear: both"></div>\n</div>', 'template--Forms-radio');//
 window.__appendTemplate('<div class="field">\n    <div class="label">\n        <span data-bind="text: $data.displayText"></span>\n    </div>\n    <div class="display">\n        <select data-bind="options: items, value: value, optionsText: $data.optionsText"></select>\n    </div>\n    <div style="clear: both"></div>\n</div>', 'template--Forms-select');//
-window.__appendTemplate('<div class="field">\n    <div class="label">\n        <span data-bind="text: $data.displayText"></span>\n    </div>\n    <div class="display">\n        <input type="text" data-bind="value: value" />\n    </div>\n    <div style="clear: both"></div>\n</div>', 'template--Forms-text');//
+window.__appendTemplate('<div class="field">\n    <div class="label">\n        <span data-bind="text: $data.displayText"></span>\n    </div>\n    <div class="display">\n        <input type="text" data-bind="value: $data.value" />\n    </div>\n    <div style="clear: both"></div>\n</div>', 'template--Forms-text');//
 window.__appendTemplate('<div data-bind="pane: \'/Common/tooltip\', data: { html: $data.field.error, autoShow: true, position: \'right\' }"></div>', 'template--Forms-validationMessage');//
 window.__appendStyle = function (content) {
     var element = document.getElementById('__tribeStyles');

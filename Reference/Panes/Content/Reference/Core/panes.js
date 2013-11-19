@@ -7,5 +7,9 @@
         { name: 'reverseTransitionIn', type: 'Boolean', description: 'Use the reverse transition when transitioning in.' },
         { name: 'id', type: 'Any', description: 'An optional unique identifier for the pane.' },
         { name: 'skipPath', type: 'Boolean', description: 'When specified, the pane is skipped when determining the parent pane path.' }
+    ],
+    NavigationOptions: [
+        { name: 'transition', type: 'String', description: 'The name of the transition to use.' },
+        { name: 'browser', type: 'Boolean | UrlProvider', description: 'Attaches navigation to the browser\'s history using the default URL provider or the one specified.' }
     ]
 };

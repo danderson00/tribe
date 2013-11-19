@@ -5,6 +5,10 @@
         <a data-bind="click: Article.show('Reference', 'Core/api')">core API functions</a>.
     </p>
     <pre class="example">&lt;div data-bind="pane: 'path/to/pane', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>
+    <p>
+        When created this way, each pane is encapsulated within a Node object that is
+        inserted into the appropriate position in an underlying node tree.
+    </p>
 
     <p>The following bindings can be used:</p>
     <div data-bind="pane: '/Interface/API/propertyList', data: { properties: Reference.Panes.options }"></div>
@@ -21,6 +25,29 @@
         </p>
         <div class="clear"></div>
     </div>
+</div>
+
+<div class="content block">
+    <h1>Navigation Panes</h1>
+    <p>
+        By default, when <span class="filename">pane.navigate</span> is called,
+        the root node is transitioned. You can specify which node to transition
+        by using the handlesNavigation pane option.
+    </p>
+    <p>
+        Passing a string to the handlesNavigation pane option specifies the name
+        of the transition to use.
+    </p>
+    <pre class="example">&lt;div data-bind="pane: 'path/to/pane', handlesNavigation: 'fade'">&lt;/div></pre>
+    <p>When passing an object, the following options can be used:</p>
+    <div data-bind="pane: '/Interface/API/propertyList', data: { properties: Reference.Panes.NavigationOptions }"></div>
+    <pre class="example">&lt;div data-bind="pane: 'path/to/pane', handlesNavigation: { transition: 'slideLeft', browser: true }">&lt;/div></pre>
+    <p>
+        Multiple navigation nodes can be specified. The closest parent navigation
+        node will be transitioned on navigation. However, the 
+        <span class="filename">browser</span> option can only be specified once 
+        per application.
+    </p>
 </div>
 
 <div class="content block">
@@ -77,4 +104,5 @@
             </tr>
         </tbody>
     </table>
+    <p>The specified model functions are executed at the end of the event when they are implemented on pane models.</p>
 </div>

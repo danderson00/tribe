@@ -54,7 +54,7 @@
     }
 
     this.dispose = function() {
-        TC.Utils.detachDocumentEvent('browser.go', onBrowserGo)
+        TC.Utils.detachDocumentEvent('browser.go', onBrowserGo);
     };
     
     function normaliseOptions() {
@@ -66,7 +66,8 @@
     }
     
     function setInitialPaneState() {
-        var urlState = options.browser && options.browser.paneOptionsFrom(window.location.search);
+        var query = window.location.href.replace(window.location.origin + window.location.pathname, '');
+        var urlState = options.browser && options.browser.paneOptionsFrom(query);
         if (urlState) {
             node.pane.path = urlState.path;
             node.pane.data = urlState.data;

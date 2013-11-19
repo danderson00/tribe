@@ -14,7 +14,7 @@
     };
     var currentAction = popActions.raiseEvent;
 
-    TC.Utils.handleDocumentEvent('popstate', executeCurrentAction);
+    window.addEventListener('popstate', executeCurrentAction);
 
     function executeCurrentAction(e) {
         if (e.state !== null) currentAction(e);
@@ -35,11 +35,11 @@
     };
 
     this.dispose = function () {
-        TC.Utils.detachDocumentEvent('popstate', executeCurrentAction);
+        window.removeEventListener('popstate', executeCurrentAction);
     };
 };
 
-if (window.history.pushState)
+if (window.history.pushState && window.addEventListener)
     TC.history = new TC.Types.History(window.history);
 else
     TC.history = new TC.Types.History({
