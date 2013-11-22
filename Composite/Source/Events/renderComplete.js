@@ -3,9 +3,7 @@
         TC.transition(pane, pane.transition, pane.reverseTransitionIn)['in']())
      .done(executeRenderComplete);
     
-    setTimeout(function() {
-        pane.endRender();
-    });
+    pane.endRender();
 
     function executeRenderComplete() {
         if (pane.model.renderComplete)

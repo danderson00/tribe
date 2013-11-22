@@ -66,7 +66,8 @@
     }
     
     function setInitialPaneState() {
-        var query = window.location.href.replace(window.location.origin + window.location.pathname, '');
+        var query = window.location.href.match(/\#.*/);
+        if (query) query = query[0].substring(1);
         var urlState = options.browser && options.browser.paneOptionsFrom(query);
         if (urlState) {
             node.pane.path = urlState.path;

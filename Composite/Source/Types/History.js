@@ -14,7 +14,9 @@
     };
     var currentAction = popActions.raiseEvent;
 
-    window.addEventListener('popstate', executeCurrentAction);
+    // this leaves IE7 & 8 high and dry. We'll probably require a polyfill and create a generic event subscription method
+    if(window.addEventListener)
+        window.addEventListener('popstate', executeCurrentAction);
 
     function executeCurrentAction(e) {
         if (e.state !== null) currentAction(e);
@@ -39,7 +41,7 @@
     };
 };
 
-if (window.history.pushState && window.addEventListener)
+if (window.history.pushState)
     TC.history = new TC.Types.History(window.history);
 else
     TC.history = new TC.Types.History({

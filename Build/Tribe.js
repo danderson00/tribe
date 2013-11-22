@@ -1232,7 +1232,9 @@ TC.Types.History = function (history) {
     };
     var currentAction = popActions.raiseEvent;
 
-    window.addEventListener('popstate', executeCurrentAction);
+    // this leaves IE7 & 8 high and dry. We'll probably require a polyfill and create a generic event subscription method
+    if(window.addEventListener)
+        window.addEventListener('popstate', executeCurrentAction);
 
     function executeCurrentAction(e) {
         if (e.state !== null) currentAction(e);
@@ -1257,7 +1259,7 @@ TC.Types.History = function (history) {
     };
 };
 
-if (window.history.pushState && window.addEventListener)
+if (window.history.pushState)
     TC.history = new TC.Types.History(window.history);
 else
     TC.history = new TC.Types.History({
@@ -1427,7 +1429,8 @@ TC.Types.Navigation = function (node, options) {
     }
     
     function setInitialPaneState() {
-        var query = window.location.href.replace(window.location.origin + window.location.pathname, '');
+        var query = window.location.href.match(/\#.*/);
+        if (query) query = query[0].substring(1);
         var urlState = options.browser && options.browser.paneOptionsFrom(query);
         if (urlState) {
             node.pane.path = urlState.path;
@@ -1717,9 +1720,7 @@ TC.Events.renderComplete = function (pane, context) {
         TC.transition(pane, pane.transition, pane.reverseTransitionIn)['in']())
      .done(executeRenderComplete);
     
-    setTimeout(function() {
-        pane.endRender();
-    });
+    pane.endRender();
 
     function executeRenderComplete() {
         if (pane.model.renderComplete)
@@ -2124,6 +2125,33 @@ TC.options.defaultUrlProvider = {
     TC.nodeFor = function (element) {
         return element && TC.Utils.extractNode(ko.contextFor($(element)[0]));
     };
+})();
+
+// BindingHandlers/foreachProperty.js
+(function() {
+    ko.bindingHandlers.foreachProperty = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            return ko.bindingHandlers.foreach.init(element, makeAccessor(mapToArray(valueAccessor())), allBindingsAccessor, viewModel, bindingContext);
+        },
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            return ko.bindingHandlers.foreach.update(element, makeAccessor(mapToArray(valueAccessor())), allBindingsAccessor, viewModel, bindingContext);
+        }
+    };
+    
+    function makeAccessor(source) {
+        return function() {
+            return source;
+        };
+    }
+
+    function mapToArray(source) {
+        var result = [];
+        for (var property in source)
+            if (source.hasOwnProperty(property))
+                // we don't want to modify the original object, extend it onto a new object
+                result.push($.extend({ $key: property }, source[property]));
+        return result;
+    }
 })();
 
 // BindingHandlers/navigate.js

@@ -1,7 +1,7 @@
 ﻿var articleUrlProvider = {
     urlDataFrom: function(options) {
         return {
-            url: Navigation.isHome(options.data) ? window.location.pathname : '?section=' + encodeURI(options.data.section) + '&topic=' + encodeURI(options.data.topic)
+            url: Navigation.isHome(options.data) ? window.location.pathname : '#section=' + encodeURI(options.data.section) + '&topic=' + encodeURI(options.data.topic)
         };
     },
     paneOptionsFrom: function (querystring) {

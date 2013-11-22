@@ -10,7 +10,7 @@ Article = {
 var articleUrlProvider = {
     urlDataFrom: function(options) {
         return {
-            url: Navigation.isHome(options.data) ? window.location.pathname : '?section=' + encodeURI(options.data.section) + '&topic=' + encodeURI(options.data.topic)
+            url: Navigation.isHome(options.data) ? window.location.pathname : '#section=' + encodeURI(options.data.section) + '&topic=' + encodeURI(options.data.topic)
         };
     },
     paneOptionsFrom: function (querystring) {
@@ -26,7 +26,7 @@ var articleUrlProvider = {
         }
     }
 };
-// Infrastructure/Navigation.js
+// Infrastructure/navigation.js
 Navigation = {
     isHome: function(article) {
         return article && article.section === 'About' && article.topic === 'home';
