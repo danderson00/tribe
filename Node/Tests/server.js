@@ -1,0 +1,1 @@
+﻿require('Tribe.Server').start();

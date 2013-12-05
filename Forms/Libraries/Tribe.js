@@ -2225,9 +2225,9 @@ TC.Loggers.console = function(level, message) {
 };
 // client.js
 Tribe = window.Tribe || {};
-Tribe.MessageHub = Tribe.MessageHub || {};
+Tribe.SignalR = Tribe.SignalR || {};
 
-Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
+Tribe.SignalR.Client = function (pubsub, hub, publisher) {
     var self = this;
 
     var startConnection;
@@ -2303,10 +2303,10 @@ Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
     window.TMH = {
         initialise: function (pubsub, url) {
             initialiseSignalR(url || 'signalr');
-            $.extend(TMH, new Tribe.MessageHub.Client(
+            $.extend(TMH, new Tribe.SignalR.Client(
                 pubsub,
                 $.connection.hubImplementation,
-                new Tribe.MessageHub.Publisher($.connection.hubImplementation)));
+                new Tribe.SignalR.Publisher($.connection.hubImplementation)));
         },
         publishToServer: notInitialised,
         joinChannel: notInitialised,
@@ -2314,7 +2314,7 @@ Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
     };
     
     function notInitialised() {
-        throw "Tribe.MessageHub must be initialised before use by calling TMH.initialise(pubsub, url)";
+        throw "Tribe.SignalR must be initialised before use by calling TMH.initialise(pubsub, url)";
     }
 
     function initialiseSignalR(url) {
@@ -2405,9 +2405,9 @@ Tribe.MessageHub.Client = function (pubsub, hub, publisher) {
 
 // Publisher.js
 Tribe = window.Tribe || {};
-Tribe.MessageHub = Tribe.MessageHub || {};
+Tribe.SignalR = Tribe.SignalR || {};
 
-Tribe.MessageHub.Publisher = function (hub) {
+Tribe.SignalR.Publisher = function (hub) {
     var self = this;
     var queue = [];
 

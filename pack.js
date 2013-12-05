@@ -3,17 +3,15 @@ sync({
     include: [
         'Composite/Build/*.js',
         'Forms/Build/*.js',
-        'MessageHub/Client/Build/*.js',
+        'SignalR/Client/Build/*.js',
         'Mobile/Build/*.js',
-        'PubSub/Build/*.js'
+        'PubSub/Build/*.js',
+        'Node/Build/*.js'
     ],
     recursive: true
 });
 
-sync({
-    to: 'Build/Binaries',
-    include: 'MessageHub/Build/Debug/Tribe.MessageHub.*.dll'
-});
+sync('MessageHub/Build/Debug/Tribe.SignalR.*.dll').to('Build/Binaries');
 
 zip({
     to: 'Tribe.zip',
@@ -22,7 +20,7 @@ zip({
 });
 
 pack([
-    T.webDependency('Composite/Build/Tribe.Composite'),
-    T.webDependency('MessageHub/Client/Build/Tribe.MessageHub')
+    T.webDependency('Build/Components/Tribe.Composite'),
+    T.webDependency('Build/Components/Tribe.SignalR')
 ])
 .to(T.webTargets('Build/Tribe'));

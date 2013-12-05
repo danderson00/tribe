@@ -50,6 +50,7 @@
     <Content Include="Samples\Transitions\target2.htm" />
     <Content Include="Samples\Transitions\target3.htm" />
     <Content Include="Source\Api\defaultUrlProvider.js" />
+    <Content Include="Source\BindingHandlers\foreachProperty.js" />
     <Content Include="Source\BindingHandlers\navigateBack.js" />
     <Content Include="Source\BindingHandlers\navigate.js" />
     <Content Include="Source\BindingHandlers\publish.js" />

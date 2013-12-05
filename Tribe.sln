@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tribe.MessageHub", "Tribe.MessageHub", "{AE3C4599-3F02-4694-98D0-99D0EA780822}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Components", "Components\Tribe.Components.csproj", "{EE7CB480-F822-4760-826C-920E94A53C2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Composite", "Composite\Tribe.Composite.csproj", "{4CCA4E09-0727-4038-AD5E-D40D709D7E22}"
@@ -15,24 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.PubSub", "PubSub\Trib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Reference", "Reference\Tribe.Reference.csproj", "{4589880D-8B80-4150-B014-E005F1ECA26F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buses.NServiceBus", "MessageHub\Buses\NServiceBus\Buses.NServiceBus.csproj", "{C98B2BDE-8DF0-4F83-BA9E-BA90CB09FA87}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPersisters.SqlServer", "MessageHub\ChannelPersisters\ChannelPersisters.SqlServer\ChannelPersisters.SqlServer.csproj", "{C3D27350-532C-4EA7-A984-5FCD68AA037A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "MessageHub\Client\Client.csproj", "{9D2F0302-1032-4F95-959B-FD789FA1677C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity", "MessageHub\Containers\Unity\Unity.csproj", "{5778A767-C424-4602-A097-298F7A1A3D70}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "MessageHub\Core\Core.csproj", "{3A44BDBA-DAB4-4B90-AE73-9BB82FEC0120}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "MessageHub\Interfaces\Interfaces.csproj", "{09F75416-657A-477E-BC20-EB201B34069F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "MessageHub\Tests\Tests.csproj", "{A6B72826-C5EF-4CC0-A007-EACD3A58F65C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{03E4F0F7-BD17-49F4-AC62-05FF5974251E}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		index.html = index.html
+		node.pack.js = node.pack.js
 		pack.js = pack.js
 		README.md = README.md
 		Tribe.zip = Tribe.zip
@@ -40,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{839161CD-9546-42A5-A2EB-265D71C7EB9C}"
 	ProjectSection(SolutionItems) = preProject
-		Build\Tribe.chrome.js = Build\Tribe.chrome.js
+		Build\Tribe.debug.js = Build\Tribe.debug.js
 		Build\Tribe.js = Build\Tribe.js
 		Build\Tribe.min.js = Build\Tribe.min.js
 	EndProjectSection
@@ -86,35 +71,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{6F
 		Build\Binaries\NServiceBus.pdb = Build\Binaries\NServiceBus.pdb
 		Build\Binaries\NServiceBus.xml = Build\Binaries\NServiceBus.xml
 		Build\Binaries\Owin.dll = Build\Binaries\Owin.dll
-		Build\Binaries\Tribe.MessageHub.Buses.NServiceBus.dll = Build\Binaries\Tribe.MessageHub.Buses.NServiceBus.dll
-		Build\Binaries\Tribe.MessageHub.Buses.NServiceBus.pdb = Build\Binaries\Tribe.MessageHub.Buses.NServiceBus.pdb
-		Build\Binaries\Tribe.MessageHub.ChannelPersisters.SqlServer.dll = Build\Binaries\Tribe.MessageHub.ChannelPersisters.SqlServer.dll
-		Build\Binaries\Tribe.MessageHub.ChannelPersisters.SqlServer.pdb = Build\Binaries\Tribe.MessageHub.ChannelPersisters.SqlServer.pdb
-		Build\Binaries\Tribe.MessageHub.Containers.Unity.dll = Build\Binaries\Tribe.MessageHub.Containers.Unity.dll
-		Build\Binaries\Tribe.MessageHub.Containers.Unity.pdb = Build\Binaries\Tribe.MessageHub.Containers.Unity.pdb
-		Build\Binaries\Tribe.MessageHub.Core.dll = Build\Binaries\Tribe.MessageHub.Core.dll
-		Build\Binaries\Tribe.MessageHub.Core.pdb = Build\Binaries\Tribe.MessageHub.Core.pdb
-		Build\Binaries\Tribe.MessageHub.Interfaces.dll = Build\Binaries\Tribe.MessageHub.Interfaces.dll
-		Build\Binaries\Tribe.MessageHub.Interfaces.pdb = Build\Binaries\Tribe.MessageHub.Interfaces.pdb
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{78BE0F69-84EA-4CD9-BB19-B71CB3F25744}"
 	ProjectSection(SolutionItems) = preProject
-		Build\Components\Tribe.Composite.chrome.js = Build\Components\Tribe.Composite.chrome.js
+		Build\Components\Tribe.Composite.debug.js = Build\Components\Tribe.Composite.debug.js
 		Build\Components\Tribe.Composite.js = Build\Components\Tribe.Composite.js
 		Build\Components\Tribe.Composite.min.js = Build\Components\Tribe.Composite.min.js
-		Build\Components\Tribe.Forms.chrome.js = Build\Components\Tribe.Forms.chrome.js
+		Build\Components\Tribe.Forms.debug.js = Build\Components\Tribe.Forms.debug.js
 		Build\Components\Tribe.Forms.js = Build\Components\Tribe.Forms.js
 		Build\Components\Tribe.Forms.min.js = Build\Components\Tribe.Forms.min.js
-		Build\Components\Tribe.MessageHub.chrome.js = Build\Components\Tribe.MessageHub.chrome.js
-		Build\Components\Tribe.MessageHub.js = Build\Components\Tribe.MessageHub.js
-		Build\Components\Tribe.MessageHub.min.js = Build\Components\Tribe.MessageHub.min.js
-		Build\Components\Tribe.Mobile.chrome.js = Build\Components\Tribe.Mobile.chrome.js
+		Build\Components\Tribe.Mobile.debug.js = Build\Components\Tribe.Mobile.debug.js
 		Build\Components\Tribe.Mobile.js = Build\Components\Tribe.Mobile.js
 		Build\Components\Tribe.Mobile.min.js = Build\Components\Tribe.Mobile.min.js
-		Build\Components\Tribe.PubSub.chrome.js = Build\Components\Tribe.PubSub.chrome.js
+		Build\Components\Tribe.Node.js = Build\Components\Tribe.Node.js
+		Build\Components\Tribe.PubSub.debug.js = Build\Components\Tribe.PubSub.debug.js
 		Build\Components\Tribe.PubSub.js = Build\Components\Tribe.PubSub.js
 		Build\Components\Tribe.PubSub.min.js = Build\Components\Tribe.PubSub.min.js
+		Build\Components\Tribe.SignalR.debug.js = Build\Components\Tribe.SignalR.debug.js
+		Build\Components\Tribe.SignalR.js = Build\Components\Tribe.SignalR.js
+		Build\Components\Tribe.SignalR.min.js = Build\Components\Tribe.SignalR.min.js
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BDA0D532-7669-4244-AFE4-601AFBDCA82F}"
@@ -124,6 +100,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BDA0D532
 		Build\Components\Tests\Tribe.MessageHub.tests.js = Build\Components\Tests\Tribe.MessageHub.tests.js
 		Build\Components\Tests\Tribe.PubSub.tests.js = Build\Components\Tests\Tribe.PubSub.tests.js
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tribe.SignalR", "Tribe.SignalR", "{6F142427-3C54-4C4D-824B-F5C3ACF46E8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buses.NServiceBus", "SignalR\Buses\NServiceBus\Buses.NServiceBus.csproj", "{C98B2BDE-8DF0-4F83-BA9E-BA90CB09FA87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPersisters.SqlServer", "SignalR\ChannelPersisters\ChannelPersisters.SqlServer\ChannelPersisters.SqlServer.csproj", "{C3D27350-532C-4EA7-A984-5FCD68AA037A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "SignalR\Client\Client.csproj", "{9D2F0302-1032-4F95-959B-FD789FA1677C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity", "SignalR\Containers\Unity\Unity.csproj", "{5778A767-C424-4602-A097-298F7A1A3D70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "SignalR\Core\Core.csproj", "{3A44BDBA-DAB4-4B90-AE73-9BB82FEC0120}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "SignalR\Interfaces\Interfaces.csproj", "{09F75416-657A-477E-BC20-EB201B34069F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "SignalR\Tests\Tests.csproj", "{A6B72826-C5EF-4CC0-A007-EACD3A58F65C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Node", "Node\Tribe.Node.csproj", "{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -155,6 +149,18 @@ Global
 		{4589880D-8B80-4150-B014-E005F1ECA26F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4589880D-8B80-4150-B014-E005F1ECA26F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4589880D-8B80-4150-B014-E005F1ECA26F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1D207D-17E0-499E-A77D-4FB969BAB658}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1D207D-17E0-499E-A77D-4FB969BAB658}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1D207D-17E0-499E-A77D-4FB969BAB658}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1D207D-17E0-499E-A77D-4FB969BAB658}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6540CDD7-5049-41AA-9637-910E8C15A718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6540CDD7-5049-41AA-9637-910E8C15A718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6540CDD7-5049-41AA-9637-910E8C15A718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6540CDD7-5049-41AA-9637-910E8C15A718}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C98B2BDE-8DF0-4F83-BA9E-BA90CB09FA87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C98B2BDE-8DF0-4F83-BA9E-BA90CB09FA87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C98B2BDE-8DF0-4F83-BA9E-BA90CB09FA87}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -183,36 +189,28 @@ Global
 		{A6B72826-C5EF-4CC0-A007-EACD3A58F65C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6B72826-C5EF-4CC0-A007-EACD3A58F65C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6B72826-C5EF-4CC0-A007-EACD3A58F65C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E1D207D-17E0-499E-A77D-4FB969BAB658}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E1D207D-17E0-499E-A77D-4FB969BAB658}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E1D207D-17E0-499E-A77D-4FB969BAB658}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E1D207D-17E0-499E-A77D-4FB969BAB658}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6540CDD7-5049-41AA-9637-910E8C15A718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6540CDD7-5049-41AA-9637-910E8C15A718}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6540CDD7-5049-41AA-9637-910E8C15A718}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6540CDD7-5049-41AA-9637-910E8C15A718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C98B2BDE-8DF0-4F83-BA9E-BA90CB09FA87} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
-		{C3D27350-532C-4EA7-A984-5FCD68AA037A} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
-		{9D2F0302-1032-4F95-959B-FD789FA1677C} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
-		{5778A767-C424-4602-A097-298F7A1A3D70} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
-		{3A44BDBA-DAB4-4B90-AE73-9BB82FEC0120} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
-		{09F75416-657A-477E-BC20-EB201B34069F} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
-		{A6B72826-C5EF-4CC0-A007-EACD3A58F65C} = {AE3C4599-3F02-4694-98D0-99D0EA780822}
 		{6FE1C6A9-283A-41CE-BFAF-5E3117E05A20} = {839161CD-9546-42A5-A2EB-265D71C7EB9C}
 		{78BE0F69-84EA-4CD9-BB19-B71CB3F25744} = {839161CD-9546-42A5-A2EB-265D71C7EB9C}
 		{4E1D207D-17E0-499E-A77D-4FB969BAB658} = {A65B7D4A-597A-4A24-8E90-0AC2524FF465}
 		{3D3B2C2F-7482-4CB4-ABEB-79231DEC8D81} = {A65B7D4A-597A-4A24-8E90-0AC2524FF465}
 		{6540CDD7-5049-41AA-9637-910E8C15A718} = {A65B7D4A-597A-4A24-8E90-0AC2524FF465}
 		{BDA0D532-7669-4244-AFE4-601AFBDCA82F} = {78BE0F69-84EA-4CD9-BB19-B71CB3F25744}
+		{C98B2BDE-8DF0-4F83-BA9E-BA90CB09FA87} = {6F142427-3C54-4C4D-824B-F5C3ACF46E8E}
+		{C3D27350-532C-4EA7-A984-5FCD68AA037A} = {6F142427-3C54-4C4D-824B-F5C3ACF46E8E}
+		{9D2F0302-1032-4F95-959B-FD789FA1677C} = {6F142427-3C54-4C4D-824B-F5C3ACF46E8E}
+		{5778A767-C424-4602-A097-298F7A1A3D70} = {6F142427-3C54-4C4D-824B-F5C3ACF46E8E}
+		{3A44BDBA-DAB4-4B90-AE73-9BB82FEC0120} = {6F142427-3C54-4C4D-824B-F5C3ACF46E8E}
+		{09F75416-657A-477E-BC20-EB201B34069F} = {6F142427-3C54-4C4D-824B-F5C3ACF46E8E}
+		{A6B72826-C5EF-4CC0-A007-EACD3A58F65C} = {6F142427-3C54-4C4D-824B-F5C3ACF46E8E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35

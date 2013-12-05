@@ -20,7 +20,8 @@
         { name: 'first', type: 'String | Array', description: 'Alias for prioritise.' },
         { name: 'last', type: 'String | Array', description: 'Specified file(s) will be included at the bottom of the output file.' },
         { name: 'includeConfigs', type: 'Boolean', description: 'PackScript configuration files are excluded by default. Overrides this behaviour.' },
-        { name: 'minify', type: 'Boolean', description: 'Minify resources using the configured minifier.' },
+        { name: 'json', type: 'Any', description: 'Stringifies the provided object as the output. Overrides the output of any included files.' },
+        { name: 'minify', type: 'Boolean', description: 'Minify resources using the configured minifier.' },        
         { name: 'sass', type: 'Boolean', description: 'Compile included SASS resources using the configured compiler.' },
         { name: 'xdt', type: 'String | Array', description: 'Apply specified XDT transformations to included files.' }
     ],
