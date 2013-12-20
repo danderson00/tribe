@@ -7,11 +7,11 @@
             loader: new TC.Types.Loader(),
             options: TC.options,
             templates: new TC.Types.Templates(),
-            loadedPanes: {},
-            pubsub: Tribe.PubSub && new Tribe.PubSub({ sync: TC.options.synchronous, handleExceptions: TC.options.handleExceptions })
+            loadedPanes: {}
         };
         var perContextState = {
-            renderOperation: new TC.Types.Operation()
+            renderOperation: new TC.Types.Operation(),
+            pubsub: TC.options.pubsub
         };
         return $.extend({}, staticState, perContextState, source);
     };

@@ -7,6 +7,7 @@ TF.Tests = {
         ko.applyBindings(model, $qunit[0]);
     }
 };
+
 // extenders.tests.js
 module('extenders');
 
@@ -20,6 +21,7 @@ test("Extending observables sets metadata", function() {
     equal(observable.metadata.type, 'type');
     equal(observable.metadata.displayText, 'displayText');
 });
+
 // render.tests.js
 module('render');
 
@@ -45,6 +47,7 @@ test("id attribute of input element is set if specified", function() {
     TF.render('text', '#qunit-fixture', { value: '', id: 'testid' });
     equal($('#testid').length, 1);
 });
+
 // scaffold.tests.js
 module('scaffold');
 
@@ -89,6 +92,7 @@ test("select template is rendered correctly from scaffold", function () {
     equal($('#qunit-fixture option').length, 3);
     equal($('#qunit-fixture option:eq(1)').text(), 'two');
 });
+
 // Utils.tests.js
 (function () {
     module('Utils');
@@ -129,6 +133,7 @@ test("select template is rendered correctly from scaffold", function () {
     });
 })();
 
+
 // Integration/factory.tests.js
 (function () {
     var model;
@@ -162,6 +167,7 @@ test("select template is rendered correctly from scaffold", function () {
     };
 
 })();
+
 
 // Integration/fields.tests.js
 (function () {
@@ -254,6 +260,7 @@ test("select template is rendered correctly from scaffold", function () {
     };
 })();
 
+
 // Integration/scaffold.tests.js
 module('Integration.scaffold');
 
@@ -268,6 +275,7 @@ test("scaffold renders fields from model", function () {
     equal($('#qunit-fixture input[type=text]').length, 1);
     equal($('#qunit-fixture input[type=password]').length, 1);
 });
+
 //
 window.__appendTemplate = function (content, id) {
     var element = document.createElement('script');
@@ -277,6 +285,8 @@ window.__appendTemplate = function (content, id) {
     element.text = content;
     document.getElementsByTagName('head')[0].appendChild(element);
 };//
-window.__appendTemplate('<div class="createProperties" data-bind="factory: data, create: true">\n    <div data-bind="textField: \'text2\', defaultValue: \'test\'"></div>    \n</div>\n\n<div class="createObject" data-bind="factory: \'data.created\', create: true">\n    <div data-bind="textField: \'text3\', defaultValue: \'test\'"></div>        \n</div>\n\n<div class="newObject" data-bind="factory: {}, create: true">\n    <div data-bind="textField: \'text4\', defaultValue: \'test\'"></div>\n    <div data-bind="textField: \'text5.text6\', defaultValue: \'test\'"></div>\n    <button id="testButton" data-bind="click: testCreatedObject"></button>\n</div>', 'template--factory');//
-window.__appendTemplate('<div data-bind="displayField: display, displayText: \'label\'"></div>\n<div data-bind="textField: text, displayText: \'label\'"></div>\n<div data-bind="dateField: date, displayText: \'label\'"></div>\n<div data-bind="passwordField: password, displayText: \'label\'"></div>\n<div data-bind="selectField: simpleSelect, displayText: \'label\', items: [\'1\', \'2\', \'3\']"></div>\n<div data-bind="selectField: objectSelect, displayText: \'label\', items: list, optionsText: \'text\'"></div>\n<div data-bind="radioField: radio, displayText: \'label\', items: [\'1\', \'2\', \'3\']"></div>\n<div data-bind="booleanField: boolean, displayText: \'label\'"></div>\n', 'template--fields');//
+window.__appendTemplate('<div class="createProperties" data-bind="factory: data, create: true">\n    <div data-bind="textField: \'text2\', defaultValue: \'test\'"></div>    \n</div>\n\n<div class="createObject" data-bind="factory: \'data.created\', create: true">\n    <div data-bind="textField: \'text3\', defaultValue: \'test\'"></div>        \n</div>\n\n<div class="newObject" data-bind="factory: {}, create: true">\n    <div data-bind="textField: \'text4\', defaultValue: \'test\'"></div>\n    <div data-bind="textField: \'text5.text6\', defaultValue: \'test\'"></div>\n    <button id="testButton" data-bind="click: testCreatedObject"></button>\n</div>', 'template--factory');
+//
+window.__appendTemplate('<div data-bind="displayField: display, displayText: \'label\'"></div>\n<div data-bind="textField: text, displayText: \'label\'"></div>\n<div data-bind="dateField: date, displayText: \'label\'"></div>\n<div data-bind="passwordField: password, displayText: \'label\'"></div>\n<div data-bind="selectField: simpleSelect, displayText: \'label\', items: [\'1\', \'2\', \'3\']"></div>\n<div data-bind="selectField: objectSelect, displayText: \'label\', items: list, optionsText: \'text\'"></div>\n<div data-bind="radioField: radio, displayText: \'label\', items: [\'1\', \'2\', \'3\']"></div>\n<div data-bind="booleanField: boolean, displayText: \'label\'"></div>\n', 'template--fields');
+//
 window.__appendTemplate('<div data-bind="scaffold: $data"></div>', 'template--scaffold');

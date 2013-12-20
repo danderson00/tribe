@@ -1,3 +1,55 @@
+// Channel.tests.js
+(function() {
+    var pubsub;
+    var channel;
+
+    module('Channel', {
+        setup: function() {
+            pubsub = new Tribe.PubSub({ sync: true });
+            channel = pubsub.channel('channel');
+        }
+    });
+
+    test("Channel publishes messages with channelId set", function () {
+        var spy = sinon.spy();
+        pubsub.subscribe('*', spy);
+        channel.publish('topic');
+        ok(spy.calledOnce);
+        equal(spy.firstCall.args[1].channelId, 'channel');
+    });
+
+    test("Channel only subscribes to messages with correct channelId set", function() {
+        var spy = sinon.spy();
+        channel.subscribe('topic', spy);
+        pubsub.publish({ topic: 'topic' });
+        pubsub.publish({ topic: 'topic', channelId: 'other' });
+        equal(spy.callCount, 0);
+        pubsub.publish({ topic: 'topic', channelId: 'channel' });
+        equal(spy.callCount, 1);
+        channel.publish({ topic: 'topic' });
+        equal(spy.callCount, 2);
+    });
+
+    test("Channel unsubscribe works as expected", function() {
+        var spy = sinon.spy();
+        var token = channel.subscribe('topic', spy);
+        channel.publish({ topic: 'topic' });
+        equal(spy.callCount, 1);
+        channel.unsubscribe(token);
+        channel.publish({ topic: 'topic' });
+        equal(spy.callCount, 1);
+    });
+
+    //test("", function () {
+    //});
+
+    //test("", function () {
+    //});
+
+    //test("", function () {
+    //});
+})();
+
 // exceptions.tests.js
 (function () {
     var pubsub;
@@ -43,6 +95,7 @@
         throw ('some error');
     }
 })();
+
 
 // Lifetime.tests.js
 (function () {
@@ -146,6 +199,7 @@
     });
 })();
 
+
 // PubSub.publish.tests.js
 (function () {
     var pubsub;
@@ -231,6 +285,7 @@
     }
 })();
 
+
 // PubSub.subscribe.tests.js
 (function () {
     var pubsub;
@@ -286,6 +341,7 @@
     });
 })();
 
+
 // PubSub.unsubscribe.tests.js
 (function () {
     var pubsub;
@@ -325,6 +381,7 @@
         ok(!spy2.called, "Second subscription successful");
     });
 })();
+
 
 // Saga.tests.js
 (function () {
@@ -512,6 +569,7 @@
     }
 })();
 
+
 // subscribeOnce.tests.js
 (function () {
     var pubsub;
@@ -574,6 +632,7 @@
         ok(spy3.calledTwice);
     });
 })();
+
 
 // SubscriberList.tests.js
 (function() {
@@ -664,6 +723,7 @@
         equal(list.get("1test1").length, 1);
     });
 })();
+
 
 // utils.tests.js
 (function () {

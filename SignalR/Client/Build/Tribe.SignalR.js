@@ -64,6 +64,7 @@ Tribe.SignalR.Client = function (pubsub, hub, publisher) {
             });
     };
 };
+
 // initialise.js
 /*!
  * Based on ASP.NET SignalR JavaScript Library v1.0.0 http://signalr.net/
@@ -178,6 +179,7 @@ Tribe.SignalR.Client = function (pubsub, hub, publisher) {
     }
 })();
 
+
 // Publisher.js
 Tribe = window.Tribe || {};
 Tribe.SignalR = Tribe.SignalR || {};
@@ -222,6 +224,7 @@ Tribe.SignalR.Publisher = function (hub) {
             hub.connection.state === $.signalR.connectionState.connected;
     }
 };
+
 // PubSub.extensions.js
 Tribe.PubSub.prototype.joinChannel = function(channelId, replayOrOptions) {
     TMH.joinChannel(channelId, replayOrOptions);

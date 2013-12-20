@@ -23,7 +23,8 @@ QUnit.testDone(function () {
     TC.options = Test.defaultOptions();
 });
 
-TC.history.dispose();// Integration/Infrastructure/context.js
+TC.history.dispose();
+// Integration/Infrastructure/context.js
 TC.context = function (state) {
     Test.Integration.context = $.extend({
         models: new TC.Types.Models(),
@@ -36,6 +37,7 @@ TC.context = function (state) {
     }, state);
     return Test.Integration.context;
 };
+
 // Integration/Infrastructure/helpers.js
 (function () {
     var helpers = Test.Integration;
@@ -75,6 +77,7 @@ TC.context = function (state) {
     };
 })();
 
+
 // Integration/Infrastructure/pubsub.js
 Test.Integration.pubsubAsMock = function() {
     Test.Integration.pubsub = function() {
@@ -91,6 +94,7 @@ Test.Integration.pubsubAsTribe = function () {
 };
 
 Test.Integration.pubsubAsMock();
+
 // Integration/Infrastructure/supportsTransitions.js
 Test.supportsTransitions = (function() {
     var b = document.body || document.documentElement;
@@ -108,6 +112,7 @@ Test.supportsTransitions = (function() {
 
     return false;
 })();
+
 
 // Unit/Infrastructure/context.js
 Test.Unit.context = function () {
@@ -145,6 +150,7 @@ Test.Unit.context = function () {
     sinon.spy(context.templates, 'render');
     return context;
 };
+
 // Unit/Infrastructure/events.js
 Test.raiseDocumentEvent = function(name, eventData, state) {
     var e;
@@ -165,9 +171,11 @@ Test.raiseDocumentEvent = function(name, eventData, state) {
     else
         document.fireEvent("on" + e.eventType, e);
 };
+
 // Unit/Infrastructure/featureDetection.js
 Test.supportsMutationEvents = ("MutationEvent" in window);
 Test.supportsHistory = ("onpopstate" in window);
+
 
 // Unit/Infrastructure/node.js
 Test.Unit.node = function () {
@@ -179,6 +187,7 @@ Test.Unit.node = function () {
         nodeForPath: function() { return this; }
     };
 };
+
 // Unit/Infrastructure/pane.js
 Test.pane = function () {
     return {
@@ -193,6 +202,7 @@ Test.pane = function () {
         dispose: function () { }
     };
 };
+
 // Unit/Utilities/bindingHandlers.tests.js
 (function() {
     module('Unit.Utilities.bindingHandlers');
@@ -216,12 +226,13 @@ Test.pane = function () {
     }
 })();
 
+
 // Unit/Utilities/collections.tests.js
 module('Unit.Utilities.collections');
 
 test("each executes iterator for each item of array, passing value and index", function () {
     var spy = sinon.spy();
-    T.each(['1', '2'], spy);
+    TC.Utils.each(['1', '2'], spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 0);
@@ -231,7 +242,7 @@ test("each executes iterator for each item of array, passing value and index", f
 
 test("each executes iterator for each property of object, passing value and property name", function () {
     var spy = sinon.spy();
-    T.each({ test1: '1', test2: '2' }, spy);
+    TC.Utils.each({ test1: '1', test2: '2' }, spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 'test1');
@@ -241,7 +252,7 @@ test("each executes iterator for each property of object, passing value and prop
 
 test("map executes iterator for each item of array, passing value and index", function () {
     var spy = sinon.spy();
-    T.map(['1', '2'], spy);
+    TC.Utils.map(['1', '2'], spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 0);
@@ -251,7 +262,7 @@ test("map executes iterator for each item of array, passing value and index", fu
 
 test("map executes iterator for each property of object, passing value and property name", function () {
     var spy = sinon.spy();
-    T.map({ test1: '1', test2: '2' }, spy);
+    TC.Utils.map({ test1: '1', test2: '2' }, spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 'test1');
@@ -260,7 +271,7 @@ test("map executes iterator for each property of object, passing value and prope
 });
 
 test("map does not flatten arrays", function() {
-    var result = T.map([1, 2], function () { return [3, 4]; });
+    var result = TC.Utils.map([1, 2], function () { return [3, 4]; });
     equal(result.length, 2);
     deepEqual(result[0], [3, 4]);
     deepEqual(result[1], [3, 4]);
@@ -268,13 +279,13 @@ test("map does not flatten arrays", function() {
 
 test("map returns empty array for undefined input", function() {
     var spy = sinon.spy();
-    deepEqual(T.map(undefined, spy), []);
+    deepEqual(TC.Utils.map(undefined, spy), []);
     ok(spy.notCalled);
 });
 
 test("filter executes once for each item of array", function() {
     var spy = sinon.spy();
-    T.filter(['1', '2'], spy);
+    TC.Utils.filter(['1', '2'], spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 0);
@@ -284,7 +295,7 @@ test("filter executes once for each item of array", function() {
 
 test("filter executes once for each property of object", function () {
     var spy = sinon.spy();
-    T.filter({ test1: '1', test2: '2' }, spy);
+    TC.Utils.filter({ test1: '1', test2: '2' }, spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 'test1');
@@ -293,19 +304,19 @@ test("filter executes once for each property of object", function () {
 });
 
 test("filter returns array of values filtered by iterator function", function() {
-    var result = T.filter(['1', '2'], function (item) { return item !== '1'; });
+    var result = TC.Utils.filter(['1', '2'], function (item) { return item !== '1'; });
     equal(result.length, 1);
     equal(result[0], '2');
 });
 
 test("filter returns empty array for undefined input", function () {
     var spy = sinon.spy();
-    deepEqual(T.filter(undefined, spy), []);
+    deepEqual(TC.Utils.filter(undefined, spy), []);
     ok(spy.notCalled);
 });
 
 test("pluck returns property value from each object in array", function() {
-    var result = T.pluck([
+    var result = TC.Utils.pluck([
         { one: 'a', two: 'b' },
         { one: 'c', two: 'd' },
         { one: 'e', two: 'f' }
@@ -317,7 +328,7 @@ test("pluck returns property value from each object in array", function() {
 test("reduce executes reduceFunction with expected arguments", function() {
     var spy = sinon.spy();
     var list = [1, 2];
-    T.reduce(list, 'initial', spy);
+    TC.Utils.reduce(list, 'initial', spy);
 
     equal(spy.callCount, 2);
     deepEqual(spy.firstCall.args, ['initial', 1, 0, list]);
@@ -325,11 +336,12 @@ test("reduce executes reduceFunction with expected arguments", function() {
 });
 
 test("reduce returns expected result", function() {
-    var result = T.reduce([1, 2, 3, 4], 10, function(memo, value) {
+    var result = TC.Utils.reduce([1, 2, 3, 4], 10, function(memo, value) {
         return memo + value;
     });
     equal(result, 20);
 });
+
 // Unit/Utilities/deparam.tests.js
 (function () {
     // these are based on tests from https://github.com/cowboy/jquery-bbq/, Copyright (c) 2010 "Cowboy" Ben Alman and also released under the MIT license
@@ -347,6 +359,7 @@ test("reduce returns expected result", function() {
         deepEqual(TC.Utils.deparam(params_str, true), params_obj_coerce);
     });
 })();
+
 // Unit/Utilities/elementDestroyed.tests.js
 module('Unit.Utilities.elementDestroyed');
 
@@ -374,6 +387,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         start();
     }
 });
+
 
 // Unit/Utilities/events.tests.js
 (function() {
@@ -433,6 +447,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     }
 })();
 
+
 // Unit/Utilities/idGenerator.tests.js
 (function () {
     module('Unit.Utilities.idGenerator');
@@ -452,6 +467,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         equal(TC.Utils.getUniqueId(), 2);
     });
 })();
+
 
 // Unit/Utilities/jquery.complete.tests.js
 (function () {
@@ -480,6 +496,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 })();
 
+
 // Unit/Utilities/nodes.tests.js
 (function() {
     module('Unit.Utilities.nodes', {
@@ -504,6 +521,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         return TC.Events.spy.firstCall.args[0];
     }
 })();
+
 
 // Unit/Utilities/objects.tests.js
 (function() {
@@ -573,6 +591,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         }
     });
 })();
+
 // Unit/Utilities/panes.tests.js
 (function () {
     var utils = TC.Utils;
@@ -586,6 +605,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         deepEqual(utils.getPaneOptions({ path: 'test' }, { data: 'data' }), { path: 'test', data: 'data' }, "accepts options object and merges other options");
     });
 })();
+
 
 // Unit/Utilities/Path.tests.js
 (function () {
@@ -683,6 +703,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 })();
 
+
 // Unit/Utilities/querystring.tests.js
 (function () {
     module('Unit.Utilities.querystring');
@@ -734,6 +755,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         deepEqual(querystring.parse('test[test2][][test3]=t'), { test: { test2: [{ test3: 't' }] } });
     });
 })();
+
 
 // Unit/Types/Flow.tests.js
 (function () {
@@ -898,6 +920,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     }
 })();
 
+
 // Unit/Types/History.tests.js
 (function () {
     var history;
@@ -973,6 +996,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     }
 })();
 
+
 // Unit/Types/Loader.tests.js
 (function() {
     var resources;
@@ -1033,42 +1057,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 })();
 
-// Unit/Types/Logger.tests.js
-(function() {
-    var logger;
 
-    module("Unit.Types.Logger", {
-        setup: function () {
-            TC.Loggers.test = sinon.spy();
-            logger = new TC.Types.Logger();
-            logger.setLogger('test');
-        }
-    });
-
-    test("logger is called with level and message", function() {
-        logger.warn('test');
-        ok(TC.Loggers.test.calledOnce);
-        ok(TC.Loggers.test.calledWithExactly('warn', 'test'));
-    });
-
-    test("default log level logs everything", function() {
-        logger.debug();
-        logger.info();
-        logger.warn();
-        logger.error();
-        equal(TC.Loggers.test.callCount, 4);
-    });
-
-    test("only levels equal or higher than the set value are logged", function () {
-        logger.setLogLevel('warn');
-        logger.debug();
-        logger.info();
-        ok(TC.Loggers.test.notCalled);
-        logger.warn();
-        logger.error();
-        ok(TC.Loggers.test.calledTwice);
-    });
-})();
 // Unit/Types/Models.tests.js
 (function() {
     var models;
@@ -1085,6 +1074,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         equal(models.test.options, options);
     });
 })();
+
 // Unit/Types/Navigation.tests.js
 (function () {
     var nav;
@@ -1246,6 +1236,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     }
 })();
 
+
 // Unit/Types/Node.findNavigation.tests.js
 (function () {
     module('Unit.Types.Node');
@@ -1302,6 +1293,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         return leaf;
     }
 })();
+
 // Unit/Types/Node.tests.js
 (function () {
     module('Unit.Types.Node');
@@ -1388,6 +1380,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         equal(node3.nodeForPath(), node1);
     });
 })();
+
 // Unit/Types/Operation.tests.js
 (function () {
     var operation;
@@ -1412,6 +1405,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         equal(operation.promise.state(), 'resolved');
     });
 })();
+
 
 // Unit/Types/Pane.tests.js
 (function() {
@@ -1443,6 +1437,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         };
     }
 })();
+
 
 // Unit/Types/Pipeline.tests.js
 (function () {
@@ -1513,6 +1508,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     }
 })();
 
+
 // Unit/Types/Templates.tests.js
 (function () {
     var templates;
@@ -1539,6 +1535,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         ok(templates.loaded('test'));
     });
 })();
+
 // Unit/LoadHandlers/scripts.tests.js
 (function() {
     var originalEval = $.globalEval;
@@ -1591,6 +1588,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 })();
 
+
 // Unit/LoadHandlers/stylesheets.tests.js
 (function() {
     var url = 'test.css';
@@ -1614,6 +1612,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         notEqual($('#__tribeStyles').html().indexOf(".test"), -1);
     });
 })();
+
 
 // Unit/LoadHandlers/templates.tests.js
 (function() {
@@ -1641,6 +1640,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         ok(context.templates.store.calledWithExactly('<br/>', '/test'));
     });
 })();
+
 
 // Unit/LoadStrategies/adhoc.tests.js
 (function () {
@@ -1700,6 +1700,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         ok(context.loader.get.notCalled);
     });
 })();
+
 // Unit/LoadStrategies/preloaded.tests.js
 module('Unit.LoadStrategies.preloaded');
 
@@ -1708,6 +1709,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
     var promise = TC.LoadStrategies.preloaded({ path: 'test2' }, context);
     equal(promise.state(), 'rejected');
 });
+
 // Unit/Events/createModel.tests.js
 (function () {
     var context;
@@ -1731,6 +1733,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
         equal(pane.model.pane, pane);
     });
 })();
+
 // Unit/Events/renderComplete.tests.js
 (function () {
     var pane, context;
@@ -1770,6 +1773,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
         TC.Utils.detachDocumentEvent("renderComplete", spy);
     });
 })();
+
 // Unit/Events/renderPane.tests.js
 (function () {
     var node;
@@ -1794,6 +1798,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
         ok(pane.model.paneRendered.calledOnce);
     });
 })();
+
 // Unit/Transitions/transition.tests.js
 (function () {
     var pane, node;
@@ -1852,6 +1857,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
     });
 })();
 
+
 // Integration/api.tests.js
 (function () {
     module("Integration.api", { teardown: Test.Integration.teardown });
@@ -1877,6 +1883,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
         equal(Test.Integration.context.models.test.constructor, constructor);
     });
 })();
+
 // Integration/bindingHandler.tests.js
 (function() {
     module('Integration.bindingHandler', {
@@ -1931,6 +1938,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
         return TC.Events.spy.firstCall.args[0];
     }
 })();
+
 // Integration/History.tests.js
 //(function () {
 //    var history;
@@ -1992,6 +2000,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
 //    });
 //})();
 
+
 // Integration/Navigate.tests.js
 module('Integration.Navigate', {
     setup: Test.Integration.createTestElement,
@@ -2021,6 +2030,7 @@ test("navigating back returns to previous pane", function() {
     node.navigateBack();
     equal($('.content1').length, 1);
 });
+
 // Integration/nodes.tests.js
 (function () {
     module('Integration.nodes', { teardown: Test.Integration.teardown });
@@ -2080,6 +2090,7 @@ test("navigating back returns to previous pane", function() {
     });
 })();
 
+
 // Integration/Paths.tests.js
 module('Integration.Paths', {
     setup: Test.Integration.createTestElement,
@@ -2092,6 +2103,7 @@ test("panes created with skipPath true inherit pane path from their parent", fun
     equal($('.parent').children().length, 1);
     equal($('.parent .child').length, 1);
 });
+
 // Integration/PubSub.tests.js
 module('Integration.PubSub', {
     setup: function () {
@@ -2112,6 +2124,7 @@ test("subscription is removed when pane is removed from DOM", function () {
     $('.test').remove();
     equal(Test.Integration.context.pubsub.subscribers.get('test').length, 0);
 });
+
 // Integration/Transition.tests.js
 (function () {
     module('Integration.Transition', {
@@ -2165,6 +2178,7 @@ test("subscription is removed when pane is removed from DOM", function () {
         });
     });
 })();
+
 
 // Integration/Tree.tests.js
 (function () {
@@ -2223,6 +2237,7 @@ test("subscription is removed when pane is removed from DOM", function () {
     });
 })();
 
+
 // Integration/Events/active.tests.js
 (function() {
     module('Integration.Events.active', {
@@ -2249,6 +2264,7 @@ test("subscription is removed when pane is removed from DOM", function () {
         equal(TC.Events.spy.secondCall.args[0].path, '/Events/basic');
     });
 })();
+
 // Integration/Events/createModel.tests.js
 (function() {
     module('Integration.Events.createModel', {
@@ -2263,6 +2279,7 @@ test("subscription is removed when pane is removed from DOM", function () {
     });
 
 })();
+
 // Integration/Events/dispose.tests.js
 (function() {
     module('Integration.Events.dispose', { teardown: Test.Integration.teardown });
@@ -2295,6 +2312,7 @@ test("subscription is removed when pane is removed from DOM", function () {
         ok(Test.Integration.context.pubsub.end.calledTwice);
     });
 })();
+
 // Integration/Events/initialiseModel.tests.js
 (function() {
     module('Integration.Events.initialiseModel', { teardown: Test.Integration.teardown });
@@ -2317,6 +2335,7 @@ test("subscription is removed when pane is removed from DOM", function () {
         ok(TC.Events.spy.notCalled);
     });
 })();
+
 // Integration/Events/loadResources.tests.js
 (function() {
     module('Integration.Events.loadResources', {
@@ -2337,6 +2356,7 @@ test("subscription is removed when pane is removed from DOM", function () {
     });
 
 })();
+
 // Integration/Events/renderComplete.tests.js
 (function() {
     module('Integration.Events.renderComplete', { teardown: Test.Integration.teardown });
@@ -2375,6 +2395,7 @@ test("subscription is removed when pane is removed from DOM", function () {
         Test.Integration.executeEvents(events, 'Events/asyncParent');
     });
 })();
+
 // Integration/Events/renderPane.tests.js
 (function() {
     module('Integration.Events.renderPane', { teardown: Test.Integration.teardown });

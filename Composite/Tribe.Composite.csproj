@@ -11,13 +11,15 @@
     <AssemblyName>Tribe.Composite</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IntermediateOutputPath>..\Build\Binaries\Temp\</IntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\Build\Binaries\Temp\</BaseIntermediateOutputPath>
+    <OutputPath>..\Build\Binaries\Temp\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,7 +28,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -96,7 +97,6 @@
     <Content Include="Source\Types\Node.js" />
     <Content Include="Source\LoadStrategies\adhoc.js" />
     <Content Include="Source\LoadStrategies\preloaded.js" />
-    <Content Include="Source\Loggers\console.js" />
     <Content Include="Source\Types\Operation.js" />
     <Content Include="Source\Types\Pane.js" />
     <Content Include="Source\Utilities\objects.js" />
@@ -104,7 +104,6 @@
     <Content Include="Source\Utilities\embeddedContext.js" />
     <Content Include="Source\Utilities\exceptions.js" />
     <Content Include="Source\Utilities\jquery.complete.js" />
-    <Content Include="Source\Types\Logger.js" />
     <Content Include="Source\LoadHandlers\templates.js" />
     <Content Include="Source\LoadHandlers\stylesheets.js" />
     <Content Include="Source\LoadHandlers\scripts.js" />
@@ -198,7 +197,6 @@
     <Content Include="Tests\Unit\Types\Navigation.tests.js" />
     <Content Include="Tests\Unit\Types\Node.tests.js" />
     <Content Include="Tests\Unit\Types\Operation.tests.js" />
-    <Content Include="Tests\Unit\Types\Logger.tests.js" />
     <Content Include="Tests\Unit\Types\Pane.tests.js" />
     <Content Include="Tests\Unit\Types\Pipeline.tests.js" />
     <Content Include="Tests\Unit\LoadHandlers\templates.tests.js" />

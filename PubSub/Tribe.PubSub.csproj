@@ -11,13 +11,15 @@
     <AssemblyName>Tribe.PubSub</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IntermediateOutputPath>..\Build\Binaries\Temp\</IntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\Build\Binaries\Temp\</BaseIntermediateOutputPath>
+    <OutputPath>..\Build\Binaries\Temp\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,7 +28,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,6 +41,7 @@
     <Content Include="Build\Tribe.PubSub.debug.js" />
     <Content Include="Build\Tribe.PubSub.js" />
     <Content Include="Build\Tribe.PubSub.min.js" />
+    <Content Include="Source\Channel.js" />
     <Content Include="Source\options.js" />
     <Content Include="Source\Lifetime.js" />
     <Content Include="Source\PubSub.js" />
@@ -48,6 +50,7 @@
     <Content Include="Source\subscribeOnce.js" />
     <Content Include="Source\SubscriberList.js" />
     <Content Include="Source\utils.js" />
+    <Content Include="Tests\Channel.tests.js" />
     <Content Include="Tests\exceptions.tests.js" />
     <Content Include="Tests\PubSub.subscribe.tests.js" />
     <Content Include="Tests\PubSub.publish.tests.js" />

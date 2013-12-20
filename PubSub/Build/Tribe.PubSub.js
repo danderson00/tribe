@@ -41,15 +41,20 @@ Tribe.PubSub = function (options) {
     }
 
     this.publish = function (topicOrEnvelope, data) {
-        var envelope = topicOrEnvelope && topicOrEnvelope.topic
-            ? topicOrEnvelope
-            : { topic: topicOrEnvelope, data: data, sync: false };
-        return publish(envelope);
+        return publish(createEnvelope(topicOrEnvelope, data));
     };
 
-    this.publishSync = function (topic, data) {
-        return publish({ topic: topic, data: data, sync: true });
+    this.publishSync = function (topicOrEnvelope, data) {
+        var envelope = createEnvelope(topicOrEnvelope, data);
+        envelope.sync = true;
+        return publish(envelope);
     };
+    
+    function createEnvelope(topicOrEnvelope, data) {
+        return topicOrEnvelope && topicOrEnvelope.topic
+            ? topicOrEnvelope
+            : { topic: topicOrEnvelope, data: data };
+    }
 
     this.subscribe = function (topic, func) {
         if (typeof (topic) === "string")
@@ -78,9 +83,60 @@ Tribe.PubSub = function (options) {
     this.createLifetime = function() {
         return new Tribe.PubSub.Lifetime(self, self);
     };
+
+    this.channel = function(channelId) {
+        return new Tribe.PubSub.Channel(self, channelId);
+    };
     
     function option(name) {
         return (options && options.hasOwnProperty(name)) ? options[name] : Tribe.PubSub.options[name];
+    }
+};
+
+
+// Channel.js
+Tribe.PubSub.Channel = function (pubsub, channelId) {
+    pubsub = pubsub.createLifetime();
+
+    this.id = channelId;
+
+    this.publish = function (topicOrEnvelope, data) {
+        return pubsub.publish(createEnvelope(topicOrEnvelope, data));
+    };
+
+    this.publishSync = function (topicOrEnvelope, data) {
+        return pubsub.publishSync(createEnvelope(topicOrEnvelope, data));
+    };
+
+    this.subscribe = function(topic, func) {
+        return pubsub.subscribe(topic, filterMessages(func));
+    };
+
+    this.subscribeOnce = function(topic, func) {
+        return pubsub.subscribeOnce(topic, filterMessages(func));
+    };
+    
+    this.unsubscribe = function(token) {
+        return pubsub.unsubscribe(token);
+    };
+
+    this.end = function() {
+        return pubsub.end();
+    };
+
+    function createEnvelope(topicOrEnvelope, data) {
+        var envelope = topicOrEnvelope && topicOrEnvelope.topic
+          ? topicOrEnvelope
+          : { topic: topicOrEnvelope, data: data };
+        envelope.channelId = channelId;
+        return envelope;
+    }
+    
+    function filterMessages(func) {
+        return function(data, envelope) {
+            if (envelope.channelId === channelId)
+                func(data, envelope);
+        };
     }
 };
 
@@ -114,6 +170,10 @@ Tribe.PubSub.Lifetime = function (parent, owner) {
         return parent.unsubscribe(token);
     };
 
+    this.channel = function(channelId) {
+        return new Tribe.PubSub.Channel(self, channelId);
+    };
+
     this.end = function() {
         return parent.unsubscribe(tokens);
     };
@@ -130,6 +190,7 @@ Tribe.PubSub.Lifetime = function (parent, owner) {
         return token;
     }
 };
+
 // options.js
 window.Tribe.PubSub.options = {
     sync: false,
@@ -138,6 +199,7 @@ window.Tribe.PubSub.options = {
         window.console && console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + e.message);
     }
 };
+
 // Saga.js
 Tribe.PubSub.Saga = function (pubsub, definition, args) {
     var self = this;
@@ -223,6 +285,7 @@ Tribe.PubSub.Saga.startSaga = function (definition, args) {
 
 Tribe.PubSub.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
 Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
+
 // subscribeOnce.js
 Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     var self = this;
@@ -257,6 +320,7 @@ Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
         };
     }
 };
+
 // SubscriberList.js
 Tribe.PubSub.SubscriberList = function() {
     var subscribers = {};
@@ -300,6 +364,7 @@ Tribe.PubSub.SubscriberList = function() {
         return published.match(expression);
     }
 };
+
 // utils.js
 Tribe.PubSub.utils = {};
 (function(utils) {

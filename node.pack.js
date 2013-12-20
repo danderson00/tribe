@@ -1,18 +1,3 @@
-createModule('Tribe.Node', 'Tribe.Server', {
-    "version": "0.1",
-    "description": "Server component of the Tribe platform",
-    "dependencies": {
-        "express": "~3.4.4",
-        "socket.io": "~0.9.16",
-        "q-io": "~1.10.6"
-    },
-});
-
-createModule('Tribe.PubSub', 'Tribe.PubSub', {
-    "version": "0.2",
-    "description": "Publish / subscribe engine with lifetimes and sagas",
-});
-
 function createModule(component, moduleName, definition) {
     var targetFolder = 'node_modules/' + moduleName + '/';
     sync('Build/Components/' + component + '.js').to(targetFolder);

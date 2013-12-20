@@ -2,6 +2,7 @@
     -webkit-transition: all 250ms ease-in-out;
     transition: all 250ms ease-in-out;
 }
+
 .fade.in.prepare {
     opacity: 0;
 }
@@ -14,6 +15,7 @@
 .fade.out.trigger {
     opacity: 0;
 }
+
 .slideRight.in.prepare {
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);

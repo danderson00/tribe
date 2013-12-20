@@ -40,15 +40,20 @@ Tribe.PubSub = function (options) {
     }
 
     this.publish = function (topicOrEnvelope, data) {
-        var envelope = topicOrEnvelope && topicOrEnvelope.topic
-            ? topicOrEnvelope
-            : { topic: topicOrEnvelope, data: data, sync: false };
-        return publish(envelope);
+        return publish(createEnvelope(topicOrEnvelope, data));
     };
 
-    this.publishSync = function (topic, data) {
-        return publish({ topic: topic, data: data, sync: true });
+    this.publishSync = function (topicOrEnvelope, data) {
+        var envelope = createEnvelope(topicOrEnvelope, data);
+        envelope.sync = true;
+        return publish(envelope);
     };
+    
+    function createEnvelope(topicOrEnvelope, data) {
+        return topicOrEnvelope && topicOrEnvelope.topic
+            ? topicOrEnvelope
+            : { topic: topicOrEnvelope, data: data };
+    }
 
     this.subscribe = function (topic, func) {
         if (typeof (topic) === "string")
@@ -76,6 +81,10 @@ Tribe.PubSub = function (options) {
 
     this.createLifetime = function() {
         return new Tribe.PubSub.Lifetime(self, self);
+    };
+
+    this.channel = function(channelId) {
+        return new Tribe.PubSub.Channel(self, channelId);
     };
     
     function option(name) {

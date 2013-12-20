@@ -27,6 +27,10 @@
         return parent.unsubscribe(token);
     };
 
+    this.channel = function(channelId) {
+        return new Tribe.PubSub.Channel(self, channelId);
+    };
+
     this.end = function() {
         return parent.unsubscribe(tokens);
     };

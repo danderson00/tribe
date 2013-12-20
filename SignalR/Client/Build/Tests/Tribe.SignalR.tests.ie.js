@@ -47,6 +47,7 @@ function mockPublisher() {
 //Tribe = window.Tribe || {};
 //Tribe.PubSub = function() { };
 //Tribe.PubSub.Lifetime = function() { };
+
 // Client.tests.js
 (function() {
     var hub;
@@ -135,6 +136,7 @@ function mockPublisher() {
         return pubsub.subscribe.firstCall.args[1];
     }
 })();
+
 // Publisher.tests.js
 (function() {
     var hub;
