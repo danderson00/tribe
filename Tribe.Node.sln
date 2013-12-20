@@ -1,0 +1,96 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Composite", "Composite\Tribe.Composite.csproj", "{4CCA4E09-0727-4038-AD5E-D40D709D7E22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Mobile", "Mobile\Tribe.Mobile.csproj", "{25A3AD00-CF30-4DE7-83A5-D11554420B30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.PubSub", "PubSub\Tribe.PubSub.csproj", "{7B2F6F26-0640-4979-B35F-2740B01D8D29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{03E4F0F7-BD17-49F4-AC62-05FF5974251E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		index.html = index.html
+		node.pack.js = node.pack.js
+		pack.js = pack.js
+		README.md = README.md
+		Tribe.zip = Tribe.zip
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{839161CD-9546-42A5-A2EB-265D71C7EB9C}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Tribe.debug.js = Build\Tribe.debug.js
+		Build\Tribe.js = Build\Tribe.js
+		Build\Tribe.min.js = Build\Tribe.min.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{78BE0F69-84EA-4CD9-BB19-B71CB3F25744}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Components\Tribe.Composite.debug.js = Build\Components\Tribe.Composite.debug.js
+		Build\Components\Tribe.Composite.js = Build\Components\Tribe.Composite.js
+		Build\Components\Tribe.Composite.min.js = Build\Components\Tribe.Composite.min.js
+		Build\Components\Tribe.Forms.debug.js = Build\Components\Tribe.Forms.debug.js
+		Build\Components\Tribe.Forms.js = Build\Components\Tribe.Forms.js
+		Build\Components\Tribe.Forms.min.js = Build\Components\Tribe.Forms.min.js
+		Build\Components\Tribe.Mobile.debug.js = Build\Components\Tribe.Mobile.debug.js
+		Build\Components\Tribe.Mobile.js = Build\Components\Tribe.Mobile.js
+		Build\Components\Tribe.Mobile.min.js = Build\Components\Tribe.Mobile.min.js
+		Build\Components\Tribe.Node.js = Build\Components\Tribe.Node.js
+		Build\Components\Tribe.PubSub.debug.js = Build\Components\Tribe.PubSub.debug.js
+		Build\Components\Tribe.PubSub.js = Build\Components\Tribe.PubSub.js
+		Build\Components\Tribe.PubSub.min.js = Build\Components\Tribe.PubSub.min.js
+		Build\Components\Tribe.SignalR.debug.js = Build\Components\Tribe.SignalR.debug.js
+		Build\Components\Tribe.SignalR.js = Build\Components\Tribe.SignalR.js
+		Build\Components\Tribe.SignalR.min.js = Build\Components\Tribe.SignalR.min.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BDA0D532-7669-4244-AFE4-601AFBDCA82F}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Components\Tests\Tribe.Composite.tests.js = Build\Components\Tests\Tribe.Composite.tests.js
+		Build\Components\Tests\Tribe.Composite.tests.mockjax.js = Build\Components\Tests\Tribe.Composite.tests.mockjax.js
+		Build\Components\Tests\Tribe.MessageHub.tests.js = Build\Components\Tests\Tribe.MessageHub.tests.js
+		Build\Components\Tests\Tribe.PubSub.tests.js = Build\Components\Tests\Tribe.PubSub.tests.js
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Node", "Node\Tribe.Node.csproj", "{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribe.Common", "Common\Tribe.Common.csproj", "{E760CA1C-7EB9-44B4-8949-2FC722A4F1D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CCA4E09-0727-4038-AD5E-D40D709D7E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CCA4E09-0727-4038-AD5E-D40D709D7E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CCA4E09-0727-4038-AD5E-D40D709D7E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CCA4E09-0727-4038-AD5E-D40D709D7E22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25A3AD00-CF30-4DE7-83A5-D11554420B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25A3AD00-CF30-4DE7-83A5-D11554420B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25A3AD00-CF30-4DE7-83A5-D11554420B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25A3AD00-CF30-4DE7-83A5-D11554420B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B2F6F26-0640-4979-B35F-2740B01D8D29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2F6F26-0640-4979-B35F-2740B01D8D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2F6F26-0640-4979-B35F-2740B01D8D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2F6F26-0640-4979-B35F-2740B01D8D29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C86CBC38-A3F5-46D8-9D04-01F9363D4E96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E760CA1C-7EB9-44B4-8949-2FC722A4F1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E760CA1C-7EB9-44B4-8949-2FC722A4F1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E760CA1C-7EB9-44B4-8949-2FC722A4F1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E760CA1C-7EB9-44B4-8949-2FC722A4F1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{78BE0F69-84EA-4CD9-BB19-B71CB3F25744} = {839161CD-9546-42A5-A2EB-265D71C7EB9C}
+		{BDA0D532-7669-4244-AFE4-601AFBDCA82F} = {78BE0F69-84EA-4CD9-BB19-B71CB3F25744}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Tribe Application</title>
+    <script type="text/javascript" src="dependencies.js"></script>
+    <script type="text/javascript" src="site.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var pubsub = new Tribe.PubSub();
+            var options = {
+                socketUrl: 'http://localhost:1678/',
+                pubsub: pubsub
+            };
+            
+            T.hub = new T.Types.Hub(io, pubsub, options);
+            TC.run(options);
+        });
+    </script>
+</head>
+    <body data-bind="pane: '/layout'"></body>
+</html>
