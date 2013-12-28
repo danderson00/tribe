@@ -11,33 +11,25 @@
         }
     });
 
-    test("constructor arguments are passed to definition constructor", function () {
-        expect(3);
-        var s = new Tribe.PubSub.Saga(pubsub, constructor, 'arg1', 'arg2');
-        function constructor(saga, arg1, arg2) {
+    test("data passed to pubsub.startSaga are passed to onstart handler", function () {
+        expect(2);
+        var s = pubsub.startSaga(constructor, 'data');
+        function constructor(saga) {
             equal(saga.pubsub.owner, pubsub);
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
+            saga.handles = {
+                onstart: function (data) { equal(data, 'data'); }
+            };
         }
     });
 
-    test("arguments passed to pubsub.startSaga are passed to definition constructor", function () {
-        expect(3);
-        var s = pubsub.startSaga(constructor, 'arg1', 'arg2');
-        function constructor(saga, arg1, arg2) {
+    test("data passed to lifetime.startSaga are passed to onstart handler", function () {
+        expect(2);
+        var s = pubsub.createLifetime().startSaga(constructor, 'data');
+        function constructor(saga) {
             equal(saga.pubsub.owner, pubsub);
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
-        }
-    });
-
-    test("arguments passed to lifetime.startSaga are passed to definition constructor", function () {
-        expect(3);
-        var s = pubsub.createLifetime().startSaga(constructor, 'arg1', 'arg2');
-        function constructor(saga, arg1, arg2) {
-            equal(saga.pubsub.owner, pubsub);
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
+            saga.handles = {
+                onstart: function (data) { equal(data, 'data'); }
+            };
         }
     });
 
@@ -100,18 +92,17 @@
         equal(saga.children.length, 1);
     });
 
-    test("startChild passes arguments to definition constructor", function () {
-        expect(2);
-        var child = function(childSaga, arg1, arg2) {
-            this.handles = {
-                onstart: function() {
-                    equal(arg1, 'arg1');
-                    equal(arg2, 2);
+    test("startChild passes data to child start function", function () {
+        expect(1);
+        var child = function(childSaga, data) {
+            childSaga.handles = {
+                onstart: function(data) {
+                    equal(data, 'data');
                 }
             };
         };
         var saga = new Tribe.PubSub.Saga(pubsub, definition);
-        saga.startChild(child, 'arg1', 2);
+        saga.startChild(child, 'data');
     });
 
     test("end calls end on any children with data passed", function () {
@@ -173,6 +164,15 @@
         pubsub.publish('parentTopic');
         pubsub.publish('childTopic');
         ok(spy.calledTwice);
+    });
+
+    test("join sets data and executes onjoin handler", function () {
+        definition.handles = {
+            onjoin: spy
+        };
+        var saga = new Tribe.PubSub.Saga(pubsub, definition).join('test');
+        equal(saga.data, 'test');
+        ok(spy.calledOnce);
     });
 
     function createDefinition(handlers) {

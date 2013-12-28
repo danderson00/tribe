@@ -1,4 +1,4 @@
-﻿window.Tribe.PubSub.options = {
+﻿Tribe.PubSub.options = {
     sync: false,
     handleExceptions: true,
     exceptionHandler: function(e, envelope) {

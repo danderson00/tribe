@@ -36,19 +36,15 @@
         ok(utils.isArray(ifnull) && ifnull.length === 0, 'handles a null properly');
     });
 
-    test('applyToConstructor', function () {
-        expect(2);
-        
-        // current implementation does not support Date
-        //deepEqual(
-        //    utils.applyToConstructor(Date, [2008, 10, 8, 00, 16, 34, 254]),
-        //    new Date(2008, 10, 8, 00, 16, 34, 254));
+    test('copyProperties', function () {
+        var source = { p1: '1', p2: '2', p3: '3' },
+            target = { p1: '2' },
+            properties = ['p1', 'p2', 'p4'];
 
-        utils.applyToConstructor(constructor, ['arg1', 'arg2']);
-        
-        function constructor(arg1, arg2) {
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
-        }
+        utils.copyProperties(source, target, properties);
+        equal(target.p1, '1');
+        equal(target.p2, '2');
+        equal(target.p3, undefined);
+        equal(target.p4, undefined);
     });
 })();

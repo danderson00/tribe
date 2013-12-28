@@ -3,7 +3,8 @@
 
     TC.context = function (source) {
         staticState = staticState || {
-            models: new TC.Types.Models(),
+            models: new TC.Types.Resources(),
+            sagas: new TC.Types.Resources(),
             loader: new TC.Types.Loader(),
             options: TC.options,
             templates: new TC.Types.Templates(),

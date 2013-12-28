@@ -36,6 +36,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Sandbox\Panes\layout.js" />
+    <Content Include="Sandbox\Sagas\chat.js" />
     <Content Include="Source\Client\setup.js" />
     <Content Include="Source\Client\PubSub.extensions.js" />
     <Content Include="node_modules\sinon\lib\sinon.js" />
@@ -140,15 +142,10 @@
     <Content Include="node_modules\sinon\test\sinon_test.js" />
     <Content Include="node_modules\underscore\underscore-min.js" />
     <Content Include="node_modules\underscore\underscore.js" />
-    <Content Include="Sandbox\Dependencies\jquery-1.9.1.js" />
-    <Content Include="Sandbox\Dependencies\knockout-2.3.0.debug.js" />
-    <Content Include="Sandbox\Dependencies\socket.io.js" />
-    <Content Include="Sandbox\Dependencies\Tribe.js" />
     <Content Include="Sandbox\Infrastructure\setup.js" />
     <Content Include="Sandbox\Panes\layout.htm" />
     <Content Include="Source\Client\Types\Hub.js" />
-    <Content Include="Source\Server\bootstrap.js" />
-    <Content Include="Source\Server\exports.js" />
+    <Content Include="Source\pack.js" />
     <Content Include="node_modules\express\index.js" />
     <Content Include="node_modules\express\lib\application.js" />
     <Content Include="node_modules\express\lib\express.js" />
@@ -912,21 +909,24 @@
     <Content Include="node_modules\socket.io\node_modules\socket.io-client\test\socket.test.js" />
     <Content Include="node_modules\socket.io\node_modules\socket.io-client\test\util.test.js" />
     <Content Include="node_modules\socket.io\node_modules\socket.io-client\test\worker.js" />
-    <Content Include="pack.js" />
+    <Content Include="Source\Pack\TC.wrapper.template.js" />
     <Content Include="Source\Server\Persistence\fileSystem.js" />
-    <Content Include="Source\Server\Types\Server.js" />
-    <Content Include="Source\Server\setup.js" />
+    <Content Include="Source\Server\index.js" />
+    <Content Include="Source\Server\Sagas\index.js" />
+    <Content Include="Source\Server\Sagas\messageHandler.js" />
     <Content Include="tests.js" />
     <Content Include="Tests\Server\Infrastructure\Mock.js" />
-    <Content Include="Tests\Server\setup.js" />
     <Content Include="Sandbox\Build\index.html" />
     <Content Include="Sandbox\pack.js" />
     <Content Include="Sandbox\server.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Build\" />
-    <Folder Include="Sandbox\node_modules\tribe\" />
-    <Folder Include="Source\Server\Utilities\" />
+    <Folder Include="Build\Client\" />
+    <Folder Include="Build\Server\Persistence\" />
+    <Folder Include="Build\Server\Sagas\" />
+    <Folder Include="Sandbox\Dependencies\" />
+    <Folder Include="Sandbox\node_modules\tribe\Persistence\" />
+    <Folder Include="Sandbox\node_modules\tribe\Sagas\" />
     <Folder Include="Tests\Client\" />
     <Folder Include="Tests\Server\Types\" />
   </ItemGroup>

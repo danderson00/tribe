@@ -37,12 +37,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="Build\Tests\Tribe.Composite.tests.ie.js" />
-    <Content Include="Build\Tests\Tribe.Composite.tests.js" />
-    <Content Include="Build\Tests\Tribe.Composite.tests.mockjax.js" />
-    <Content Include="Build\Tribe.Composite.debug.js" />
-    <Content Include="Build\Tribe.Composite.js" />
-    <Content Include="Build\Tribe.Composite.min.js" />
     <Content Include="Libraries\knockout-2.3.0.debug.js" />
     <Content Include="Libraries\knockout-2.3.0.js" />
     <Content Include="Samples\Transitions\index.html" />
@@ -69,6 +63,7 @@
     <Content Include="Source\Utilities\panes.js" />
     <Content Include="Source\Utilities\deparam.js" />
     <Content Include="Tests\ie.html" />
+    <Content Include="Tests\Integration\Sagas.tests.js" />
     <Content Include="Tests\Integration\Infrastructure\supportsTransitions.js" />
     <Content Include="Tests\pack.js" />
     <Content Include="Libraries\jquery-1.9.1.js" />
@@ -107,7 +102,7 @@
     <Content Include="Source\LoadHandlers\templates.js" />
     <Content Include="Source\LoadHandlers\stylesheets.js" />
     <Content Include="Source\LoadHandlers\scripts.js" />
-    <Content Include="Source\Types\Models.js" />
+    <Content Include="Source\Types\Resources.js" />
     <Content Include="Source\options.js" />
     <Content Include="Source\Utilities\knockout.js" />
     <Content Include="Source\Api\nodes.js" />
@@ -203,7 +198,7 @@
     <Content Include="Tests\Unit\LoadHandlers\stylesheets.tests.js" />
     <Content Include="Tests\Unit\LoadHandlers\scripts.tests.js" />
     <Content Include="Tests\index.html" />
-    <Content Include="Tests\Unit\Types\Models.tests.js" />
+    <Content Include="Tests\Unit\Types\Resources.tests.js" />
     <Content Include="Tests\Unit\Infrastructure\context.js" />
     <Content Include="Tests\Unit\Utilities\bindingHandlers.tests.js" />
     <Content Include="Tests\Unit\Utilities\collections.tests.js" />
@@ -227,6 +222,7 @@
     <Content Include="Tests\Unit\Utilities\querystring.tests.js" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Build\Tests\" />
     <Folder Include="Documentation\" />
   </ItemGroup>
   <ItemGroup>

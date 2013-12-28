@@ -24,10 +24,13 @@ QUnit.testDone(function () {
 });
 
 TC.history.dispose();
+
 // Integration/Infrastructure/context.js
+
 TC.context = function (state) {
     Test.Integration.context = $.extend({
-        models: new TC.Types.Models(),
+        models: new TC.Types.Resources(),
+        sagas: new TC.Types.Resources(),
         loader: new TC.Types.Loader(),
         options: TC.options,
         templates: new TC.Types.Templates(),
@@ -38,7 +41,9 @@ TC.context = function (state) {
     return Test.Integration.context;
 };
 
+
 // Integration/Infrastructure/helpers.js
+
 (function () {
     var helpers = Test.Integration;
 
@@ -78,7 +83,9 @@ TC.context = function (state) {
 })();
 
 
+
 // Integration/Infrastructure/pubsub.js
+
 Test.Integration.pubsubAsMock = function() {
     Test.Integration.pubsub = function() {
         var pubsub = { end: sinon.spy(), createLifetime: function () { return pubsub; } };
@@ -95,7 +102,9 @@ Test.Integration.pubsubAsTribe = function () {
 
 Test.Integration.pubsubAsMock();
 
+
 // Integration/Infrastructure/supportsTransitions.js
+
 Test.supportsTransitions = (function() {
     var b = document.body || document.documentElement;
     var style = b.style;
@@ -114,7 +123,9 @@ Test.supportsTransitions = (function() {
 })();
 
 
+
 // Unit/Infrastructure/context.js
+
 Test.Unit.context = function () {
     var template = '';
     var context = {
@@ -151,7 +162,9 @@ Test.Unit.context = function () {
     return context;
 };
 
+
 // Unit/Infrastructure/events.js
+
 Test.raiseDocumentEvent = function(name, eventData, state) {
     var e;
     if (document.createEvent) {
@@ -172,12 +185,16 @@ Test.raiseDocumentEvent = function(name, eventData, state) {
         document.fireEvent("on" + e.eventType, e);
 };
 
+
 // Unit/Infrastructure/featureDetection.js
+
 Test.supportsMutationEvents = ("MutationEvent" in window);
 Test.supportsHistory = ("onpopstate" in window);
 
 
+
 // Unit/Infrastructure/node.js
+
 Test.Unit.node = function () {
     var pane = Test.pane();
     return {
@@ -188,7 +205,9 @@ Test.Unit.node = function () {
     };
 };
 
+
 // Unit/Infrastructure/pane.js
+
 Test.pane = function () {
     return {
         path: 'test',
@@ -203,7 +222,9 @@ Test.pane = function () {
     };
 };
 
+
 // Unit/Utilities/bindingHandlers.tests.js
+
 (function() {
     module('Unit.Utilities.bindingHandlers');
 
@@ -227,7 +248,9 @@ Test.pane = function () {
 })();
 
 
+
 // Unit/Utilities/collections.tests.js
+
 module('Unit.Utilities.collections');
 
 test("each executes iterator for each item of array, passing value and index", function () {
@@ -342,7 +365,9 @@ test("reduce returns expected result", function() {
     equal(result, 20);
 });
 
+
 // Unit/Utilities/deparam.tests.js
+
 (function () {
     // these are based on tests from https://github.com/cowboy/jquery-bbq/, Copyright (c) 2010 "Cowboy" Ben Alman and also released under the MIT license
     module('Unit.Utilities.deparam');
@@ -360,7 +385,9 @@ test("reduce returns expected result", function() {
     });
 })();
 
+
 // Unit/Utilities/elementDestroyed.tests.js
+
 module('Unit.Utilities.elementDestroyed');
 
 test("promise resolves when element is removed using jQuery", function () {
@@ -389,7 +416,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 });
 
 
+
 // Unit/Utilities/events.tests.js
+
 (function() {
     var utils = TC.Utils;
     var spy;
@@ -448,7 +477,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Utilities/idGenerator.tests.js
+
 (function () {
     module('Unit.Utilities.idGenerator');
 
@@ -469,7 +500,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Utilities/jquery.complete.tests.js
+
 (function () {
     var deferreds;
 
@@ -497,7 +530,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Utilities/nodes.tests.js
+
 (function() {
     module('Unit.Utilities.nodes', {
         setup: function () {
@@ -523,7 +558,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Utilities/objects.tests.js
+
 (function() {
     var utils = TC.Utils;
     module('Unit.Utilities.objects');
@@ -592,7 +629,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 })();
 
+
 // Unit/Utilities/panes.tests.js
+
 (function () {
     var utils = TC.Utils;
     
@@ -607,7 +646,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Utilities/Path.tests.js
+
 (function () {
     module("Unit.Utilities.Path");
 
@@ -704,7 +745,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Utilities/querystring.tests.js
+
 (function () {
     module('Unit.Utilities.querystring');
     
@@ -757,7 +800,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Types/Flow.tests.js
+
 (function () {
     var spy;
     var pubsub;
@@ -774,30 +819,23 @@ asyncTest("promise resolves when element is removed using native functions", fun
         }
     });
     
-    test("constructor arguments are passed to definition constructor", function () {
-        expect(2);
-        var f = new TC.Types.Flow(node, constructor, 'arg1', 'arg2');
-        function constructor(flow, arg1, arg2) {
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
+    test("arguments to Node.startFlow are passed to onstart handler", function () {
+        expect(1);
+        var f = node.startFlow(constructor, 'data');
+        function constructor(flow) {
+            this.handles = {
+                onstart: function (data) { equal(data, 'data'); }
+            };
         }
     });
 
-    test("arguments to Node.startFlow are passed to definition constructor", function () {
-        expect(2);
-        var f = node.startFlow(constructor, 'arg1', 'arg2');
-        function constructor(flow, arg1, arg2) {
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
-        }
-    });
-
-    test("arguments to Pane.startFlow are passed to definition constructor", function () {
-        expect(2);
-        var f = pane.startFlow(constructor, 'arg1', 'arg2');
-        function constructor(flow, arg1, arg2) {
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
+    test("arguments to Pane.startFlow are passed to onstart handler", function () {
+        expect(1);
+        var f = pane.startFlow(constructor, 'data');
+        function constructor(flow) {
+            this.handles = {
+                onstart: function (data) { equal(data, 'data'); }
+            };
         }
     });
 
@@ -921,7 +959,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Types/History.tests.js
+
 (function () {
     var history;
     var api;
@@ -997,7 +1037,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Types/Loader.tests.js
+
 (function() {
     var resources;
     var context;
@@ -1058,24 +1100,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
-// Unit/Types/Models.tests.js
-(function() {
-    var models;
-
-    module('Unit.Types.Models', {
-        setup: function() { models = new TC.Types.Models(); }
-    });
-
-    test("register stores model as property with constructor and options", function () {
-        var constructor = function () { };
-        var options = {};
-        models.register('test', constructor, options);
-        equal(models.test.constructor, constructor);
-        equal(models.test.options, options);
-    });
-})();
 
 // Unit/Types/Navigation.tests.js
+
 (function () {
     var nav;
     var node;
@@ -1237,7 +1264,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Types/Node.findNavigation.tests.js
+
 (function () {
     module('Unit.Types.Node');
 
@@ -1294,7 +1323,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
     }
 })();
 
+
 // Unit/Types/Node.tests.js
+
 (function () {
     module('Unit.Types.Node');
 
@@ -1381,7 +1412,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 })();
 
+
 // Unit/Types/Operation.tests.js
+
 (function () {
     var operation;
     
@@ -1407,7 +1440,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Types/Pane.tests.js
+
 (function() {
     module('Unit.Types.Pane');
 
@@ -1439,7 +1474,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/Types/Pipeline.tests.js
+
 (function () {
     var events;
     var pipeline;
@@ -1509,7 +1546,28 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
+// Unit/Types/Resources.tests.js
+
+(function() {
+    var models;
+
+    module('Unit.Types.Resources', {
+        setup: function () { models = new TC.Types.Resources(); }
+    });
+
+    test("register stores model as property with constructor and options", function () {
+        var constructor = function () { };
+        var options = {};
+        models.register('test', constructor, options);
+        equal(models.test.constructor, constructor);
+        equal(models.test.options, options);
+    });
+})();
+
+
 // Unit/Types/Templates.tests.js
+
 (function () {
     var templates;
     
@@ -1536,7 +1594,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 })();
 
+
 // Unit/LoadHandlers/scripts.tests.js
+
 (function() {
     var originalEval = $.globalEval;
     var url = 'test.js';
@@ -1589,7 +1649,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/LoadHandlers/stylesheets.tests.js
+
 (function() {
     var url = 'test.css';
     var resourcePath = '/test';
@@ -1614,7 +1676,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/LoadHandlers/templates.tests.js
+
 (function() {
     var url = 'test.htm';
     var resourcePath = '/test';
@@ -1642,7 +1706,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 })();
 
 
+
 // Unit/LoadStrategies/adhoc.tests.js
+
 (function () {
     var context;
     
@@ -1701,7 +1767,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 })();
 
+
 // Unit/LoadStrategies/preloaded.tests.js
+
 module('Unit.LoadStrategies.preloaded');
 
 test("returns rejected promise if no resources have been loaded for the specified path", function() {
@@ -1710,7 +1778,9 @@ test("returns rejected promise if no resources have been loaded for the specifie
     equal(promise.state(), 'rejected');
 });
 
+
 // Unit/Events/createModel.tests.js
+
 (function () {
     var context;
     var node;
@@ -1734,7 +1804,9 @@ test("returns rejected promise if no resources have been loaded for the specifie
     });
 })();
 
+
 // Unit/Events/renderComplete.tests.js
+
 (function () {
     var pane, context;
     
@@ -1774,7 +1846,9 @@ test("returns rejected promise if no resources have been loaded for the specifie
     });
 })();
 
+
 // Unit/Events/renderPane.tests.js
+
 (function () {
     var node;
     var context;
@@ -1799,7 +1873,9 @@ test("returns rejected promise if no resources have been loaded for the specifie
     });
 })();
 
+
 // Unit/Transitions/transition.tests.js
+
 (function () {
     var pane, node;
     
@@ -1858,7 +1934,9 @@ test("returns rejected promise if no resources have been loaded for the specifie
 })();
 
 
+
 // Integration/api.tests.js
+
 (function () {
     module("Integration.api", { teardown: Test.Integration.teardown });
 
@@ -1882,9 +1960,18 @@ test("returns rejected promise if no resources have been loaded for the specifie
         TC.registerModel(constructor);
         equal(Test.Integration.context.models.test.constructor, constructor);
     });
+
+    test("registerSaga takes path from TC.scriptEnvironment", function () {
+        var constructor = function () { };
+        TC.scriptEnvironment = { resourcePath: 'test' };
+        TC.registerSaga(constructor);
+        equal(Test.Integration.context.sagas.test.constructor, constructor);
+    });
 })();
 
+
 // Integration/bindingHandler.tests.js
+
 (function() {
     module('Integration.bindingHandler', {
         setup: function() {
@@ -1939,7 +2026,9 @@ test("returns rejected promise if no resources have been loaded for the specifie
     }
 })();
 
+
 // Integration/History.tests.js
+
 //(function () {
 //    var history;
 
@@ -2001,7 +2090,9 @@ test("returns rejected promise if no resources have been loaded for the specifie
 //})();
 
 
+
 // Integration/Navigate.tests.js
+
 module('Integration.Navigate', {
     setup: Test.Integration.createTestElement,
     teardown: Test.Integration.teardown
@@ -2031,7 +2122,9 @@ test("navigating back returns to previous pane", function() {
     equal($('.content1').length, 1);
 });
 
+
 // Integration/nodes.tests.js
+
 (function () {
     module('Integration.nodes', { teardown: Test.Integration.teardown });
 
@@ -2091,7 +2184,9 @@ test("navigating back returns to previous pane", function() {
 })();
 
 
+
 // Integration/Paths.tests.js
+
 module('Integration.Paths', {
     setup: Test.Integration.createTestElement,
     teardown: Test.Integration.teardown
@@ -2104,7 +2199,9 @@ test("panes created with skipPath true inherit pane path from their parent", fun
     equal($('.parent .child').length, 1);
 });
 
+
 // Integration/PubSub.tests.js
+
 module('Integration.PubSub', {
     setup: function () {
         Test.Integration.pubsubAsTribe();
@@ -2125,7 +2222,33 @@ test("subscription is removed when pane is removed from DOM", function () {
     equal(Test.Integration.context.pubsub.subscribers.get('test').length, 0);
 });
 
+
+// Integration/Sagas.tests.js
+
+module('Integration.Sagas', {
+    setup: Test.Integration.createTestElement,
+    teardown: Test.Integration.teardown
+});
+
+test("sagas can be registered by name", function () {
+    var func = function () { };
+    TC.registerSaga('test1', func);
+
+    equal(Test.Integration.context.sagas.test1.constructor, func);
+});
+
+test("sagas can be registered using scriptEnvironment", function () {
+    var func = function () { };
+    TC.scriptEnvironment = { resourcePath: 'test2' };
+    TC.registerSaga(func);
+    delete TC.scriptEnvironment;
+    
+    equal(Test.Integration.context.sagas.test2.constructor, func);
+});
+
+
 // Integration/Transition.tests.js
+
 (function () {
     module('Integration.Transition', {
         setup: Test.Integration.createTestElement,
@@ -2180,7 +2303,9 @@ test("subscription is removed when pane is removed from DOM", function () {
 })();
 
 
+
 // Integration/Tree.tests.js
+
 (function () {
     var root;
 
@@ -2238,7 +2363,9 @@ test("subscription is removed when pane is removed from DOM", function () {
 })();
 
 
+
 // Integration/Events/active.tests.js
+
 (function() {
     module('Integration.Events.active', {
         setup: function () { TC.Events.spy = sinon.spy(); },
@@ -2265,7 +2392,9 @@ test("subscription is removed when pane is removed from DOM", function () {
     });
 })();
 
+
 // Integration/Events/createModel.tests.js
+
 (function() {
     module('Integration.Events.createModel', {
         setup: function () { Test.Integration.executeEvents(Test.Integration.testEventsUntil('createModel'), 'Events/basic'); },
@@ -2280,7 +2409,9 @@ test("subscription is removed when pane is removed from DOM", function () {
 
 })();
 
+
 // Integration/Events/dispose.tests.js
+
 (function() {
     module('Integration.Events.dispose', { teardown: Test.Integration.teardown });
 
@@ -2313,7 +2444,9 @@ test("subscription is removed when pane is removed from DOM", function () {
     });
 })();
 
+
 // Integration/Events/initialiseModel.tests.js
+
 (function() {
     module('Integration.Events.initialiseModel', { teardown: Test.Integration.teardown });
 
@@ -2336,7 +2469,9 @@ test("subscription is removed when pane is removed from DOM", function () {
     });
 })();
 
+
 // Integration/Events/loadResources.tests.js
+
 (function() {
     module('Integration.Events.loadResources', {
         setup: function () { Test.Integration.executeEvents(['loadResources'], 'Events/basic'); },
@@ -2357,7 +2492,9 @@ test("subscription is removed when pane is removed from DOM", function () {
 
 })();
 
+
 // Integration/Events/renderComplete.tests.js
+
 (function() {
     module('Integration.Events.renderComplete', { teardown: Test.Integration.teardown });
 
@@ -2396,7 +2533,9 @@ test("subscription is removed when pane is removed from DOM", function () {
     });
 })();
 
+
 // Integration/Events/renderPane.tests.js
+
 (function() {
     module('Integration.Events.renderPane', { teardown: Test.Integration.teardown });
 

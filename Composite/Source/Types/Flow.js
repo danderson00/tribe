@@ -1,12 +1,12 @@
 ﻿(function () {
-    TC.Types.Flow = function (navigationSource, definition, args) {
+    TC.Types.Flow = function (navigationSource, definition) {
         var self = this;
 
         this.node = navigationNode();
         this.pubsub = this.node.pane.pubsub.owner;
         this.sagas = [];
 
-        definition = createDefinition(self, definition, Array.prototype.slice.call(arguments, 2));
+        definition = createDefinition(self, definition);
         this.saga = new Tribe.PubSub.Saga(this.pubsub, definition);
 
         this.start = function(data) {
@@ -31,9 +31,9 @@
         }
     };
 
-    TC.Types.Flow.prototype.startChild = function(definition, args) {
-        definition = createDefinition(this, definition, Array.prototype.slice.call(arguments, 1));
-        this.saga.startChild(definition);
+    TC.Types.Flow.prototype.startChild = function(definition, data) {
+        definition = createDefinition(this, definition);
+        this.saga.startChild(definition, data);
         return this;
     };
 
@@ -44,8 +44,8 @@
     // This keeps a separate collection of sagas bound to this flow's lifetime
     // It would be nice to make them children of the underlying saga, but
     // then they would end any time a message was executed.
-    TC.Types.Flow.prototype.startSaga = function (definition, args) {
-        var saga = this.pubsub.startSaga.apply(this.pubsub, arguments);
+    TC.Types.Flow.prototype.startSaga = function (definition, data) {
+        var saga = this.pubsub.startSaga(definition, data);
         this.sagas.push(saga);
         return saga;
     };
@@ -66,27 +66,22 @@
         };
     };
 
-    TC.Types.Flow.prototype.start = function(flow, args) {
+    TC.Types.Flow.prototype.start = function(flow, data) {
         var thisFlow = this;
-        var childArguments = arguments;
         return function() {
-            thisFlow.startChild.apply(thisFlow, childArguments);
+            thisFlow.startChild(flow, data);
         };
     };
 
 
     // This is reused by Node and Pane
-    TC.Types.Flow.startFlow = function (definition, args) {
-        var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
-        var flow = Tribe.PubSub.utils.applyToConstructor(TC.Types.Flow, constructorArgs);
-        return flow.start();
+    TC.Types.Flow.startFlow = function (definition, data) {
+        return new TC.Types.Flow(this, definition).start(data);
     };
     
-    function createDefinition(flow, definition, argsToApply) {
-        if (definition.constructor === Function) {
-            var definitionArgs = [flow].concat(argsToApply);
-            definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
-        }
+    function createDefinition(flow, definition) {
+        if (definition.constructor === Function)
+            definition = new definition(flow);
         return definition;
     }
 })();

@@ -37,9 +37,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="pack.js" />
-    <Content Include="setup.js" />
-    <Content Include="Tests\Logger.tests.js" />
-    <Content Include="Types\Logger.js" />
+    <Content Include="Source\setup.js" />
+    <Content Include="Tests\logger.tests.js" />
+    <Content Include="Source\logger.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Build\" />

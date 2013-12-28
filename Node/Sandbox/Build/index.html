@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Tribe Application</title>
-    <script type="text/javascript" src="dependencies.js"></script>
-    <script type="text/javascript" src="site.js"></script>
+    <title></title>
+    <script type="text/javascript" src="Build/dependencies.js"></script>
+    <script type="text/javascript" src="Build/site.js"></script>
     <script type="text/javascript">
         $(function () {
             var pubsub = new Tribe.PubSub();
@@ -11,7 +11,7 @@
                 socketUrl: 'http://localhost:1678/',
                 pubsub: pubsub
             };
-            
+
             T.hub = new T.Types.Hub(io, pubsub, options);
             TC.run(options);
         });

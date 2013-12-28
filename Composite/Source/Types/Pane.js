@@ -59,4 +59,9 @@ TC.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
 };
 
+TC.Types.Pane.prototype.startSaga = function(path, args) {
+    var saga = TC.context().sagas[path];
+    this.pubsub.startSaga.apply(this.pubsub, [saga.constructor].concat(Array.prototype.slice.call(arguments, 1)));
+};
+
 TC.Types.Pane.prototype.startFlow = TC.Types.Flow.startFlow;

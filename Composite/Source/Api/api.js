@@ -1,16 +1,22 @@
 ﻿(function () {
     TC.registerModel = function () {
+        addResource('models', TC.Utils.arguments(arguments));
+    };
+
+    TC.registerSaga = function () {
+        addResource('sagas', TC.Utils.arguments(arguments));
+    };
+    
+    function addResource(contextProperty, args) {
         var environment = TC.scriptEnvironment || {};
-        
         var context = environment.context || TC.context();
-        var args = TC.Utils.arguments(arguments);
-        
+
+        var path = args.string || environment.resourcePath;
         var constructor = args.func;
         var options = args.object;
-        var path = args.string || environment.resourcePath;
-        
-        context.models.register(path, constructor, options);
-    };
+
+        context[contextProperty].register(path, constructor, options);
+    }
 
     TC.run = function(options) {
         TC.options = $.extend(TC.options, options);

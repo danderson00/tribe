@@ -1,10 +1,8 @@
 /*! The Tribe platform is licensed under the MIT license. See http://tribejs.com/ for more information. */
 
-// Source/setup.js
-if (typeof(T) === 'undefined')
-    T = {};
 
 // Source/logger.js
+
 (function () {
     var level = 4;
     var levels = {
@@ -41,14 +39,94 @@ if (typeof(T) === 'undefined')
     
     if (typeof (exports) !== 'undefined' && typeof (module) !== 'undefined')
         module.exports = api;
-    else
+    else {
+        if (typeof (T) === 'undefined')
+            T = {};
         T.logger = api;
+    }
+})();
+
+
+
+
+// Source/serializer.js
+
+(function () {
+    // man... this cross-platform stuff sucks...
+    var ko;
+    if (typeof (window) !== 'undefined')
+        ko = window.ko;
+    if (typeof (require) !== 'undefined')
+        ko = require('knockout');
+
+    var api = {
+        serialize: function (source) {
+            return JSON.stringify(this.extractMetadata(source));
+        },
+        extractMetadata: function (source) {
+            var target = source,
+                metadata = {};
+            removeObservables();
+            return {
+                target: target,
+                metadata: metadata
+            };
+
+            function removeObservables() {
+                metadata.observables = [];
+                for (var property in target)
+                    if (target.hasOwnProperty(property) && ko.isObservable(target[property])) {
+                        target[property] = target[property]();
+                        metadata.observables.push(property);
+                    }
+
+            }
+        },
+        deserialize: function (source) {
+            source = JSON.parse(source);
+            if (source.target)
+                return this.applyMetadata(source.target, source.metadata);
+            return source;
+        },
+        applyMetadata: function (target, metadata) {
+            if (metadata)
+                restoreObservables();
+            return target;
+
+            function restoreObservables() {
+                var observables = metadata.observables;
+                for (var i = 0, l = observables.length; i < l; i++)
+                    restoreProperty(observables[i]);
+            }
+
+            function restoreProperty(property) {
+                target[property] = createObservable(target[property]);
+            }
+
+            function createObservable(value) {
+                return value.constructor === Array ?
+                    ko.observableArray(value) :
+                    ko.observable(value);
+            }
+        }
+    };
+
+    if (typeof (exports) !== 'undefined' && typeof (module) !== 'undefined')
+        module.exports = api;
+    else {
+        if (typeof (T) === 'undefined')
+            T = {};
+        T.serializer = api;
+    }
 })();
 
 
 
 // PubSub.js
-window.Tribe = window.Tribe || {};
+
+if (typeof (Tribe) === 'undefined')
+    Tribe = {};
+
 Tribe.PubSub = function (options) {
     var self = this;
     var utils = Tribe.PubSub.utils;
@@ -144,6 +222,7 @@ Tribe.PubSub = function (options) {
 
 
 // Channel.js
+
 Tribe.PubSub.Channel = function (pubsub, channelId) {
     pubsub = pubsub.createLifetime();
 
@@ -189,7 +268,9 @@ Tribe.PubSub.Channel = function (pubsub, channelId) {
     }
 };
 
+
 // Lifetime.js
+
 Tribe.PubSub.Lifetime = function (parent, owner) {
     var self = this;
     var tokens = [];
@@ -240,8 +321,10 @@ Tribe.PubSub.Lifetime = function (parent, owner) {
     }
 };
 
+
 // options.js
-window.Tribe.PubSub.options = {
+
+Tribe.PubSub.options = {
     sync: false,
     handleExceptions: true,
     exceptionHandler: function(e, envelope) {
@@ -249,8 +332,10 @@ window.Tribe.PubSub.options = {
     }
 };
 
-// Saga.js
-Tribe.PubSub.Saga = function (pubsub, definition, args) {
+
+// Saga.core.js
+
+Tribe.PubSub.Saga = function (pubsub, definition) {
     var self = this;
     var utils = Tribe.PubSub.utils;
 
@@ -258,42 +343,78 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
     this.pubsub = pubsub;
     this.children = [];
 
-    definition = createDefinition(definition, Array.prototype.slice.call(arguments, 2));
-    var handlers = definition.handles || {};
+    configureSaga();
+    var handlers = this.handles || {};
 
-    this.start = function (data) {
-        utils.each(handlers, attachHandler);
-        if (handlers.onstart) handlers.onstart(data, self);
+    // this is not ie<9 compatible and includes onstart / onend
+    this.topics = Object.keys(handlers);
+
+    this.start = function (startData) {
+        utils.each(handlers, self.addHandler, self);
+        if (handlers.onstart) handlers.onstart(startData, self);
         return self;
     };
 
-    this.startChild = function (child, args) {
-        self.children.push(new Tribe.PubSub.Saga(pubsub, createDefinition(child, Array.prototype.slice.call(arguments, 1)))
-            .start());
+    this.startChild = function (child, onstartData) {
+        self.children.push(new Tribe.PubSub.Saga(pubsub, child)
+            .start(onstartData));
         return self;
     };
 
-    this.end = function (data) {
-        if (handlers.onend) handlers.onend(data, self);
+    this.join = function (data, onjoinData) {
+        utils.each(handlers, self.addHandler, self);
+        self.data = data;
+        if (handlers.onjoin) handlers.onjoin(onjoinData, self);
+        return self;
+    };
+
+    this.end = function (onendData) {
+        if (handlers.onend) handlers.onend(onendData, self);
         pubsub.end();
-        endChildren(data);
+        self.endChildren(onendData);
         return self;
     };
 
-    function attachHandler(handler, topic) {
-        if (topic !== 'onstart' && topic !== 'onend')
-            if (!handler)
-                pubsub.subscribe(topic, endHandler());
-            else if (handler.constructor === Function)
-                pubsub.subscribe(topic, messageHandlerFor(handler));
-            else
-                pubsub.subscribe(topic, childHandlerFor(handler));
+    this.endChildren = function(data) {
+        Tribe.PubSub.utils.each(self.children, function(child) {
+             child.end(data);
+        });
     }
+    
+    function configureSaga() {
+        if (definition)
+            if (definition.constructor === Function)
+                definition(self);
+            else
+                Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly']);
+    }
+};
+
+Tribe.PubSub.Saga.startSaga = function (definition, data) {
+    return new Tribe.PubSub.Saga(this, definition).start(data);
+};
+
+Tribe.PubSub.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
+Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
+
+
+// Saga.handlers.js
+
+Tribe.PubSub.Saga.prototype.addHandler = function (handler, topic) {
+    var self = this;
+
+    if (topic !== 'onstart' && topic !== 'onend' && topic !== 'onjoin')
+        if (!handler)
+            this.pubsub.subscribe(topic, endHandler());
+        else if (handler.constructor === Function)
+            this.pubsub.subscribe(topic, messageHandlerFor(handler));
+        else
+            this.pubsub.subscribe(topic, childHandlerFor(handler));
 
     function messageHandlerFor(handler) {
         return function (messageData, envelope) {
-            if (!definition.endsChildrenExplicitly)
-                endChildren(messageData);
+            if (!self.endsChildrenExplicitly)
+                self.endChildren(messageData);
             handler(messageData, envelope, self);
         };
     }
@@ -309,33 +430,12 @@ Tribe.PubSub.Saga = function (pubsub, definition, args) {
             self.end(messageData);
         };
     }
-
-    function endChildren(data) {
-        Tribe.PubSub.utils.each(self.children, function(child) {
-             child.end(data);
-        });
-    }
-    
-    function createDefinition(constructor, argsToApply) {
-        if (constructor.constructor === Function) {
-            var definitionArgs = [self].concat(argsToApply);
-            constructor = utils.applyToConstructor(constructor, definitionArgs);
-        }
-        return constructor;
-    }
-};
-
-Tribe.PubSub.Saga.startSaga = function (definition, args) {
-    var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
-    var saga = Tribe.PubSub.utils.applyToConstructor(Tribe.PubSub.Saga, constructorArgs);
-    return saga.start();
 };
 
 
-Tribe.PubSub.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
-Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
 
 // subscribeOnce.js
+
 Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     var self = this;
     var utils = Tribe.PubSub.utils;
@@ -370,7 +470,9 @@ Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     }
 };
 
+
 // SubscriberList.js
+
 Tribe.PubSub.SubscriberList = function() {
     var subscribers = {};
     var lastUid = -1;
@@ -414,45 +516,16 @@ Tribe.PubSub.SubscriberList = function() {
     }
 };
 
+
 // utils.js
+
 Tribe.PubSub.utils = {};
 (function(utils) {
     utils.isArray = function (source) {
         return source.constructor === Array;
     };
 
-    // these implementations from http://stackoverflow.com/questions/3362471/how-can-i-call-a-javascript-constructor-using-call-or-apply
-    
-    // far simpler, but doesn't support IE8.
-    //utils.applyToConstructor = function(constructor, argArray) {
-    //    var args = [null].concat(argArray);
-    //    var factoryFunction = constructor.bind.apply(constructor, args);
-    //    return new factoryFunction();
-    //};
-
-    // this does not support Date
-    utils.applyToConstructor = function(Constructor, args) {
-        var Temp = function() {
-        }, // temporary constructor
-            inst, ret; // other vars
-
-        // Give the Temp constructor the Constructor's prototype
-        Temp.prototype = Constructor.prototype;
-
-        // Create a new instance
-        inst = new Temp;
-
-        // Call the original Constructor with the temp
-        // instance as its context (i.e. its 'this' value)
-        ret = Constructor.apply(inst, args);
-
-        // If an object has been returned then return it otherwise
-        // return the original instance.
-        // (consistent with behaviour of the new operator)
-        return Object(ret) === ret ? ret : inst;
-    };
-
-    // The following functions are taken from the underscore library, duplicated to avoid dependency. Licensing at http://underscorejs.org.
+    // The following functions are taken from the underscore library, duplicated to avoid dependency. License at http://underscorejs.org.
     var nativeForEach = Array.prototype.forEach;
     var nativeMap = Array.prototype.map;
     var breaker = {};
@@ -483,10 +556,26 @@ Tribe.PubSub.utils = {};
         });
         return results;
     };
+
+    utils.copyProperties = function (source, target, properties) {
+        for (var i = 0, l = properties.length; i < l; i++) {
+            var property = properties[i];
+            if(source.hasOwnProperty(property))
+                target[property] = source[property];
+        }
+    };
 })(Tribe.PubSub.utils);
 
 
+
+// exports.js
+
+if (typeof(module) !== 'undefined')
+    module.exports = new Tribe.PubSub();
+
+
 // setup.js
+
 (function (global) {
     if (typeof (jQuery) === 'undefined')
         throw 'jQuery must be loaded before knockout.composite can initialise';
@@ -514,7 +603,9 @@ Tribe.PubSub.utils = {};
 })(window || this);
 
 
+
 // options.js
+
 TC.defaultOptions = function() {
     return {
         synchronous: false,
@@ -526,7 +617,9 @@ TC.defaultOptions = function() {
 };
 TC.options = TC.defaultOptions();
 
+
 // Utilities/bindingHandlers.js
+
 (function () {
     ko.bindingHandlers.cssClass = {
         update: function (element, valueAccessor) {
@@ -559,7 +652,9 @@ TC.options = TC.defaultOptions();
 
 })();
 
+
 // Utilities/collections.js
+
 (function (utils) {    
     utils.each = function (collection, iterator) {
         return $.each(collection || [], function (index, value) {
@@ -599,7 +694,9 @@ TC.options = TC.defaultOptions();
     };
 })(TC.Utils);
 
+
 // Utilities/deparam.js
+
 // this is taken from https://github.com/cowboy/jquery-bbq/, Copyright (c) 2010 "Cowboy" Ben Alman and also released under the MIT license
 
 // Deserialize a params string into an object, optionally coercing numbers,
@@ -698,7 +795,9 @@ TC.Utils.deparam = function (params, coerce) {
     return obj;
 };
 
+
 // Utilities/embeddedContext.js
+
 (function() {
     TC.Utils.embedState = function (model, context, node) {
         embedProperty(model, 'context', context);
@@ -729,7 +828,9 @@ TC.Utils.deparam = function (params, coerce) {
 })();
 
 
+
 // Utilities/events.js
+
 (function () {
     TC.Utils.elementDestroyed = function (element) {
         if (element.constructor === jQuery)
@@ -784,7 +885,9 @@ TC.Utils.deparam = function (params, coerce) {
     };
 })();
 
+
 // Utilities/exceptions.js
+
 TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
     if (handleExceptions)
         try {
@@ -796,7 +899,9 @@ TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
         func.apply(this, args || []);
 };
 
+
 // Utilities/idGenerator.js
+
 (function () {
     TC.Utils.idGenerator = function () {
         return {
@@ -819,7 +924,9 @@ TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
     };
 })();
 
+
 // Utilities/indexOf.js
+
 if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = function (searchElement /*, fromIndex */) {
         'use strict';
@@ -853,7 +960,9 @@ if (!Array.prototype.indexOf) {
     };
 }
 
+
 // Utilities/jquery.complete.js
+
 (function ($) {
     $.complete = function (deferreds) {
         var wrappers = [];
@@ -887,7 +996,9 @@ if (!Array.prototype.indexOf) {
     };
 })(jQuery);
 
+
 // Utilities/jquery.destroyed.js
+
 (function ($) {
     var oldClean = jQuery.cleanData;
 
@@ -906,7 +1017,9 @@ if (!Array.prototype.indexOf) {
     };
 })(jQuery);
 
+
 // Utilities/knockout.js
+
 TC.Utils.cleanElement = function (element) {
     // prevent knockout from calling cleanData 
     // - calls to this function ultimately result from cleanData being called by jQuery, so a loop will occur
@@ -916,7 +1029,9 @@ TC.Utils.cleanElement = function (element) {
     $.cleanData = func;
 };
 
+
 // Utilities/objects.js
+
 TC.Utils.arguments = function (args) {
     var byConstructor = {};
     $.each(args, function (index, arg) {
@@ -971,7 +1086,9 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 
 
 
+
 // Utilities/panes.js
+
 (function () {
     var utils = TC.Utils;
 
@@ -1000,7 +1117,9 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 })();
 
 
+
 // Utilities/Path.js
+
 (function() {
     TC.Path = Path;
 
@@ -1082,7 +1201,9 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 })();
 
 
+
 // Utilities/querystring.parse.js
+
 (function () {
     // This is a modified version of modules from the YUI Library - 
     // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-parse.js.html
@@ -1188,7 +1309,9 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 })();
 
 
+
 // Utilities/querystring.stringify.js
+
 (function () {
     // This is a modified version of modules from the YUI Library - 
     // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-stringify.js.html
@@ -1256,16 +1379,18 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 })();
 
 
+
 // Types/Flow.js
+
 (function () {
-    TC.Types.Flow = function (navigationSource, definition, args) {
+    TC.Types.Flow = function (navigationSource, definition) {
         var self = this;
 
         this.node = navigationNode();
         this.pubsub = this.node.pane.pubsub.owner;
         this.sagas = [];
 
-        definition = createDefinition(self, definition, Array.prototype.slice.call(arguments, 2));
+        definition = createDefinition(self, definition);
         this.saga = new Tribe.PubSub.Saga(this.pubsub, definition);
 
         this.start = function(data) {
@@ -1290,9 +1415,9 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
         }
     };
 
-    TC.Types.Flow.prototype.startChild = function(definition, args) {
-        definition = createDefinition(this, definition, Array.prototype.slice.call(arguments, 1));
-        this.saga.startChild(definition);
+    TC.Types.Flow.prototype.startChild = function(definition, data) {
+        definition = createDefinition(this, definition);
+        this.saga.startChild(definition, data);
         return this;
     };
 
@@ -1303,8 +1428,8 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
     // This keeps a separate collection of sagas bound to this flow's lifetime
     // It would be nice to make them children of the underlying saga, but
     // then they would end any time a message was executed.
-    TC.Types.Flow.prototype.startSaga = function (definition, args) {
-        var saga = this.pubsub.startSaga.apply(this.pubsub, arguments);
+    TC.Types.Flow.prototype.startSaga = function (definition, data) {
+        var saga = this.pubsub.startSaga(definition, data);
         this.sagas.push(saga);
         return saga;
     };
@@ -1325,32 +1450,29 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
         };
     };
 
-    TC.Types.Flow.prototype.start = function(flow, args) {
+    TC.Types.Flow.prototype.start = function(flow, data) {
         var thisFlow = this;
-        var childArguments = arguments;
         return function() {
-            thisFlow.startChild.apply(thisFlow, childArguments);
+            thisFlow.startChild(flow, data);
         };
     };
 
 
     // This is reused by Node and Pane
-    TC.Types.Flow.startFlow = function (definition, args) {
-        var constructorArgs = [this, definition].concat(Array.prototype.slice.call(arguments, 1));
-        var flow = Tribe.PubSub.utils.applyToConstructor(TC.Types.Flow, constructorArgs);
-        return flow.start();
+    TC.Types.Flow.startFlow = function (definition, data) {
+        return new TC.Types.Flow(this, definition).start(data);
     };
     
-    function createDefinition(flow, definition, argsToApply) {
-        if (definition.constructor === Function) {
-            var definitionArgs = [flow].concat(argsToApply);
-            definition = Tribe.PubSub.utils.applyToConstructor(definition, definitionArgs);
-        }
+    function createDefinition(flow, definition) {
+        if (definition.constructor === Function)
+            definition = new definition(flow);
         return definition;
     }
 })();
 
+
 // Types/History.js
+
 TC.Types.History = function (history) {
     var currentState = 0;
     history.replaceState(currentState, window.title);
@@ -1403,7 +1525,9 @@ else
         go: function () { }
     });
 
+
 // Types/Loader.js
+
 TC.Types.Loader = function () {
     var self = this;
     var resources = {};
@@ -1432,18 +1556,9 @@ TC.Types.Loader = function () {
 };
 
 
-// Types/Models.js
-TC.Types.Models = function () { };
-
-TC.Types.Models.prototype.register = function (resourcePath, constructor, options) {
-    this[resourcePath] = {
-        constructor: constructor,
-        options: options || {}
-    };
-    TC.logger.debug("Model loaded for " + resourcePath);
-};
 
 // Types/Navigation.js
+
 TC.Types.Navigation = function (node, options) {
     normaliseOptions();
     setInitialPaneState();
@@ -1526,7 +1641,9 @@ TC.Types.Navigation = function (node, options) {
     }
 };
 
+
 // Types/Node.js
+
 TC.Types.Node = function (parent, pane) {
     this.parent = parent;
     this.children = [];
@@ -1607,7 +1724,9 @@ TC.Types.Node.prototype.dispose = function() {
 TC.Types.Node.prototype.startFlow = TC.Types.Flow.startFlow;
 
 
+
 // Types/Operation.js
+
 TC.Types.Operation = function () {
     var self = this;
     var incomplete = [];
@@ -1626,7 +1745,9 @@ TC.Types.Operation = function () {
     
 };
 
+
 // Types/Pane.js
+
 TC.Types.Pane = function (options) {
     TC.Utils.inheritOptions(options, this, ['path', 'data', 'element', 'transition', 'reverseTransitionIn', 'handlesNavigation', 'pubsub', 'id', 'skipPath']);
 
@@ -1688,10 +1809,17 @@ TC.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
 };
 
+TC.Types.Pane.prototype.startSaga = function(path, args) {
+    var saga = TC.context().sagas[path];
+    this.pubsub.startSaga.apply(this.pubsub, [saga.constructor].concat(Array.prototype.slice.call(arguments, 1)));
+};
+
 TC.Types.Pane.prototype.startFlow = TC.Types.Flow.startFlow;
 
 
+
 // Types/Pipeline.js
+
 TC.Types.Pipeline = function (events, context) {
     this.execute = function (eventsToExecute, target) {
         var currentEvent = -1;
@@ -1729,7 +1857,22 @@ TC.Types.Pipeline = function (events, context) {
     };
 };
 
+
+// Types/Resources.js
+
+TC.Types.Resources = function () { };
+
+TC.Types.Resources.prototype.register = function (resourcePath, constructor, options) {
+    this[resourcePath] = {
+        constructor: constructor,
+        options: options || {}
+    };
+    TC.logger.debug("Model loaded for " + resourcePath);
+};
+
+
 // Types/Templates.js
+
 TC.Types.Templates = function () {
     var self = this;
 
@@ -1758,12 +1901,16 @@ TC.Types.Templates = function () {
     };
 };
 
+
 // Events/active.js
+
 TC.Events.active = function (pane, context) {
     return TC.Utils.elementDestroyed(pane.element);
 };
 
+
 // Events/createModel.js
+
 TC.Events.createModel = function (pane, context) {
     var definition = context.models[pane.path];
     var model = definition && definition.constructor ?
@@ -1775,7 +1922,9 @@ TC.Events.createModel = function (pane, context) {
     pane.model = model;
 };
 
+
 // Events/createPubSub.js
+
 TC.Events.createPubSub = function (pane, context) {
     if (context.pubsub)
         pane.pubsub = context.pubsub.createLifetime ?
@@ -1784,7 +1933,9 @@ TC.Events.createPubSub = function (pane, context) {
 };
 
 
+
 // Events/dispose.js
+
 TC.Events.dispose = function (pane, context) {
     pane.pubsub && pane.pubsub.end && pane.pubsub.end();
     pane.dispose();
@@ -1792,14 +1943,18 @@ TC.Events.dispose = function (pane, context) {
 };
 
 
+
 // Events/initialiseModel.js
+
 TC.Events.initialiseModel = function (pane, context) {
     if (pane.model.initialise)
         return pane.model.initialise();
     return null;
 };
 
+
 // Events/loadResources.js
+
 TC.Events.loadResources = function (pane, context) {
     var strategy = TC.LoadStrategies[context.options.loadStrategy];
     
@@ -1809,7 +1964,9 @@ TC.Events.loadResources = function (pane, context) {
     return strategy(pane, context);
 };
 
+
 // Events/renderComplete.js
+
 TC.Events.renderComplete = function (pane, context) {
     $.when(
         TC.transition(pane, pane.transition, pane.reverseTransitionIn)['in']())
@@ -1826,7 +1983,9 @@ TC.Events.renderComplete = function (pane, context) {
     }
 };
 
+
 // Events/renderPane.js
+
 TC.Events.renderPane = function (pane, context) {
     var renderOperation = context.renderOperation;
 
@@ -1845,7 +2004,9 @@ TC.Events.renderPane = function (pane, context) {
     }
 };
 
+
 // LoadHandlers/scripts.js
+
 TC.LoadHandlers.js = function (url, resourcePath, context) {
     return $.ajax({
         url: url,
@@ -1875,7 +2036,9 @@ TC.LoadHandlers.js = function (url, resourcePath, context) {
     }    
 };
 
+
 // LoadHandlers/stylesheets.js
+
 TC.LoadHandlers.css = function (url, resourcePath, context) {
     var supportsTextNodes = true;
     
@@ -1912,7 +2075,9 @@ TC.LoadHandlers.css = function (url, resourcePath, context) {
     }
 };
 
+
 // LoadHandlers/templates.js
+
 TC.LoadHandlers.htm = function (url, resourcePath, context) {
     return $.ajax({
         url: url,
@@ -1929,7 +2094,9 @@ TC.LoadHandlers.htm = function (url, resourcePath, context) {
 TC.LoadHandlers.html = TC.LoadHandlers.htm;
 
 
+
 // LoadStrategies/adhoc.js
+
 TC.LoadStrategies.adhoc = function (pane, context) {
     if (context.loadedPanes[pane.path] !== undefined)
         return context.loadedPanes[pane.path];
@@ -1958,7 +2125,9 @@ TC.LoadStrategies.adhoc = function (pane, context) {
     return deferred;
 };
 
+
 // LoadStrategies/preloaded.js
+
 TC.LoadStrategies.preloaded = function (pane, context) {
     if (!context.models[pane.path] && !context.templates.loaded(pane.path)) {
         TC.logger.error("No resources loaded for '" + pane.path + "'.");
@@ -1967,7 +2136,9 @@ TC.LoadStrategies.preloaded = function (pane, context) {
     return null;
 };
 
+
 // Transitions/transition.js
+
 TC.transition = function (target, transition, reverse) {
     var node;
     var pane;
@@ -2046,7 +2217,9 @@ TC.transition = function (target, transition, reverse) {
     }    
 };
 
+
 // Transitions/Css/css.js
+
 (function () {
     var supported = supportsTransitions();
     
@@ -2119,7 +2292,10 @@ TC.transition = function (target, transition, reverse) {
 })();
 
 
+
 // Transitions/Css/style.css.js
+
+
 //
 window.__appendStyle = function (content) {
     var element = document.getElementById('__tribeStyles');
@@ -2137,20 +2313,28 @@ window.__appendStyle = function (content) {
 };//
 window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transition:all 250ms ease-in-out}.fade.in.prepare{opacity:0}.fade.in.trigger{opacity:1}.fade.out.prepare{opacity:1}.fade.out.trigger{opacity:0}.slideRight.in.prepare{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideRight.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideRight.out.trigger{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.prepare{-webkit-transform:translateX(100%);transform:translateX(100%)}.slideLeft.in.trigger{-webkit-transform:translateX(0);transform:translateX(0)}.slideLeft.out.trigger{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.slideDown.in.prepare{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.slideDown.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideDown.out.trigger{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.prepare{-webkit-transform:translateY(100%);transform:translateY(100%)}.slideUp.in.trigger{-webkit-transform:translateY(0);transform:translateY(0)}.slideUp.out.trigger{-webkit-transform:translateY(-100%);transform:translateY(-100%)}');
 
+
 // Api/api.js
+
 (function () {
     TC.registerModel = function () {
+        addResource('models', TC.Utils.arguments(arguments));
+    };
+
+    TC.registerSaga = function () {
+        addResource('sagas', TC.Utils.arguments(arguments));
+    };
+    
+    function addResource(contextProperty, args) {
         var environment = TC.scriptEnvironment || {};
-        
         var context = environment.context || TC.context();
-        var args = TC.Utils.arguments(arguments);
-        
+
+        var path = args.string || environment.resourcePath;
         var constructor = args.func;
         var options = args.object;
-        var path = args.string || environment.resourcePath;
-        
-        context.models.register(path, constructor, options);
-    };
+
+        context[contextProperty].register(path, constructor, options);
+    }
 
     TC.run = function(options) {
         TC.options = $.extend(TC.options, options);
@@ -2178,13 +2362,16 @@ window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transiti
     };
 })(); 
 
+
 // Api/context.js
+
 (function () {
     var staticState;
 
     TC.context = function (source) {
         staticState = staticState || {
-            models: new TC.Types.Models(),
+            models: new TC.Types.Resources(),
+            sagas: new TC.Types.Resources(),
             loader: new TC.Types.Loader(),
             options: TC.options,
             templates: new TC.Types.Templates(),
@@ -2199,7 +2386,9 @@ window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transiti
 })();
 
 
+
 // Api/defaultUrlProvider.js
+
 TC.options.defaultUrlProvider = {
     urlDataFrom: function(paneOptions) {
         return paneOptions && { url: '#' + $.param(paneOptions) };
@@ -2209,7 +2398,9 @@ TC.options.defaultUrlProvider = {
     }
 };
 
+
 // Api/nodes.js
+
 (function () {
     var utils = TC.Utils;
 
@@ -2239,7 +2430,9 @@ TC.options.defaultUrlProvider = {
 })();
 
 
+
 // BindingHandlers/foreachProperty.js
+
 (function() {
     ko.bindingHandlers.foreachProperty = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -2267,7 +2460,9 @@ TC.options.defaultUrlProvider = {
 })();
 
 
+
 // BindingHandlers/navigate.js
+
 ko.bindingHandlers.navigate = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         var node = TC.nodeFor(element);
@@ -2285,7 +2480,9 @@ ko.bindingHandlers.navigate = {
     }
 };
 
+
 // BindingHandlers/navigateBack.js
+
 ko.bindingHandlers.navigateBack = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         var node = TC.nodeFor(element);
@@ -2301,7 +2498,9 @@ ko.bindingHandlers.navigateBack = {
     }
 };
 
+
 // BindingHandlers/pane.js
+
 (function() {
     ko.bindingHandlers.pane = { init: updateBinding };
 
@@ -2317,7 +2516,9 @@ ko.bindingHandlers.navigateBack = {
 })();
 
 
+
 // BindingHandlers/publish.js
+
 ko.bindingHandlers.publish = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         var pubsub = TC.nodeFor(element).pane.pubsub;

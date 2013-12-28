@@ -1,4 +1,6 @@
-﻿window.Tribe = window.Tribe || {};
+﻿if (typeof (Tribe) === 'undefined')
+    Tribe = {};
+
 Tribe.PubSub = function (options) {
     var self = this;
     var utils = Tribe.PubSub.utils;

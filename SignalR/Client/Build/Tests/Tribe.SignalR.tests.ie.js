@@ -1,4 +1,6 @@
+
 // Resources/helpers.js
+
 function mockSignalR() {
     $.connection = {
         hubImplementation: {
@@ -48,7 +50,9 @@ function mockPublisher() {
 //Tribe.PubSub = function() { };
 //Tribe.PubSub.Lifetime = function() { };
 
+
 // Client.tests.js
+
 (function() {
     var hub;
     var pubsub;
@@ -137,7 +141,9 @@ function mockPublisher() {
     }
 })();
 
+
 // Publisher.tests.js
+
 (function() {
     var hub;
     var pubsub;

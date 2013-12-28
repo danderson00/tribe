@@ -16,4 +16,8 @@
     this.join = function(channel) {
         socket.emit('join', channel);
     };
+
+    this.startSaga = function(path, id, data) {
+        socket.emit('startSaga', { path: path, id: id, data: data });
+    };
 };

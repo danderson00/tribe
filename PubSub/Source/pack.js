@@ -3,5 +3,6 @@
         path: '*.js',
         domain: 'Tribe.PubSub'
     }),
-    prioritise: 'PubSub.js'
+    first: 'PubSub.js',
+    last: 'exports.js'
 }).to(T.webTargets('../Build/Tribe.PubSub'));

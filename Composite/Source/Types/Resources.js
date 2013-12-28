@@ -1,6 +1,6 @@
-﻿TC.Types.Models = function () { };
+﻿TC.Types.Resources = function () { };
 
-TC.Types.Models.prototype.register = function (resourcePath, constructor, options) {
+TC.Types.Resources.prototype.register = function (resourcePath, constructor, options) {
     this[resourcePath] = {
         constructor: constructor,
         options: options || {}

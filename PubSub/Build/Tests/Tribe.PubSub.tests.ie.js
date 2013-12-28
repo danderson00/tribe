@@ -1,4 +1,6 @@
+
 // Channel.tests.js
+
 (function() {
     var pubsub;
     var channel;
@@ -50,7 +52,9 @@
     //});
 })();
 
+
 // exceptions.tests.js
+
 (function () {
     var pubsub;
 
@@ -97,7 +101,9 @@
 })();
 
 
+
 // Lifetime.tests.js
+
 (function () {
     var pubsub;
 
@@ -200,7 +206,9 @@
 })();
 
 
+
 // PubSub.publish.tests.js
+
 (function () {
     var pubsub;
 
@@ -286,7 +294,9 @@
 })();
 
 
+
 // PubSub.subscribe.tests.js
+
 (function () {
     var pubsub;
 
@@ -342,7 +352,9 @@
 })();
 
 
+
 // PubSub.unsubscribe.tests.js
+
 (function () {
     var pubsub;
 
@@ -383,7 +395,9 @@
 })();
 
 
+
 // Saga.tests.js
+
 (function () {
     var spy;
     var definition;
@@ -397,33 +411,25 @@
         }
     });
 
-    test("constructor arguments are passed to definition constructor", function () {
-        expect(3);
-        var s = new Tribe.PubSub.Saga(pubsub, constructor, 'arg1', 'arg2');
-        function constructor(saga, arg1, arg2) {
+    test("data passed to pubsub.startSaga are passed to onstart handler", function () {
+        expect(2);
+        var s = pubsub.startSaga(constructor, 'data');
+        function constructor(saga) {
             equal(saga.pubsub.owner, pubsub);
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
+            saga.handles = {
+                onstart: function (data) { equal(data, 'data'); }
+            };
         }
     });
 
-    test("arguments passed to pubsub.startSaga are passed to definition constructor", function () {
-        expect(3);
-        var s = pubsub.startSaga(constructor, 'arg1', 'arg2');
-        function constructor(saga, arg1, arg2) {
+    test("data passed to lifetime.startSaga are passed to onstart handler", function () {
+        expect(2);
+        var s = pubsub.createLifetime().startSaga(constructor, 'data');
+        function constructor(saga) {
             equal(saga.pubsub.owner, pubsub);
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
-        }
-    });
-
-    test("arguments passed to lifetime.startSaga are passed to definition constructor", function () {
-        expect(3);
-        var s = pubsub.createLifetime().startSaga(constructor, 'arg1', 'arg2');
-        function constructor(saga, arg1, arg2) {
-            equal(saga.pubsub.owner, pubsub);
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
+            saga.handles = {
+                onstart: function (data) { equal(data, 'data'); }
+            };
         }
     });
 
@@ -486,18 +492,17 @@
         equal(saga.children.length, 1);
     });
 
-    test("startChild passes arguments to definition constructor", function () {
-        expect(2);
-        var child = function(childSaga, arg1, arg2) {
-            this.handles = {
-                onstart: function() {
-                    equal(arg1, 'arg1');
-                    equal(arg2, 2);
+    test("startChild passes data to child start function", function () {
+        expect(1);
+        var child = function(childSaga, data) {
+            childSaga.handles = {
+                onstart: function(data) {
+                    equal(data, 'data');
                 }
             };
         };
         var saga = new Tribe.PubSub.Saga(pubsub, definition);
-        saga.startChild(child, 'arg1', 2);
+        saga.startChild(child, 'data');
     });
 
     test("end calls end on any children with data passed", function () {
@@ -561,6 +566,15 @@
         ok(spy.calledTwice);
     });
 
+    test("join sets data and executes onjoin handler", function () {
+        definition.handles = {
+            onjoin: spy
+        };
+        var saga = new Tribe.PubSub.Saga(pubsub, definition).join('test');
+        equal(saga.data, 'test');
+        ok(spy.calledOnce);
+    });
+
     function createDefinition(handlers) {
         return {
             pubsub: pubsub,
@@ -570,7 +584,9 @@
 })();
 
 
+
 // subscribeOnce.tests.js
+
 (function () {
     var pubsub;
 
@@ -634,7 +650,9 @@
 })();
 
 
+
 // SubscriberList.tests.js
+
 (function() {
     var list;
 
@@ -725,7 +743,9 @@
 })();
 
 
+
 // utils.tests.js
+
 (function () {
     module("utils");
 
@@ -764,20 +784,16 @@
         ok(utils.isArray(ifnull) && ifnull.length === 0, 'handles a null properly');
     });
 
-    test('applyToConstructor', function () {
-        expect(2);
-        
-        // current implementation does not support Date
-        //deepEqual(
-        //    utils.applyToConstructor(Date, [2008, 10, 8, 00, 16, 34, 254]),
-        //    new Date(2008, 10, 8, 00, 16, 34, 254));
+    test('copyProperties', function () {
+        var source = { p1: '1', p2: '2', p3: '3' },
+            target = { p1: '2' },
+            properties = ['p1', 'p2', 'p4'];
 
-        utils.applyToConstructor(constructor, ['arg1', 'arg2']);
-        
-        function constructor(arg1, arg2) {
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
-        }
+        utils.copyProperties(source, target, properties);
+        equal(target.p1, '1');
+        equal(target.p2, '2');
+        equal(target.p3, undefined);
+        equal(target.p4, undefined);
     });
 })();
 

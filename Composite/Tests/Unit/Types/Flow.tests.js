@@ -14,30 +14,23 @@
         }
     });
     
-    test("constructor arguments are passed to definition constructor", function () {
-        expect(2);
-        var f = new TC.Types.Flow(node, constructor, 'arg1', 'arg2');
-        function constructor(flow, arg1, arg2) {
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
+    test("arguments to Node.startFlow are passed to onstart handler", function () {
+        expect(1);
+        var f = node.startFlow(constructor, 'data');
+        function constructor(flow) {
+            this.handles = {
+                onstart: function (data) { equal(data, 'data'); }
+            };
         }
     });
 
-    test("arguments to Node.startFlow are passed to definition constructor", function () {
-        expect(2);
-        var f = node.startFlow(constructor, 'arg1', 'arg2');
-        function constructor(flow, arg1, arg2) {
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
-        }
-    });
-
-    test("arguments to Pane.startFlow are passed to definition constructor", function () {
-        expect(2);
-        var f = pane.startFlow(constructor, 'arg1', 'arg2');
-        function constructor(flow, arg1, arg2) {
-            equal(arg1, 'arg1');
-            equal(arg2, 'arg2');
+    test("arguments to Pane.startFlow are passed to onstart handler", function () {
+        expect(1);
+        var f = pane.startFlow(constructor, 'data');
+        function constructor(flow) {
+            this.handles = {
+                onstart: function (data) { equal(data, 'data'); }
+            };
         }
     });
 

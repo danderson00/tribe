@@ -21,4 +21,11 @@
         TC.registerModel(constructor);
         equal(Test.Integration.context.models.test.constructor, constructor);
     });
+
+    test("registerSaga takes path from TC.scriptEnvironment", function () {
+        var constructor = function () { };
+        TC.scriptEnvironment = { resourcePath: 'test' };
+        TC.registerSaga(constructor);
+        equal(Test.Integration.context.sagas.test.constructor, constructor);
+    });
 })();

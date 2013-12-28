@@ -1,8 +1,8 @@
 ﻿(function() {
     var models;
 
-    module('Unit.Types.Models', {
-        setup: function() { models = new TC.Types.Models(); }
+    module('Unit.Types.Resources', {
+        setup: function () { models = new TC.Types.Resources(); }
     });
 
     test("register stores model as property with constructor and options", function () {
