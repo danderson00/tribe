@@ -1,0 +1,12 @@
+﻿<div class="chat">
+    <div>Channel: <span data-bind="text: channel"></span></div>
+    <div>Username: <span data-bind="text: username"></span></div>
+    <div>
+        <input data-bind="value: message" />
+        <button data-bind="click: send">Send</button>
+        <button data-bind="click: close">Close</button>
+    </div>
+    <ul data-bind="foreach: messages">
+        <li data-bind="text: $data" />
+    </ul>
+</div>

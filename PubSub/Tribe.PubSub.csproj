@@ -42,11 +42,13 @@
     <Content Include="Build\Tribe.PubSub.js" />
     <Content Include="Build\Tribe.PubSub.min.js" />
     <Content Include="Source\Channel.js" />
+    <Content Include="Source\Saga.handlers.js" />
+    <Content Include="Source\exports.js" />
     <Content Include="Source\options.js" />
     <Content Include="Source\Lifetime.js" />
     <Content Include="Source\PubSub.js" />
     <Content Include="Source\pack.js" />
-    <Content Include="Source\Saga.js" />
+    <Content Include="Source\Saga.core.js" />
     <Content Include="Source\subscribeOnce.js" />
     <Content Include="Source\SubscriberList.js" />
     <Content Include="Source\utils.js" />

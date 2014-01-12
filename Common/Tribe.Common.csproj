@@ -37,12 +37,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="pack.js" />
-    <Content Include="Source\setup.js" />
+    <Content Include="Source\serializer.js" />
+    <Content Include="Tests\index.html" />
     <Content Include="Tests\logger.tests.js" />
     <Content Include="Source\logger.js" />
+    <Content Include="Tests\serializer.tests.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Build\" />
+    <Folder Include="Build\Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

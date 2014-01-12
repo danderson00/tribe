@@ -1,7 +1,9 @@
 ﻿Tribe.PubSub.Channel = function (pubsub, channelId) {
+    var self = this;
     pubsub = pubsub.createLifetime();
 
     this.id = channelId;
+    this.owner = pubsub.owner;
 
     this.publish = function (topicOrEnvelope, data) {
         return pubsub.publish(createEnvelope(topicOrEnvelope, data));
@@ -25,6 +27,10 @@
 
     this.end = function() {
         return pubsub.end();
+    };
+
+    this.createLifetime = function () {
+        return new Tribe.PubSub.Lifetime(self, self.owner);
     };
 
     function createEnvelope(topicOrEnvelope, data) {

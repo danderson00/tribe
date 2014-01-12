@@ -1,7 +1,7 @@
 {
     "name": "tribe",
-    "version": "0.0.2",
-    "description": "Tribe is a platform for building rich, powerful, distributed HTML5 web and mobile systems.",
+    "version": "0.0.3",
+    "description": "Tribe is a platform for building rich, powerful, highly scalable distributed HTML5 web and mobile systems.",
     "dependencies": {
 		"express": "~3.4.7",
 		"knockout": "~2.3.0",

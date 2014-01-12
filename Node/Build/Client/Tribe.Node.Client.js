@@ -60,6 +60,8 @@ T.Types = T.Types || {};
 
     Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.prototype.startSaga;
     Tribe.PubSub.Lifetime.prototype.joinSaga = Tribe.PubSub.prototype.joinSaga;
+    Tribe.PubSub.Channel.prototype.startSaga = Tribe.PubSub.prototype.startSaga;
+    Tribe.PubSub.Channel.prototype.joinSaga = Tribe.PubSub.prototype.joinSaga;
 
     Tribe.PubSub.Channel.prototype.connect = function (topics) {
         var self = this;

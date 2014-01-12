@@ -1,7 +1,5 @@
-﻿<h1>Tribe Sandbox</h1>
-<input data-bind="value: message" />
-<button data-bind="click: send">Send</button>
+﻿Channel to join <input data-bind="value: channel" />
+Username: <input data-bind="value: username" />
+<button data-bind="click: join">Join</button>
 
-<ul data-bind="foreach: saga().data.messages">
-    <li data-bind="text: $data" />
-</ul>
+<div class="channels"></div>
