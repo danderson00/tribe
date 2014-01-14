@@ -79,6 +79,12 @@
     <Content Include="node_modules\optimist\test\_.js" />
     <Content Include="node_modules\optimist\test\_\argv.js" />
     <Content Include="node_modules\optimist\test\_\bin.js" />
+    <Content Include="Sandbox\Panes\chat.css" />
+    <Content Include="Sandbox\Panes\chat.htm" />
+    <Content Include="Sandbox\Panes\chat.js" />
+    <Content Include="Sandbox\Old\Panes\layout.js" />
+    <Content Include="Sandbox\Old\Sagas\chat.js" />
+    <Content Include="Sandbox\Panes\layout.htm" />
     <Content Include="Sandbox\Panes\layout.js" />
     <Content Include="Sandbox\Sagas\chat.js" />
     <Content Include="Source\Client\setup.js" />
@@ -185,8 +191,8 @@
     <Content Include="node_modules\sinon\test\sinon_test.js" />
     <Content Include="node_modules\underscore\underscore-min.js" />
     <Content Include="node_modules\underscore\underscore.js" />
-    <Content Include="Sandbox\Infrastructure\setup.js" />
-    <Content Include="Sandbox\Panes\layout.htm" />
+    <Content Include="Sandbox\Old\Infrastructure\setup.js" />
+    <Content Include="Sandbox\Old\Panes\layout.htm" />
     <Content Include="Source\Client\Types\Hub.js" />
     <Content Include="pack.js" />
     <Content Include="node_modules\express\index.js" />
@@ -970,7 +976,9 @@
     <Content Include="Source\Server\index.js" />
     <Content Include="Source\Server\sagas\index.js" />
     <Content Include="Templates\basic\Build\index.html" />
-    <Content Include="Templates\basic\Panes\layout.html" />
+    <Content Include="Templates\basic\Infrastructure\readme.txt" />
+    <Content Include="Templates\basic\Panes\layout.htm" />
+    <Content Include="Templates\basic\Sagas\readme.txt" />
     <Content Include="Templates\basic\server.js" />
     <Content Include="tests.js" />
     <Content Include="Tests\Server\Infrastructure\Mock.js" />
@@ -979,14 +987,14 @@
   <ItemGroup>
     <Folder Include="Build\" />
     <Folder Include="Sandbox\Build\" />
-    <Folder Include="Sandbox\Data\" />
     <Folder Include="Sandbox\Dependencies\" />
     <Folder Include="Sandbox\node_modules\tribe\client\" />
     <Folder Include="Sandbox\node_modules\tribe\sagas\" />
+    <Folder Include="Sandbox\Old\Build\" />
+    <Folder Include="Sandbox\Old\Data\" />
+    <Folder Include="Sandbox\Old\Dependencies\" />
     <Folder Include="Templates\basic\Data\" />
     <Folder Include="Templates\basic\Dependencies\" />
-    <Folder Include="Templates\basic\Infrastructure\" />
-    <Folder Include="Templates\basic\Sagas\" />
     <Folder Include="Tests\Client\" />
     <Folder Include="Tests\Server\Types\" />
   </ItemGroup>
