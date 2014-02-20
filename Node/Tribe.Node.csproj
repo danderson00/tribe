@@ -972,14 +972,24 @@
     <None Include="node_modules\optimist\package.json" />
     <None Include="node_modules\optimist\readme.markdown" />
     <None Include="Source\bin\tribe" />
-    <Content Include="Source\Server\store\fs.js" />
+    <Content Include="Source\Server\options.js" />
+    <Content Include="Source\Server\resolve.js" />
+    <Content Include="Source\Server\Server\build.js" />
+    <Content Include="Source\Server\Server\socket.js" />
+    <Content Include="Source\Server\Server\http.js" />
+    <Content Include="Source\Server\Store\fs.js" />
     <Content Include="Source\Server\index.js" />
-    <Content Include="Source\Server\sagas\index.js" />
+    <Content Include="Source\Server\Sagas\index.js" />
+    <Content Include="Source\Server\utilities.js" />
     <Content Include="Templates\basic\Build\index.html" />
     <Content Include="Templates\basic\Infrastructure\readme.txt" />
     <Content Include="Templates\basic\Panes\layout.htm" />
     <Content Include="Templates\basic\Sagas\readme.txt" />
     <Content Include="Templates\basic\server.js" />
+    <Content Include="TestHarness\Panes\layout.htm" />
+    <Content Include="TestHarness\Panes\fixture.htm" />
+    <Content Include="TestHarness\Panes\test.htm" />
+    <Content Include="TestHarness\server.js" />
     <Content Include="tests.js" />
     <Content Include="Tests\Server\Infrastructure\Mock.js" />
     <Content Include="Sandbox\server.js" />
@@ -996,7 +1006,6 @@
     <Folder Include="Templates\basic\Data\" />
     <Folder Include="Templates\basic\Dependencies\" />
     <Folder Include="Tests\Client\" />
-    <Folder Include="Tests\Server\Types\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="node_modules\.bin\express" />

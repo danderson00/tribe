@@ -1,8 +1,8 @@
 ﻿// hack to get knockout working in sagas
 ko = require('knockout');
 
-var store = require('tribe/store/fs');
-var serializer = require('tribe/serializer');
+var store = resolve('/Store/fs'),
+    serializer = resolve('/serializer');
 
 var sagas = {
     start: function (path, id, data) {

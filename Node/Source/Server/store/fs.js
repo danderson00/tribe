@@ -1,19 +1,22 @@
 ﻿module.exports = (function () {
-    var fs = require('q-io/fs');
+    var fs = require('q-io/fs'),
+        log = resolve('/logger');
 
     var api = {
         put: function(partitionKey, rowKey, data) {
             return fs.makeTree(targetFolder(partitionKey))
                 .then(writeFile)
-                .fail(console.error);
+                .fail(log.error);
 
             function writeFile() {
                 return fs.write(targetFile(partitionKey, rowKey), JSON.stringify(data))
+                    .fail(log.error);
             }
         },
         get: function(partitionKey, rowKey) {
             return fs.read(targetFile(partitionKey, rowKey))
-                .then(JSON.parse);
+                .then(JSON.parse)
+                .fail(log.error);
         },
         basePath: __dirname
     };
