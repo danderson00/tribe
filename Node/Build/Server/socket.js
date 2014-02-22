@@ -2,7 +2,7 @@
     start: function (server) {
         var io = require('socket.io').listen(server),
             log = resolve('/logger'),
-            sagas = resolve('/Sagas'),
+            sagas = resolve('/Handlers/sagas'),
             options = resolve('/options');
 
         // server/socket.js
