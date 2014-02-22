@@ -1,6 +1,6 @@
 ﻿ko.bindingHandlers.factory = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var data = T.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         data.value = data.value || {};
         
         if (data.value.constructor === String)

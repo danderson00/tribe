@@ -593,15 +593,15 @@ if (typeof(module) !== 'undefined')
     global.Tribe = global.Tribe || {};
     global.Tribe.Composite = {};
     global.TC = global.Tribe.Composite;
-    global.TC.Events = {};
-    global.TC.Factories = {};
-    global.TC.LoadHandlers = {};
-    global.TC.LoadStrategies = {};
-    global.TC.Transitions = {};
-    global.TC.Types = {};
-    global.TC.Utils = {};
-    global.TC.logger = T.logger;
-    global.TC.pubsub = new Tribe.PubSub();
+    global.T.Events = {};
+    global.T.Factories = {};
+    global.T.LoadHandlers = {};
+    global.T.LoadStrategies = {};
+    global.T.Transitions = {};
+    global.T.Types = {};
+    global.T.Utils = {};
+    global.T.logger = T.logger;
+    global.T.pubsub = new Tribe.PubSub();
 
     $(function() {
         $('head').append('<style class="__tribe">.__rendering { position: fixed; top: -10000px; left: -10000px; }</style>');
@@ -612,7 +612,7 @@ if (typeof(module) !== 'undefined')
 
 // options.js
 
-TC.defaultOptions = function() {
+T.defaultOptions = function() {
     return {
         synchronous: false,
         handleExceptions: true,
@@ -621,7 +621,8 @@ TC.defaultOptions = function() {
         events: ['loadResources', 'createPubSub', 'createModel', 'initialiseModel', 'renderPane', 'renderComplete', 'active', 'dispose']
     };
 };
-TC.options = TC.defaultOptions();
+T.options = T.defaultOptions();
+
 
 
 // Utilities/bindingHandlers.js
@@ -698,7 +699,8 @@ TC.options = TC.defaultOptions();
         });
         return initialValue;
     };
-})(TC.Utils);
+})(T.Utils);
+
 
 
 // Utilities/deparam.js
@@ -708,7 +710,7 @@ TC.options = TC.defaultOptions();
 // Deserialize a params string into an object, optionally coercing numbers,
 // booleans, null and undefined values; this method is the counterpart to the
 // internal jQuery.param method.
-TC.Utils.deparam = function (params, coerce) {
+T.Utils.deparam = function (params, coerce) {
     var decode = decodeURIComponent;
     var obj = {},
       coerce_types = { 'true': !0, 'false': !1, 'null': null };
@@ -805,20 +807,20 @@ TC.Utils.deparam = function (params, coerce) {
 // Utilities/embeddedContext.js
 
 (function() {
-    TC.Utils.embedState = function (model, context, node) {
+    T.Utils.embedState = function (model, context, node) {
         embedProperty(model, 'context', context);
         embedProperty(model, 'node', node);
     };
 
-    TC.Utils.contextFor = function (element) {
-        return element && TC.Utils.extractContext(ko.contextFor($(element)[0]));
+    T.Utils.contextFor = function (element) {
+        return element && T.Utils.extractContext(ko.contextFor($(element)[0]));
     };
 
-    TC.Utils.extractContext = function (koBindingContext) {
+    T.Utils.extractContext = function (koBindingContext) {
         return koBindingContext && embeddedProperty(koBindingContext.$root, 'context');
     };
 
-    TC.Utils.extractNode = function (koBindingContext) {
+    T.Utils.extractNode = function (koBindingContext) {
         return koBindingContext && embeddedProperty(koBindingContext.$root, 'node');
     };
 
@@ -838,7 +840,7 @@ TC.Utils.deparam = function (params, coerce) {
 // Utilities/events.js
 
 (function () {
-    TC.Utils.elementDestroyed = function (element) {
+    T.Utils.elementDestroyed = function (element) {
         if (element.constructor === jQuery)
             element = element[0];
 
@@ -867,7 +869,7 @@ TC.Utils.deparam = function (params, coerce) {
     // this used to use DOM functions to raise events, but IE8 doesn't support custom events
     // we'll use jQuery, but expose the originalEvent for DOM events and the jQuery event
     // for custom events (originalEvent is null for custom events).
-    TC.Utils.raiseDocumentEvent = function (name, eventData) {
+    T.Utils.raiseDocumentEvent = function (name, eventData) {
         var e = $.Event(name);
         e.eventData = eventData;
         $(document).trigger(e);
@@ -876,7 +878,7 @@ TC.Utils.deparam = function (params, coerce) {
     var handlers = {};
 
     // if a handler is used for more than one event, a leak will occur
-    TC.Utils.handleDocumentEvent = function (name, handler) {
+    T.Utils.handleDocumentEvent = function (name, handler) {
         $(document).on(name, internalHandler);
         handlers[handler] = internalHandler;
         
@@ -885,7 +887,7 @@ TC.Utils.deparam = function (params, coerce) {
         }
     };
 
-    TC.Utils.detachDocumentEvent = function (name, handler) {
+    T.Utils.detachDocumentEvent = function (name, handler) {
         $(document).off(name, handlers[handler]);
         delete handlers[handler];
     };
@@ -894,12 +896,12 @@ TC.Utils.deparam = function (params, coerce) {
 
 // Utilities/exceptions.js
 
-TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
+T.Utils.tryCatch = function(func, args, handleExceptions, message) {
     if (handleExceptions)
         try {
             func.apply(this, args || []);
         } catch (ex) {
-            TC.logger.error(message, ex);
+            T.logger.error(message, ex);
         }
     else
         func.apply(this, args || []);
@@ -909,7 +911,7 @@ TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
 // Utilities/idGenerator.js
 
 (function () {
-    TC.Utils.idGenerator = function () {
+    T.Utils.idGenerator = function () {
         return {
             next: (function () {
                 var id = 0;
@@ -924,8 +926,8 @@ TC.Utils.tryCatch = function(func, args, handleExceptions, message) {
         };
     };
 
-    var generator = TC.Utils.idGenerator();
-    TC.Utils.getUniqueId = function () {
+    var generator = T.Utils.idGenerator();
+    T.Utils.getUniqueId = function () {
         return generator.next();
     };
 })();
@@ -1026,7 +1028,7 @@ if (!Array.prototype.indexOf) {
 
 // Utilities/knockout.js
 
-TC.Utils.cleanElement = function (element) {
+T.Utils.cleanElement = function (element) {
     // prevent knockout from calling cleanData 
     // - calls to this function ultimately result from cleanData being called by jQuery, so a loop will occur
     var func = $.cleanData;
@@ -1038,7 +1040,7 @@ TC.Utils.cleanElement = function (element) {
 
 // Utilities/objects.js
 
-TC.Utils.arguments = function (args) {
+T.Utils.arguments = function (args) {
     var byConstructor = {};
     $.each(args, function (index, arg) {
         byConstructor[arg.constructor] = arg;
@@ -1056,19 +1058,19 @@ TC.Utils.arguments = function (args) {
     };
 };
 
-TC.Utils.removeItem = function (array, item) {
+T.Utils.removeItem = function (array, item) {
     var index = $.inArray(item, array);
     if (index > -1)
         array.splice(index, 1);
 };
 
-TC.Utils.inheritOptions = function (from, to, options) {
+T.Utils.inheritOptions = function (from, to, options) {
     for (var i = 0, l = options.length; i < l; i++)
         to[options[i]] = from[options[i]];
     return to;
 };
 
-TC.Utils.cloneData = function (from, except) {
+T.Utils.cloneData = function (from, except) {
     if (!from) return;
     var result = {};
     for (var property in from) {
@@ -1082,7 +1084,7 @@ TC.Utils.cloneData = function (from, except) {
     return result;
 };
 
-TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
+T.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
     var data = allBindingsAccessor();
     data.value = valueAccessor();
     if (!ko.isObservable(data.value) && $.isFunction(data.value))
@@ -1096,7 +1098,7 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 // Utilities/panes.js
 
 (function () {
-    var utils = TC.Utils;
+    var utils = T.Utils;
 
     utils.getPaneOptions = function(value, otherOptions) {
         var options = value.constructor === String ? { path: value } : value;
@@ -1104,13 +1106,13 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
     };
 
     utils.bindPane = function (node, element, paneOptions, context) {
-        context = context || utils.contextFor(element) || TC.context();
-        var pane = new TC.Types.Pane($.extend({ element: $(element)[0] }, paneOptions));
+        context = context || utils.contextFor(element) || T.context();
+        var pane = new T.Types.Pane($.extend({ element: $(element)[0] }, paneOptions));
         node.setPane(pane);
 
         context.renderOperation.add(pane);
 
-        var pipeline = new TC.Types.Pipeline(TC.Events, context);
+        var pipeline = new T.Types.Pipeline(T.Events, context);
         pipeline.execute(context.options.events, pane);
 
         return pane;
@@ -1127,7 +1129,7 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 // Utilities/Path.js
 
 (function() {
-    TC.Path = Path;
+    T.Path = Path;
 
     function Path(path) {
         path = path ? normalise(path.toString()) : '';
@@ -1215,13 +1217,13 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
     // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-parse.js.html
     // Either it should be rewritten or attribution and licensing be available here and on the website like in http://yuilibrary.com/license/
 
-    TC.Utils.Querystring = TC.Utils.Querystring || {};
+    T.Utils.Querystring = T.Utils.Querystring || {};
 
-    TC.Utils.Querystring.parse = function (source, seperator, eqSymbol) {
+    T.Utils.Querystring.parse = function (source, seperator, eqSymbol) {
         stripLeadIn();
         
-        return TC.Utils.reduce(
-            TC.Utils.map(
+        return T.Utils.reduce(
+            T.Utils.map(
                 source.split(seperator || "&"),
                 pieceParser(eqSymbol || "=")
             ),
@@ -1323,11 +1325,11 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
     // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-stringify.js.html
     // Either it should be rewritten or attribution and licensing be available here and on the website like in http://yuilibrary.com/license/
 
-    TC.Utils.Querystring = TC.Utils.Querystring || {};
+    T.Utils.Querystring = T.Utils.Querystring || {};
 
     var escape = encodeURIComponent;
 
-    TC.Utils.Querystring.stringify = function (source, options) {
+    T.Utils.Querystring.stringify = function (source, options) {
         return stringify(source, options);
     };
 
@@ -1362,7 +1364,7 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
         // Check for cyclical references in nested objects
         for (i = stack.length - 1; i >= 0; --i)
             if (stack[i] === source)
-                throw new Error("TC.Utils.Querystring.stringify: cyclical reference");
+                throw new Error("T.Utils.Querystring.stringify: cyclical reference");
 
         stack.push(source);
         s = [];
@@ -1389,7 +1391,7 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 // Types/Flow.js
 
 (function () {
-    TC.Types.Flow = function (navigationSource, definition) {
+    T.Types.Flow = function (navigationSource, definition) {
         var self = this;
 
         this.node = navigationNode();
@@ -1406,49 +1408,49 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 
         this.end = function(data) {
             self.saga.end(data);
-            TC.Utils.each(self.sagas, function(saga) {
+            T.Utils.each(self.sagas, function(saga) {
                 saga.end(data);
             });
             return self;
         };
 
         function navigationNode() {
-            if (navigationSource.constructor === TC.Types.Node)
+            if (navigationSource.constructor === T.Types.Node)
                 return navigationSource.findNavigation().node;
-            if (navigationSource.constructor === TC.Types.Pane)
+            if (navigationSource.constructor === T.Types.Pane)
                 return navigationSource.node.findNavigation().node;
-            throw new Error("navigationSource must be either TC.Types.Pane or TC.Types.Node");
+            throw new Error("navigationSource must be either T.Types.Pane or T.Types.Node");
         }
     };
 
-    TC.Types.Flow.prototype.startChild = function(definition, data) {
+    T.Types.Flow.prototype.startChild = function(definition, data) {
         definition = createDefinition(this, definition);
         this.saga.startChild(definition, data);
         return this;
     };
 
-    TC.Types.Flow.prototype.navigate = function (pathOrOptions, data) {
+    T.Types.Flow.prototype.navigate = function (pathOrOptions, data) {
         this.node.navigate(pathOrOptions, data);
     };
     
     // This keeps a separate collection of sagas bound to this flow's lifetime
     // It would be nice to make them children of the underlying saga, but
     // then they would end any time a message was executed.
-    TC.Types.Flow.prototype.startSaga = function (definition, data) {
+    T.Types.Flow.prototype.startSaga = function (definition, data) {
         var saga = this.pubsub.startSaga(definition, data);
         this.sagas.push(saga);
         return saga;
     };
 
     // flow helpers
-    TC.Types.Flow.prototype.to = function (pathOrOptions, data) {
+    T.Types.Flow.prototype.to = function (pathOrOptions, data) {
         var node = this.node;
         return function () {
             node.navigate(pathOrOptions, data);
         };
     };
 
-    TC.Types.Flow.prototype.endsAt = function (pathOrOptions, data) {
+    T.Types.Flow.prototype.endsAt = function (pathOrOptions, data) {
         var flow = this;
         return function () {
             flow.node.navigate(pathOrOptions, data);
@@ -1456,7 +1458,7 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
         };
     };
 
-    TC.Types.Flow.prototype.start = function(flow, data) {
+    T.Types.Flow.prototype.start = function(flow, data) {
         var thisFlow = this;
         return function() {
             thisFlow.startChild(flow, data);
@@ -1465,8 +1467,8 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 
 
     // This is reused by Node and Pane
-    TC.Types.Flow.startFlow = function (definition, data) {
-        return new TC.Types.Flow(this, definition).start(data);
+    T.Types.Flow.startFlow = function (definition, data) {
+        return new T.Types.Flow(this, definition).start(data);
     };
     
     function createDefinition(flow, definition) {
@@ -1479,13 +1481,13 @@ TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 
 // Types/History.js
 
-TC.Types.History = function (history) {
+T.Types.History = function (history) {
     var currentState = 0;
     history.replaceState(currentState, window.title);
 
     var popActions = {
         raiseEvent: function (e) {
-            TC.Utils.raiseDocumentEvent('browser.go', { count: (e.state - currentState) });
+            T.Utils.raiseDocumentEvent('browser.go', { count: (e.state - currentState) });
             currentState = e.state;
         },
         updateStack: function(e) {
@@ -1523,9 +1525,9 @@ TC.Types.History = function (history) {
 };
 
 if (window.history.pushState)
-    TC.history = new TC.Types.History(window.history);
+    T.history = new T.Types.History(window.history);
 else
-    TC.history = new TC.Types.History({
+    T.history = new T.Types.History({
         replaceState: function () { },
         pushState: function () { },
         go: function () { }
@@ -1534,7 +1536,7 @@ else
 
 // Types/Loader.js
 
-TC.Types.Loader = function () {
+T.Types.Loader = function () {
     var self = this;
     var resources = {};
 
@@ -1542,8 +1544,8 @@ TC.Types.Loader = function () {
         if (resources[url] !== undefined)
             return resources[url];
 
-        var extension = TC.Path(url).extension().toString();
-        var handler = TC.LoadHandlers[extension];
+        var extension = T.Path(url).extension().toString();
+        var handler = T.LoadHandlers[extension];
 
         if (handler) {
             var result = handler(url, resourcePath, context);
@@ -1556,7 +1558,7 @@ TC.Types.Loader = function () {
             return result;
         }
 
-        TC.logger.warn("Resource of type " + extension + " but no handler registered.");
+        T.logger.warn("Resource of type " + extension + " but no handler registered.");
         return null;
     };
 };
@@ -1565,7 +1567,7 @@ TC.Types.Loader = function () {
 
 // Types/Navigation.js
 
-TC.Types.Navigation = function (node, options) {
+T.Types.Navigation = function (node, options) {
     normaliseOptions();
     setInitialPaneState();
 
@@ -1577,7 +1579,7 @@ TC.Types.Navigation = function (node, options) {
 
     this.navigate = function (paneOptions) {
         if (options.browser)
-            TC.history.navigate(options.browser && options.browser.urlDataFrom(paneOptions));
+            T.history.navigate(options.browser && options.browser.urlDataFrom(paneOptions));
 
         trimStack();
         stack.push(paneOptions);
@@ -1592,10 +1594,10 @@ TC.Types.Navigation = function (node, options) {
 
     this.go = function(frameCount) {
         go(frameCount);
-        if (options.browser) TC.history.update(frameCount);
+        if (options.browser) T.history.update(frameCount);
     };
     
-    if(options.browser) TC.Utils.handleDocumentEvent('browser.go', onBrowserGo);
+    if(options.browser) T.Utils.handleDocumentEvent('browser.go', onBrowserGo);
     function onBrowserGo(e) {
         go(e.eventData.count);
     }
@@ -1612,7 +1614,7 @@ TC.Types.Navigation = function (node, options) {
     }
 
     function navigateTo(paneOptions, reverse) {
-        TC.Utils.raiseDocumentEvent('navigating', { node: node, options: paneOptions, browserData: options.browserData });
+        T.Utils.raiseDocumentEvent('navigating', { node: node, options: paneOptions, browserData: options.browserData });
         node.transitionTo(paneOptions, options.transition, reverse);
     }
 
@@ -1621,7 +1623,7 @@ TC.Types.Navigation = function (node, options) {
     }
 
     this.dispose = function() {
-        TC.Utils.detachDocumentEvent('browser.go', onBrowserGo);
+        T.Utils.detachDocumentEvent('browser.go', onBrowserGo);
     };
     
     function normaliseOptions() {
@@ -1629,7 +1631,7 @@ TC.Types.Navigation = function (node, options) {
         if (options.constructor === String)
             options = { transition: options };
         if (options.browser === true)
-            options.browser = TC.options.defaultUrlProvider;
+            options.browser = T.options.defaultUrlProvider;
     }
     
     function setInitialPaneState() {
@@ -1650,30 +1652,30 @@ TC.Types.Navigation = function (node, options) {
 
 // Types/Node.js
 
-TC.Types.Node = function (parent, pane) {
+T.Types.Node = function (parent, pane) {
     this.parent = parent;
     this.children = [];
     this.root = parent ? parent.root : this;
-    this.id = TC.Utils.getUniqueId();
+    this.id = T.Utils.getUniqueId();
 
     if (parent) parent.children.push(this);
     if (pane) this.setPane(pane);
 };
 
-TC.Types.Node.prototype.navigate = function (pathOrPane, data) {
-    var paneOptions = TC.Utils.getPaneOptions(pathOrPane, { data: data });
-    if (!TC.Path(paneOptions.path).isAbsolute())
+T.Types.Node.prototype.navigate = function (pathOrPane, data) {
+    var paneOptions = T.Utils.getPaneOptions(pathOrPane, { data: data });
+    if (!T.Path(paneOptions.path).isAbsolute())
         // this is duplicated in Pane.inheritPathFrom - the concept (relative paths inherit existing paths) needs to be clearer
-        paneOptions.path = TC.Path(this.nodeForPath().pane.path).withoutFilename().combine(paneOptions.path).toString();
+        paneOptions.path = T.Path(this.nodeForPath().pane.path).withoutFilename().combine(paneOptions.path).toString();
     
     this.findNavigation().navigate(paneOptions);
 };
 
-TC.Types.Node.prototype.navigateBack = function () {
+T.Types.Node.prototype.navigateBack = function () {
     this.findNavigation().go(-1);
 };
 
-TC.Types.Node.prototype.findNavigation = function() {
+T.Types.Node.prototype.findNavigation = function() {
     if (this.defaultNavigation)
         return this.defaultNavigation;
 
@@ -1681,18 +1683,18 @@ TC.Types.Node.prototype.findNavigation = function() {
         return this.navigation;
         
     if (!this.parent) {
-        this.navigation = new TC.Types.Navigation(this);
+        this.navigation = new T.Types.Navigation(this);
         return this.navigation;
     }
 
     return this.parent.findNavigation();
 };
 
-TC.Types.Node.prototype.transitionTo = function(paneOptions, transition, reverse) {
-    TC.transition(this, transition, reverse).to(paneOptions);
+T.Types.Node.prototype.transitionTo = function(paneOptions, transition, reverse) {
+    T.transition(this, transition, reverse).to(paneOptions);
 };
 
-TC.Types.Node.prototype.setPane = function (pane) {
+T.Types.Node.prototype.setPane = function (pane) {
     if (this.pane)
         this.pane.node = null;
 
@@ -1701,7 +1703,7 @@ TC.Types.Node.prototype.setPane = function (pane) {
     this.skipPath = pane.skipPath;
 
     if (pane.handlesNavigation) {
-        this.navigation = new TC.Types.Navigation(this, pane.handlesNavigation);
+        this.navigation = new T.Types.Navigation(this, pane.handlesNavigation);
         
         // this sets this pane as the "default", accessible from panes outside the tree. First in best dressed.
         this.root.defaultNavigation = this.root.defaultNavigation || this.navigation;
@@ -1710,16 +1712,16 @@ TC.Types.Node.prototype.setPane = function (pane) {
     pane.inheritPathFrom(this.parent);
 };
 
-TC.Types.Node.prototype.nodeForPath = function() {
+T.Types.Node.prototype.nodeForPath = function() {
     return this.skipPath && this.parent ? this.parent.nodeForPath() : this;
 };
 
-TC.Types.Node.prototype.dispose = function() {
+T.Types.Node.prototype.dispose = function() {
     if (this.root.defaultNavigation === this.navigation)
         this.root.defaultNavigation = null;
 
     if (this.parent)
-        TC.Utils.removeItem(this.parent.children, this);
+        T.Utils.removeItem(this.parent.children, this);
 
     if (this.pane && this.pane.dispose) {
         delete this.pane.node;
@@ -1727,13 +1729,13 @@ TC.Types.Node.prototype.dispose = function() {
     }
 };
 
-TC.Types.Node.prototype.startFlow = TC.Types.Flow.startFlow;
+T.Types.Node.prototype.startFlow = T.Types.Flow.startFlow;
 
 
 
 // Types/Operation.js
 
-TC.Types.Operation = function () {
+T.Types.Operation = function () {
     var self = this;
     var incomplete = [];
 
@@ -1744,7 +1746,7 @@ TC.Types.Operation = function () {
     };
 
     this.complete = function (id) {
-        TC.Utils.removeItem(incomplete, id);
+        T.Utils.removeItem(incomplete, id);
         if (incomplete.length === 0)
             self.promise.resolve();
     };
@@ -1754,8 +1756,8 @@ TC.Types.Operation = function () {
 
 // Types/Pane.js
 
-TC.Types.Pane = function (options) {
-    TC.Utils.inheritOptions(options, this, ['path', 'data', 'element', 'transition', 'reverseTransitionIn', 'handlesNavigation', 'pubsub', 'id', 'skipPath']);
+T.Types.Pane = function (options) {
+    T.Utils.inheritOptions(options, this, ['path', 'data', 'element', 'transition', 'reverseTransitionIn', 'handlesNavigation', 'pubsub', 'id', 'skipPath']);
 
     // events we are interested in hooking in to - this could be done completely generically by the pipeline
     this.is = {
@@ -1764,19 +1766,19 @@ TC.Types.Pane = function (options) {
     };    
 };
 
-TC.Types.Pane.prototype.navigate = function (pathOrPane, data) {
+T.Types.Pane.prototype.navigate = function (pathOrPane, data) {
     this.node && this.node.navigate(pathOrPane, data);
 };
 
-TC.Types.Pane.prototype.navigateBack = function () {
+T.Types.Pane.prototype.navigateBack = function () {
     this.node && this.node.navigateBack();
 };
 
-TC.Types.Pane.prototype.remove = function () {
+T.Types.Pane.prototype.remove = function () {
     $(this.element).remove();
 };
 
-TC.Types.Pane.prototype.dispose = function () {
+T.Types.Pane.prototype.dispose = function () {
     if (this.model && this.model.dispose)
         this.model.dispose();
 
@@ -1786,47 +1788,47 @@ TC.Types.Pane.prototype.dispose = function () {
     }
 
     if (this.element)
-        TC.Utils.cleanElement(this.element);
+        T.Utils.cleanElement(this.element);
 };
 
-TC.Types.Pane.prototype.inheritPathFrom = function (node) {
+T.Types.Pane.prototype.inheritPathFrom = function (node) {
     node = node && node.nodeForPath();
     var pane = node && node.pane;    
-    var path = TC.Path(this.path);
+    var path = T.Path(this.path);
     if (path.isAbsolute() || !pane)
         this.path = path.makeAbsolute().toString();
     else
-        this.path = TC.Path(pane.path).withoutFilename().combine(path).toString();
+        this.path = T.Path(pane.path).withoutFilename().combine(path).toString();
 };
 
-TC.Types.Pane.prototype.find = function(selector) {
+T.Types.Pane.prototype.find = function(selector) {
     return $(this.element).find(selector);
 };
 
-TC.Types.Pane.prototype.startRender = function () {
+T.Types.Pane.prototype.startRender = function () {
     $(this.element).addClass('__rendering');
 };
 
-TC.Types.Pane.prototype.endRender = function () {
+T.Types.Pane.prototype.endRender = function () {
     $(this.element).removeClass('__rendering');
 };
 
-TC.Types.Pane.prototype.toString = function () {
+T.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
 };
 
-TC.Types.Pane.prototype.startSaga = function(path, args) {
-    var saga = TC.context().sagas[path];
+T.Types.Pane.prototype.startSaga = function(path, args) {
+    var saga = T.context().sagas[path];
     this.pubsub.startSaga.apply(this.pubsub, [saga.constructor].concat(Array.prototype.slice.call(arguments, 1)));
 };
 
-TC.Types.Pane.prototype.startFlow = TC.Types.Flow.startFlow;
+T.Types.Pane.prototype.startFlow = T.Types.Flow.startFlow;
 
 
 
 // Types/Pipeline.js
 
-TC.Types.Pipeline = function (events, context) {
+T.Types.Pipeline = function (events, context) {
     this.execute = function (eventsToExecute, target) {
         var currentEvent = -1;
         var promise = $.Deferred();
@@ -1843,7 +1845,7 @@ TC.Types.Pipeline = function (events, context) {
             var thisEvent = events[eventName];
 
             if (!thisEvent) {
-                TC.logger.warn("No event defined for " + eventName);
+                T.logger.warn("No event defined for " + eventName);
                 executeNextEvent();
                 return;
             }
@@ -1855,7 +1857,7 @@ TC.Types.Pipeline = function (events, context) {
             function handleFailure() {
                 promise.reject();
                 var targetDescription = target ? target.toString() : "empty target";
-                TC.logger.error("An error occurred in the '" + eventName + "' event for " + targetDescription);
+                T.logger.error("An error occurred in the '" + eventName + "' event for " + targetDescription);
             }
         }
 
@@ -1866,24 +1868,24 @@ TC.Types.Pipeline = function (events, context) {
 
 // Types/Resources.js
 
-TC.Types.Resources = function () { };
+T.Types.Resources = function () { };
 
-TC.Types.Resources.prototype.register = function (resourcePath, constructor, options) {
+T.Types.Resources.prototype.register = function (resourcePath, constructor, options) {
     this[resourcePath] = {
         constructor: constructor,
         options: options || {}
     };
-    TC.logger.debug("Model loaded for " + resourcePath);
+    T.logger.debug("Model loaded for " + resourcePath);
 };
 
 
 // Types/Templates.js
 
-TC.Types.Templates = function () {
+T.Types.Templates = function () {
     var self = this;
 
     this.store = function (template, path) {
-        var id = TC.Path(path).asMarkupIdentifier().toString();
+        var id = T.Path(path).asMarkupIdentifier().toString();
         embedTemplate(template, 'template-' + id);
     };
     
@@ -1897,11 +1899,11 @@ TC.Types.Templates = function () {
     }
     
     this.loaded = function(path) {
-        return $('head script#template-' + TC.Path(path).asMarkupIdentifier()).length > 0;
+        return $('head script#template-' + T.Path(path).asMarkupIdentifier()).length > 0;
     };
 
     this.render = function (target, path) {
-        var id = TC.Path(path).asMarkupIdentifier();
+        var id = T.Path(path).asMarkupIdentifier();
         // can't use html() to append - this uses the element innerHTML property and IE7 and 8 will strip comments (i.e. containerless control flow bindings)
         $(target).empty().append($('head script#template-' + id).html());
     };
@@ -1910,20 +1912,20 @@ TC.Types.Templates = function () {
 
 // Events/active.js
 
-TC.Events.active = function (pane, context) {
-    return TC.Utils.elementDestroyed(pane.element);
+T.Events.active = function (pane, context) {
+    return T.Utils.elementDestroyed(pane.element);
 };
 
 
 // Events/createModel.js
 
-TC.Events.createModel = function (pane, context) {
+T.Events.createModel = function (pane, context) {
     var definition = context.models[pane.path];
     var model = definition && definition.constructor ?
         new definition.constructor(pane) :
         { pane: pane, data: pane.data };
 
-    TC.Utils.embedState(model, context, pane.node);
+    T.Utils.embedState(model, context, pane.node);
 
     pane.model = model;
 };
@@ -1931,7 +1933,7 @@ TC.Events.createModel = function (pane, context) {
 
 // Events/createPubSub.js
 
-TC.Events.createPubSub = function (pane, context) {
+T.Events.createPubSub = function (pane, context) {
     if (context.pubsub)
         pane.pubsub = context.pubsub.createLifetime ?
             context.pubsub.createLifetime() :
@@ -1942,7 +1944,7 @@ TC.Events.createPubSub = function (pane, context) {
 
 // Events/dispose.js
 
-TC.Events.dispose = function (pane, context) {
+T.Events.dispose = function (pane, context) {
     pane.pubsub && pane.pubsub.end && pane.pubsub.end();
     pane.dispose();
     pane.is.disposed.resolve();
@@ -1952,7 +1954,7 @@ TC.Events.dispose = function (pane, context) {
 
 // Events/initialiseModel.js
 
-TC.Events.initialiseModel = function (pane, context) {
+T.Events.initialiseModel = function (pane, context) {
     if (pane.model.initialise)
         return pane.model.initialise();
     return null;
@@ -1961,8 +1963,8 @@ TC.Events.initialiseModel = function (pane, context) {
 
 // Events/loadResources.js
 
-TC.Events.loadResources = function (pane, context) {
-    var strategy = TC.LoadStrategies[context.options.loadStrategy];
+T.Events.loadResources = function (pane, context) {
+    var strategy = T.LoadStrategies[context.options.loadStrategy];
     
     if (!strategy)
         throw "Unknown resource load strategy";
@@ -1973,9 +1975,9 @@ TC.Events.loadResources = function (pane, context) {
 
 // Events/renderComplete.js
 
-TC.Events.renderComplete = function (pane, context) {
+T.Events.renderComplete = function (pane, context) {
     $.when(
-        TC.transition(pane, pane.transition, pane.reverseTransitionIn)['in']())
+        T.transition(pane, pane.transition, pane.reverseTransitionIn)['in']())
      .done(executeRenderComplete);
     
     pane.endRender();
@@ -1984,20 +1986,20 @@ TC.Events.renderComplete = function (pane, context) {
         if (pane.model.renderComplete)
             pane.model.renderComplete();
         pane.is.rendered.resolve();
-        TC.Utils.raiseDocumentEvent('renderComplete', pane);
-        context.renderOperation = new TC.Types.Operation();
+        T.Utils.raiseDocumentEvent('renderComplete', pane);
+        context.renderOperation = new T.Types.Operation();
     }
 };
 
 
 // Events/renderPane.js
 
-TC.Events.renderPane = function (pane, context) {
+T.Events.renderPane = function (pane, context) {
     var renderOperation = context.renderOperation;
 
     pane.startRender();
     context.templates.render(pane.element, pane.path);
-    TC.Utils.tryCatch(applyBindings, null, context.options.handleExceptions, 'An error occurred applying the bindings for ' + pane.toString());
+    T.Utils.tryCatch(applyBindings, null, context.options.handleExceptions, 'An error occurred applying the bindings for ' + pane.toString());
 
     if (pane.model.paneRendered)
         pane.model.paneRendered();
@@ -2013,7 +2015,7 @@ TC.Events.renderPane = function (pane, context) {
 
 // LoadHandlers/scripts.js
 
-TC.LoadHandlers.js = function (url, resourcePath, context) {
+T.LoadHandlers.js = function (url, resourcePath, context) {
     return $.ajax({
         url: url,
         dataType: 'text',
@@ -2023,18 +2025,18 @@ TC.LoadHandlers.js = function (url, resourcePath, context) {
     });
 
     function executeScript(script) {
-        TC.scriptEnvironment = {
+        T.scriptEnvironment = {
             url: url,
             resourcePath: resourcePath,
             context: context
         };
 
-        TC.Utils.tryCatch($.globalEval, [appendSourceUrl(script)], context.options.handleExceptions,
+        T.Utils.tryCatch($.globalEval, [appendSourceUrl(script)], context.options.handleExceptions,
             'An error occurred executing script loaded from ' + url + (resourcePath ? ' for resource ' + resourcePath : ''));
 
-        delete TC.scriptEnvironment;
+        delete T.scriptEnvironment;
 
-        TC.logger.debug('Loaded script from ' + url);
+        T.logger.debug('Loaded script from ' + url);
     }
 
     function appendSourceUrl(script) {
@@ -2045,7 +2047,7 @@ TC.LoadHandlers.js = function (url, resourcePath, context) {
 
 // LoadHandlers/stylesheets.js
 
-TC.LoadHandlers.css = function (url, resourcePath, context) {
+T.LoadHandlers.css = function (url, resourcePath, context) {
     var supportsTextNodes = true;
     
     return $.ajax({
@@ -2084,7 +2086,7 @@ TC.LoadHandlers.css = function (url, resourcePath, context) {
 
 // LoadHandlers/templates.js
 
-TC.LoadHandlers.htm = function (url, resourcePath, context) {
+T.LoadHandlers.htm = function (url, resourcePath, context) {
     return $.ajax({
         url: url,
         dataType: 'html',
@@ -2097,17 +2099,17 @@ TC.LoadHandlers.htm = function (url, resourcePath, context) {
         context.templates.store(template, resourcePath);
     }
 };
-TC.LoadHandlers.html = TC.LoadHandlers.htm;
+T.LoadHandlers.html = T.LoadHandlers.htm;
 
 
 
 // LoadStrategies/adhoc.js
 
-TC.LoadStrategies.adhoc = function (pane, context) {
+T.LoadStrategies.adhoc = function (pane, context) {
     if (context.loadedPanes[pane.path] !== undefined)
         return context.loadedPanes[pane.path];
 
-    var path = TC.Path(context.options.basePath).combine(TC.Path(pane.path).makeRelative());
+    var path = T.Path(context.options.basePath).combine(T.Path(pane.path).makeRelative());
 
     if (context.templates.loaded(pane.path) || context.models[pane.path])
         return null;
@@ -2122,7 +2124,7 @@ TC.LoadStrategies.adhoc = function (pane, context) {
 
     $.when(deferred)
         .fail(function() {
-            TC.logger.error("Unable to load resources for '" + pane.path + "'.");
+            T.logger.error("Unable to load resources for '" + pane.path + "'.");
         })
         .always(function () {
             context.loadedPanes[pane.path] = null;
@@ -2134,9 +2136,9 @@ TC.LoadStrategies.adhoc = function (pane, context) {
 
 // LoadStrategies/preloaded.js
 
-TC.LoadStrategies.preloaded = function (pane, context) {
+T.LoadStrategies.preloaded = function (pane, context) {
     if (!context.models[pane.path] && !context.templates.loaded(pane.path)) {
-        TC.logger.error("No resources loaded for '" + pane.path + "'.");
+        T.logger.error("No resources loaded for '" + pane.path + "'.");
         return $.Deferred().reject();
     }
     return null;
@@ -2145,16 +2147,16 @@ TC.LoadStrategies.preloaded = function (pane, context) {
 
 // Transitions/transition.js
 
-TC.transition = function (target, transition, reverse) {
+T.transition = function (target, transition, reverse) {
     var node;
     var pane;
     var element;
     setState();
     
     transition = transition || (pane && pane.transition) || (node && node.transition);
-    var implementation = TC.Transitions[transition];
+    var implementation = T.Transitions[transition];
     if (reverse && implementation && implementation.reverse)
-        implementation = TC.Transitions[implementation.reverse];
+        implementation = T.Transitions[implementation.reverse];
 
     return {
         'in': function () {
@@ -2178,11 +2180,11 @@ TC.transition = function (target, transition, reverse) {
         },
         
         to: function (paneOptions, remove) {
-            var context = TC.context();
+            var context = T.context();
             if (node)
-                TC.Utils.insertPaneAfter(node, element, TC.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), context);
+                T.Utils.insertPaneAfter(node, element, T.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), context);
             else
-                TC.insertNodeAfter(element, TC.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), null, context);
+                T.insertNodeAfter(element, T.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), null, context);
             this.out(remove);
             return context.renderOperation.promise;
         }
@@ -2190,7 +2192,7 @@ TC.transition = function (target, transition, reverse) {
     
     function setTransitionMode() {
         var $element = $(element);
-        if (TC.transition.mode === 'fixed')
+        if (T.transition.mode === 'fixed')
             $element.css({
                 position: 'fixed',
                 width: $element.width(),
@@ -2207,13 +2209,13 @@ TC.transition = function (target, transition, reverse) {
     }
 
     function setState() {
-        if (!target) throw "No target passed to TC.transition";
+        if (!target) throw "No target passed to T.transition";
         
-        if (target.constructor === TC.Types.Node) {
+        if (target.constructor === T.Types.Node) {
             node = target;
             pane = node.pane;
             element = pane.element;
-        } else if (target.constructor === TC.Types.Pane) {
+        } else if (target.constructor === T.Types.Pane) {
             pane = target;
             node = pane.node;
             element = pane.element;
@@ -2238,7 +2240,7 @@ TC.transition = function (target, transition, reverse) {
     var transitionEndEvents = 'webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd';
 
     function createCssTransition(transition, reverse) {
-        TC.Transitions[transition] = {
+        T.Transitions[transition] = {
             'in': function (element) {
                 if (!supported) return null;
                 
@@ -2323,17 +2325,17 @@ window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transiti
 // Api/api.js
 
 (function () {
-    TC.registerModel = function () {
-        addResource('models', TC.Utils.arguments(arguments));
+    T.registerModel = function () {
+        addResource('models', T.Utils.arguments(arguments));
     };
 
-    TC.registerSaga = function () {
-        addResource('sagas', TC.Utils.arguments(arguments));
+    T.registerSaga = function () {
+        addResource('sagas', T.Utils.arguments(arguments));
     };
     
     function addResource(contextProperty, args) {
-        var environment = TC.scriptEnvironment || {};
-        var context = environment.context || TC.context();
+        var environment = T.scriptEnvironment || {};
+        var context = environment.context || T.context();
 
         var path = args.string || environment.resourcePath;
         var constructor = args.func;
@@ -2342,13 +2344,13 @@ window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transiti
         context[contextProperty].register(path, constructor, options);
     }
 
-    TC.run = function(options) {
-        TC.options = $.extend(TC.options, options);
-        TC.options.pubsub = TC.options.pubsub || new Tribe.PubSub({ sync: TC.options.synchronous, handleExceptions: TC.options.handleExceptions });
+    T.run = function(options) {
+        T.options = $.extend(T.options, options);
+        T.options.pubsub = T.options.pubsub || new Tribe.PubSub({ sync: T.options.synchronous, handleExceptions: T.options.handleExceptions });
         ko.applyBindings();
         //if (preload) {
         //    var promises = [];
-        //    var context = TC.context();
+        //    var context = T.context();
 
         //    if ($.isArray(preload))
         //        for (var i = 0, l = preload.length; i < l; i++)
@@ -2357,7 +2359,7 @@ window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transiti
         //        addPromise(preload);
             
         //    function addPromise(path) {
-        //        promises.push(context.loader.get(TC.Path(context.options.basePath).combine(path).toString(), null, context));
+        //        promises.push(context.loader.get(T.Path(context.options.basePath).combine(path).toString(), null, context));
         //    }
 
         //    return $.when.apply(null, promises).done(function () {
@@ -2374,18 +2376,18 @@ window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transiti
 (function () {
     var staticState;
 
-    TC.context = function (source) {
+    T.context = function (source) {
         staticState = staticState || {
-            models: new TC.Types.Resources(),
-            sagas: new TC.Types.Resources(),
-            loader: new TC.Types.Loader(),
-            options: TC.options,
-            templates: new TC.Types.Templates(),
+            models: new T.Types.Resources(),
+            sagas: new T.Types.Resources(),
+            loader: new T.Types.Loader(),
+            options: T.options,
+            templates: new T.Types.Templates(),
             loadedPanes: {}
         };
         var perContextState = {
-            renderOperation: new TC.Types.Operation(),
-            pubsub: TC.options.pubsub
+            renderOperation: new T.Types.Operation(),
+            pubsub: T.options.pubsub
         };
         return $.extend({}, staticState, perContextState, source);
     };
@@ -2395,12 +2397,12 @@ window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transiti
 
 // Api/defaultUrlProvider.js
 
-TC.options.defaultUrlProvider = {
+T.options.defaultUrlProvider = {
     urlDataFrom: function(paneOptions) {
         return paneOptions && { url: '#' + $.param(paneOptions) };
     },
     paneOptionsFrom: function(url) {
-        return url && TC.Utils.deparam(url.substr(1));
+        return url && T.Utils.deparam(url.substr(1));
     }
 };
 
@@ -2408,30 +2410,30 @@ TC.options.defaultUrlProvider = {
 // Api/nodes.js
 
 (function () {
-    var utils = TC.Utils;
+    var utils = T.Utils;
 
-    TC.createNode = function (element, paneOptions, parentNode, context) {
-        parentNode = parentNode || TC.nodeFor(element);
-        context = context || utils.contextFor(element) || TC.context();
+    T.createNode = function (element, paneOptions, parentNode, context) {
+        parentNode = parentNode || T.nodeFor(element);
+        context = context || utils.contextFor(element) || T.context();
 
-        var node = new TC.Types.Node(parentNode);
+        var node = new T.Types.Node(parentNode);
         utils.bindPane(node, element, paneOptions, context);
 
         return node;
     };
 
-    TC.appendNode = function (target, paneOptions, parentNode, context) {
+    T.appendNode = function (target, paneOptions, parentNode, context) {
         var element = $('<div/>').appendTo(target);
-        return TC.createNode(element, paneOptions, parentNode, context);
+        return T.createNode(element, paneOptions, parentNode, context);
     };
 
-    TC.insertNodeAfter = function (target, paneOptions, parentNode, context) {
+    T.insertNodeAfter = function (target, paneOptions, parentNode, context) {
         var element = $('<div/>').insertAfter(target);
-        return TC.createNode(element, paneOptions, parentNode || TC.nodeFor(target), context);
+        return T.createNode(element, paneOptions, parentNode || T.nodeFor(target), context);
     };
 
-    TC.nodeFor = function (element) {
-        return element && TC.Utils.extractNode(ko.contextFor($(element)[0]));
+    T.nodeFor = function (element) {
+        return element && T.Utils.extractNode(ko.contextFor($(element)[0]));
     };
 })();
 
@@ -2471,16 +2473,16 @@ TC.options.defaultUrlProvider = {
 
 ko.bindingHandlers.navigate = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var node = TC.nodeFor(element);
+        var node = T.nodeFor(element);
         if (!node) return;
 
-        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var data = T.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         var handler = ko.bindingHandlers.validatedClick || ko.bindingHandlers.click;
         handler.init(element, navigate, allBindingsAccessor, viewModel);
 
         function navigate() {
             return function () {
-                node.navigate(data.value, TC.Utils.cloneData(data.data));
+                node.navigate(data.value, T.Utils.cloneData(data.data));
             };
         }
     }
@@ -2491,7 +2493,7 @@ ko.bindingHandlers.navigate = {
 
 ko.bindingHandlers.navigateBack = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var node = TC.nodeFor(element);
+        var node = T.nodeFor(element);
         if (!node) return;
 
         ko.bindingHandlers.click.init(element, navigateBack, allBindingsAccessor, viewModel);
@@ -2511,12 +2513,12 @@ ko.bindingHandlers.navigateBack = {
     ko.bindingHandlers.pane = { init: updateBinding };
 
     function updateBinding(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        TC.createNode(element, constructPaneOptions(), TC.Utils.extractNode(bindingContext), TC.Utils.extractContext(bindingContext));
+        T.createNode(element, constructPaneOptions(), T.Utils.extractNode(bindingContext), T.Utils.extractContext(bindingContext));
 
         return { controlsDescendantBindings: true };
 
         function constructPaneOptions() {
-            return TC.Utils.getPaneOptions(ko.utils.unwrapObservable(valueAccessor()), allBindingsAccessor());
+            return T.Utils.getPaneOptions(ko.utils.unwrapObservable(valueAccessor()), allBindingsAccessor());
         }
     }
 })();
@@ -2527,16 +2529,16 @@ ko.bindingHandlers.navigateBack = {
 
 ko.bindingHandlers.publish = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var pubsub = TC.nodeFor(element).pane.pubsub;
+        var pubsub = T.nodeFor(element).pane.pubsub;
         if (!pubsub) return;
 
-        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var data = T.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         var handler = ko.bindingHandlers.validatedClick || ko.bindingHandlers.click;
         handler.init(element, publishAccessor, allBindingsAccessor, viewModel);
 
         function publishAccessor() {
             return function () {
-                pubsub.publish(data.value, TC.Utils.cloneData(data.data));
+                pubsub.publish(data.value, T.Utils.cloneData(data.data));
             };
         }
     }

@@ -24,8 +24,8 @@
                         // ignore Tribe embedded properties that cause the validator to loop infinitely
                         if (property.substr(0, 2) === "__" ||
                             (value && (
-                                value.constructor === TC.Types.Node ||
-                                value.constructor === TC.Types.Pane
+                                value.constructor === T.Types.Node ||
+                                value.constructor === T.Types.Pane
                             )))
                             delete model[property];                        
                     }

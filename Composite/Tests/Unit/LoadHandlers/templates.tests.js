@@ -14,11 +14,11 @@
     });
 
     test("template handler returns promise object", function() {
-        ok(TC.LoadHandlers.htm(url, resourcePath, context).promise);
+        ok(T.LoadHandlers.htm(url, resourcePath, context).promise);
     });
 
     test("template is stored with resource path identifier", function() {
-        TC.LoadHandlers.htm(url, resourcePath, context);
+        T.LoadHandlers.htm(url, resourcePath, context);
         ok(context.templates.store.calledOnce);
         ok(context.templates.store.calledWithExactly('<br/>', '/test'));
     });

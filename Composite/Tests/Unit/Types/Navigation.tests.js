@@ -5,8 +5,8 @@
     module('Unit.Types.Navigation', {
         setup: function () {
             node = nodeStub('test');
-            nav = new TC.Types.Navigation(node, { transition: 'fade' });
-            TC.history = { navigate: sinon.spy(), update: sinon.spy() };
+            nav = new T.Types.Navigation(node, { transition: 'fade' });
+            T.history = { navigate: sinon.spy(), update: sinon.spy() };
         },
         teardown: function() {
             nav.dispose();
@@ -21,7 +21,7 @@
     });
 
     test("forward accepts string transition as options", function () {
-        nav = new TC.Types.Navigation(node, 'fade');
+        nav = new T.Types.Navigation(node, 'fade');
         var navigateArgs = { path: 'test2' };
         nav.navigate(navigateArgs);
         equal(node.transitionTo.firstCall.args[0], navigateArgs);
@@ -69,32 +69,32 @@
 
     test("document navigating event is raised when navigating", function () {
         expect(1);
-        TC.Utils.handleDocumentEvent('navigating', assert);
+        T.Utils.handleDocumentEvent('navigating', assert);
         nav.navigate({ path: 'test2' });
-        TC.Utils.detachDocumentEvent('navigating', assert);
+        T.Utils.detachDocumentEvent('navigating', assert);
         
         function assert(e) {
             equal(e.eventData.options.path, 'test2');
         }
     });
 
-    test("TC.history.navigate is called on navigate when browser option is set", function() {
-        nav = new TC.Types.Navigation(node, { browser: true });
+    test("T.history.navigate is called on navigate when browser option is set", function() {
+        nav = new T.Types.Navigation(node, { browser: true });
         nav.navigate({ path: 'test2' });
-        ok(TC.history.navigate.calledOnce);
+        ok(T.history.navigate.calledOnce);
     });
 
-    test("TC.history.update is called on go when browser option is set", function () {
-        nav = new TC.Types.Navigation(node, { browser: true });
+    test("T.history.update is called on go when browser option is set", function () {
+        nav = new T.Types.Navigation(node, { browser: true });
         nav.navigate({ path: 'test2' });
         nav.go(-1);
-        ok(TC.history.update.calledOnce);
+        ok(T.history.update.calledOnce);
     });
 
     test("node transitions when browser.go event is received", function() {
-        nav = new TC.Types.Navigation(node, { browser: true });
+        nav = new T.Types.Navigation(node, { browser: true });
         nav.navigate({ path: 'test2' });
-        TC.Utils.raiseDocumentEvent('browser.go', { count: -1 });
+        T.Utils.raiseDocumentEvent('browser.go', { count: -1 });
         equal(node.transitionTo.secondCall.args[0].path, 'test');
     });
 
@@ -107,7 +107,7 @@
                 };
             }
         };
-        nav = new TC.Types.Navigation(node, { browser: provider });
+        nav = new T.Types.Navigation(node, { browser: provider });
         deepEqual(nav.stack[0], provider.paneOptionsFrom());
     });
 
@@ -115,7 +115,7 @@
         var provider = {
             paneOptionsFrom: function () { return null; }
         };
-        nav = new TC.Types.Navigation(node, { browser: provider });
+        nav = new T.Types.Navigation(node, { browser: provider });
         deepEqual(nav.stack[0].path, 'test');
     });
 
@@ -129,9 +129,9 @@
                 };
             }
         };
-        nav = new TC.Types.Navigation(node, { browser: provider });
+        nav = new T.Types.Navigation(node, { browser: provider });
         nav.navigate({ path: 'test2' });
-        deepEqual(TC.history.navigate.firstCall.args[0], provider.urlDataFrom());
+        deepEqual(T.history.navigate.firstCall.args[0], provider.urlDataFrom());
     });
 
     Test.urlProvider = {

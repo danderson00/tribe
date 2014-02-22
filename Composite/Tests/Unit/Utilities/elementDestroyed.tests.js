@@ -3,7 +3,7 @@
 test("promise resolves when element is removed using jQuery", function () {
     expect(1);
     var element = $('<div/>').appendTo('#qunit-fixture');
-    $.when(TC.Utils.elementDestroyed(element)).done(function() {
+    $.when(T.Utils.elementDestroyed(element)).done(function() {
         ok(true);
     });
     element.remove();
@@ -13,7 +13,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     if (Test.supportsMutationEvents) {
         expect(1);
         var element = $('<div/>').appendTo('#qunit-fixture');
-        $.when(TC.Utils.elementDestroyed(element)).done(function() {
+        $.when(T.Utils.elementDestroyed(element)).done(function() {
             ok(true);
             start();
         });

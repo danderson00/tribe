@@ -1,6 +1,6 @@
 ﻿// needs a big ol' refactor
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var pubsub = pane.pubsub;
         var data = pane.data;
 
@@ -41,7 +41,7 @@
                 else if (item.process)
                     Process[item.process](pane);
                 else if (item.dialog)
-                    TC.dialog(item.dialog, { modal: true });
+                    T.dialog(item.dialog, { modal: true });
                 else if (item.publish)
                     pubsub.publish(item.publish.message, item.publish.data);
             }
@@ -82,9 +82,9 @@
         function tabLoaded(tab) {
             if (panes[tab.text] == null) {
                 var element = $('<div></div>').addClass('tabContent subpanel').appendTo(tabPanel);
-                var context = TC.context();
+                var context = T.context();
                 var renderOperation = context.renderOperation;
-                var node = TC.appendNode(element, {
+                var node = T.appendNode(element, {
                     path: tab.pane,
                     data: tab.data,
                 }, null, context);

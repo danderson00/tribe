@@ -1,8 +1,8 @@
-﻿TC.LoadStrategies.adhoc = function (pane, context) {
+﻿T.LoadStrategies.adhoc = function (pane, context) {
     if (context.loadedPanes[pane.path] !== undefined)
         return context.loadedPanes[pane.path];
 
-    var path = TC.Path(context.options.basePath).combine(TC.Path(pane.path).makeRelative());
+    var path = T.Path(context.options.basePath).combine(T.Path(pane.path).makeRelative());
 
     if (context.templates.loaded(pane.path) || context.models[pane.path])
         return null;
@@ -17,7 +17,7 @@
 
     $.when(deferred)
         .fail(function() {
-            TC.logger.error("Unable to load resources for '" + pane.path + "'.");
+            T.logger.error("Unable to load resources for '" + pane.path + "'.");
         })
         .always(function () {
             context.loadedPanes[pane.path] = null;

@@ -58,11 +58,11 @@
     utils.elementIsRightAligned = function(element) {
         return findParentElement(element, function(target) {
             if ($(target).css('right') !== 'auto' && $(target).css('left') === 'auto') {
-                TC.logger.debug("Element is aligned right by position (" + $(target).css('right') + "): " + $(element).attr('class'));
+                T.logger.debug("Element is aligned right by position (" + $(target).css('right') + "): " + $(element).attr('class'));
                 return target;
             }
             if ($(target).css('float') === 'right') {
-                TC.logger.debug("Element is aligned right by float: " + $(element).attr('class'));
+                T.logger.debug("Element is aligned right by float: " + $(element).attr('class'));
                 return target;
             }
             return false;
@@ -75,4 +75,4 @@
                 return target;
         });
     };
-})(TC.Utils);
+})(T.Utils);

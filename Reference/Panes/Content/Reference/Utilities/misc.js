@@ -1,6 +1,6 @@
 ﻿Reference.Utilities.Misc = [
-    { name: 'TC.Utils.try', description: '', arguments: [{ name: 'func' }, { name: 'args' }, { name: 'handleExceptions' }, { name: 'message' }] },
-    { name: 'TC.Utils.idGenerator', description: '', returns: '{ next: function() }' },
-    { name: 'TC.Utils.getUniqueId', description: '' },
-    { name: 'TC.Utils.cleanElement', description: '', arguments: [{ name: 'element' }] }
+    { name: 'T.Utils.try', description: '', arguments: [{ name: 'func' }, { name: 'args' }, { name: 'handleExceptions' }, { name: 'message' }] },
+    { name: 'T.Utils.idGenerator', description: '', returns: '{ next: function() }' },
+    { name: 'T.Utils.getUniqueId', description: '' },
+    { name: 'T.Utils.cleanElement', description: '', arguments: [{ name: 'element' }] }
 ];

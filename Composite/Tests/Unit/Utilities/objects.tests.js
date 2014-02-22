@@ -1,5 +1,5 @@
 ﻿(function() {
-    var utils = TC.Utils;
+    var utils = T.Utils;
     module('Unit.Utilities.objects');
 
     test("arguments.byConstructor", function() {
@@ -31,9 +31,9 @@
 
     test("inheritOptions", function() {
         var source = { test1: 'test', test2: 2 };
-        equal(TC.Utils.inheritOptions(source, {}, ['test1']).test1, 'test');
-        equal(TC.Utils.inheritOptions(source, {}, ['test2']).test2, 2);
-        equal(TC.Utils.inheritOptions(source, {}, ['test1', 'test2', 'test3']).test3, undefined);
+        equal(T.Utils.inheritOptions(source, {}, ['test1']).test1, 'test');
+        equal(T.Utils.inheritOptions(source, {}, ['test2']).test2, 2);
+        equal(T.Utils.inheritOptions(source, {}, ['test1', 'test2', 'test3']).test3, undefined);
     });
     
     test("cloneData", function () {

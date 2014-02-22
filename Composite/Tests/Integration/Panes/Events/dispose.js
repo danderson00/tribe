@@ -1,4 +1,4 @@
-﻿TC.registerModel(function (pane) {
+﻿T.registerModel(function (pane) {
     Test.state.disposeCallCount = 0;
     Test.state.disposed = $.Deferred();
     

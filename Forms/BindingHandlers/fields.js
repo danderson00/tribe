@@ -10,7 +10,7 @@
     function addBindingHandler(name) {
         ko.bindingHandlers[name + 'Field'] = {
             init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-                var options = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+                var options = T.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
                 if (bindingContext.__factory)
                     options.target = viewModel;
                 TF.render(name, element, options);

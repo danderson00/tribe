@@ -1,15 +1,15 @@
 ﻿TC = window.TC || {};
-TC.grid = TC.grid || {};
+T.grid = T.grid || {};
 
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var pubsub = pane.pubsub;
         var data = pane.data;
         var self = this;
 
-        var grid = TC.grid;
+        var grid = T.grid;
         var source = ko.utils.unwrapObservable(data.source);
-        var id = TC.Utils.getUniqueId();
+        var id = T.Utils.getUniqueId();
         var columnList = extractColumnList();
         var lastSort;
 
@@ -36,7 +36,7 @@ TC.grid = TC.grid || {};
         };
 
         this.renderComplete = function () {
-            TC.renderTooltips(self.tooltips, 'help', pane);
+            T.renderTooltips(self.tooltips, 'help', pane);
         };
 
         pubsub.subscribe('filterChanged', function (filterData) {
@@ -83,7 +83,7 @@ TC.grid = TC.grid || {};
             var value = !column.property ? '' :
                 $.isFunction(column.property) ?
                     column.property(item) :
-                    TC.Utils.evaluateProperty(item, column.property);
+                    T.Utils.evaluateProperty(item, column.property);
             return { display: formatCell(value), value: value, cssClass: getCellClass(value, column) };
         }
 
@@ -193,7 +193,7 @@ TC.grid = TC.grid || {};
 })();
 
 (function () {
-    var grid = TC.grid;
+    var grid = T.grid;
 
     grid.Filter = function (fieldProperties, id, pubsub) {
         $.extend(this, fieldProperties);

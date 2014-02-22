@@ -8,8 +8,8 @@
         setup: function () {
             spy = sinon.spy();
             pubsub = new Tribe.PubSub({ sync: true });
-            pane = new TC.Types.Pane({ pubsub: pubsub });
-            node = new TC.Types.Node(null, pane);
+            pane = new T.Types.Pane({ pubsub: pubsub });
+            node = new T.Types.Node(null, pane);
             node.findNavigation = function () { return { node: { navigate: spy, pane: pane } }; };
         }
     });
@@ -35,7 +35,7 @@
     });
 
     test("Flow calls navigate on navigation pane when to is called", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         f.to('path', 'data')();
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'path');
@@ -43,7 +43,7 @@
     });
 
     test("Flow calls navigate on navigation pane when message is received for to event", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('to');
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'path');
@@ -51,7 +51,7 @@
     });
 
     test("No handlers are executed after flow ends", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('to');
         pubsub.publish('end');
         pubsub.publish('to');
@@ -59,7 +59,7 @@
     });
 
     test("No handlers are executed after flow ends with null handler", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('to');
         pubsub.publish('null');
         pubsub.publish('to');
@@ -67,14 +67,14 @@
     });
 
     test("Child onstart handler is executed when start child message is received", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('startChild');
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'child');
     });
 
     test("Child handlers are executed after start child message is received", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('navigateChild');
         pubsub.publish('startChild');
         pubsub.publish('navigateChild');
@@ -82,7 +82,7 @@
     });
 
     test("Child handlers are not executed after end child message is received", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('startChild');
         pubsub.publish('navigateChild');
         pubsub.publish('endChild');
@@ -91,7 +91,7 @@
     });
 
     test("Child handlers are not executed after end flow message is received", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('startChild');
         pubsub.publish('navigateChild');
         pubsub.publish('end');
@@ -100,7 +100,7 @@
     });
 
     test("Sagas started with startSaga end when this flow ends", function() {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         var sagaHandler = sinon.spy();
         f.startSaga({ handles: { 'sagaMessage': sagaHandler } });
         pubsub.publish('sagaMessage');
@@ -112,13 +112,13 @@
 
     test("Child flows are constructed with same flow object", function () {
         expect(1);
-        var f = new TC.Types.Flow(node, ParentFlow).start();
+        var f = new T.Types.Flow(node, ParentFlow).start();
         pubsub.publish('assertFlowEqual', f);
     });
 
     test("Child flows end when a parent message is published", function () {
         expect(1);
-        var f = new TC.Types.Flow(node, ParentFlow).start();
+        var f = new T.Types.Flow(node, ParentFlow).start();
         pubsub.publish('assertFlowEqual', f);
         f.end();
         pubsub.publish('assertFlowEqual', f);

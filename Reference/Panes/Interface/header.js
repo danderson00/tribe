@@ -1,5 +1,5 @@
-﻿TC.registerModel(function (pane) {
-    TC.Utils.handleDocumentEvent('navigating', navigating);
+﻿T.registerModel(function (pane) {
+    T.Utils.handleDocumentEvent('navigating', navigating);
     function navigating(e) {
         if (Navigation.isHome(e.eventData.options.data))
             hide();
@@ -14,17 +14,17 @@
 
     function show() {
         if (!$('.header .logo').is(':visible'))
-            TC.transition('.header .logo', 'fade')['in']();
+            T.transition('.header .logo', 'fade')['in']();
     }
 
     function hide() {
         if ($('.header .logo').is(':visible'))
-            TC.transition('.header .logo', 'fade').out(false);
+            T.transition('.header .logo', 'fade').out(false);
     }
 
     this.feedback = function () {
-        TC.transition(
-            TC.appendNode('body', { path: '/Interface/feedback' }),
+        T.transition(
+            T.appendNode('body', { path: '/Interface/feedback' }),
             'fade')['in']();
     };
 

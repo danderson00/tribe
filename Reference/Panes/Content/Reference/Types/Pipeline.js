@@ -1,5 +1,5 @@
 ﻿Reference.Types.Pipeline = {
-    name: 'TC.Types.Pipeline',
+    name: 'T.Types.Pipeline',
     description: 'Manages the step by step execution of a number of named events. Each step will only execute after the promise returned by the previous step resolves. A rejected promise will halt execution of the pipeline.',
     constructor: {
         arguments: [

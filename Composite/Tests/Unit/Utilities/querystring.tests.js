@@ -1,7 +1,7 @@
 ﻿(function () {
     module('Unit.Utilities.querystring');
     
-    var querystring = TC.Utils.Querystring;
+    var querystring = T.Utils.Querystring;
 
     test("stringify handles flat objects", function() {
         equal(querystring.stringify({ test: 't', test2: 2 }), 'test=t&test2=2');

@@ -1,5 +1,5 @@
 ﻿Reference.Types.Pane = {
-    name: 'TC.Types.Pane',
+    name: 'T.Types.Pane',
     description: 'A pane is a single user interface component within an application. It can consist of a HTML template, a JavaScript model and a CSS stylesheet. Panes can be nested within other panes.',
     constructor: {
         arguments: [
@@ -23,7 +23,7 @@
                 { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
                 { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'remove',
@@ -42,7 +42,7 @@
             name: 'inheritPathFrom',
             description: 'If the pane\'s current path is relative, inherit the absolute path from the specified node.',
             arguments: [
-                { name: 'node', type: 'TC.Types.Node' }
+                { name: 'node', type: 'T.Types.Node' }
             ],
             returns: 'undefined'
         },

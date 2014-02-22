@@ -1,5 +1,5 @@
-﻿TC.registerModel(function (pane) {
-    TC.toolbar.defaults.back = true;
+﻿T.registerModel(function (pane) {
+    T.toolbar.defaults.back = true;
 
     this.samples = function() {
         pane.navigate('samples');

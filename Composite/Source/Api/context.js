@@ -1,18 +1,18 @@
 ﻿(function () {
     var staticState;
 
-    TC.context = function (source) {
+    T.context = function (source) {
         staticState = staticState || {
-            models: new TC.Types.Resources(),
-            sagas: new TC.Types.Resources(),
-            loader: new TC.Types.Loader(),
-            options: TC.options,
-            templates: new TC.Types.Templates(),
+            models: new T.Types.Resources(),
+            sagas: new T.Types.Resources(),
+            loader: new T.Types.Loader(),
+            options: T.options,
+            templates: new T.Types.Templates(),
             loadedPanes: {}
         };
         var perContextState = {
-            renderOperation: new TC.Types.Operation(),
-            pubsub: TC.options.pubsub
+            renderOperation: new T.Types.Operation(),
+            pubsub: T.options.pubsub
         };
         return $.extend({}, staticState, perContextState, source);
     };

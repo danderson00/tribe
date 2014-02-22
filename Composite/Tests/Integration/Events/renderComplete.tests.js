@@ -17,7 +17,7 @@
     
     asyncTest("renderComplete is called on single model when in async mode", function () {
         expect(1);
-        TC.options.synchronous = false;
+        T.options.synchronous = false;
         Test.state.renderComplete = function () {
             equal($('.message').text(), 'test message');
             start();
@@ -27,7 +27,7 @@
 
     asyncTest("renderComplete is called on all models when in async mode", function () {
         expect(1);
-        TC.options.synchronous = false;
+        T.options.synchronous = false;
         Test.state.renderComplete = function () {
             equal($('.message').text(), 'test message');
             start();

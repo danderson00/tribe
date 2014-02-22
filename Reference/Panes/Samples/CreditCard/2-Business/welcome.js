@@ -1,4 +1,4 @@
-﻿TC.registerModel(function(pane) {
+﻿T.registerModel(function(pane) {
     this.personal = function() {
         pane.startFlow(PersonalFlow2);
     };

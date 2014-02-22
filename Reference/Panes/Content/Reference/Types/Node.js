@@ -1,10 +1,10 @@
 ﻿Reference.Types.Node = {
-    name: 'TC.Types.Node',
+    name: 'T.Types.Node',
     description: 'A Node object is a placeholder for a pane within the UI structure. Nodes can be transitioned to display different panes using the navigate or transitionTo functions.',
     constructor: {
         arguments: [
-            { name: 'parent', type: 'TC.Types.Node' },
-            { name: 'pane', type: 'TC.Types.Pane' }
+            { name: 'parent', type: 'T.Types.Node' },
+            { name: 'pane', type: 'T.Types.Pane' }
         ]
     },
     functions: [
@@ -25,7 +25,7 @@
         {
             name: 'findNavigation',
             description: 'Find the node that handles navigation for the current node. Usually the closest parent that has been marked with handlesNavigation, unless overridden.',
-            returns: 'TC.Types.Navigation'
+            returns: 'T.Types.Navigation'
         },
         {
             name: 'transitionTo',
@@ -44,20 +44,20 @@
                 { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
                 { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'setPane',
             description: 'Sets the pane on the current node.',
             arguments: [
-                { name: 'pane', type: 'TC.Types.Pane' }
+                { name: 'pane', type: 'T.Types.Pane' }
             ],
             returns: 'undefined'
         },
         {
             name: 'nodeForPath',
             description: 'Find the node to use for inheriting paths from.',
-            returns: 'TC.Types.Node'
+            returns: 'T.Types.Node'
         },
         {
             name: 'dispose',
@@ -68,16 +68,16 @@
     properties: [
         {
             name: 'parent',
-            type: 'TC.Types.Node'
+            type: 'T.Types.Node'
         },
         {
             name: 'children',
-            type: '[TC.Types.Node]'
+            type: '[T.Types.Node]'
         },
         {
             name: 'root',
             description: 'The root node of the current node tree.',
-            type: 'TC.Types.Node'
+            type: 'T.Types.Node'
         },
         {
             name: 'id',
@@ -86,17 +86,17 @@
         },
         {
             name: 'pane',
-            type: 'TC.Types.Pane'
+            type: 'T.Types.Pane'
         },
         {
             name: 'navigation',
             description: 'The Navigation object for the current node, if any.',
-            type: 'TC.Types.Navigation'
+            type: 'T.Types.Navigation'
         },
         {
             name: 'defaultNavigation',
             description: 'The default Navigation object to use for the current node. Set on the root node so that all nodes in the tree can access the navigation node.',
-            type: 'TC.Types.Node'
+            type: 'T.Types.Node'
         }
     ]
 };

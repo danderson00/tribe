@@ -1,5 +1,5 @@
 ﻿(function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var pubsub = pane.pubsub;
         var data = pane.data;
 

@@ -7,7 +7,7 @@
     module("Unit.Types.Pipeline", {
         setup: function() {
             events = testEvents();
-            pipeline = new TC.Types.Pipeline(events, context);
+            pipeline = new T.Types.Pipeline(events, context);
         }
     });
 

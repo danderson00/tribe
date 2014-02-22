@@ -1,27 +1,27 @@
 ﻿(function () {
-    var utils = TC.Utils;
+    var utils = T.Utils;
 
-    TC.createNode = function (element, paneOptions, parentNode, context) {
-        parentNode = parentNode || TC.nodeFor(element);
-        context = context || utils.contextFor(element) || TC.context();
+    T.createNode = function (element, paneOptions, parentNode, context) {
+        parentNode = parentNode || T.nodeFor(element);
+        context = context || utils.contextFor(element) || T.context();
 
-        var node = new TC.Types.Node(parentNode);
+        var node = new T.Types.Node(parentNode);
         utils.bindPane(node, element, paneOptions, context);
 
         return node;
     };
 
-    TC.appendNode = function (target, paneOptions, parentNode, context) {
+    T.appendNode = function (target, paneOptions, parentNode, context) {
         var element = $('<div/>').appendTo(target);
-        return TC.createNode(element, paneOptions, parentNode, context);
+        return T.createNode(element, paneOptions, parentNode, context);
     };
 
-    TC.insertNodeAfter = function (target, paneOptions, parentNode, context) {
+    T.insertNodeAfter = function (target, paneOptions, parentNode, context) {
         var element = $('<div/>').insertAfter(target);
-        return TC.createNode(element, paneOptions, parentNode || TC.nodeFor(target), context);
+        return T.createNode(element, paneOptions, parentNode || T.nodeFor(target), context);
     };
 
-    TC.nodeFor = function (element) {
-        return element && TC.Utils.extractNode(ko.contextFor($(element)[0]));
+    T.nodeFor = function (element) {
+        return element && T.Utils.extractNode(ko.contextFor($(element)[0]));
     };
 })();

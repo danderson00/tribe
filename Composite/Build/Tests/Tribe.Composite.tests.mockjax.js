@@ -10,7 +10,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Events/async.js',
-    responseText: '\nTC.registerModel(function (pane) {\n    this.message = \'test message\';\n    \n    this.paneRendered = function() {\n        if (Test.state.paneRendered) Test.state.paneRendered();\n    };\n\n    this.renderComplete = function() {\n        if (Test.state.renderComplete) Test.state.renderComplete();\n    };\n});',
+    responseText: '\nT.registerModel(function (pane) {\n    this.message = \'test message\';\n    \n    this.paneRendered = function() {\n        if (Test.state.paneRendered) Test.state.paneRendered();\n    };\n\n    this.renderComplete = function() {\n        if (Test.state.renderComplete) Test.state.renderComplete();\n    };\n});',
     responseTime: 0
 });
 
@@ -24,7 +24,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Events/asyncParent.js',
-    responseText: '\nTC.registerModel(function (pane) {\n});',
+    responseText: '\nT.registerModel(function (pane) {\n});',
     responseTime: 0
 });
 
@@ -45,7 +45,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Events/basic.js',
-    responseText: '\nTC.registerModel(function (pane) {\n    var self = this;\n    \n    Test.state.model = this;\n    Test.state.pane = pane;\n\n    this.message = \'\';\n    this.paneRenderedCalled = false;\n    this.renderCompleteCalled = false;\n    this.disposeCalled = false;\n    \n    this.initialise = function() {\n        self.message = \'test message\';\n    };\n\n    this.paneRendered = function() {\n        self.paneRenderedCalled = true;\n    };\n\n    this.renderComplete = function() {\n        self.renderCompleteCalled = true;\n    };\n\n    this.dispose = function() {\n        self.disposeCalled = true;\n    };\n});',
+    responseText: '\nT.registerModel(function (pane) {\n    var self = this;\n    \n    Test.state.model = this;\n    Test.state.pane = pane;\n\n    this.message = \'\';\n    this.paneRenderedCalled = false;\n    this.renderCompleteCalled = false;\n    this.disposeCalled = false;\n    \n    this.initialise = function() {\n        self.message = \'test message\';\n    };\n\n    this.paneRendered = function() {\n        self.paneRenderedCalled = true;\n    };\n\n    this.renderComplete = function() {\n        self.renderCompleteCalled = true;\n    };\n\n    this.dispose = function() {\n        self.disposeCalled = true;\n    };\n});',
     responseTime: 0
 });
 
@@ -66,7 +66,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Events/data.js',
-    responseText: '\nTC.registerModel(function(pane) {\n    this.message = pane.data;\n});',
+    responseText: '\nT.registerModel(function(pane) {\n    this.message = pane.data;\n});',
     responseTime: 0
 });
 
@@ -80,7 +80,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Events/dispose.js',
-    responseText: '\nTC.registerModel(function (pane) {\n    Test.state.disposeCallCount = 0;\n    Test.state.disposed = $.Deferred();\n    \n    this.dispose = function() {\n        Test.state.disposed.resolve();\n        Test.state.disposeCallCount++;\n    };\n});',
+    responseText: '\nT.registerModel(function (pane) {\n    Test.state.disposeCallCount = 0;\n    Test.state.disposed = $.Deferred();\n    \n    this.dispose = function() {\n        Test.state.disposed.resolve();\n        Test.state.disposeCallCount++;\n    };\n});',
     responseTime: 0
 });
 
@@ -94,7 +94,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Events/initialise.js',
-    responseText: '\nTC.registerModel(function (pane) {\n    this.initialise = function() {\n        return Test.state.deferred = $.Deferred();\n    };\n});',
+    responseText: '\nT.registerModel(function (pane) {\n    this.initialise = function() {\n        return Test.state.deferred = $.Deferred();\n    };\n});',
     responseTime: 0
 });
 
@@ -108,7 +108,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Events/initialiseParent.js',
-    responseText: '\nTC.registerModel(function (pane) {\n    this.renderComplete = function() {\n        Test.state.parentRenderCompleteCalled = true;\n    };\n});',
+    responseText: '\nT.registerModel(function (pane) {\n    this.renderComplete = function() {\n        Test.state.parentRenderCompleteCalled = true;\n    };\n});',
     responseTime: 0
 });
 
@@ -178,7 +178,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Paths/common.js',
-    responseText: '\nTC.registerModel(function(pane) {\n    pane.node.skipPath = true;\n    this.pane = pane.data.pane;\n});',
+    responseText: '\nT.registerModel(function(pane) {\n    pane.node.skipPath = true;\n    this.pane = pane.data.pane;\n});',
     responseTime: 0
 });
 
@@ -199,7 +199,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Paths/Subfolder/parent.js',
-    responseText: '\nTC.registerModel(function(pane) {\n    this.renderComplete = function() {\n        TC.createNode(\'.parent\', { path: \'/Paths/common\', data: { pane: \'child\' } });\n    };\n});',
+    responseText: '\nT.registerModel(function(pane) {\n    this.renderComplete = function() {\n        T.createNode(\'.parent\', { path: \'/Paths/common\', data: { pane: \'child\' } });\n    };\n});',
     responseTime: 0
 });
 
@@ -213,7 +213,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/PubSub/subscriber.js',
-    responseText: '\nTC.registerModel(function(pane) {\n    pane.pubsub.subscribe(\'test\', function(data) {\n        $(\'.subscriber\').text(data);\n    });\n});',
+    responseText: '\nT.registerModel(function(pane) {\n    pane.pubsub.subscribe(\'test\', function(data) {\n        $(\'.subscriber\').text(data);\n    });\n});',
     responseTime: 0
 });
 
@@ -241,7 +241,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Tree/1.js',
-    responseText: '\nTC.registerModel(function (pane) {\n    Test.state.pane = pane;\n\n    this.renderComplete = function() {\n        if (Test.state.renderComplete) Test.state.renderComplete();\n    };\n});',
+    responseText: '\nT.registerModel(function (pane) {\n    Test.state.pane = pane;\n\n    this.renderComplete = function() {\n        if (Test.state.renderComplete) Test.state.renderComplete();\n    };\n});',
     responseTime: 0
 });
 
@@ -283,7 +283,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Utilities/child.js',
-    responseText: '\nTC.registerModel(function(pane) {\n    this.message = "test message";\n});',
+    responseText: '\nT.registerModel(function(pane) {\n    this.message = "test message";\n});',
     responseTime: 0
 });
 
@@ -297,7 +297,7 @@ $.mockjax({
 
 $.mockjax({
     url: 'Integration/Panes/Utilities/dynamicParent.js',
-    responseText: '\nTC.registerModel(function(pane) {\n    this.paneRendered = function() {\n        TC.createNode(\'.dynamicParent\', { path: \'child\' });\n    };\n});',
+    responseText: '\nT.registerModel(function(pane) {\n    this.paneRendered = function() {\n        T.createNode(\'.dynamicParent\', { path: \'child\' });\n    };\n});',
     responseTime: 0
 });
 

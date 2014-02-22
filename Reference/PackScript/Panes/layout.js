@@ -7,7 +7,7 @@ Article = {
     }
 };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     this.renderComplete = function() {
         pane.find('pre.example').each(function () {
             $(this).html(PR.prettyPrintOne($(this).html()));

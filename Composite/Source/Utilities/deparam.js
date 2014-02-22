@@ -3,7 +3,7 @@
 // Deserialize a params string into an object, optionally coercing numbers,
 // booleans, null and undefined values; this method is the counterpart to the
 // internal jQuery.param method.
-TC.Utils.deparam = function (params, coerce) {
+T.Utils.deparam = function (params, coerce) {
     var decode = decodeURIComponent;
     var obj = {},
       coerce_types = { 'true': !0, 'false': !1, 'null': null };

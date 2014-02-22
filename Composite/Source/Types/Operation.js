@@ -1,4 +1,4 @@
-﻿TC.Types.Operation = function () {
+﻿T.Types.Operation = function () {
     var self = this;
     var incomplete = [];
 
@@ -9,7 +9,7 @@
     };
 
     this.complete = function (id) {
-        TC.Utils.removeItem(incomplete, id);
+        T.Utils.removeItem(incomplete, id);
         if (incomplete.length === 0)
             self.promise.resolve();
     };

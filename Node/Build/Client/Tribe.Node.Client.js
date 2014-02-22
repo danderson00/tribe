@@ -46,7 +46,7 @@ T.Types = T.Types || {};
     };
 
     function sagaDefinition(path) {
-        return TC.context().sagas[path].constructor;
+        return T.context().sagas[path].constructor;
     }
 
     // need to also be able to detach

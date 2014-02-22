@@ -1,4 +1,4 @@
-﻿TC.registerModel(function(pane) {
+﻿T.registerModel(function(pane) {
     this.tabData = {
         tabs: [
             { header: 'Tab 1', content: 'Content 1' },

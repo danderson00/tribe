@@ -3,11 +3,11 @@
     // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-stringify.js.html
     // Either it should be rewritten or attribution and licensing be available here and on the website like in http://yuilibrary.com/license/
 
-    TC.Utils.Querystring = TC.Utils.Querystring || {};
+    T.Utils.Querystring = T.Utils.Querystring || {};
 
     var escape = encodeURIComponent;
 
-    TC.Utils.Querystring.stringify = function (source, options) {
+    T.Utils.Querystring.stringify = function (source, options) {
         return stringify(source, options);
     };
 
@@ -42,7 +42,7 @@
         // Check for cyclical references in nested objects
         for (i = stack.length - 1; i >= 0; --i)
             if (stack[i] === source)
-                throw new Error("TC.Utils.Querystring.stringify: cyclical reference");
+                throw new Error("T.Utils.Querystring.stringify: cyclical reference");
 
         stack.push(source);
         s = [];

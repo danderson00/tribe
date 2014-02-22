@@ -1,4 +1,4 @@
-﻿TC.toolbar = {
+﻿T.toolbar = {
     title: ko.observable(),
     back: ko.observable(false),
     options: ko.observableArray([]),
@@ -8,9 +8,9 @@
         visible: true
     }
 };
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     this.back = function () {
-        var back = ko.utils.unwrapObservable(pane.data.back || TC.toolbar.back);
+        var back = ko.utils.unwrapObservable(pane.data.back || T.toolbar.back);
         if (back === true)
             pane.node.navigateBack();
         else if (back.constructor === Function)
@@ -18,25 +18,25 @@ TC.registerModel(function (pane) {
     };
 
     this.showOptions = function() {
-        TC.appendNode(pane.element, { path: 'options', data: { options: pane.data.options || TC.toolbar.options() } });
+        T.appendNode(pane.element, { path: 'options', data: { options: pane.data.options || T.toolbar.options() } });
     };
 
     function renderComplete() {
-        var defaults = TC.toolbar.defaults;
-        TC.toolbar.back(defaults.back && !pane.node.findNavigation().isAtStart());
+        var defaults = T.toolbar.defaults;
+        T.toolbar.back(defaults.back && !pane.node.findNavigation().isAtStart());
     }
     
     function navigating() {
-        var defaults = TC.toolbar.defaults;
-        TC.toolbar.title(defaults.title);
-        TC.toolbar.options(defaults.options);
-        TC.toolbar.visible(defaults.visible);
+        var defaults = T.toolbar.defaults;
+        T.toolbar.title(defaults.title);
+        T.toolbar.options(defaults.options);
+        T.toolbar.visible(defaults.visible);
     }
 
-    TC.Utils.handleDocumentEvent('renderComplete', renderComplete);
-    TC.Utils.handleDocumentEvent('navigating', navigating);
+    T.Utils.handleDocumentEvent('renderComplete', renderComplete);
+    T.Utils.handleDocumentEvent('navigating', navigating);
     this.dispose = function () {
-        TC.Utils.detachDocumentEvent('renderComplete', renderComplete);
-        TC.Utils.detachDocumentEvent('navigating', navigating);
+        T.Utils.detachDocumentEvent('renderComplete', renderComplete);
+        T.Utils.detachDocumentEvent('navigating', navigating);
     };
 });

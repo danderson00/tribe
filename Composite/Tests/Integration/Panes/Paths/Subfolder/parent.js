@@ -1,5 +1,5 @@
-﻿TC.registerModel(function(pane) {
+﻿T.registerModel(function(pane) {
     this.renderComplete = function() {
-        TC.createNode('.parent', { path: '/Paths/common', data: { pane: 'child' } });
+        T.createNode('.parent', { path: '/Paths/common', data: { pane: 'child' } });
     };
 });

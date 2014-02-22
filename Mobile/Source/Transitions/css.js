@@ -8,7 +8,7 @@
     //createWebkitTransition('cubeRight', 'cubeLeft');
 
     function createWebkitTransition(name, reverse) {
-        TC.Transitions[name] = {
+        T.Transitions[name] = {
             in: function(element) {
                 var $element = $(element);
                 $element.bind('webkitAnimationEnd', animationEnd)

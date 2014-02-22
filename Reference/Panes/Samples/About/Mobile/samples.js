@@ -1,7 +1,7 @@
-﻿TC.registerModel(function (pane) {
-    TC.toolbar.title('Title!');
+﻿T.registerModel(function (pane) {
+    T.toolbar.title('Title!');
     
-    TC.toolbar.options([
+    T.toolbar.options([
         { text: 'Option 1', func: function () { } },
         { text: 'Option 2', func: function () { } }
     ]);
@@ -19,7 +19,7 @@
     };
 
     this.overlay = function() {
-        TC.overlay('overlay');
+        T.overlay('overlay');
     };
 
     this.navigate = function() {

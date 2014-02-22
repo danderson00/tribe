@@ -1,5 +1,5 @@
 ﻿(function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         pane.node.skipPath = true;
         
         var pubsub = pane.pubsub;
@@ -10,7 +10,7 @@
         this.expanders = data;
 
         this.renderComplete = function () {
-            TC.renderTooltips(self.tooltips, 'help', pane);
+            T.renderTooltips(self.tooltips, 'help', pane);
         };
 
         this.tooltips = {

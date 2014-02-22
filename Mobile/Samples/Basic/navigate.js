@@ -1,4 +1,4 @@
-﻿TC.registerModel(function (pane) {
-    TC.toolbar.title('Navigate!');
-    TC.toolbar.back(true);
+﻿T.registerModel(function (pane) {
+    T.toolbar.title('Navigate!');
+    T.toolbar.back(true);
 });

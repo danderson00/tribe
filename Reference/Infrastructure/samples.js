@@ -10,14 +10,14 @@ Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'create.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>// Declare model constructors using this simple function.<br/>// Tribe creates an instance and binds it to the template.<br/><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.task = ko.observable();<br/>    <br/>    this.create = function() {<br/>        pane.pubsub.publish(\'task.create\', self.task());<br/>        self.task(\'\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>// Declare model constructors using this simple function.<br/>// Tribe creates an instance and binds it to the template.<br/><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.task = ko.observable();<br/>    <br/>    this.create = function() {<br/>        pane.pubsub.publish(\'task.create\', self.task());<br/>        self.task(\'\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Todos&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript"><br/>            // all the configuration you need!<br/>            $(TC.run);<br/>        &lt;/script><br/>    &lt;/head><br/>    &lt;body data-bind="pane: \'layout\'">&lt;/body><br/>&lt;/html></pre>'
+    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Todos&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript"><br/>            // all the configuration you need!<br/>            $(T.run);<br/>        &lt;/script><br/>    &lt;/head><br/>    &lt;body data-bind="pane: \'layout\'">&lt;/body><br/>&lt;/html></pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Tasks'] = Samples['About/Tasks'] || [];
@@ -45,7 +45,7 @@ Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'list.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.tasks = ko.observableArray([\'Sample task\']);<br/><br/>    // Using messages decouples your components.<br/>    // Tribe cleans up subscriptions automatically.<br/>    pane.pubsub.subscribe(\'task.create\', function(task) {<br/>        self.tasks.push(task);<br/>    });<br/><br/>    pane.pubsub.subscribe(\'task.delete\', function (task) {<br/>        var index = self.tasks.indexOf(task);<br/>        self.tasks.splice(index, 1);<br/>    });<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.tasks = ko.observableArray([\'Sample task\']);<br/><br/>    // Using messages decouples your components.<br/>    // Tribe cleans up subscriptions automatically.<br/>    pane.pubsub.subscribe(\'task.create\', function(task) {<br/>        self.tasks.push(task);<br/>    });<br/><br/>    pane.pubsub.subscribe(\'task.delete\', function (task) {<br/>        var index = self.tasks.indexOf(task);<br/>        self.tasks.splice(index, 1);<br/>    });<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Tasks'] = Samples['About/Tasks'] || [];
@@ -59,7 +59,7 @@ Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'task.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.task = pane.data;<br/>    <br/>    this.deleteTask = function() {<br/>        pane.pubsub.publish(\'task.delete\', self.task);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.task = pane.data;<br/>    <br/>    this.deleteTask = function() {<br/>        pane.pubsub.publish(\'task.delete\', self.task);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Chat'] = Samples['About/Chat'] || [];
@@ -73,14 +73,14 @@ Samples['About/Chat'] = Samples['About/Chat'] || [];
 Samples['About/Chat'].push({
     filename: 'chat.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    // Hook up our message hub and join a channel<br/>    TMH.initialise(pane.pubsub);<br/>    TMH.joinChannel(\'chat\', {<br/>         serverEvents: [\'chat.*\']<br/>    });<br/><br/>    // The dispose function is called automatically<br/>    // when the pane is removed from the DOM.<br/>    this.dispose = function() {<br/>        TMH.leaveChannel(\'chat\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    // Hook up our message hub and join a channel<br/>    //TMH.initialise(pane.pubsub);<br/>    //TMH.joinChannel(\'chat\', {<br/>    //     serverEvents: [\'chat.*\']<br/>    //});<br/><br/>    // The dispose function is called automatically<br/>    // when the pane is removed from the DOM.<br/>    this.dispose = function() {<br/>        //TMH.leaveChannel(\'chat\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Chat'] = Samples['About/Chat'] || [];
 Samples['About/Chat'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Todos&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript"><br/>            $(TC.run);<br/>        &lt;/script><br/>    &lt;/head><br/>    &lt;body data-bind="pane: \'chat\'">&lt;/body><br/>&lt;/html></pre>'
+    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Todos&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript"><br/>            $(T.run);<br/>        &lt;/script><br/>    &lt;/head><br/>    &lt;body data-bind="pane: \'chat\'">&lt;/body><br/>&lt;/html></pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Chat'] = Samples['About/Chat'] || [];
@@ -101,7 +101,7 @@ Samples['About/Chat'] = Samples['About/Chat'] || [];
 Samples['About/Chat'].push({
     filename: 'messages.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.messages = ko.observableArray();<br/><br/>    pane.pubsub.subscribe(\'chat.message\',<br/>        function (message) {<br/>            self.messages.push(message);<br/>        });<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.messages = ko.observableArray();<br/><br/>    pane.pubsub.subscribe(\'chat.message\',<br/>        function (message) {<br/>            self.messages.push(message);<br/>        });<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Chat'] = Samples['About/Chat'] || [];
@@ -115,7 +115,7 @@ Samples['About/Chat'] = Samples['About/Chat'] || [];
 Samples['About/Chat'].push({
     filename: 'sender.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.name = ko.observable(\'Anonymous\');<br/>    this.message = ko.observable();<br/><br/>    this.send = function() {<br/>        pane.pubsub.publish(\'chat.message\', {<br/>            name: self.name(),<br/>            message: self.message()<br/>        });<br/>        self.message(\'\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.name = ko.observable(\'Anonymous\');<br/>    this.message = ko.observable();<br/><br/>    this.send = function() {<br/>        pane.pubsub.publish(\'chat.message\', {<br/>            name: self.name(),<br/>            message: self.message()<br/>        });<br/>        self.message(\'\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Mobile'] = Samples['About/Mobile'] || [];
@@ -129,7 +129,7 @@ Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>  &lt;head><br/>    &lt;title>Tribe Mobile&lt;/title><br/>    <br/>    &lt;!-- Some metadata for mobile browsers --><br/>    &lt;meta name="viewport"<br/>          content="minimum-scale=1.0, width=device-width, <br/>                   maximum-scale=1.0, user-scalable=no" /><br/>     <br/>    &lt;script src="jquery.js">&lt;/script><br/>    &lt;script src="knockout.js">&lt;/script><br/>    &lt;script src="Tribe.js">&lt;/script><br/><br/>    &lt;!-- Tribe.Mobile.js is all you need to load --><br/>    &lt;script src="Tribe.Mobile.js">&lt;/script><br/><br/>    &lt;script type="text/javascript"><br/>        $(TC.run);<br/>    &lt;/script><br/>  &lt;/head><br/><br/>  &lt;!-- Use /Mobile/main as your host pane --><br/>  &lt;body data-bind="pane: \'/Mobile/main\',<br/>                   data: { pane: \'welcome\' }"><br/>  &lt;/body><br/>&lt;/html><br/></pre>'
+    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>  &lt;head><br/>    &lt;title>Tribe Mobile&lt;/title><br/>    <br/>    &lt;!-- Some metadata for mobile browsers --><br/>    &lt;meta name="viewport"<br/>          content="minimum-scale=1.0, width=device-width, <br/>                   maximum-scale=1.0, user-scalable=no" /><br/>     <br/>    &lt;script src="jquery.js">&lt;/script><br/>    &lt;script src="knockout.js">&lt;/script><br/>    &lt;script src="Tribe.js">&lt;/script><br/><br/>    &lt;!-- Tribe.Mobile.js is all you need to load --><br/>    &lt;script src="Tribe.Mobile.js">&lt;/script><br/><br/>    &lt;script type="text/javascript"><br/>        $(T.run);<br/>    &lt;/script><br/>  &lt;/head><br/><br/>  &lt;!-- Use /Mobile/main as your host pane --><br/>  &lt;body data-bind="pane: \'/Mobile/main\',<br/>                   data: { pane: \'welcome\' }"><br/>  &lt;/body><br/>&lt;/html><br/></pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Mobile'] = Samples['About/Mobile'] || [];
@@ -157,7 +157,7 @@ Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
     filename: 'samples.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    TC.toolbar.title(\'Title!\');<br/>    <br/>    TC.toolbar.options([<br/>        { text: \'Option 1\', func: function () { } },<br/>        { text: \'Option 2\', func: function () { } }<br/>    ]);<br/><br/>    this.listData = {<br/>        items: [<br/>            { id: 1, name: \'Item 1\' },<br/>            { id: 2, name: \'Item 2\' }<br/>        ],<br/>        itemText: function(item) {<br/>             return item.id + \' - \' + item.name;<br/>        },<br/>        headerText: \'Select List\',<br/>        itemClick: function(item) { }<br/>    };<br/><br/>    this.overlay = function() {<br/>        TC.overlay(\'overlay\');<br/>    };<br/><br/>    this.navigate = function() {<br/>        pane.navigate(\'navigate\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    T.toolbar.title(\'Title!\');<br/>    <br/>    T.toolbar.options([<br/>        { text: \'Option 1\', func: function () { } },<br/>        { text: \'Option 2\', func: function () { } }<br/>    ]);<br/><br/>    this.listData = {<br/>        items: [<br/>            { id: 1, name: \'Item 1\' },<br/>            { id: 2, name: \'Item 2\' }<br/>        ],<br/>        itemText: function(item) {<br/>             return item.id + \' - \' + item.name;<br/>        },<br/>        headerText: \'Select List\',<br/>        itemClick: function(item) { }<br/>    };<br/><br/>    this.overlay = function() {<br/>        T.overlay(\'overlay\');<br/>    };<br/><br/>    this.navigate = function() {<br/>        pane.navigate(\'navigate\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Mobile'] = Samples['About/Mobile'] || [];
@@ -178,7 +178,7 @@ Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    TC.toolbar.defaults.back = true;<br/><br/>    this.samples = function() {<br/>        pane.navigate(\'samples\');<br/>    };<br/><br/>    this.chat = function () {<br/>        pane.navigate(\'chat\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    T.toolbar.defaults.back = true;<br/><br/>    this.samples = function() {<br/>        pane.navigate(\'samples\');<br/>    };<br/><br/>    this.chat = function () {<br/>        pane.navigate(\'chat\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Creating'] = Samples['Panes/Creating'] || [];
@@ -199,14 +199,14 @@ Samples['Panes/Creating'] = Samples['Panes/Creating'] || [];
 Samples['Panes/Creating'].push({
     filename: 'helloWorld.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    // Model properties are available for <br/>    // data binding in your template.<br/>    this.message = "Message passed: " + pane.data.message;<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    // Model properties are available for <br/>    // data binding in your template.<br/>    this.message = "Message passed: " + pane.data.message;<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Creating'] = Samples['Panes/Creating'] || [];
 Samples['Panes/Creating'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Creating Panes&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript">$(TC.run)&lt;/script><br/>    &lt;/head><br/>    <br/>    &lt;!-- Create a pane and pass it some data --><br/>    &lt;body data-bind="pane: \'helloWorld\',<br/>                     data: { message: \'Test message.\' }"><br/>    &lt;/body><br/>&lt;/html></pre>'
+    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Creating Panes&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript">$(T.run)&lt;/script><br/>    &lt;/head><br/>    <br/>    &lt;!-- Create a pane and pass it some data --><br/>    &lt;body data-bind="pane: \'helloWorld\',<br/>                     data: { message: \'Test message.\' }"><br/>    &lt;/body><br/>&lt;/html></pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Dynamic'] = Samples['Panes/Dynamic'] || [];
@@ -220,7 +220,7 @@ Samples['Panes/Dynamic'] = Samples['Panes/Dynamic'] || [];
 Samples['Panes/Dynamic'].push({
     filename: 'create.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var i = 0;<br/>    <br/>    // Dynamically insert a pane into the element<br/>    // with its class set to "items".<br/>    this.createPane = function() {<br/>        TC.appendNode(\'.items\', { path: \'item\', data: ++i });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var i = 0;<br/>    <br/>    // Dynamically insert a pane into the element<br/>    // with its class set to "items".<br/>    this.createPane = function() {<br/>        T.appendNode(\'.items\', { path: \'item\', data: ++i });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Dynamic'] = Samples['Panes/Dynamic'] || [];
@@ -262,7 +262,7 @@ Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
 Samples['Panes/Communicating'].push({
     filename: 'layout.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    // Create an observable to share between child panes<br/>    this.observable = ko.observable(\'Test\');<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    // Create an observable to share between child panes<br/>    this.observable = ko.observable(\'Test\');<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
@@ -276,7 +276,7 @@ Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
 Samples['Panes/Communicating'].push({
     filename: 'receiver.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    // Our shared observable<br/>    this.observable = pane.data;<br/>    <br/>    // Listen for messages and push them onto <br/>    // an array as they arrive<br/>    this.messages = ko.observableArray();<br/>    pane.pubsub.subscribe(\'sample.message\', function (data) {<br/>        self.messages.push(data);<br/>    });<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    // Our shared observable<br/>    this.observable = pane.data;<br/>    <br/>    // Listen for messages and push them onto <br/>    // an array as they arrive<br/>    this.messages = ko.observableArray();<br/>    pane.pubsub.subscribe(\'sample.message\', function (data) {<br/>        self.messages.push(data);<br/>    });<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
@@ -290,7 +290,7 @@ Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
 Samples['Panes/Communicating'].push({
     filename: 'sender.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    // Our shared observable<br/>    this.observable = pane.data;<br/>    <br/>    // The pubsub object is available through the pane object.<br/>    this.message = ko.observable();<br/>    this.send = function() {<br/>        pane.pubsub.publish(\'sample.message\',<br/>            { message: self.message() });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    // Our shared observable<br/>    this.observable = pane.data;<br/>    <br/>    // The pubsub object is available through the pane object.<br/>    this.message = ko.observable();<br/>    this.send = function() {<br/>        pane.pubsub.publish(\'sample.message\',<br/>            { message: self.message() });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Lifecycle'] = Samples['Panes/Lifecycle'] || [];
@@ -304,7 +304,7 @@ Samples['Panes/Lifecycle'] = Samples['Panes/Lifecycle'] || [];
 Samples['Panes/Lifecycle'].push({
     filename: 'create.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var i = 0;<br/>    <br/>    this.createPane = function() {<br/>        TC.appendNode(pane.find(\'.items\'),<br/>            { path: \'item\', data: ++i });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var i = 0;<br/>    <br/>    this.createPane = function() {<br/>        T.appendNode(pane.find(\'.items\'),<br/>            { path: \'item\', data: ++i });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Lifecycle'] = Samples['Panes/Lifecycle'] || [];
@@ -325,7 +325,7 @@ Samples['Panes/Lifecycle'] = Samples['Panes/Lifecycle'] || [];
 Samples['Panes/Lifecycle'].push({
     filename: 'item.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    this.data = pane.data;<br/><br/>    // The initialise function is called before the pane<br/>    // is rendered. If you return a jQuery deferred object,<br/>    // Tribe will wait for it to resolve before continuing.<br/>    <br/>    this.initialise = function() {<br/>        var promise = $.Deferred();<br/>        setTimeout(promise.resolve, 500);<br/>        return promise;<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    this.data = pane.data;<br/><br/>    // The initialise function is called before the pane<br/>    // is rendered. If you return a jQuery deferred object,<br/>    // Tribe will wait for it to resolve before continuing.<br/>    <br/>    this.initialise = function() {<br/>        var promise = $.Deferred();<br/>        setTimeout(promise.resolve, 500);<br/>        return promise;<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
@@ -339,7 +339,7 @@ Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
 Samples['Panes/Navigating'].push({
     filename: 'first.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.next = function() {<br/>        pane.navigate(\'second\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.next = function() {<br/>        pane.navigate(\'second\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
@@ -367,7 +367,7 @@ Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
 Samples['Panes/Navigating'].push({
     filename: 'second.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.back = function () {<br/>        pane.navigateBack();<br/>    };<br/><br/>    this.next = function () {<br/>        pane.navigate(\'third\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.back = function () {<br/>        pane.navigateBack();<br/>    };<br/><br/>    this.next = function () {<br/>        pane.navigate(\'third\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
@@ -381,7 +381,7 @@ Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
 Samples['Panes/Navigating'].push({
     filename: 'third.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.back = function() {<br/>        pane.navigateBack();<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.back = function() {<br/>        pane.navigateBack();<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
@@ -402,7 +402,7 @@ Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
 Samples['Webmail/1-Folders'].push({
     filename: 'folders.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>// Our model just contains a list of folders and<br/>// an observable to hold the selected folder.<br/><br/>TC.registerModel(function (pane) {<br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(\'Inbox\');<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>// Our model just contains a list of folders and<br/>// an observable to hold the selected folder.<br/><br/>T.registerModel(function (pane) {<br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(\'Inbox\');<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
@@ -430,7 +430,7 @@ Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
 Samples['Webmail/2-Mails'].push({
     filename: 'folders.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(pane.data.folder);<br/><br/>    // We\'ve added a separate click handler to navigate<br/>    // when a folder is selected.<br/>    this.selectFolder = function (folder) {<br/>        self.selectedFolder(folder);<br/>        pane.navigate(\'mails\', { folder: folder });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(pane.data.folder);<br/><br/>    // We\'ve added a separate click handler to navigate<br/>    // when a folder is selected.<br/>    this.selectFolder = function (folder) {<br/>        self.selectedFolder(folder);<br/>        pane.navigate(\'mails\', { folder: folder });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
@@ -465,7 +465,7 @@ Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
 Samples['Webmail/2-Mails'].push({
     filename: 'mails.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = ko.observable();<br/><br/>    // Load data using AJAX to our data property    <br/>    this.initialise = function() {<br/>        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = ko.observable();<br/><br/>    // Load data using AJAX to our data property    <br/>    this.initialise = function() {<br/>        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
@@ -486,7 +486,7 @@ Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
 Samples['Webmail/3-Content'].push({
     filename: 'folders.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(pane.data.folder);<br/><br/>    this.selectFolder = function (folder) {<br/>        self.selectedFolder(folder);<br/>        pane.navigate(\'mails\', { folder: folder });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(pane.data.folder);<br/><br/>    this.selectFolder = function (folder) {<br/>        self.selectedFolder(folder);<br/>        pane.navigate(\'mails\', { folder: folder });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
@@ -521,7 +521,7 @@ Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
 Samples['Webmail/3-Content'].push({
     filename: 'mails.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = ko.observable();<br/><br/>    this.initialise = function () {<br/>        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);<br/>    };<br/>    <br/>    this.selectMail = function (mail) {<br/>        pane.navigate(\'viewMail\', mail);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = ko.observable();<br/><br/>    this.initialise = function () {<br/>        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);<br/>    };<br/>    <br/>    this.selectMail = function (mail) {<br/>        pane.navigate(\'viewMail\', mail);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
@@ -542,7 +542,7 @@ Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
 Samples['Webmail/3-Content'].push({
     filename: 'viewMail.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.data = ko.observable();<br/><br/>    this.initialise = function () {<br/>        $.getJSON(\'Data/mail/\' + pane.data.id, self.data);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.data = ko.observable();<br/><br/>    this.initialise = function () {<br/>        $.getJSON(\'Data/mail/\' + pane.data.id, self.data);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
@@ -556,7 +556,7 @@ Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'confirm.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function () {<br/>        // Dump the details object on screen for our viewer\'s pleasure.<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function () {<br/>        // Dump the details object on screen for our viewer\'s pleasure.<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
@@ -591,7 +591,7 @@ Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.start = function () {<br/>        // panes expose a simple function for starting flows<br/>        pane.startFlow(PersonalFlow);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.start = function () {<br/>        // panes expose a simple function for starting flows<br/>        pane.startFlow(PersonalFlow);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/2-Business'] = Samples['CreditCard/2-Business'] || [];
@@ -626,7 +626,7 @@ Samples['CreditCard/2-Business'] = Samples['CreditCard/2-Business'] || [];
 Samples['CreditCard/2-Business'].push({
     filename: 'confirm.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/2-Business'] = Samples['CreditCard/2-Business'] || [];
@@ -661,7 +661,7 @@ Samples['CreditCard/2-Business'] = Samples['CreditCard/2-Business'] || [];
 Samples['CreditCard/2-Business'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.personal = function() {<br/>        pane.startFlow(PersonalFlow2);<br/>    };<br/><br/>    this.business = function () {<br/>        pane.startFlow(BusinessFlow2);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.personal = function() {<br/>        pane.startFlow(PersonalFlow2);<br/>    };<br/><br/>    this.business = function () {<br/>        pane.startFlow(BusinessFlow2);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/3-Saga'] = Samples['CreditCard/3-Saga'] || [];
@@ -696,7 +696,7 @@ Samples['CreditCard/3-Saga'] = Samples['CreditCard/3-Saga'] || [];
 Samples['CreditCard/3-Saga'].push({
     filename: 'confirm.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/3-Saga'] = Samples['CreditCard/3-Saga'] || [];
@@ -738,7 +738,7 @@ Samples['CreditCard/3-Saga'] = Samples['CreditCard/3-Saga'] || [];
 Samples['CreditCard/3-Saga'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.personal = function() {<br/>        pane.startFlow(PersonalFlow3);<br/>    };<br/><br/>    this.business = function () {<br/>        pane.startFlow(BusinessFlow3);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.personal = function() {<br/>        pane.startFlow(PersonalFlow3);<br/>    };<br/><br/>    this.business = function () {<br/>        pane.startFlow(BusinessFlow3);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
@@ -766,7 +766,7 @@ Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
 Samples['CreditCard/4-Combined'].push({
     filename: 'confirm.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/><br/>    this.restart = function() {<br/>        pane.startFlow(CreditCardFlow);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/><br/>    this.restart = function() {<br/>        pane.startFlow(CreditCardFlow);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
@@ -794,7 +794,7 @@ Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
 Samples['CreditCard/4-Combined'].push({
     filename: 'host.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    pane.startFlow(CreditCardFlow);<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    pane.startFlow(CreditCardFlow);<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];

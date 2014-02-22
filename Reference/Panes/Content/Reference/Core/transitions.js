@@ -1,9 +1,9 @@
 ﻿Reference.Transition = {
-    name: 'TC.transition',
+    name: 'T.transition',
     description: 'Create an object with a set of functions for transition elements and nodes.',
     arguments: [
-        { name: 'target', type: 'selector | TC.Types.Pane | TC.Types.Node', description: 'The target of the transition.' },
-        { name: 'transition', type: 'String', description: 'The name of the transition registered in the TC.Transitions collection. If not specified, this will default to transition specified on the pane or node.<br/>Built-in transitions are fade, slideLeft, slideRight, slideUp and slideDown.' },
+        { name: 'target', type: 'selector | T.Types.Pane | T.Types.Node', description: 'The target of the transition.' },
+        { name: 'transition', type: 'String', description: 'The name of the transition registered in the T.Transitions collection. If not specified, this will default to transition specified on the pane or node.<br/>Built-in transitions are fade, slideLeft, slideRight, slideUp and slideDown.' },
         { name: 'reverse', type: 'Boolean', description: 'Use the reverse transition to the one specified.' }
     ],
     returns: 'Object'

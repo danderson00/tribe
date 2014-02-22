@@ -1,3 +1,3 @@
-﻿TC.registerModel(function (pane) {    
+﻿T.registerModel(function (pane) {    
     this.func = $.extend({ name: 'new ' + pane.data.name }, pane.data.constructor);
 });

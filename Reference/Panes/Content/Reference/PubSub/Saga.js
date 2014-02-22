@@ -36,11 +36,11 @@
     ],
     properties: [
         { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub instance used for subscriptions.' },
-        { name: 'children', type: '[TC.Types.Saga]', description: 'An array of sagas added through handler definitions or startChild.' }
+        { name: 'children', type: '[T.Types.Saga]', description: 'An array of sagas added through handler definitions or startChild.' }
     ],
     Definition: {
         arguments: [
-            { Argument: 'saga', Type: 'TC.Types.Flow', Description: 'The Saga object that is consuming the definition.' },
+            { Argument: 'saga', Type: 'T.Types.Flow', Description: 'The Saga object that is consuming the definition.' },
             { Argument: 'args, ...', Type: 'Any', Description: 'The additional arguments that were passed to the Saga constructor.' }
         ],
         properties: [

@@ -7,10 +7,10 @@
         params_str = 'a[]=4&a[]=5&a[]=6&b[x][]=7&b[y]=8&b[z][]=9&b[z][]=0&b[z][]=true&b[z][]=false&b[z][]=undefined&b[z][]=&c=1';
 
     test("deparam deserialises string correctly", function() {
-        deepEqual(TC.Utils.deparam(params_str), params_obj);
+        deepEqual(T.Utils.deparam(params_str), params_obj);
     });
 
     test("deparam deserialises string correctly and coerces types", function () {
-        deepEqual(TC.Utils.deparam(params_str, true), params_obj_coerce);
+        deepEqual(T.Utils.deparam(params_str, true), params_obj_coerce);
     });
 })();

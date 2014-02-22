@@ -1,13 +1,13 @@
-﻿TC.transition = function (target, transition, reverse) {
+﻿T.transition = function (target, transition, reverse) {
     var node;
     var pane;
     var element;
     setState();
     
     transition = transition || (pane && pane.transition) || (node && node.transition);
-    var implementation = TC.Transitions[transition];
+    var implementation = T.Transitions[transition];
     if (reverse && implementation && implementation.reverse)
-        implementation = TC.Transitions[implementation.reverse];
+        implementation = T.Transitions[implementation.reverse];
 
     return {
         'in': function () {
@@ -31,11 +31,11 @@
         },
         
         to: function (paneOptions, remove) {
-            var context = TC.context();
+            var context = T.context();
             if (node)
-                TC.Utils.insertPaneAfter(node, element, TC.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), context);
+                T.Utils.insertPaneAfter(node, element, T.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), context);
             else
-                TC.insertNodeAfter(element, TC.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), null, context);
+                T.insertNodeAfter(element, T.Utils.getPaneOptions(paneOptions, { transition: transition, reverseTransitionIn: reverse }), null, context);
             this.out(remove);
             return context.renderOperation.promise;
         }
@@ -43,7 +43,7 @@
     
     function setTransitionMode() {
         var $element = $(element);
-        if (TC.transition.mode === 'fixed')
+        if (T.transition.mode === 'fixed')
             $element.css({
                 position: 'fixed',
                 width: $element.width(),
@@ -60,13 +60,13 @@
     }
 
     function setState() {
-        if (!target) throw "No target passed to TC.transition";
+        if (!target) throw "No target passed to T.transition";
         
-        if (target.constructor === TC.Types.Node) {
+        if (target.constructor === T.Types.Node) {
             node = target;
             pane = node.pane;
             element = pane.element;
-        } else if (target.constructor === TC.Types.Pane) {
+        } else if (target.constructor === T.Types.Pane) {
             pane = target;
             node = pane.node;
             element = pane.element;

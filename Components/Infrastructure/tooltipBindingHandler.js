@@ -1,7 +1,7 @@
 ﻿(function () {
-    var utils = TC.Utils;
+    var utils = T.Utils;
 
-    TC.tooltipTimeout = 5000;
+    T.tooltipTimeout = 5000;
 
     ko.bindingHandlers.tooltip = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -14,13 +14,13 @@
                     data = { html: value, target: $(element), position: bindings.position };
                 else
                     data = value;
-                TC.createNode(element, { path: '/Common/tooltip', data: data }, utils.extractNode(bindingContext));
+                T.createNode(element, { path: '/Common/tooltip', data: data }, utils.extractNode(bindingContext));
             }
 
         }
     };
 
-    TC.renderTooltips = function (tooltips, topic, parentPane, show) {
+    T.renderTooltips = function (tooltips, topic, parentPane, show) {
         if ($.isArray(tooltips))
             for (var i = 0; i < tooltips.length; i++)
                 renderTooltip(tooltips[i], true);
@@ -36,14 +36,14 @@
             var target = $(parentPane.element).find(tooltip.selector);
             if (target.length > 0) {
                 if (parentPane.element)
-                    TC.insertNodeAfter(target, { path: '/Common/tooltip', data: extend(tooltip, autoShow) });
+                    T.insertNodeAfter(target, { path: '/Common/tooltip', data: extend(tooltip, autoShow) });
             } else {
-                TC.logger.warn("Tooltip for selector " + tooltip.selector + " not rendered - element not found");
+                T.logger.warn("Tooltip for selector " + tooltip.selector + " not rendered - element not found");
             }
         }
 
         function extend(tooltip, autoShow) {
-            return $.extend({ timeout: TC.tooltipTimeout, topic: topic, autoShow: autoShow && !tooltip.hover, target: $(parentPane.element).find(tooltip.selector) }, tooltip);
+            return $.extend({ timeout: T.tooltipTimeout, topic: topic, autoShow: autoShow && !tooltip.hover, target: $(parentPane.element).find(tooltip.selector) }, tooltip);
         }
 
         function tipShownKey(property) {

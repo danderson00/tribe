@@ -1,4 +1,4 @@
-﻿TC.registerModel(function (pane) {
+﻿T.registerModel(function (pane) {
     pane.node.skipPath = true;
     pane.node.root = pane.node;
 

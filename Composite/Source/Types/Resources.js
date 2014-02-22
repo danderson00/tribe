@@ -1,9 +1,9 @@
-﻿TC.Types.Resources = function () { };
+﻿T.Types.Resources = function () { };
 
-TC.Types.Resources.prototype.register = function (resourcePath, constructor, options) {
+T.Types.Resources.prototype.register = function (resourcePath, constructor, options) {
     this[resourcePath] = {
         constructor: constructor,
         options: options || {}
     };
-    TC.logger.debug("Model loaded for " + resourcePath);
+    T.logger.debug("Model loaded for " + resourcePath);
 };

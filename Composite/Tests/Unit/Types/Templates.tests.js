@@ -2,7 +2,7 @@
     var templates;
     
     module('Unit.Types.Templates', {
-        setup: function () { templates = new TC.Types.Templates(); },
+        setup: function () { templates = new T.Types.Templates(); },
         teardown: function () { $('head script[type="text/template"]').remove(); }
     });
 

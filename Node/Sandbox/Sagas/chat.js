@@ -1,4 +1,4 @@
-﻿TC.registerSaga(function (saga) {
+﻿T.registerSaga(function (saga) {
     saga.data = { messages: ko.observableArray() };
 
     saga.handles = {

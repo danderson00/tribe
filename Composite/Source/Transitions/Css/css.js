@@ -10,7 +10,7 @@
     var transitionEndEvents = 'webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd';
 
     function createCssTransition(transition, reverse) {
-        TC.Transitions[transition] = {
+        T.Transitions[transition] = {
             'in': function (element) {
                 if (!supported) return null;
                 

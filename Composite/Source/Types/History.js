@@ -1,10 +1,10 @@
-﻿TC.Types.History = function (history) {
+﻿T.Types.History = function (history) {
     var currentState = 0;
     history.replaceState(currentState, window.title);
 
     var popActions = {
         raiseEvent: function (e) {
-            TC.Utils.raiseDocumentEvent('browser.go', { count: (e.state - currentState) });
+            T.Utils.raiseDocumentEvent('browser.go', { count: (e.state - currentState) });
             currentState = e.state;
         },
         updateStack: function(e) {
@@ -42,9 +42,9 @@
 };
 
 if (window.history.pushState)
-    TC.history = new TC.Types.History(window.history);
+    T.history = new T.Types.History(window.history);
 else
-    TC.history = new TC.Types.History({
+    T.history = new T.Types.History({
         replaceState: function () { },
         pushState: function () { },
         go: function () { }

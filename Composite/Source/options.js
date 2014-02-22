@@ -1,4 +1,4 @@
-﻿TC.defaultOptions = function() {
+﻿T.defaultOptions = function() {
     return {
         synchronous: false,
         handleExceptions: true,
@@ -7,4 +7,4 @@
         events: ['loadResources', 'createPubSub', 'createModel', 'initialiseModel', 'renderPane', 'renderComplete', 'active', 'dispose']
     };
 };
-TC.options = TC.defaultOptions();
+T.options = T.defaultOptions();

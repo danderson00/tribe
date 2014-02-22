@@ -2,7 +2,7 @@
 
 test("each executes iterator for each item of array, passing value and index", function () {
     var spy = sinon.spy();
-    TC.Utils.each(['1', '2'], spy);
+    T.Utils.each(['1', '2'], spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 0);
@@ -12,7 +12,7 @@ test("each executes iterator for each item of array, passing value and index", f
 
 test("each executes iterator for each property of object, passing value and property name", function () {
     var spy = sinon.spy();
-    TC.Utils.each({ test1: '1', test2: '2' }, spy);
+    T.Utils.each({ test1: '1', test2: '2' }, spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 'test1');
@@ -22,7 +22,7 @@ test("each executes iterator for each property of object, passing value and prop
 
 test("map executes iterator for each item of array, passing value and index", function () {
     var spy = sinon.spy();
-    TC.Utils.map(['1', '2'], spy);
+    T.Utils.map(['1', '2'], spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 0);
@@ -32,7 +32,7 @@ test("map executes iterator for each item of array, passing value and index", fu
 
 test("map executes iterator for each property of object, passing value and property name", function () {
     var spy = sinon.spy();
-    TC.Utils.map({ test1: '1', test2: '2' }, spy);
+    T.Utils.map({ test1: '1', test2: '2' }, spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 'test1');
@@ -41,7 +41,7 @@ test("map executes iterator for each property of object, passing value and prope
 });
 
 test("map does not flatten arrays", function() {
-    var result = TC.Utils.map([1, 2], function () { return [3, 4]; });
+    var result = T.Utils.map([1, 2], function () { return [3, 4]; });
     equal(result.length, 2);
     deepEqual(result[0], [3, 4]);
     deepEqual(result[1], [3, 4]);
@@ -49,13 +49,13 @@ test("map does not flatten arrays", function() {
 
 test("map returns empty array for undefined input", function() {
     var spy = sinon.spy();
-    deepEqual(TC.Utils.map(undefined, spy), []);
+    deepEqual(T.Utils.map(undefined, spy), []);
     ok(spy.notCalled);
 });
 
 test("filter executes once for each item of array", function() {
     var spy = sinon.spy();
-    TC.Utils.filter(['1', '2'], spy);
+    T.Utils.filter(['1', '2'], spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 0);
@@ -65,7 +65,7 @@ test("filter executes once for each item of array", function() {
 
 test("filter executes once for each property of object", function () {
     var spy = sinon.spy();
-    TC.Utils.filter({ test1: '1', test2: '2' }, spy);
+    T.Utils.filter({ test1: '1', test2: '2' }, spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 'test1');
@@ -74,19 +74,19 @@ test("filter executes once for each property of object", function () {
 });
 
 test("filter returns array of values filtered by iterator function", function() {
-    var result = TC.Utils.filter(['1', '2'], function (item) { return item !== '1'; });
+    var result = T.Utils.filter(['1', '2'], function (item) { return item !== '1'; });
     equal(result.length, 1);
     equal(result[0], '2');
 });
 
 test("filter returns empty array for undefined input", function () {
     var spy = sinon.spy();
-    deepEqual(TC.Utils.filter(undefined, spy), []);
+    deepEqual(T.Utils.filter(undefined, spy), []);
     ok(spy.notCalled);
 });
 
 test("pluck returns property value from each object in array", function() {
-    var result = TC.Utils.pluck([
+    var result = T.Utils.pluck([
         { one: 'a', two: 'b' },
         { one: 'c', two: 'd' },
         { one: 'e', two: 'f' }
@@ -98,7 +98,7 @@ test("pluck returns property value from each object in array", function() {
 test("reduce executes reduceFunction with expected arguments", function() {
     var spy = sinon.spy();
     var list = [1, 2];
-    TC.Utils.reduce(list, 'initial', spy);
+    T.Utils.reduce(list, 'initial', spy);
 
     equal(spy.callCount, 2);
     deepEqual(spy.firstCall.args, ['initial', 1, 0, list]);
@@ -106,7 +106,7 @@ test("reduce executes reduceFunction with expected arguments", function() {
 });
 
 test("reduce returns expected result", function() {
-    var result = TC.Utils.reduce([1, 2, 3, 4], 10, function(memo, value) {
+    var result = T.Utils.reduce([1, 2, 3, 4], 10, function(memo, value) {
         return memo + value;
     });
     equal(result, 20);

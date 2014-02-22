@@ -1,5 +1,5 @@
 ﻿Reference.Types.Operation = {
-    name: 'TC.Types.Operation',
+    name: 'T.Types.Operation',
     description: 'Encapsulates an operation involving several child operations, keyed by an id. Child operations can be added cumulatively. Promise resolves when the all child operations complete.',
     functions: [
         {

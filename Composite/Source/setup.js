@@ -9,15 +9,15 @@
     global.Tribe = global.Tribe || {};
     global.Tribe.Composite = {};
     global.TC = global.Tribe.Composite;
-    global.TC.Events = {};
-    global.TC.Factories = {};
-    global.TC.LoadHandlers = {};
-    global.TC.LoadStrategies = {};
-    global.TC.Transitions = {};
-    global.TC.Types = {};
-    global.TC.Utils = {};
-    global.TC.logger = T.logger;
-    global.TC.pubsub = new Tribe.PubSub();
+    global.T.Events = {};
+    global.T.Factories = {};
+    global.T.LoadHandlers = {};
+    global.T.LoadStrategies = {};
+    global.T.Transitions = {};
+    global.T.Types = {};
+    global.T.Utils = {};
+    global.T.logger = T.logger;
+    global.T.pubsub = new Tribe.PubSub();
 
     $(function() {
         $('head').append('<style class="__tribe">.__rendering { position: fixed; top: -10000px; left: -10000px; }</style>');

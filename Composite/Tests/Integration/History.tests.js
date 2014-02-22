@@ -3,7 +3,7 @@
 
 //    module('Integration.History', {
 //        setup: function () {
-//            history = new TC.Types.History(window.history);
+//            history = new T.Types.History(window.history);
 //            Test.Integration.createTestElement();
 //        },
 //        teardown: function() {
@@ -12,8 +12,8 @@
 //    });
 
 //    test("History sets window state when navigating", function () {
-//        TC.createNode('.test', { path: 'History/layout' });
-//        TC.nodeFor('.content1').navigate('content2');
+//        T.createNode('.test', { path: 'History/layout' });
+//        T.nodeFor('.content1').navigate('content2');
 //        var options = JSON.parse(window.history.state.options);
 //        equal(options.path, '/History/content2');
 //    });
@@ -21,8 +21,8 @@
 //    // these tests sometimes seem to do strange things to the Chrome debugger. If breakpoints aren't being hit, this is the culprit.
 //    asyncTest("History transitions navigation node to previous state when back is called", function () {
 //        expect(2);
-//        TC.createNode('.test', { path: '/History/layout' });
-//        TC.nodeFor('.content1').navigate('content2');
+//        T.createNode('.test', { path: '/History/layout' });
+//        T.nodeFor('.content1').navigate('content2');
 //        window.history.back();
 //        setTimeout(function() {
 //            equal($('.content2').length, 0);
@@ -33,8 +33,8 @@
 
 //    asyncTest("History transitions navigation node to next state when forward is called", function () {
 //        expect(2);
-//        TC.createNode('.test', { path: '/History/layout' });
-//        TC.nodeFor('.content1').navigate('content2');
+//        T.createNode('.test', { path: '/History/layout' });
+//        T.nodeFor('.content1').navigate('content2');
 //        window.history.back();
 //        setTimeout(function () {
 //            window.history.forward();
@@ -52,8 +52,8 @@
 //            equal(data.options.path, '/Navigate/content2');
 //            equal(data.options.data, 'test');
 //        });
-//        TC.createNode('.test', { path: 'Navigate/layout' });
-//        TC.nodeFor('.content1').navigate({ path: 'content2', data: 'test' });
+//        T.createNode('.test', { path: 'Navigate/layout' });
+//        T.nodeFor('.content1').navigate({ path: 'content2', data: 'test' });
 //        $(document).off('navigating');
 //    });
 //})();

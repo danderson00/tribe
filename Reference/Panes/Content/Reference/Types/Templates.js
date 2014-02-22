@@ -1,5 +1,5 @@
 ﻿Reference.Types.Templates = {
-    name: 'TC.Types.Templates',
+    name: 'T.Types.Templates',
     description: 'Managed collection of HTML templates.',
     functions: [
         {

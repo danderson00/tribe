@@ -1,5 +1,5 @@
 ﻿(function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         pane.node.skipPath = true;
         
         var pubsub = pane.pubsub;
@@ -29,7 +29,7 @@
 
             setIcon();
 
-            //TC.renderTooltips(self.tooltips, 'help', pane);
+            //T.renderTooltips(self.tooltips, 'help', pane);
         };
 
         this.click = function () {
@@ -96,7 +96,7 @@
 
         function renderPane(scroll) {
             self.loading(true);
-            childPane = TC.appendNode($content, { path: data.pane, data: data.data }).pane;
+            childPane = T.appendNode($content, { path: data.pane, data: data.data }).pane;
 
             $.when(childPane.is.rendered).always(function() {
                 self.loading(false);

@@ -1,4 +1,4 @@
-﻿TC.registerModel(function (pane) {
+﻿T.registerModel(function (pane) {
     this.data = pane.data;
 
     // The initialise function is called before the pane

@@ -1,5 +1,5 @@
-﻿TC.registerModel(function(pane) {
+﻿T.registerModel(function(pane) {
     this.showDialog = function() {
-        TC.dialog('/dialogContent', { title: 'Sample Dialog' });
+        T.dialog('/dialogContent', { title: 'Sample Dialog' });
     };
 });

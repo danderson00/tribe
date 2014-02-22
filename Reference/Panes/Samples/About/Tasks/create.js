@@ -1,7 +1,7 @@
 ﻿// Declare model constructors using this simple function.
 // Tribe creates an instance and binds it to the template.
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
     
     this.task = ko.observable();

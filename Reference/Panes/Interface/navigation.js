@@ -1,4 +1,4 @@
-﻿TC.registerModel(function (pane) {
+﻿T.registerModel(function (pane) {
     var self = this;
     var currentSection;
 
@@ -23,7 +23,7 @@
 
     // it would be nice to use the article.show message for this,
     // but that won't work with browser back and forward buttons
-    TC.Utils.handleDocumentEvent('navigating', navigating);
+    T.Utils.handleDocumentEvent('navigating', navigating);
     function navigating(e) {
         var data = e.eventData.options.data || {};
         updateCurrentArticle(data);
@@ -53,12 +53,12 @@
 
     function show() {
         if (!$('.navigation').is(':visible'))
-            TC.transition('.navigation', 'slideRight')['in']();
+            T.transition('.navigation', 'slideRight')['in']();
     }
 
     function hide() {
         if ($('.navigation').is(':visible'))
-            TC.transition('.navigation', 'slideLeft').out(false);
+            T.transition('.navigation', 'slideLeft').out(false);
     }
 
     this.dispose = function () {
@@ -67,7 +67,7 @@
 
     // maps the cleaner API navigation structure into a structure suitable for data bindings. could be refactored out.
     function mapNavigation(section) {
-        return TC.Utils.map(Navigation[section], function (item, key) {
+        return T.Utils.map(Navigation[section], function (item, key) {
             return {
                 displayText: key,
                 section: section,
@@ -79,7 +79,7 @@
     }
 
     function mapChildItems(parentKey, container) {
-        return TC.Utils.map(container, function (item, key) {
+        return T.Utils.map(container, function (item, key) {
             return {
                 displayText: key,
                 topic: parentKey + '/' + item

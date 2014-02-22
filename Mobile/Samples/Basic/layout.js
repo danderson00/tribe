@@ -1,6 +1,6 @@
-﻿TC.registerModel(function (pane) {
-    TC.toolbar.title('Title!');
-    TC.toolbar.options([
+﻿T.registerModel(function (pane) {
+    T.toolbar.title('Title!');
+    T.toolbar.options([
         { text: 'test', func: function () { alert('test'); } },
         { text: 'test2', func: function () { alert('test2'); } }
     ]);
@@ -19,11 +19,11 @@
     };
 
     this.overlay = function() {
-        TC.overlay('overlay');
+        T.overlay('overlay');
     };
 
     this.toolbar = function () {
-        TC.toolbar.visible(!TC.toolbar.visible());
+        T.toolbar.visible(!T.toolbar.visible());
     };
 
     this.navigate = function() {

@@ -1,37 +1,37 @@
-﻿TC.registerModel(function (pane) {
+﻿T.registerModel(function (pane) {
     var data = pane.data || {};
     var element;
 
     this.pane = data.pane;
 
     pane.node.nodeForPath = function() {
-        return TC.nodeFor('.TM').children[1];
+        return T.nodeFor('.TM').children[1];
     };
     
     this.renderComplete = function () {
         element = $(pane.element).find('.overlay').show();
-        TC.transition(element, data.transition || 'slideDown')['in']();
+        T.transition(element, data.transition || 'slideDown')['in']();
 
-        TC.nodeFor(element.children()).pane.remove = close;
+        T.nodeFor(element.children()).pane.remove = close;
     };
 
     function close() {
-        TC.transition(element, data.transition || 'slideDown', true).out();
+        T.transition(element, data.transition || 'slideDown', true).out();
     }
 });
 
-TC.overlay = function (paneOptions, transition) {
-    var node = TC.appendNode('.TM', { path: '/Mobile/overlay', data: { pane: paneOptions }});
+T.overlay = function (paneOptions, transition) {
+    var node = T.appendNode('.TM', { path: '/Mobile/overlay', data: { pane: paneOptions }});
     return {
         node: node,
         close: function () {
-            TC.transition($(node.pane.element).find('.overlay'), transition || 'slideDown', true).out();
+            T.transition($(node.pane.element).find('.overlay'), transition || 'slideDown', true).out();
         }
     };
 };
 
 // HACK
-TC.dialog = function(paneOptions) {
-    return TC.overlay(paneOptions, 'slideLeft');
+T.dialog = function(paneOptions) {
+    return T.overlay(paneOptions, 'slideLeft');
 };
-TC.Types.Pane.prototype.dialog = TC.dialog;
+T.Types.Pane.prototype.dialog = T.dialog;

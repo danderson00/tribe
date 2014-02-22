@@ -2,7 +2,7 @@
     var models;
 
     module('Unit.Types.Resources', {
-        setup: function () { models = new TC.Types.Resources(); }
+        setup: function () { models = new T.Types.Resources(); }
     });
 
     test("register stores model as property with constructor and options", function () {

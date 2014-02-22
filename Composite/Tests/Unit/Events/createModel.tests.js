@@ -10,13 +10,13 @@
     });
 
     test("model is created from stored constructor", function () {
-        TC.Events.createModel(pane, context);
+        T.Events.createModel(pane, context);
         ok(context.models.test.constructor.calledOnce);
     });
 
     test("default model is created if no constructor defined", function () {
         context.models.test.constructor = null;
-        TC.Events.createModel(pane, context);
+        T.Events.createModel(pane, context);
         equal(pane.model.pane, pane);
     });
 })();

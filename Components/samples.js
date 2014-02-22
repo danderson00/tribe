@@ -33,7 +33,7 @@
     var sample = Samples['dialog'] || [];
     sample.push({
         header: 'JS',
-        content: '<pre class="highlight">TC.registerModel(function(pane) {\n    this.showDialog = function() {\n        TC.dialog(\'/dialogContent\', { title: \'Sample Dialog\' });\n    };\n});</pre>'
+        content: '<pre class="highlight">T.registerModel(function(pane) {\n    this.showDialog = function() {\n        T.dialog(\'/dialogContent\', { title: \'Sample Dialog\' });\n    };\n});</pre>'
     });
     Samples['dialog'] = sample;
 })();
@@ -63,7 +63,7 @@
     var sample = Samples['graph'] || [];
     sample.push({
         header: 'JS',
-        content: '<pre class="highlight">TC.registerModel(function(pane) {\n    this.graphData = {\n        series: {\n            \'Series 1\': [[0, 0], [1, 2], [2, 3], [3, 3], [4, 5]],\n            \'Series 2\': [[0, 0], [1, 1], [2, 4], [3, 3], [4, 2]]\n        },\n        css: {\n            width: 420,\n            height: 300\n        }\n    };\n});</pre>'
+        content: '<pre class="highlight">T.registerModel(function(pane) {\n    this.graphData = {\n        series: {\n            \'Series 1\': [[0, 0], [1, 2], [2, 3], [3, 3], [4, 5]],\n            \'Series 2\': [[0, 0], [1, 1], [2, 4], [3, 3], [4, 2]]\n        },\n        css: {\n            width: 420,\n            height: 300\n        }\n    };\n});</pre>'
     });
     Samples['graph'] = sample;
 })();
@@ -83,7 +83,7 @@
     var sample = Samples['grid'] || [];
     sample.push({
         header: 'JS',
-        content: '<pre class="highlight">TC.registerModel(function(pane) {\n    this.gridSource = [\n        { string: \'Hello\', first: 1, second: 4 },\n        { string: \'World\', first: 2, second: 3 }\n    ];\n    \n    this.gridColumns = [\n        { property: \'string\', heading: \'String\' },\n        { grouping: \'Grouping\', columns: [\n            { property: \'first\', heading: \'First\' },\n            { property: \'second\', heading: \'Second\' }\n        ]}\n    ];\n});</pre>'
+        content: '<pre class="highlight">T.registerModel(function(pane) {\n    this.gridSource = [\n        { string: \'Hello\', first: 1, second: 4 },\n        { string: \'World\', first: 2, second: 3 }\n    ];\n    \n    this.gridColumns = [\n        { property: \'string\', heading: \'String\' },\n        { grouping: \'Grouping\', columns: [\n            { property: \'first\', heading: \'First\' },\n            { property: \'second\', heading: \'Second\' }\n        ]}\n    ];\n});</pre>'
     });
     Samples['grid'] = sample;
 })();
@@ -113,7 +113,7 @@
     var sample = Samples['sample'] || [];
     sample.push({
         header: 'JS',
-        content: '<pre class="highlight">TC.registerModel(function(pane) {\n    this.pane = pane.data.pane;\n\n    this.highlightSyntax = function() {\n        $(\'.sampleSource pre\').syntaxHighlight();\n    };\n});</pre>'
+        content: '<pre class="highlight">T.registerModel(function(pane) {\n    this.pane = pane.data.pane;\n\n    this.highlightSyntax = function() {\n        $(\'.sampleSource pre\').syntaxHighlight();\n    };\n});</pre>'
     });
     Samples['sample'] = sample;
 })();
@@ -133,7 +133,7 @@
     var sample = Samples['tabs'] || [];
     sample.push({
         header: 'JS',
-        content: '<pre class="highlight">TC.registerModel(function(pane) {\n    this.tabData = {\n        tabs: [\n            { header: \'Tab 1\', content: \'Content 1\' },\n            { header: \'Tab 2\', content: \'Content 2\' }\n        ]\n    };\n});</pre>'
+        content: '<pre class="highlight">T.registerModel(function(pane) {\n    this.tabData = {\n        tabs: [\n            { header: \'Tab 1\', content: \'Content 1\' },\n            { header: \'Tab 2\', content: \'Content 2\' }\n        ]\n    };\n});</pre>'
     });
     Samples['tabs'] = sample;
 })();

@@ -1,12 +1,12 @@
-﻿TC.context = function (state) {
+﻿T.context = function (state) {
     Test.Integration.context = $.extend({
-        models: new TC.Types.Resources(),
-        sagas: new TC.Types.Resources(),
-        loader: new TC.Types.Loader(),
-        options: TC.options,
-        templates: new TC.Types.Templates(),
+        models: new T.Types.Resources(),
+        sagas: new T.Types.Resources(),
+        loader: new T.Types.Loader(),
+        options: T.options,
+        templates: new T.Types.Templates(),
         loadedPanes: {},
-        renderOperation: new TC.Types.Operation(),
+        renderOperation: new T.Types.Operation(),
         pubsub: Test.Integration.pubsub()
     }, state);
     return Test.Integration.context;

@@ -1,4 +1,4 @@
-﻿TC.registerModel(function (pane) {
+﻿T.registerModel(function (pane) {
     var self = this;
 
     this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];

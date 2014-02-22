@@ -2,7 +2,7 @@
     module('Unit.Types.Node');
 
     test("node creates Navigation if handlesNavigation is set on pane", function() {
-        var node = new TC.Types.Node(null, pane('test', true));
+        var node = new T.Types.Node(null, pane('test', true));
         ok(node.navigation);
     });
 
@@ -43,13 +43,13 @@
     });
     
     function pane(path, handlesNavigation) {
-        return new TC.Types.Pane({ path: path, handlesNavigation: handlesNavigation });
+        return new T.Types.Pane({ path: path, handlesNavigation: handlesNavigation });
     }
 
     function createTree(navigationNode) {
-        var root = new TC.Types.Node(null, pane('root', navigationNode === 'root'));
-        var middle = new TC.Types.Node(root, pane('middle', navigationNode === 'middle'));
-        var leaf = new TC.Types.Node(middle, pane('leaf', navigationNode === 'leaf'));
+        var root = new T.Types.Node(null, pane('root', navigationNode === 'root'));
+        var middle = new T.Types.Node(root, pane('middle', navigationNode === 'middle'));
+        var leaf = new T.Types.Node(middle, pane('leaf', navigationNode === 'leaf'));
         return leaf;
     }
 })();

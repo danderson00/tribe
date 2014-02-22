@@ -1,4 +1,4 @@
-﻿TC.registerModel(function (pane) {
+﻿T.registerModel(function (pane) {
     var data = pane.data;
     this.items = data.items;
     this.click = data.itemClick || function () { };

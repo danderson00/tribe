@@ -1,5 +1,5 @@
-﻿TC.Events.loadResources = function (pane, context) {
-    var strategy = TC.LoadStrategies[context.options.loadStrategy];
+﻿T.Events.loadResources = function (pane, context) {
+    var strategy = T.LoadStrategies[context.options.loadStrategy];
     
     if (!strategy)
         throw "Unknown resource load strategy";

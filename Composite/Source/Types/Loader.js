@@ -1,4 +1,4 @@
-﻿TC.Types.Loader = function () {
+﻿T.Types.Loader = function () {
     var self = this;
     var resources = {};
 
@@ -6,8 +6,8 @@
         if (resources[url] !== undefined)
             return resources[url];
 
-        var extension = TC.Path(url).extension().toString();
-        var handler = TC.LoadHandlers[extension];
+        var extension = T.Path(url).extension().toString();
+        var handler = T.LoadHandlers[extension];
 
         if (handler) {
             var result = handler(url, resourcePath, context);
@@ -20,7 +20,7 @@
             return result;
         }
 
-        TC.logger.warn("Resource of type " + extension + " but no handler registered.");
+        T.logger.warn("Resource of type " + extension + " but no handler registered.");
         return null;
     };
 };

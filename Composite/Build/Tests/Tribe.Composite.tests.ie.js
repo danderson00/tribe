@@ -10,32 +10,33 @@ Test.defaultOptions = function() {
         handleExceptions: false,
         basePath: 'Integration/Panes/',
         loadStrategy: 'adhoc',
-        events: TC.defaultOptions().events,
-        defaultUrlProvider: TC.options.defaultUrlProvider
+        events: T.defaultOptions().events,
+        defaultUrlProvider: T.options.defaultUrlProvider
     };
 };
-TC.options = Test.defaultOptions();
+T.options = Test.defaultOptions();
 
 
 QUnit.testDone(function () {
     ko.cleanNode(document.getElementById('qunit-fixture'));
     Test.state = {};
-    TC.options = Test.defaultOptions();
+    T.options = Test.defaultOptions();
 });
 
-TC.history.dispose();
+T.history.dispose();
+
 
 // Integration/Infrastructure/context.js
 
-TC.context = function (state) {
+T.context = function (state) {
     Test.Integration.context = $.extend({
-        models: new TC.Types.Resources(),
-        sagas: new TC.Types.Resources(),
-        loader: new TC.Types.Loader(),
-        options: TC.options,
-        templates: new TC.Types.Templates(),
+        models: new T.Types.Resources(),
+        sagas: new T.Types.Resources(),
+        loader: new T.Types.Loader(),
+        options: T.options,
+        templates: new T.Types.Templates(),
         loadedPanes: {},
-        renderOperation: new TC.Types.Operation(),
+        renderOperation: new T.Types.Operation(),
         pubsub: Test.Integration.pubsub()
     }, state);
     return Test.Integration.context;
@@ -48,8 +49,8 @@ TC.context = function (state) {
     var helpers = Test.Integration;
 
     helpers.executeEvents = function (events, pane, data) {
-        TC.options.events = events;
-        TC.options.basePath = 'Integration/Panes';
+        T.options.events = events;
+        T.options.basePath = 'Integration/Panes';
 
         var $element = $('#qunit-fixture');
         $element.append('<div data-bind="pane: \'' + pane + '\', data: \'' + data + '\'"></div>');
@@ -57,7 +58,7 @@ TC.context = function (state) {
     };
 
     helpers.executeDefaultEvents = function (pane) {
-        helpers.executeEvents(TC.defaultOptions().events, pane);
+        helpers.executeEvents(T.defaultOptions().events, pane);
     };
 
     helpers.createTestElement = function() {
@@ -66,13 +67,13 @@ TC.context = function (state) {
 
     helpers.testEventsUntil = function(event) {
         var events = [];
-        var defaultEvents = TC.defaultOptions().events;
+        var defaultEvents = T.defaultOptions().events;
         for (var i = 0, l = defaultEvents.length; i < l; i++) {
             events.push(defaultEvents[i]);
             if (defaultEvents[i] === event)
                 break;
         }
-        TC.Events.spy = sinon.spy();
+        T.Events.spy = sinon.spy();
         events.push('spy');
         return events;
     };
@@ -255,7 +256,7 @@ module('Unit.Utilities.collections');
 
 test("each executes iterator for each item of array, passing value and index", function () {
     var spy = sinon.spy();
-    TC.Utils.each(['1', '2'], spy);
+    T.Utils.each(['1', '2'], spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 0);
@@ -265,7 +266,7 @@ test("each executes iterator for each item of array, passing value and index", f
 
 test("each executes iterator for each property of object, passing value and property name", function () {
     var spy = sinon.spy();
-    TC.Utils.each({ test1: '1', test2: '2' }, spy);
+    T.Utils.each({ test1: '1', test2: '2' }, spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 'test1');
@@ -275,7 +276,7 @@ test("each executes iterator for each property of object, passing value and prop
 
 test("map executes iterator for each item of array, passing value and index", function () {
     var spy = sinon.spy();
-    TC.Utils.map(['1', '2'], spy);
+    T.Utils.map(['1', '2'], spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 0);
@@ -285,7 +286,7 @@ test("map executes iterator for each item of array, passing value and index", fu
 
 test("map executes iterator for each property of object, passing value and property name", function () {
     var spy = sinon.spy();
-    TC.Utils.map({ test1: '1', test2: '2' }, spy);
+    T.Utils.map({ test1: '1', test2: '2' }, spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 'test1');
@@ -294,7 +295,7 @@ test("map executes iterator for each property of object, passing value and prope
 });
 
 test("map does not flatten arrays", function() {
-    var result = TC.Utils.map([1, 2], function () { return [3, 4]; });
+    var result = T.Utils.map([1, 2], function () { return [3, 4]; });
     equal(result.length, 2);
     deepEqual(result[0], [3, 4]);
     deepEqual(result[1], [3, 4]);
@@ -302,13 +303,13 @@ test("map does not flatten arrays", function() {
 
 test("map returns empty array for undefined input", function() {
     var spy = sinon.spy();
-    deepEqual(TC.Utils.map(undefined, spy), []);
+    deepEqual(T.Utils.map(undefined, spy), []);
     ok(spy.notCalled);
 });
 
 test("filter executes once for each item of array", function() {
     var spy = sinon.spy();
-    TC.Utils.filter(['1', '2'], spy);
+    T.Utils.filter(['1', '2'], spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 0);
@@ -318,7 +319,7 @@ test("filter executes once for each item of array", function() {
 
 test("filter executes once for each property of object", function () {
     var spy = sinon.spy();
-    TC.Utils.filter({ test1: '1', test2: '2' }, spy);
+    T.Utils.filter({ test1: '1', test2: '2' }, spy);
     ok(spy.calledTwice);
     equal(spy.firstCall.args[0], '1');
     equal(spy.firstCall.args[1], 'test1');
@@ -327,19 +328,19 @@ test("filter executes once for each property of object", function () {
 });
 
 test("filter returns array of values filtered by iterator function", function() {
-    var result = TC.Utils.filter(['1', '2'], function (item) { return item !== '1'; });
+    var result = T.Utils.filter(['1', '2'], function (item) { return item !== '1'; });
     equal(result.length, 1);
     equal(result[0], '2');
 });
 
 test("filter returns empty array for undefined input", function () {
     var spy = sinon.spy();
-    deepEqual(TC.Utils.filter(undefined, spy), []);
+    deepEqual(T.Utils.filter(undefined, spy), []);
     ok(spy.notCalled);
 });
 
 test("pluck returns property value from each object in array", function() {
-    var result = TC.Utils.pluck([
+    var result = T.Utils.pluck([
         { one: 'a', two: 'b' },
         { one: 'c', two: 'd' },
         { one: 'e', two: 'f' }
@@ -351,7 +352,7 @@ test("pluck returns property value from each object in array", function() {
 test("reduce executes reduceFunction with expected arguments", function() {
     var spy = sinon.spy();
     var list = [1, 2];
-    TC.Utils.reduce(list, 'initial', spy);
+    T.Utils.reduce(list, 'initial', spy);
 
     equal(spy.callCount, 2);
     deepEqual(spy.firstCall.args, ['initial', 1, 0, list]);
@@ -359,7 +360,7 @@ test("reduce executes reduceFunction with expected arguments", function() {
 });
 
 test("reduce returns expected result", function() {
-    var result = TC.Utils.reduce([1, 2, 3, 4], 10, function(memo, value) {
+    var result = T.Utils.reduce([1, 2, 3, 4], 10, function(memo, value) {
         return memo + value;
     });
     equal(result, 20);
@@ -377,11 +378,11 @@ test("reduce returns expected result", function() {
         params_str = 'a[]=4&a[]=5&a[]=6&b[x][]=7&b[y]=8&b[z][]=9&b[z][]=0&b[z][]=true&b[z][]=false&b[z][]=undefined&b[z][]=&c=1';
 
     test("deparam deserialises string correctly", function() {
-        deepEqual(TC.Utils.deparam(params_str), params_obj);
+        deepEqual(T.Utils.deparam(params_str), params_obj);
     });
 
     test("deparam deserialises string correctly and coerces types", function () {
-        deepEqual(TC.Utils.deparam(params_str, true), params_obj_coerce);
+        deepEqual(T.Utils.deparam(params_str, true), params_obj_coerce);
     });
 })();
 
@@ -393,7 +394,7 @@ module('Unit.Utilities.elementDestroyed');
 test("promise resolves when element is removed using jQuery", function () {
     expect(1);
     var element = $('<div/>').appendTo('#qunit-fixture');
-    $.when(TC.Utils.elementDestroyed(element)).done(function() {
+    $.when(T.Utils.elementDestroyed(element)).done(function() {
         ok(true);
     });
     element.remove();
@@ -403,7 +404,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     if (Test.supportsMutationEvents) {
         expect(1);
         var element = $('<div/>').appendTo('#qunit-fixture');
-        $.when(TC.Utils.elementDestroyed(element)).done(function() {
+        $.when(T.Utils.elementDestroyed(element)).done(function() {
             ok(true);
             start();
         });
@@ -420,7 +421,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
 // Unit/Utilities/events.tests.js
 
 (function() {
-    var utils = TC.Utils;
+    var utils = T.Utils;
     var spy;
 
     module('Unit.Utilities.events', {
@@ -484,7 +485,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module('Unit.Utilities.idGenerator');
 
     test("idGenerator starts at 0 and generates sequential numbers", function () {
-        var generator = TC.Utils.idGenerator();
+        var generator = T.Utils.idGenerator();
         equal(generator.next(), 0);
         equal(generator.next(), 1);
         equal(generator.next(), 2);
@@ -493,9 +494,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("getUniqueId is a static generator", function() {
-        equal(TC.Utils.getUniqueId(), 0);
-        equal(TC.Utils.getUniqueId(), 1);
-        equal(TC.Utils.getUniqueId(), 2);
+        equal(T.Utils.getUniqueId(), 0);
+        equal(T.Utils.getUniqueId(), 1);
+        equal(T.Utils.getUniqueId(), 2);
     });
 })();
 
@@ -536,24 +537,24 @@ asyncTest("promise resolves when element is removed using native functions", fun
 (function() {
     module('Unit.Utilities.nodes', {
         setup: function () {
-            TC.Events.spy = sinon.spy();
-            TC.options.events = ['spy'];
+            T.Events.spy = sinon.spy();
+            T.options.events = ['spy'];
         }
     });
 
     test("createNode executes events specified in options with new node", function () {
-        TC.createNode('#qunit-fixture');
-        ok(TC.Events.spy.calledOnce);
+        T.createNode('#qunit-fixture');
+        ok(T.Events.spy.calledOnce);
         ok(pane());
     });
 
     test("appendNode appends wrapper to target element", function() {
-        TC.appendNode('#qunit-fixture');
+        T.appendNode('#qunit-fixture');
         equal($('#qunit-fixture div').length, 1);
     });
 
     function pane() {
-        return TC.Events.spy.firstCall.args[0];
+        return T.Events.spy.firstCall.args[0];
     }
 })();
 
@@ -562,7 +563,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
 // Unit/Utilities/objects.tests.js
 
 (function() {
-    var utils = TC.Utils;
+    var utils = T.Utils;
     module('Unit.Utilities.objects');
 
     test("arguments.byConstructor", function() {
@@ -594,9 +595,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
 
     test("inheritOptions", function() {
         var source = { test1: 'test', test2: 2 };
-        equal(TC.Utils.inheritOptions(source, {}, ['test1']).test1, 'test');
-        equal(TC.Utils.inheritOptions(source, {}, ['test2']).test2, 2);
-        equal(TC.Utils.inheritOptions(source, {}, ['test1', 'test2', 'test3']).test3, undefined);
+        equal(T.Utils.inheritOptions(source, {}, ['test1']).test1, 'test');
+        equal(T.Utils.inheritOptions(source, {}, ['test2']).test2, 2);
+        equal(T.Utils.inheritOptions(source, {}, ['test1', 'test2', 'test3']).test3, undefined);
     });
     
     test("cloneData", function () {
@@ -633,7 +634,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
 // Unit/Utilities/panes.tests.js
 
 (function () {
-    var utils = TC.Utils;
+    var utils = T.Utils;
     
     module('Unit.Utilities.panes');
 
@@ -653,94 +654,94 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module("Unit.Utilities.Path");
 
     test('Path handles empty arguments', function () {
-        equal(TC.Path('').toString(), '');
-        equal(TC.Path(undefined).toString(), '');
-        equal(TC.Path(null).toString(), '');
+        equal(T.Path('').toString(), '');
+        equal(T.Path(undefined).toString(), '');
+        equal(T.Path(null).toString(), '');
     });
 
     test("withoutFilename", function () {
-        equal(TC.Path("/folder/subfolder/filename.ext").withoutFilename().toString(), "/folder/subfolder/", "Path with slashes");
+        equal(T.Path("/folder/subfolder/filename.ext").withoutFilename().toString(), "/folder/subfolder/", "Path with slashes");
     });
 
     test("filename", function () {
-        equal(TC.Path("filename.ext").filename().toString(), "filename.ext", "Filename");
-        equal(TC.Path("/filename.ext").filename().toString(), "filename.ext", "Root path filename");
-        equal(TC.Path("/folder/subfolder/filename.ext").filename().toString(), "filename.ext", "Path with slashes");
+        equal(T.Path("filename.ext").filename().toString(), "filename.ext", "Filename");
+        equal(T.Path("/filename.ext").filename().toString(), "filename.ext", "Root path filename");
+        equal(T.Path("/folder/subfolder/filename.ext").filename().toString(), "filename.ext", "Path with slashes");
     });
 
     test("extension", function () {
-        equal(TC.Path("filename.ext").extension().toString(), "ext", "Filename");
-        equal(TC.Path("/filename.ext").extension().toString(), "ext", "Root path filename");
-        equal(TC.Path("filename").extension().toString(), "", "Filename without extension");
-        equal(TC.Path("/filename").extension().toString(), "", "Root path filename without extension");
-        equal(TC.Path("filename.").extension().toString(), "", "Empty extension");
-        equal(TC.Path("/folder/subfolder/filename.ext").extension().toString(), "ext", "Path with slashes");
+        equal(T.Path("filename.ext").extension().toString(), "ext", "Filename");
+        equal(T.Path("/filename.ext").extension().toString(), "ext", "Root path filename");
+        equal(T.Path("filename").extension().toString(), "", "Filename without extension");
+        equal(T.Path("/filename").extension().toString(), "", "Root path filename without extension");
+        equal(T.Path("filename.").extension().toString(), "", "Empty extension");
+        equal(T.Path("/folder/subfolder/filename.ext").extension().toString(), "ext", "Path with slashes");
     });
 
     test("withoutExtension", function () {
-        equal(TC.Path("filename.ext").withoutExtension().toString(), "filename");
-        equal(TC.Path("filename").withoutExtension().toString(), "filename");
-        equal(TC.Path("/test/filename.ext").withoutExtension().toString(), "/test/filename");
-        equal(TC.Path("/test/filename").withoutExtension().toString(), "/test/filename");
-        equal(TC.Path("/test/filename.ext").filename().withoutExtension().toString(), "filename");
-        equal(TC.Path("/test/filename").filename().withoutExtension().toString(), "filename");
+        equal(T.Path("filename.ext").withoutExtension().toString(), "filename");
+        equal(T.Path("filename").withoutExtension().toString(), "filename");
+        equal(T.Path("/test/filename.ext").withoutExtension().toString(), "/test/filename");
+        equal(T.Path("/test/filename").withoutExtension().toString(), "/test/filename");
+        equal(T.Path("/test/filename.ext").filename().withoutExtension().toString(), "filename");
+        equal(T.Path("/test/filename").filename().withoutExtension().toString(), "filename");
     });
 
     test("Path objects can be concatenated with strings", function () {
-        equal(TC.Path('/folder/filename.ext').withoutFilename() + 'new.ext', '/folder/new.ext');
+        equal(T.Path('/folder/filename.ext').withoutFilename() + 'new.ext', '/folder/new.ext');
     });
 
     test("isAbsolute", function () {
-        ok(TC.Path("/test/").isAbsolute());
-        ok(TC.Path("http://test/").isAbsolute());
-        ok(!TC.Path("test/").isAbsolute());
-        ok(!TC.Path("test.txt").isAbsolute());
-        ok(!TC.Path("../test.txt").isAbsolute());
+        ok(T.Path("/test/").isAbsolute());
+        ok(T.Path("http://test/").isAbsolute());
+        ok(!T.Path("test/").isAbsolute());
+        ok(!T.Path("test.txt").isAbsolute());
+        ok(!T.Path("../test.txt").isAbsolute());
     });
 
     test("makeAbsolute", function () {
-        equal(TC.Path("/test").makeAbsolute().toString(), "/test");
-        equal(TC.Path("test").makeAbsolute().toString(), "/test");
-        equal(TC.Path("test.txt").makeAbsolute().toString(), "/test.txt");
-        equal(TC.Path("test/test.txt").makeAbsolute().toString(), "/test/test.txt");
+        equal(T.Path("/test").makeAbsolute().toString(), "/test");
+        equal(T.Path("test").makeAbsolute().toString(), "/test");
+        equal(T.Path("test.txt").makeAbsolute().toString(), "/test.txt");
+        equal(T.Path("test/test.txt").makeAbsolute().toString(), "/test/test.txt");
     });
 
     test("makeRelative", function () {
-        equal(TC.Path("test").makeRelative().toString(), "test");
-        equal(TC.Path("/test").makeRelative().toString(), "test");
-        equal(TC.Path("/test.txt").makeRelative().toString(), "test.txt");
-        equal(TC.Path("/test/test.txt").makeRelative().toString(), "test/test.txt");
+        equal(T.Path("test").makeRelative().toString(), "test");
+        equal(T.Path("/test").makeRelative().toString(), "test");
+        equal(T.Path("/test.txt").makeRelative().toString(), "test.txt");
+        equal(T.Path("/test/test.txt").makeRelative().toString(), "test/test.txt");
     });
 
     test("normalise", function () {
-        equal(TC.Path('test').toString(), 'test');
-        equal(TC.Path('../test').toString(), '../test');
-        equal(TC.Path('test1/../test2').toString(), 'test2');
-        equal(TC.Path('/test1/../test2').toString(), '/test2');
-        equal(TC.Path('/test1/../test2/../test3').toString(), '/test3');
-        equal(TC.Path('./test').toString(), 'test');
-        equal(TC.Path('test1/./test2').toString(), 'test1/test2');
-        equal(TC.Path('.././test1/../test2').toString(), '../test2');
-        equal(TC.Path('http://test//test.htm').toString(), 'http://test/test.htm');
-        equal(TC.Path('http://test///test//test.htm').toString(), 'http://test/test/test.htm');
-        equal(TC.Path('1///2//3/4/5').toString(), '1/2/3/4/5');
+        equal(T.Path('test').toString(), 'test');
+        equal(T.Path('../test').toString(), '../test');
+        equal(T.Path('test1/../test2').toString(), 'test2');
+        equal(T.Path('/test1/../test2').toString(), '/test2');
+        equal(T.Path('/test1/../test2/../test3').toString(), '/test3');
+        equal(T.Path('./test').toString(), 'test');
+        equal(T.Path('test1/./test2').toString(), 'test1/test2');
+        equal(T.Path('.././test1/../test2').toString(), '../test2');
+        equal(T.Path('http://test//test.htm').toString(), 'http://test/test.htm');
+        equal(T.Path('http://test///test//test.htm').toString(), 'http://test/test/test.htm');
+        equal(T.Path('1///2//3/4/5').toString(), '1/2/3/4/5');
     });
 
     test("asPathIdentifier", function () {
-        equal(TC.Path('test.txt').asMarkupIdentifier().toString(), 'test');
-        equal(TC.Path('test/test.txt').asMarkupIdentifier().toString(), 'test-test');
+        equal(T.Path('test.txt').asMarkupIdentifier().toString(), 'test');
+        equal(T.Path('test/test.txt').asMarkupIdentifier().toString(), 'test-test');
     });
 
     test("setExtension", function() {
-        equal(TC.Path('/test/test').setExtension('js').toString(), '/test/test.js');
-        equal(TC.Path('/test/test.txt').setExtension('js').toString(), '/test/test.js');
+        equal(T.Path('/test/test').setExtension('js').toString(), '/test/test.js');
+        equal(T.Path('/test/test.txt').setExtension('js').toString(), '/test/test.js');
     });
 
     test("combine", function() {
-        equal(TC.Path('/test/').combine('/test.txt').toString(), '/test/test.txt');
-        equal(TC.Path('http://test/').combine('/test.txt').toString(), 'http://test/test.txt');
-        equal(TC.Path('/1/').combine('/2/').combine('/test.txt').toString(), '/1/2/test.txt');
-        equal(TC.Path('').combine('test.txt').toString(), 'test.txt');
+        equal(T.Path('/test/').combine('/test.txt').toString(), '/test/test.txt');
+        equal(T.Path('http://test/').combine('/test.txt').toString(), 'http://test/test.txt');
+        equal(T.Path('/1/').combine('/2/').combine('/test.txt').toString(), '/1/2/test.txt');
+        equal(T.Path('').combine('test.txt').toString(), 'test.txt');
     });
 })();
 
@@ -751,7 +752,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
 (function () {
     module('Unit.Utilities.querystring');
     
-    var querystring = TC.Utils.Querystring;
+    var querystring = T.Utils.Querystring;
 
     test("stringify handles flat objects", function() {
         equal(querystring.stringify({ test: 't', test2: 2 }), 'test=t&test2=2');
@@ -813,8 +814,8 @@ asyncTest("promise resolves when element is removed using native functions", fun
         setup: function () {
             spy = sinon.spy();
             pubsub = new Tribe.PubSub({ sync: true });
-            pane = new TC.Types.Pane({ pubsub: pubsub });
-            node = new TC.Types.Node(null, pane);
+            pane = new T.Types.Pane({ pubsub: pubsub });
+            node = new T.Types.Node(null, pane);
             node.findNavigation = function () { return { node: { navigate: spy, pane: pane } }; };
         }
     });
@@ -840,7 +841,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("Flow calls navigate on navigation pane when to is called", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         f.to('path', 'data')();
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'path');
@@ -848,7 +849,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("Flow calls navigate on navigation pane when message is received for to event", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('to');
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'path');
@@ -856,7 +857,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("No handlers are executed after flow ends", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('to');
         pubsub.publish('end');
         pubsub.publish('to');
@@ -864,7 +865,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("No handlers are executed after flow ends with null handler", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('to');
         pubsub.publish('null');
         pubsub.publish('to');
@@ -872,14 +873,14 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("Child onstart handler is executed when start child message is received", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('startChild');
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'child');
     });
 
     test("Child handlers are executed after start child message is received", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('navigateChild');
         pubsub.publish('startChild');
         pubsub.publish('navigateChild');
@@ -887,7 +888,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("Child handlers are not executed after end child message is received", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('startChild');
         pubsub.publish('navigateChild');
         pubsub.publish('endChild');
@@ -896,7 +897,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("Child handlers are not executed after end flow message is received", function () {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         pubsub.publish('startChild');
         pubsub.publish('navigateChild');
         pubsub.publish('end');
@@ -905,7 +906,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("Sagas started with startSaga end when this flow ends", function() {
-        var f = new TC.Types.Flow(node, TestFlow).start();
+        var f = new T.Types.Flow(node, TestFlow).start();
         var sagaHandler = sinon.spy();
         f.startSaga({ handles: { 'sagaMessage': sagaHandler } });
         pubsub.publish('sagaMessage');
@@ -917,13 +918,13 @@ asyncTest("promise resolves when element is removed using native functions", fun
 
     test("Child flows are constructed with same flow object", function () {
         expect(1);
-        var f = new TC.Types.Flow(node, ParentFlow).start();
+        var f = new T.Types.Flow(node, ParentFlow).start();
         pubsub.publish('assertFlowEqual', f);
     });
 
     test("Child flows end when a parent message is published", function () {
         expect(1);
-        var f = new TC.Types.Flow(node, ParentFlow).start();
+        var f = new T.Types.Flow(node, ParentFlow).start();
         pubsub.publish('assertFlowEqual', f);
         f.end();
         pubsub.publish('assertFlowEqual', f);
@@ -969,7 +970,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module('Unit.Types.History', {
         setup: function () {
             api = mockHistoryApi();
-            history = new TC.Types.History(api);
+            history = new T.Types.History(api);
         },
         teardown: function () {
             history.dispose();
@@ -984,9 +985,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
                 equal(e.eventData.count, 1);
             }
 
-            TC.Utils.handleDocumentEvent('browser.go', assert);
+            T.Utils.handleDocumentEvent('browser.go', assert);
             raisePopstate();
-            TC.Utils.detachDocumentEvent('browser.go', assert);
+            T.Utils.detachDocumentEvent('browser.go', assert);
         } else ok(true, "Test skipped - History API is not supported.");
     });
 
@@ -998,10 +999,10 @@ asyncTest("promise resolves when element is removed using native functions", fun
                 equal(e.eventData.count, 1);
             }
 
-            TC.Utils.handleDocumentEvent('browser.go', assert);
+            T.Utils.handleDocumentEvent('browser.go', assert);
             history.update(1);
             raisePopstate();
-            TC.Utils.detachDocumentEvent('browser.go', assert);
+            T.Utils.detachDocumentEvent('browser.go', assert);
         } else ok(true, "Test skipped - History API is not supported.");
     });
 
@@ -1047,20 +1048,20 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module("Unit.Types.Loader", {
         setup: function () {
             context = Test.Unit.context();
-            resources = new TC.Types.Loader();
+            resources = new T.Types.Loader();
         }
     });
 
     test("get should call handler for file extension from passed url", function () {
         var spy = sinon.spy();
-        TC.LoadHandlers.test = spy;
+        T.LoadHandlers.test = spy;
         resources.get('test.test');
         ok(spy.calledOnce);
     });
 
     test("get should call handler with url, resourcePath and context", function () {
         var spy = sinon.spy();
-        TC.LoadHandlers.test = spy;
+        T.LoadHandlers.test = spy;
         resources.get('test.test', 'test/test', context);
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'test.test');
@@ -1070,14 +1071,14 @@ asyncTest("promise resolves when element is removed using native functions", fun
 
     test("when passed the same url, get should return the same deferred from first call to handler", function () {
         var deferred = $.Deferred();
-        TC.LoadHandlers.test = sinon.stub().returns(deferred);
+        T.LoadHandlers.test = sinon.stub().returns(deferred);
         equal(resources.get('test.test'), deferred);
         equal(resources.get('test.test'), deferred);
     });
 
     test("get should return null after deferred from first call to handler completes", function () {
         var deferred = $.Deferred();
-        TC.LoadHandlers.test = sinon.stub().returns(deferred);
+        T.LoadHandlers.test = sinon.stub().returns(deferred);
         equal(resources.get('test.test'), deferred);
         deferred.resolve();
         equal(resources.get('test.test'), null);
@@ -1085,14 +1086,14 @@ asyncTest("promise resolves when element is removed using native functions", fun
 
     test("get should return null after deferred from first call to handler fails", function () {
         var deferred = $.Deferred();
-        TC.LoadHandlers.test = sinon.stub().returns(deferred);
+        T.LoadHandlers.test = sinon.stub().returns(deferred);
         equal(resources.get('test.test'), deferred);
         deferred.reject();
         equal(resources.get('test.test'), null);
     });
 
     test("get should return different deferred for each unique url", function () {
-        TC.LoadHandlers.test = function () { return $.Deferred(); };
+        T.LoadHandlers.test = function () { return $.Deferred(); };
         var result1 = resources.get('test1.test');
         var result2 = resources.get('test2.test');
         notEqual(result1, result2);
@@ -1110,8 +1111,8 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module('Unit.Types.Navigation', {
         setup: function () {
             node = nodeStub('test');
-            nav = new TC.Types.Navigation(node, { transition: 'fade' });
-            TC.history = { navigate: sinon.spy(), update: sinon.spy() };
+            nav = new T.Types.Navigation(node, { transition: 'fade' });
+            T.history = { navigate: sinon.spy(), update: sinon.spy() };
         },
         teardown: function() {
             nav.dispose();
@@ -1126,7 +1127,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("forward accepts string transition as options", function () {
-        nav = new TC.Types.Navigation(node, 'fade');
+        nav = new T.Types.Navigation(node, 'fade');
         var navigateArgs = { path: 'test2' };
         nav.navigate(navigateArgs);
         equal(node.transitionTo.firstCall.args[0], navigateArgs);
@@ -1174,32 +1175,32 @@ asyncTest("promise resolves when element is removed using native functions", fun
 
     test("document navigating event is raised when navigating", function () {
         expect(1);
-        TC.Utils.handleDocumentEvent('navigating', assert);
+        T.Utils.handleDocumentEvent('navigating', assert);
         nav.navigate({ path: 'test2' });
-        TC.Utils.detachDocumentEvent('navigating', assert);
+        T.Utils.detachDocumentEvent('navigating', assert);
         
         function assert(e) {
             equal(e.eventData.options.path, 'test2');
         }
     });
 
-    test("TC.history.navigate is called on navigate when browser option is set", function() {
-        nav = new TC.Types.Navigation(node, { browser: true });
+    test("T.history.navigate is called on navigate when browser option is set", function() {
+        nav = new T.Types.Navigation(node, { browser: true });
         nav.navigate({ path: 'test2' });
-        ok(TC.history.navigate.calledOnce);
+        ok(T.history.navigate.calledOnce);
     });
 
-    test("TC.history.update is called on go when browser option is set", function () {
-        nav = new TC.Types.Navigation(node, { browser: true });
+    test("T.history.update is called on go when browser option is set", function () {
+        nav = new T.Types.Navigation(node, { browser: true });
         nav.navigate({ path: 'test2' });
         nav.go(-1);
-        ok(TC.history.update.calledOnce);
+        ok(T.history.update.calledOnce);
     });
 
     test("node transitions when browser.go event is received", function() {
-        nav = new TC.Types.Navigation(node, { browser: true });
+        nav = new T.Types.Navigation(node, { browser: true });
         nav.navigate({ path: 'test2' });
-        TC.Utils.raiseDocumentEvent('browser.go', { count: -1 });
+        T.Utils.raiseDocumentEvent('browser.go', { count: -1 });
         equal(node.transitionTo.secondCall.args[0].path, 'test');
     });
 
@@ -1212,7 +1213,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
                 };
             }
         };
-        nav = new TC.Types.Navigation(node, { browser: provider });
+        nav = new T.Types.Navigation(node, { browser: provider });
         deepEqual(nav.stack[0], provider.paneOptionsFrom());
     });
 
@@ -1220,7 +1221,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
         var provider = {
             paneOptionsFrom: function () { return null; }
         };
-        nav = new TC.Types.Navigation(node, { browser: provider });
+        nav = new T.Types.Navigation(node, { browser: provider });
         deepEqual(nav.stack[0].path, 'test');
     });
 
@@ -1234,9 +1235,9 @@ asyncTest("promise resolves when element is removed using native functions", fun
                 };
             }
         };
-        nav = new TC.Types.Navigation(node, { browser: provider });
+        nav = new T.Types.Navigation(node, { browser: provider });
         nav.navigate({ path: 'test2' });
-        deepEqual(TC.history.navigate.firstCall.args[0], provider.urlDataFrom());
+        deepEqual(T.history.navigate.firstCall.args[0], provider.urlDataFrom());
     });
 
     Test.urlProvider = {
@@ -1271,7 +1272,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module('Unit.Types.Node');
 
     test("node creates Navigation if handlesNavigation is set on pane", function() {
-        var node = new TC.Types.Node(null, pane('test', true));
+        var node = new T.Types.Node(null, pane('test', true));
         ok(node.navigation);
     });
 
@@ -1312,13 +1313,13 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
     
     function pane(path, handlesNavigation) {
-        return new TC.Types.Pane({ path: path, handlesNavigation: handlesNavigation });
+        return new T.Types.Pane({ path: path, handlesNavigation: handlesNavigation });
     }
 
     function createTree(navigationNode) {
-        var root = new TC.Types.Node(null, pane('root', navigationNode === 'root'));
-        var middle = new TC.Types.Node(root, pane('middle', navigationNode === 'middle'));
-        var leaf = new TC.Types.Node(middle, pane('leaf', navigationNode === 'leaf'));
+        var root = new T.Types.Node(null, pane('root', navigationNode === 'root'));
+        var middle = new T.Types.Node(root, pane('middle', navigationNode === 'middle'));
+        var leaf = new T.Types.Node(middle, pane('leaf', navigationNode === 'leaf'));
         return leaf;
     }
 })();
@@ -1330,43 +1331,43 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module('Unit.Types.Node');
 
     function pane(path, handlesNavigation) {
-        return new TC.Types.Pane({ path: path, handlesNavigation: handlesNavigation });
+        return new T.Types.Pane({ path: path, handlesNavigation: handlesNavigation });
     }
 
     test("setPane makes path absolute and sets pane path from pane if no parent", function() {
-        var node = new TC.Types.Node(null, pane('test'));
+        var node = new T.Types.Node(null, pane('test'));
         equal(node.pane.path, '/test');
     });
 
     test("setPane sets pane path from parent and relative pane path", function () {
-        var parent = new TC.Types.Node(null, pane('/path/parent'));
-        var node = new TC.Types.Node(parent, pane('child'));
+        var parent = new T.Types.Node(null, pane('/path/parent'));
+        var node = new T.Types.Node(parent, pane('child'));
         equal(node.pane.path, '/path/child');
     });
 
     test("setPane sets pane path from pane if path is absolute", function () {
-        var parent = new TC.Types.Node(null, pane('/path/parent'));
-        var node = new TC.Types.Node(parent, pane('/root'));
+        var parent = new T.Types.Node(null, pane('/path/parent'));
+        var node = new T.Types.Node(parent, pane('/root'));
         equal(node.pane.path, '/root');
     });
 
     test("setPane unsets node on existing pane", function () {
         var existingPane = pane('test');
-        var node = new TC.Types.Node(null, existingPane);
-        node.setPane(new TC.Types.Pane(pane('test2')));
+        var node = new T.Types.Node(null, existingPane);
+        node.setPane(new T.Types.Pane(pane('test2')));
         equal(existingPane.node, null);
     });
 
     test("setPane sets node.navigation when pane.handlesNavigation", function() {
-        var node = new TC.Types.Node();
+        var node = new T.Types.Node();
         node.setPane(pane('', 'test'));
-        ok(node.navigation.constructor, TC.Types.Navigation);
+        ok(node.navigation.constructor, T.Types.Navigation);
     });
 
     test("node root is set correctly", function() {
-        var one = new TC.Types.Node(null, pane('one'));
-        var two = new TC.Types.Node(one, pane('two'));
-        var three = new TC.Types.Node(two, pane('three'));
+        var one = new T.Types.Node(null, pane('one'));
+        var two = new T.Types.Node(one, pane('two'));
+        var three = new T.Types.Node(two, pane('three'));
 
         equal(one.root, one);
         equal(two.root, one);
@@ -1374,15 +1375,15 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("dispose removes node from parent collection", function() {
-        var parent = new TC.Types.Node(null, pane('parent'));
-        var child = new TC.Types.Node(parent, pane('child'));
+        var parent = new T.Types.Node(null, pane('parent'));
+        var child = new T.Types.Node(parent, pane('child'));
         equal(parent.children.length, 1);
         child.dispose();
         equal(parent.children.length, 0);
     });
 
     test("navigate inherits path from existing pane", function () {
-        var node = new TC.Types.Node(null, pane('/path/node1'));
+        var node = new T.Types.Node(null, pane('/path/node1'));
         node.transitionTo = sinon.spy();
         node.navigate('node2');
         ok(node.transitionTo.calledOnce);
@@ -1390,22 +1391,22 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("nodeForPath returns current node if skipPath is not specified", function() {
-        var node1 = new TC.Types.Node(null, pane('/path1/node1'));
-        var node2 = new TC.Types.Node(node1, pane('/path2/node2'));
+        var node1 = new T.Types.Node(null, pane('/path1/node1'));
+        var node2 = new T.Types.Node(node1, pane('/path2/node2'));
         equal(node2.nodeForPath(), node2);
     });
 
     test("nodeForPath returns parent if skipPath is specified", function() {
-        var node1 = new TC.Types.Node(null, pane('/path1/node1'));
-        var node2 = new TC.Types.Node(node1, pane('/path2/node2'));
+        var node1 = new T.Types.Node(null, pane('/path1/node1'));
+        var node2 = new T.Types.Node(node1, pane('/path2/node2'));
         node2.skipPath = true;
         equal(node2.nodeForPath(), node1);
     });
 
     test("nodeForPath recurses, skipping nodes as specified", function () {
-        var node1 = new TC.Types.Node(null, pane('/path1/node1'));
-        var node2 = new TC.Types.Node(node1, pane('/path2/node2'));
-        var node3 = new TC.Types.Node(node2, pane('/path2/node2'));
+        var node1 = new T.Types.Node(null, pane('/path1/node1'));
+        var node2 = new T.Types.Node(node1, pane('/path2/node2'));
+        var node3 = new T.Types.Node(node2, pane('/path2/node2'));
         node2.skipPath = true;
         node3.skipPath = true;
         equal(node3.nodeForPath(), node1);
@@ -1419,7 +1420,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     var operation;
     
     module("Unit.Types.Operation", {
-        setup: function() { operation = new TC.Types.Operation(); }
+        setup: function() { operation = new T.Types.Operation(); }
     });
 
     test("operation resolves when single child completes", function () {
@@ -1447,19 +1448,19 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module('Unit.Types.Pane');
 
     test("inheritPathFrom inherits path if pane path is relative", function () {
-        var pane = new TC.Types.Pane({ path: 'pane2' });
+        var pane = new T.Types.Pane({ path: 'pane2' });
         pane.inheritPathFrom(wrap({ path: '/Test/pane1' }));
         equal(pane.path, '/Test/pane2');
     });
 
     test("inheritPathFrom doesn't inherit path if pane path is absolute", function () {
-        var pane = new TC.Types.Pane({ path: '/pane2' });
+        var pane = new T.Types.Pane({ path: '/pane2' });
         pane.inheritPathFrom(wrap({ path: '/Test/pane1' }));
         equal(pane.path, '/pane2');
     });
 
     test("inheritPathFrom sets child folders from relative pane path", function () {
-        var pane = new TC.Types.Pane({ path: 'Test2/pane2' });
+        var pane = new T.Types.Pane({ path: 'Test2/pane2' });
         pane.inheritPathFrom(wrap({ path: '/Test/pane1' }));
         equal(pane.path, '/Test/Test2/pane2');
     });
@@ -1486,7 +1487,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module("Unit.Types.Pipeline", {
         setup: function() {
             events = testEvents();
-            pipeline = new TC.Types.Pipeline(events, context);
+            pipeline = new T.Types.Pipeline(events, context);
         }
     });
 
@@ -1553,7 +1554,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     var models;
 
     module('Unit.Types.Resources', {
-        setup: function () { models = new TC.Types.Resources(); }
+        setup: function () { models = new T.Types.Resources(); }
     });
 
     test("register stores model as property with constructor and options", function () {
@@ -1572,7 +1573,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     var templates;
     
     module('Unit.Types.Templates', {
-        setup: function () { templates = new TC.Types.Templates(); },
+        setup: function () { templates = new T.Types.Templates(); },
         teardown: function () { $('head script[type="text/template"]').remove(); }
     });
 
@@ -1617,13 +1618,13 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("script handler returns promise object", function() {
-        ok(TC.LoadHandlers.js(url, resourcePath, context).promise);
+        ok(T.LoadHandlers.js(url, resourcePath, context).promise);
     });
 
     test("script handler executes globalEval with response", function () {
         $.globalEval = sinon.spy();
         response = "test";
-        TC.LoadHandlers.js(url, resourcePath, context);
+        T.LoadHandlers.js(url, resourcePath, context);
         ok($.globalEval.calledOnce);
         equal($.globalEval.firstCall.args[0].substring(0, response.length), response);
     });
@@ -1631,20 +1632,20 @@ asyncTest("promise resolves when element is removed using native functions", fun
     test("script handler appends sourceURL tag", function () {
         $.globalEval = sinon.spy();
         response = "test";
-        TC.LoadHandlers.js(url, resourcePath, context);
+        T.LoadHandlers.js(url, resourcePath, context);
         ok($.globalEval.calledOnce);
         equal($.globalEval.firstCall.args[0].substring(response.length + 1), "//@ sourceURL=tribe://Application/test.js");
     });
 
-    test("script handler sets TC.scriptEnvironment before executing scripts", function () {
+    test("script handler sets T.scriptEnvironment before executing scripts", function () {
         expect(1);
-        response = "equal(TC.scriptEnvironment.resourcePath, '" + resourcePath + "');";
-        TC.LoadHandlers.js(url, resourcePath, context);
+        response = "equal(T.scriptEnvironment.resourcePath, '" + resourcePath + "');";
+        T.LoadHandlers.js(url, resourcePath, context);
     });
 
-    test("script handler clears TC.scriptEnvironment after executing scripts", function () {
-        TC.LoadHandlers.js(url, resourcePath, context);
-        equal(TC.scriptEnvironment, undefined);
+    test("script handler clears T.scriptEnvironment after executing scripts", function () {
+        T.LoadHandlers.js(url, resourcePath, context);
+        equal(T.scriptEnvironment, undefined);
     });
 })();
 
@@ -1665,12 +1666,12 @@ asyncTest("promise resolves when element is removed using native functions", fun
     module('Unit.LoadHandlers.stylesheets');
     
     test("stylesheet handler returns promise object", function() {
-        ok(TC.LoadHandlers.css(url, resourcePath, Test.Unit.context()).promise);
+        ok(T.LoadHandlers.css(url, resourcePath, Test.Unit.context()).promise);
     });
 
     test("stylesheet handler adds stylesheet to page header", function () {
         response = ".test{}";
-        TC.LoadHandlers.css(url, resourcePath, Test.Unit.context());
+        T.LoadHandlers.css(url, resourcePath, Test.Unit.context());
         notEqual($('#__tribeStyles').html().indexOf(".test"), -1);
     });
 })();
@@ -1695,11 +1696,11 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("template handler returns promise object", function() {
-        ok(TC.LoadHandlers.htm(url, resourcePath, context).promise);
+        ok(T.LoadHandlers.htm(url, resourcePath, context).promise);
     });
 
     test("template is stored with resource path identifier", function() {
-        TC.LoadHandlers.htm(url, resourcePath, context);
+        T.LoadHandlers.htm(url, resourcePath, context);
         ok(context.templates.store.calledOnce);
         ok(context.templates.store.calledWithExactly('<br/>', '/test'));
     });
@@ -1717,7 +1718,7 @@ asyncTest("promise resolves when element is removed using native functions", fun
     });
 
     test("loader.get is called for each resource", function () {
-        TC.LoadStrategies.adhoc({ path: 'new' }, context);
+        T.LoadStrategies.adhoc({ path: 'new' }, context);
         ok(context.loader.get.calledThrice);
         ok(context.loader.get.firstCall.calledWithExactly('new.js', 'new', context));
         ok(context.loader.get.secondCall.calledWithExactly('new.htm', 'new', context));
@@ -1727,42 +1728,42 @@ asyncTest("promise resolves when element is removed using native functions", fun
     test("loader.get is called with base path combined with pane path", function () {
         context = Test.Unit.context();
         context.options.basePath = 'panes';
-        TC.LoadStrategies.adhoc({ path: 'test2' }, context);
+        T.LoadStrategies.adhoc({ path: 'test2' }, context);
         ok(context.loader.get.firstCall.calledWithExactly('panes/test2.js', 'test2', context));
     });
 
     test("subsequent calls with the same path returns the same deferred object", function () {
         var deferred = $.Deferred();
         context.loader.get = function() { return deferred; };
-        var result1 = TC.LoadStrategies.adhoc({ path: 'test' }, context);
-        var result2 = TC.LoadStrategies.adhoc({ path: 'test' }, context);
+        var result1 = T.LoadStrategies.adhoc({ path: 'test' }, context);
+        var result2 = T.LoadStrategies.adhoc({ path: 'test' }, context);
         equal(result1, result2);
     });
 
     test("subsequent calls with the same path returns null after the deferred has been resolved", function () {
         var deferred = $.Deferred();
         context.loader.get = function () { return deferred; };
-        TC.LoadStrategies.adhoc({ path: 'test' }, context);
+        T.LoadStrategies.adhoc({ path: 'test' }, context);
         deferred.resolve();
-        equal(TC.LoadStrategies.adhoc({ path: 'test' }, context), null);
+        equal(T.LoadStrategies.adhoc({ path: 'test' }, context), null);
     });
 
     test("subsequent calls with the same path returns null after the deferred has been rejected", function () {
         var deferred = $.Deferred();
         context.loader.get = function () { return deferred; };
-        TC.LoadStrategies.adhoc({ path: 'test' }, context);
+        T.LoadStrategies.adhoc({ path: 'test' }, context);
         deferred.reject();
-        equal(TC.LoadStrategies.adhoc({ path: 'test' }, context), null);
+        equal(T.LoadStrategies.adhoc({ path: 'test' }, context), null);
     });
 
     test("loader.get is not called when model has been loaded", function () {
-        TC.LoadStrategies.adhoc({ path: 'test' }, context);
+        T.LoadStrategies.adhoc({ path: 'test' }, context);
         ok(context.loader.get.notCalled);
     });
 
     test("loader.get is not called when template has been loaded", function () {
         context.templates.loaded = function() { return true; };
-        TC.LoadStrategies.adhoc({ path: 'new' }, context);
+        T.LoadStrategies.adhoc({ path: 'new' }, context);
         ok(context.loader.get.notCalled);
     });
 })();
@@ -1774,7 +1775,7 @@ module('Unit.LoadStrategies.preloaded');
 
 test("returns rejected promise if no resources have been loaded for the specified path", function() {
     var context = Test.Unit.context();
-    var promise = TC.LoadStrategies.preloaded({ path: 'test2' }, context);
+    var promise = T.LoadStrategies.preloaded({ path: 'test2' }, context);
     equal(promise.state(), 'rejected');
 });
 
@@ -1793,13 +1794,13 @@ test("returns rejected promise if no resources have been loaded for the specifie
     });
 
     test("model is created from stored constructor", function () {
-        TC.Events.createModel(pane, context);
+        T.Events.createModel(pane, context);
         ok(context.models.test.constructor.calledOnce);
     });
 
     test("default model is created if no constructor defined", function () {
         context.models.test.constructor = null;
-        TC.Events.createModel(pane, context);
+        T.Events.createModel(pane, context);
         equal(pane.model.pane, pane);
     });
 })();
@@ -1812,37 +1813,37 @@ test("returns rejected promise if no resources have been loaded for the specifie
     
     module("Unit.Events.renderComplete", {
         setup: function() {
-            pane = new TC.Types.Pane({ element: '#qunit-fixture', transition: 'test' });
+            pane = new T.Types.Pane({ element: '#qunit-fixture', transition: 'test' });
             pane.model = { renderComplete: sinon.spy() };
             context = Test.Unit.context();
-            TC.Transitions.test = { 'in': sinon.spy() };
+            T.Transitions.test = { 'in': sinon.spy() };
         }
     });
 
     test("renderComplete calls transition.in with pane element", function () {
-        TC.Events.renderComplete(pane, context);
-        ok(TC.Transitions.test['in'].calledOnce);
-        equal(TC.Transitions.test['in'].firstCall.args[0], pane.element);
+        T.Events.renderComplete(pane, context);
+        ok(T.Transitions.test['in'].calledOnce);
+        equal(T.Transitions.test['in'].firstCall.args[0], pane.element);
     });
 
     test("renderComplete calls renderComplete on pane model", function () {
-        TC.Events.renderComplete(pane, context);
+        T.Events.renderComplete(pane, context);
         ok(pane.model.renderComplete.calledOnce);
     });
 
     test("renderComplete resolves is.rendered on pane model", function () {
         equal(pane.is.rendered.state(), 'pending');
-        TC.Events.renderComplete(pane, context);
+        T.Events.renderComplete(pane, context);
         equal(pane.is.rendered.state(), 'resolved');
     });
 
     test("renderComplete raises renderComplete event on document, passing pane as data", function () {
         var spy = sinon.spy();
-        TC.Utils.handleDocumentEvent("renderComplete", spy);
-        TC.Events.renderComplete(pane, context);
+        T.Utils.handleDocumentEvent("renderComplete", spy);
+        T.Events.renderComplete(pane, context);
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0].eventData, pane);
-        TC.Utils.detachDocumentEvent("renderComplete", spy);
+        T.Utils.detachDocumentEvent("renderComplete", spy);
     });
 })();
 
@@ -1862,13 +1863,13 @@ test("returns rejected promise if no resources have been loaded for the specifie
     });
 
     test("templates.render is called with identifier and element", function () {
-        TC.Events.renderPane(pane, context);
+        T.Events.renderPane(pane, context);
         ok(context.templates.render.calledOnce);
         ok(context.templates.render.calledWithExactly(pane.element, 'test'));
     });
 
     test("paneRendered function is called on the model", function () {
-        TC.Events.renderPane(pane, context);
+        T.Events.renderPane(pane, context);
         ok(pane.model.paneRendered.calledOnce);
     });
 })();
@@ -1882,53 +1883,53 @@ test("returns rejected promise if no resources have been loaded for the specifie
     module('Unit.transition', {
         setup: function () {
             Test.Integration.createTestElement();
-            TC.Transitions.test = { 'in': sinon.spy(), out: sinon.spy(), reverse: 'test2' };
-            TC.Transitions.test2 = { 'in': sinon.spy(), out: sinon.spy(), reverse: 'test' };
-            pane = new TC.Types.Pane({ transition: 'test', element: '.test' });
-            node = new TC.Types.Node(null, pane);
+            T.Transitions.test = { 'in': sinon.spy(), out: sinon.spy(), reverse: 'test2' };
+            T.Transitions.test2 = { 'in': sinon.spy(), out: sinon.spy(), reverse: 'test' };
+            pane = new T.Types.Pane({ transition: 'test', element: '.test' });
+            node = new T.Types.Node(null, pane);
         }
     });
 
     test("transition executes specified in transition against given element", function () {
-        TC.transition('.test', 'test')['in']();
-        equal(TC.Transitions.test['in'].firstCall.args[0], '.test');
+        T.transition('.test', 'test')['in']();
+        equal(T.Transitions.test['in'].firstCall.args[0], '.test');
     });
 
     test("transition executes specified out transition against given element", function () {
-        TC.transition('.test', 'test').out();
-        equal(TC.Transitions.test.out.firstCall.args[0], '.test');
+        T.transition('.test', 'test').out();
+        equal(T.Transitions.test.out.firstCall.args[0], '.test');
     });
 
     test("transition gets target element and transition from node", function () {
-        TC.transition(node)['in']();
-        equal(TC.Transitions.test['in'].firstCall.args[0], '.test');
+        T.transition(node)['in']();
+        equal(T.Transitions.test['in'].firstCall.args[0], '.test');
     });
 
     test("transition gets target element and transition from pane", function () {
-        TC.transition(pane)['in']();
-        equal(TC.Transitions.test['in'].firstCall.args[0], '.test');
+        T.transition(pane)['in']();
+        equal(T.Transitions.test['in'].firstCall.args[0], '.test');
     });
 
     test("specifying transition as argument overrides pane transition", function() {
-        TC.Transitions.test2 = { 'in': sinon.spy(), out: sinon.spy() };
-        TC.transition(pane, 'test2')['in']();
-        ok(TC.Transitions.test['in'].notCalled);
-        ok(TC.Transitions.test2['in'].calledOnce);
+        T.Transitions.test2 = { 'in': sinon.spy(), out: sinon.spy() };
+        T.transition(pane, 'test2')['in']();
+        ok(T.Transitions.test['in'].notCalled);
+        ok(T.Transitions.test2['in'].calledOnce);
     });
 
     test("transitioning out removes element by default", function () {
-        TC.transition('.test').out();
+        T.transition('.test').out();
         equal($('.test').length, 0);
     });
 
     test("transitioning out hides element if specified", function () {
-        TC.transition('.test').out(false);
+        T.transition('.test').out(false);
         equal($('.test').length, 1);
     });
 
     test("reverse transition is executed when specified", function() {
-        TC.transition('.test', 'test', true)['in']();
-        equal(TC.Transitions.test2['in'].firstCall.args[0], '.test');
+        T.transition('.test', 'test', true)['in']();
+        equal(T.Transitions.test2['in'].firstCall.args[0], '.test');
 
     });
 })();
@@ -1945,26 +1946,26 @@ test("returns rejected promise if no resources have been loaded for the specifie
         var options = {};
         var constructor = function () { };
 
-        TC.registerModel(path, options, constructor);
+        T.registerModel(path, options, constructor);
         equal(Test.Integration.context.models.path.options, options);
         equal(Test.Integration.context.models.path.constructor, constructor);
 
-        TC.registerModel(options, constructor, path);
+        T.registerModel(options, constructor, path);
         equal(Test.Integration.context.models.path.options, options);
         equal(Test.Integration.context.models.path.constructor, constructor);
     });
 
-    test("registerModel takes path from TC.scriptEnvironment", function () {
+    test("registerModel takes path from T.scriptEnvironment", function () {
         var constructor = function () { };
-        TC.scriptEnvironment = { resourcePath: 'test' };
-        TC.registerModel(constructor);
+        T.scriptEnvironment = { resourcePath: 'test' };
+        T.registerModel(constructor);
         equal(Test.Integration.context.models.test.constructor, constructor);
     });
 
-    test("registerSaga takes path from TC.scriptEnvironment", function () {
+    test("registerSaga takes path from T.scriptEnvironment", function () {
         var constructor = function () { };
-        TC.scriptEnvironment = { resourcePath: 'test' };
-        TC.registerSaga(constructor);
+        T.scriptEnvironment = { resourcePath: 'test' };
+        T.registerSaga(constructor);
         equal(Test.Integration.context.sagas.test.constructor, constructor);
     });
 })();
@@ -1975,8 +1976,8 @@ test("returns rejected promise if no resources have been loaded for the specifie
 (function() {
     module('Integration.bindingHandler', {
         setup: function() {
-            TC.Events.spy = sinon.spy();
-            TC.options.events = ['spy'];
+            T.Events.spy = sinon.spy();
+            T.options.events = ['spy'];
         }, teardown: Test.Integration.teardown
     });
 
@@ -2022,7 +2023,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
     }
     
     function pane() {
-        return TC.Events.spy.firstCall.args[0];
+        return T.Events.spy.firstCall.args[0];
     }
 })();
 
@@ -2034,7 +2035,7 @@ test("returns rejected promise if no resources have been loaded for the specifie
 
 //    module('Integration.History', {
 //        setup: function () {
-//            history = new TC.Types.History(window.history);
+//            history = new T.Types.History(window.history);
 //            Test.Integration.createTestElement();
 //        },
 //        teardown: function() {
@@ -2043,8 +2044,8 @@ test("returns rejected promise if no resources have been loaded for the specifie
 //    });
 
 //    test("History sets window state when navigating", function () {
-//        TC.createNode('.test', { path: 'History/layout' });
-//        TC.nodeFor('.content1').navigate('content2');
+//        T.createNode('.test', { path: 'History/layout' });
+//        T.nodeFor('.content1').navigate('content2');
 //        var options = JSON.parse(window.history.state.options);
 //        equal(options.path, '/History/content2');
 //    });
@@ -2052,8 +2053,8 @@ test("returns rejected promise if no resources have been loaded for the specifie
 //    // these tests sometimes seem to do strange things to the Chrome debugger. If breakpoints aren't being hit, this is the culprit.
 //    asyncTest("History transitions navigation node to previous state when back is called", function () {
 //        expect(2);
-//        TC.createNode('.test', { path: '/History/layout' });
-//        TC.nodeFor('.content1').navigate('content2');
+//        T.createNode('.test', { path: '/History/layout' });
+//        T.nodeFor('.content1').navigate('content2');
 //        window.history.back();
 //        setTimeout(function() {
 //            equal($('.content2').length, 0);
@@ -2064,8 +2065,8 @@ test("returns rejected promise if no resources have been loaded for the specifie
 
 //    asyncTest("History transitions navigation node to next state when forward is called", function () {
 //        expect(2);
-//        TC.createNode('.test', { path: '/History/layout' });
-//        TC.nodeFor('.content1').navigate('content2');
+//        T.createNode('.test', { path: '/History/layout' });
+//        T.nodeFor('.content1').navigate('content2');
 //        window.history.back();
 //        setTimeout(function () {
 //            window.history.forward();
@@ -2083,8 +2084,8 @@ test("returns rejected promise if no resources have been loaded for the specifie
 //            equal(data.options.path, '/Navigate/content2');
 //            equal(data.options.data, 'test');
 //        });
-//        TC.createNode('.test', { path: 'Navigate/layout' });
-//        TC.nodeFor('.content1').navigate({ path: 'content2', data: 'test' });
+//        T.createNode('.test', { path: 'Navigate/layout' });
+//        T.nodeFor('.content1').navigate({ path: 'content2', data: 'test' });
 //        $(document).off('navigating');
 //    });
 //})();
@@ -2099,23 +2100,23 @@ module('Integration.Navigate', {
 });
 
 test("navigating child pane transitions node marked with handlesNavigation", function () {
-    TC.createNode('.test', { path: 'Navigate/layout' });
-    TC.nodeFor('.child1').navigate('content2');
+    T.createNode('.test', { path: 'Navigate/layout' });
+    T.nodeFor('.child1').navigate('content2');
     equal($('.child2').length, 1);
     equal($('.content1').length, 0);
 });
 
 test("navigating root pane transitions node marked with handlesNavigation", function () {
-    TC.createNode('.test', { path: 'Navigate/layout' });
-    TC.nodeFor('.layout').navigate('content2');
+    T.createNode('.test', { path: 'Navigate/layout' });
+    T.nodeFor('.layout').navigate('content2');
     equal($('.layout').length, 1);
     equal($('.child2').length, 1);
     equal($('.content1').length, 0);
 });
 
 test("navigating back returns to previous pane", function() {
-    TC.createNode('.test', { path: 'Navigate/layout' });
-    var node = TC.nodeFor('.layout');
+    T.createNode('.test', { path: 'Navigate/layout' });
+    var node = T.nodeFor('.layout');
     node.navigate('content2');
     equal($('.content1').length, 0);
     node.navigateBack();
@@ -2129,40 +2130,40 @@ test("navigating back returns to previous pane", function() {
     module('Integration.nodes', { teardown: Test.Integration.teardown });
 
     test("createNode binds pane to target element", function() {
-        TC.createNode('#qunit-fixture', { path: 'Utilities/parent' });
+        T.createNode('#qunit-fixture', { path: 'Utilities/parent' });
         equal($('#qunit-fixture .parent .child .message').text(), 'test message');
     });
 
     test("appendNode appends wrapped pane to target element", function() {
-        TC.appendNode('#qunit-fixture', { path: 'Utilities/parent' });
+        T.appendNode('#qunit-fixture', { path: 'Utilities/parent' });
         equal($('#qunit-fixture div .parent .child .message').text(), 'test message');
     });
 
     test("createNode called from paneRendered model function renders", function() {
-        TC.createNode('#qunit-fixture', { path: 'Utilities/dynamicParent' });
+        T.createNode('#qunit-fixture', { path: 'Utilities/dynamicParent' });
         equal($('#qunit-fixture .dynamicParent .child .message').text(), 'test message');
     });
 
     test("createNode inherits context from parent element", function () {
-        TC.Events.spy = sinon.spy();
-        TC.options.events = ['loadResources', 'createModel', 'initialiseModel', 'renderPane', 'renderComplete', 'spy', 'active', 'dispose'];
+        T.Events.spy = sinon.spy();
+        T.options.events = ['loadResources', 'createModel', 'initialiseModel', 'renderPane', 'renderComplete', 'spy', 'active', 'dispose'];
         
-        TC.createNode('#qunit-fixture', { path: 'Utilities/dynamicParent' });
-        ok(TC.Events.spy.calledTwice);
-        equal(TC.Events.spy.firstCall.args[1], TC.Events.spy.secondCall.args[1]);
+        T.createNode('#qunit-fixture', { path: 'Utilities/dynamicParent' });
+        ok(T.Events.spy.calledTwice);
+        equal(T.Events.spy.firstCall.args[1], T.Events.spy.secondCall.args[1]);
     });
 
     test("createNode returns populated Node object", function() {
-        var node = TC.createNode('#qunit-fixture', { path: 'Utilities/parent' });
+        var node = T.createNode('#qunit-fixture', { path: 'Utilities/parent' });
         equal(node.pane.path, '/Utilities/parent');
         equal(node.children.length, 1);
     });
 
     asyncTest("context.renderOperation resolves when render operation is complete", function () {
         expect(1);
-        TC.options.synchronous = false;
-        var context = TC.context();
-        TC.createNode('#qunit-fixture', { path: 'Utilities/parent' }, null, context);
+        T.options.synchronous = false;
+        var context = T.context();
+        T.createNode('#qunit-fixture', { path: 'Utilities/parent' }, null, context);
         $.when(context.renderOperation.promise)
             .done(function() {
                 equal($('#qunit-fixture .parent .child .message').text(), 'test message');
@@ -2172,9 +2173,9 @@ test("navigating back returns to previous pane", function() {
 
     asyncTest("context.renderOperation includes dynamically added nodes", function () {
         expect(1);
-        TC.options.synchronous = false;
-        var context = TC.context();
-        TC.createNode('#qunit-fixture', { path: 'Utilities/dynamicParent' }, null, context);
+        T.options.synchronous = false;
+        var context = T.context();
+        T.createNode('#qunit-fixture', { path: 'Utilities/dynamicParent' }, null, context);
         $.when(context.renderOperation.promise)
             .done(function () {
                 equal($('#qunit-fixture .dynamicParent .child .message').text(), 'test message');
@@ -2193,7 +2194,7 @@ module('Integration.Paths', {
 });
 
 test("panes created with skipPath true inherit pane path from their parent", function() {
-    TC.createNode('.test', { path: 'Paths/Subfolder/parent' });
+    T.createNode('.test', { path: 'Paths/Subfolder/parent' });
     equal($('.parent').length, 1);
     equal($('.parent').children().length, 1);
     equal($('.parent .child').length, 1);
@@ -2210,13 +2211,13 @@ module('Integration.PubSub', {
 });
 
 test("subscription in pane is executed", function() {
-    TC.createNode('.test', { path: 'PubSub/subscriber' });
+    T.createNode('.test', { path: 'PubSub/subscriber' });
     Test.Integration.context.pubsub.publish('test', 'message');
     equal($('.subscriber').text(), 'message');
 });
 
 test("subscription is removed when pane is removed from DOM", function () {
-    TC.createNode('.test', { path: 'PubSub/subscriber' });
+    T.createNode('.test', { path: 'PubSub/subscriber' });
     equal(Test.Integration.context.pubsub.subscribers.get('test').length, 1);
     $('.test').remove();
     equal(Test.Integration.context.pubsub.subscribers.get('test').length, 0);
@@ -2232,16 +2233,16 @@ module('Integration.Sagas', {
 
 test("sagas can be registered by name", function () {
     var func = function () { };
-    TC.registerSaga('test1', func);
+    T.registerSaga('test1', func);
 
     equal(Test.Integration.context.sagas.test1.constructor, func);
 });
 
 test("sagas can be registered using scriptEnvironment", function () {
     var func = function () { };
-    TC.scriptEnvironment = { resourcePath: 'test2' };
-    TC.registerSaga(func);
-    delete TC.scriptEnvironment;
+    T.scriptEnvironment = { resourcePath: 'test2' };
+    T.registerSaga(func);
+    delete T.scriptEnvironment;
     
     equal(Test.Integration.context.sagas.test2.constructor, func);
 });
@@ -2256,44 +2257,44 @@ test("sagas can be registered using scriptEnvironment", function () {
     });
 
     test("transitioning node replaces pane with specified pane", function () {
-        TC.createNode('.test', { path: 'Transition/pane1' });
+        T.createNode('.test', { path: 'Transition/pane1' });
         equal($('.pane1').length, 1);
-        TC.transition(TC.nodeFor('.pane1')).to('Transition/pane2');
+        T.transition(T.nodeFor('.pane1')).to('Transition/pane2');
         equal($('.pane1').length, 0);
         equal($('.pane2').length, 1);
     });
 
     test("transitioning element replaces pane with specified pane", function () {
-        TC.createNode('.test', { path: 'Transition/pane1' });
+        T.createNode('.test', { path: 'Transition/pane1' });
         equal($('.pane1').length, 1);
-        TC.transition('.test').to('Transition/pane2');
+        T.transition('.test').to('Transition/pane2');
         equal($('.pane1').length, 0);
         equal($('.pane2').length, 1);
     });
 
     test("specifying reverseTransitionIn pane option applies reverse transition", function () {
         if (Test.supportsTransitions) {
-            TC.createNode('.test', { path: 'Transition/pane1', transition: 'slideLeft', reverseTransitionIn: true });
+            T.createNode('.test', { path: 'Transition/pane1', transition: 'slideLeft', reverseTransitionIn: true });
             ok($('.pane1').parent().hasClass('slideRight'));
         } else ok(true, "Test skipped - browser does not support CSS transitions.");
     });
 
     test("specifying reverse argument applies reverse transition", function () {
         if (Test.supportsTransitions) {
-            TC.createNode('.test', { path: 'Transition/pane1', transition: 'slideLeft', reverseTransitionIn: true });
-            TC.transition(TC.nodeFor('.pane1'), null, true).to('Transition/pane2');
+            T.createNode('.test', { path: 'Transition/pane1', transition: 'slideLeft', reverseTransitionIn: true });
+            T.transition(T.nodeFor('.pane1'), null, true).to('Transition/pane2');
             ok($('.pane1').parent().hasClass('slideRight'));
             ok($('.pane2').parent().hasClass('slideRight'));
         } else ok(true, "Test skipped - browser does not support CSS transitions.");
     });
 
     asyncTest("async transition to replaces pane with specified pane", function () {
-        TC.options.synchronous = false;
-        var context = TC.context();
-        TC.createNode('.test', { path: 'Transition/pane1' }, null, context);
+        T.options.synchronous = false;
+        var context = T.context();
+        T.createNode('.test', { path: 'Transition/pane1' }, null, context);
         $.when(context.renderOperation.promise).done(function() {
             equal($('.pane1').length, 1);
-            $.when(TC.transition('.test').to('Transition/pane2')).done(function() {
+            $.when(T.transition('.test').to('Transition/pane2')).done(function() {
                 equal($('.pane1').length, 0);
                 equal($('.pane2').length, 1);
                 start();
@@ -2338,24 +2339,24 @@ test("sagas can be registered using scriptEnvironment", function () {
     });
 
     test("pane changes when node is transitioned", function () {
-        TC.transition(TC.nodeFor('.11')).to('12');
+        T.transition(T.nodeFor('.11')).to('12');
         equal(root.children[0].pane.path, '/Tree/12');
     });
 
     test("child nodes are removed when transitioned", function () {
-        TC.transition(TC.nodeFor('.11')).to('12');
+        T.transition(T.nodeFor('.11')).to('12');
         equal(root.children[0].children.length, 0);
     });
 
     test("node is not replaced when transitioned", function() {
         var node = root.children[0];
-        TC.transition(TC.nodeFor('.11')).to('12');
+        T.transition(T.nodeFor('.11')).to('12');
         equal(root.children[0], node);
     });
 
     test("node is replaced when element is transitioned", function() {
         var node = root.children[0];
-        TC.transition($('.11').parent()).to('/Tree/12');
+        T.transition($('.11').parent()).to('/Tree/12');
         equal(root.children.length, 1);
         notEqual(root.children[0], node);
         equal(root.children[0].pane.path, '/Tree/12');
@@ -2368,7 +2369,7 @@ test("sagas can be registered using scriptEnvironment", function () {
 
 (function() {
     module('Integration.Events.active', {
-        setup: function () { TC.Events.spy = sinon.spy(); },
+        setup: function () { T.Events.spy = sinon.spy(); },
         teardown: Test.Integration.teardown
     });
 
@@ -2376,19 +2377,19 @@ test("sagas can be registered using scriptEnvironment", function () {
 
     test("event ends when pane element is removed from DOM", function () {
         Test.Integration.executeEvents(events, 'Events/basic');
-        ok(TC.Events.spy.notCalled);
+        ok(T.Events.spy.notCalled);
         $('.basic').parent().remove();
-        ok(TC.Events.spy.called);
-        equal(TC.Events.spy.firstCall.args[0].path, '/Events/basic');
+        ok(T.Events.spy.called);
+        equal(T.Events.spy.firstCall.args[0].path, '/Events/basic');
     });
 
     test("child events end when parent pane element is removed from DOM", function () {
         Test.Integration.executeEvents(events, 'Events/basicParent');
-        ok(TC.Events.spy.notCalled);
+        ok(T.Events.spy.notCalled);
         $('.basicContainer').parent().remove();
-        ok(TC.Events.spy.calledTwice);
-        equal(TC.Events.spy.firstCall.args[0].path, '/Events/basicParent');
-        equal(TC.Events.spy.secondCall.args[0].path, '/Events/basic');
+        ok(T.Events.spy.calledTwice);
+        equal(T.Events.spy.firstCall.args[0].path, '/Events/basicParent');
+        equal(T.Events.spy.secondCall.args[0].path, '/Events/basic');
     });
 })();
 
@@ -2457,15 +2458,15 @@ test("sagas can be registered using scriptEnvironment", function () {
 
     test("returning deferred from initialise makes pipeline wait", function () {
         Test.Integration.executeEvents(Test.Integration.testEventsUntil('initialiseModel'), 'Events/initialise');
-        ok(TC.Events.spy.notCalled);
+        ok(T.Events.spy.notCalled);
         Test.state.deferred.resolve();
-        ok(TC.Events.spy.calledOnce);
+        ok(T.Events.spy.calledOnce);
     });
 
     test("rejecting deferred returned from initialise halts pipeline", function () {
         Test.Integration.executeEvents(Test.Integration.testEventsUntil('initialiseModel'), 'Events/initialise');
         Test.state.deferred.reject();
-        ok(TC.Events.spy.notCalled);
+        ok(T.Events.spy.notCalled);
     });
 })();
 
@@ -2514,7 +2515,7 @@ test("sagas can be registered using scriptEnvironment", function () {
     
     asyncTest("renderComplete is called on single model when in async mode", function () {
         expect(1);
-        TC.options.synchronous = false;
+        T.options.synchronous = false;
         Test.state.renderComplete = function () {
             equal($('.message').text(), 'test message');
             start();
@@ -2524,7 +2525,7 @@ test("sagas can be registered using scriptEnvironment", function () {
 
     asyncTest("renderComplete is called on all models when in async mode", function () {
         expect(1);
-        TC.options.synchronous = false;
+        T.options.synchronous = false;
         Test.state.renderComplete = function () {
             equal($('.message').text(), 'test message');
             start();
@@ -2563,7 +2564,7 @@ test("sagas can be registered using scriptEnvironment", function () {
 
     asyncTest("paneRendered is called on model when in async mode", function () {
         expect(1);
-        TC.options.synchronous = false;
+        T.options.synchronous = false;
         Test.state.paneRendered = function () {
             equal($('.message').text(), 'test message');
             start();

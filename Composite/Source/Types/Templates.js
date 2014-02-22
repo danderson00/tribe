@@ -1,8 +1,8 @@
-﻿TC.Types.Templates = function () {
+﻿T.Types.Templates = function () {
     var self = this;
 
     this.store = function (template, path) {
-        var id = TC.Path(path).asMarkupIdentifier().toString();
+        var id = T.Path(path).asMarkupIdentifier().toString();
         embedTemplate(template, 'template-' + id);
     };
     
@@ -16,11 +16,11 @@
     }
     
     this.loaded = function(path) {
-        return $('head script#template-' + TC.Path(path).asMarkupIdentifier()).length > 0;
+        return $('head script#template-' + T.Path(path).asMarkupIdentifier()).length > 0;
     };
 
     this.render = function (target, path) {
-        var id = TC.Path(path).asMarkupIdentifier();
+        var id = T.Path(path).asMarkupIdentifier();
         // can't use html() to append - this uses the element innerHTML property and IE7 and 8 will strip comments (i.e. containerless control flow bindings)
         $(target).empty().append($('head script#template-' + id).html());
     };

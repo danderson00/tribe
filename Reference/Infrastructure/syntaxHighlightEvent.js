@@ -1,3 +1,3 @@
-﻿TC.Events.syntaxHighlight = function(pane) {
+﻿T.Events.syntaxHighlight = function(pane) {
     pane.find();
 };

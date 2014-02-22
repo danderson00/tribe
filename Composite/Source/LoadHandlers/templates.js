@@ -1,4 +1,4 @@
-﻿TC.LoadHandlers.htm = function (url, resourcePath, context) {
+﻿T.LoadHandlers.htm = function (url, resourcePath, context) {
     return $.ajax({
         url: url,
         dataType: 'html',
@@ -11,4 +11,4 @@
         context.templates.store(template, resourcePath);
     }
 };
-TC.LoadHandlers.html = TC.LoadHandlers.htm;
+T.LoadHandlers.html = T.LoadHandlers.htm;

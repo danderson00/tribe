@@ -1,4 +1,4 @@
-﻿TC.LoadHandlers.css = function (url, resourcePath, context) {
+﻿T.LoadHandlers.css = function (url, resourcePath, context) {
     var supportsTextNodes = true;
     
     return $.ajax({

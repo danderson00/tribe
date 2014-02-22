@@ -1,5 +1,5 @@
-﻿TC.registerModel(function(pane) {
+﻿T.registerModel(function(pane) {
     this.paneRendered = function() {
-        TC.createNode('.dynamicParent', { path: 'child' });
+        T.createNode('.dynamicParent', { path: 'child' });
     };
 });

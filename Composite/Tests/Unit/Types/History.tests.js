@@ -5,7 +5,7 @@
     module('Unit.Types.History', {
         setup: function () {
             api = mockHistoryApi();
-            history = new TC.Types.History(api);
+            history = new T.Types.History(api);
         },
         teardown: function () {
             history.dispose();
@@ -20,9 +20,9 @@
                 equal(e.eventData.count, 1);
             }
 
-            TC.Utils.handleDocumentEvent('browser.go', assert);
+            T.Utils.handleDocumentEvent('browser.go', assert);
             raisePopstate();
-            TC.Utils.detachDocumentEvent('browser.go', assert);
+            T.Utils.detachDocumentEvent('browser.go', assert);
         } else ok(true, "Test skipped - History API is not supported.");
     });
 
@@ -34,10 +34,10 @@
                 equal(e.eventData.count, 1);
             }
 
-            TC.Utils.handleDocumentEvent('browser.go', assert);
+            T.Utils.handleDocumentEvent('browser.go', assert);
             history.update(1);
             raisePopstate();
-            TC.Utils.detachDocumentEvent('browser.go', assert);
+            T.Utils.detachDocumentEvent('browser.go', assert);
         } else ok(true, "Test skipped - History API is not supported.");
     });
 

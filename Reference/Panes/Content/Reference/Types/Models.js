@@ -1,5 +1,5 @@
 ﻿Reference.Types.Models = {
-    name: 'TC.Types.Models',
+    name: 'T.Types.Models',
     description: 'Managed collection of pane models.',
     functions: [
         {

@@ -1,6 +1,6 @@
 ﻿(function () {
     // TODO: Refactor - the trigger and panel should be in separate panes. The rest is starting to get nasty now too...
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var self = this;
         var data = pane.data;
 

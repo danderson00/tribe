@@ -2,7 +2,7 @@
     var operation;
     
     module("Unit.Types.Operation", {
-        setup: function() { operation = new TC.Types.Operation(); }
+        setup: function() { operation = new T.Types.Operation(); }
     });
 
     test("operation resolves when single child completes", function () {

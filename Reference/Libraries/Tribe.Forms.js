@@ -932,7 +932,7 @@ if(ko.validation)
 
 ko.bindingHandlers.factory = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var data = T.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         data.value = data.value || {};
         
         if (data.value.constructor === String)
@@ -961,7 +961,7 @@ ko.bindingHandlers.factory = {
     function addBindingHandler(name) {
         ko.bindingHandlers[name + 'Field'] = {
             init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-                var options = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+                var options = T.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
                 if (bindingContext.__factory)
                     options.target = viewModel;
                 TF.render(name, element, options);
@@ -991,7 +991,7 @@ ko.bindingHandlers.focus = {
 
 ko.bindingHandlers.scaffold = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var data = TC.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
+        var data = T.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         data.value = data.value || {};
 
         TF.scaffold(data.value).to(element);
@@ -1065,8 +1065,8 @@ ko.bindingHandlers.scaffold = {
                         // ignore Tribe embedded properties that cause the validator to loop infinitely
                         if (property.substr(0, 2) === "__" ||
                             (value && (
-                                value.constructor === TC.Types.Node ||
-                                value.constructor === TC.Types.Pane
+                                value.constructor === T.Types.Node ||
+                                value.constructor === T.Types.Pane
                             )))
                             delete model[property];                        
                     }
@@ -1094,14 +1094,14 @@ ko.bindingHandlers.scaffold = {
 //            $targetElement = $prev.attr('type') === 'hidden' ? $prev.prev() : $prev;
 //        }
 //        var error = ko.observable();
-//        var pane = TC.insertNodeAfter($targetElement, {
+//        var pane = T.insertNodeAfter($targetElement, {
 //            path: '/Common/tooltip',
 //            data: { html: error, position: 'auto', target: $targetElement, timeout: 3000, topic: id }
 //        });
 //        $targetElement.next().addClass('validationMessage');
 //        observable.subscribe(function () {
 //            if (observable.isModified && observable.isModified()) {
-//                TC.context().pubsub.publish(observable.isValid() ? 'tooltip.hide' : 'tooltip.show', { topic: id, immediate: true });
+//                T.context().pubsub.publish(observable.isValid() ? 'tooltip.hide' : 'tooltip.show', { topic: id, immediate: true });
 //                error(observable.error);
 //            }
 //        });

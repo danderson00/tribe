@@ -63,7 +63,7 @@
                 { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Saga definition or its constructor.' },
                 { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'TC.Types.Saga'
+            returns: 'T.Types.Saga'
         }
 
     ],

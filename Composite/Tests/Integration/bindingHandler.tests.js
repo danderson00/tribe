@@ -1,8 +1,8 @@
 ﻿(function() {
     module('Integration.bindingHandler', {
         setup: function() {
-            TC.Events.spy = sinon.spy();
-            TC.options.events = ['spy'];
+            T.Events.spy = sinon.spy();
+            T.options.events = ['spy'];
         }, teardown: Test.Integration.teardown
     });
 
@@ -48,6 +48,6 @@
     }
     
     function pane() {
-        return TC.Events.spy.firstCall.args[0];
+        return T.Events.spy.firstCall.args[0];
     }
 })();

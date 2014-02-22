@@ -1,6 +1,6 @@
-TC.scriptEnvironment = { resourcePath: '/Common/dialog' };
+T.scriptEnvironment = { resourcePath: '/Common/dialog' };
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         pane.node.skipPath = true;
         
         var self = this;
@@ -22,7 +22,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/dialog' };
 
         this.paneRendered = function() {
             if (options.title)
-                TC.createNode(pane.find('.dialogHeader'), { path: '/Common/contentHeader', data: { text: options.title } });
+                T.createNode(pane.find('.dialogHeader'), { path: '/Common/contentHeader', data: { text: options.title } });
         };
 
         this.renderComplete = function () {
@@ -36,7 +36,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/dialog' };
             }
 
             if(!options.reusable)
-                $.when(TC.Utils.elementDestroyed($(dialogSelector + ' .dialogPane'))).done(function() {
+                $.when(T.Utils.elementDestroyed($(dialogSelector + ' .dialogPane'))).done(function() {
                     pane.remove();
                 });
         };
@@ -105,7 +105,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/dialog' };
     });
 })();
 
-TC.dialog = function (pane, options) {
+T.dialog = function (pane, options) {
     options = options || {};
     var element = options.element ? $(options.element) : 'body';
     pane = typeof (pane) == 'string' ? { path: pane } : pane;
@@ -113,7 +113,7 @@ TC.dialog = function (pane, options) {
     var title = ko.observable(options.title);
     options.title = options.title && title;
 
-    var node = TC.appendNode(element, { path: '/Common/dialog', id: options.id, data: { pane: pane, options: options } }, options.node);
+    var node = T.appendNode(element, { path: '/Common/dialog', id: options.id, data: { pane: pane, options: options } }, options.node);
     return {
         node: node,
         close: node.pane.remove,
@@ -123,16 +123,16 @@ TC.dialog = function (pane, options) {
         }
     };
 };
-TC.overlay = TC.dialog;
+T.overlay = T.dialog;
 
-TC.Types.Pane.prototype.dialog = function (pane, options) {
-    return TC.dialog(pane, $.extend({ node: this.node }, options));
+T.Types.Pane.prototype.dialog = function (pane, options) {
+    return T.dialog(pane, $.extend({ node: this.node }, options));
 };
 //@ sourceURL=tribe:///Common/Panes/dialog
-TC.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
+T.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
 // needs a big ol' refactor
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var pubsub = pane.pubsub;
         var data = pane.data;
 
@@ -173,7 +173,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
                 else if (item.process)
                     Process[item.process](pane);
                 else if (item.dialog)
-                    TC.dialog(item.dialog, { modal: true });
+                    T.dialog(item.dialog, { modal: true });
                 else if (item.publish)
                     pubsub.publish(item.publish.message, item.publish.data);
             }
@@ -214,9 +214,9 @@ TC.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
         function tabLoaded(tab) {
             if (panes[tab.text] == null) {
                 var element = $('<div></div>').addClass('tabContent subpanel').appendTo(tabPanel);
-                var context = TC.context();
+                var context = T.context();
                 var renderOperation = context.renderOperation;
-                var node = TC.appendNode(element, {
+                var node = T.appendNode(element, {
                     path: tab.pane,
                     data: tab.data,
                 }, null, context);
@@ -285,9 +285,9 @@ TC.scriptEnvironment = { resourcePath: '/Common/tabPanel' };
     });
 })();
 //@ sourceURL=tribe:///Common/Panes/tabPanel
-TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
+T.scriptEnvironment = { resourcePath: '/Common/tooltip' };
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var pubsub = pane.pubsub;
         var data = pane.data;
         var self = this;
@@ -453,9 +453,9 @@ TC.scriptEnvironment = { resourcePath: '/Common/tooltip' };
 })();
 
 //@ sourceURL=tribe:///Common/Panes/tooltip
-TC.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
+T.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var pubsub = pane.pubsub;
         var data = pane.data;
 
@@ -471,10 +471,10 @@ TC.scriptEnvironment = { resourcePath: '/Common/contentHeader' };
     });
 })();
 //@ sourceURL=tribe:///Common/Panes/contentHeader
-TC.scriptEnvironment = { resourcePath: '/Common/dropDown' };
+T.scriptEnvironment = { resourcePath: '/Common/dropDown' };
 (function () {
     // TODO: Refactor - the trigger and panel should be in separate panes. The rest is starting to get nasty now too...
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var self = this;
         var data = pane.data;
 
@@ -640,9 +640,9 @@ TC.scriptEnvironment = { resourcePath: '/Common/dropDown' };
     });
 })();
 //@ sourceURL=tribe:///Common/Panes/dropDown
-TC.scriptEnvironment = { resourcePath: '/Common/expander' };
+T.scriptEnvironment = { resourcePath: '/Common/expander' };
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         pane.node.skipPath = true;
         
         var pubsub = pane.pubsub;
@@ -672,7 +672,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/expander' };
 
             setIcon();
 
-            //TC.renderTooltips(self.tooltips, 'help', pane);
+            //T.renderTooltips(self.tooltips, 'help', pane);
         };
 
         this.click = function () {
@@ -739,7 +739,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/expander' };
 
         function renderPane(scroll) {
             self.loading(true);
-            childPane = TC.appendNode($content, { path: data.pane, data: data.data }).pane;
+            childPane = T.appendNode($content, { path: data.pane, data: data.data }).pane;
 
             $.when(childPane.is.rendered).always(function() {
                 self.loading(false);
@@ -765,9 +765,9 @@ TC.scriptEnvironment = { resourcePath: '/Common/expander' };
     });
 })();
 //@ sourceURL=tribe:///Common/Panes/expander
-TC.scriptEnvironment = { resourcePath: '/Common/expanderList' };
+T.scriptEnvironment = { resourcePath: '/Common/expanderList' };
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         pane.node.skipPath = true;
         
         var pubsub = pane.pubsub;
@@ -778,7 +778,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/expanderList' };
         this.expanders = data;
 
         this.renderComplete = function () {
-            TC.renderTooltips(self.tooltips, 'help', pane);
+            T.renderTooltips(self.tooltips, 'help', pane);
         };
 
         this.tooltips = {
@@ -791,9 +791,9 @@ TC.scriptEnvironment = { resourcePath: '/Common/expanderList' };
     });
 })();
 //@ sourceURL=tribe:///Common/Panes/expanderList
-TC.scriptEnvironment = { resourcePath: '/Common/graph' };
+T.scriptEnvironment = { resourcePath: '/Common/graph' };
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var pubsub = pane.pubsub;
         var data = pane.data;
 
@@ -812,7 +812,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
         this.showSeriesSelect = data.showSeriesSelect !== false;
 
         if (data.selectedSeriesKey)
-            this.selectedSeries.extend({ persist: 'TC.graph.' + data.selectedSeriesKey });
+            this.selectedSeries.extend({ persist: 'T.graph.' + data.selectedSeriesKey });
 
         this.selectedSeries.subscribe(function (value) {
             plot(extractSeries(data.series, ko.utils.unwrapObservable(value)));
@@ -827,7 +827,7 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
                 $graph.css(data.css);
 
             plot(extractSeries(data.series, self.selectedSeries()));
-            TC.renderTooltips(self.tooltips, 'help', pane);
+            T.renderTooltips(self.tooltips, 'help', pane);
         };
 
         pubsub.subscribe('graphDataUpdated', function(series) {
@@ -906,19 +906,19 @@ TC.scriptEnvironment = { resourcePath: '/Common/graph' };
     });
 })();
 //@ sourceURL=tribe:///Common/Panes/graph
-TC.scriptEnvironment = { resourcePath: '/Common/grid' };
+T.scriptEnvironment = { resourcePath: '/Common/grid' };
 TC = window.TC || {};
-TC.grid = TC.grid || {};
+T.grid = T.grid || {};
 
 (function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var pubsub = pane.pubsub;
         var data = pane.data;
         var self = this;
 
-        var grid = TC.grid;
+        var grid = T.grid;
         var source = ko.utils.unwrapObservable(data.source);
-        var id = TC.Utils.getUniqueId();
+        var id = T.Utils.getUniqueId();
         var columnList = extractColumnList();
         var lastSort;
 
@@ -945,7 +945,7 @@ TC.grid = TC.grid || {};
         };
 
         this.renderComplete = function () {
-            TC.renderTooltips(self.tooltips, 'help', pane);
+            T.renderTooltips(self.tooltips, 'help', pane);
         };
 
         pubsub.subscribe('filterChanged', function (filterData) {
@@ -992,7 +992,7 @@ TC.grid = TC.grid || {};
             var value = !column.property ? '' :
                 $.isFunction(column.property) ?
                     column.property(item) :
-                    TC.Utils.evaluateProperty(item, column.property);
+                    T.Utils.evaluateProperty(item, column.property);
             return { display: formatCell(value), value: value, cssClass: getCellClass(value, column) };
         }
 
@@ -1102,7 +1102,7 @@ TC.grid = TC.grid || {};
 })();
 
 (function () {
-    var grid = TC.grid;
+    var grid = T.grid;
 
     grid.Filter = function (fieldProperties, id, pubsub) {
         $.extend(this, fieldProperties);
@@ -1130,8 +1130,8 @@ TC.grid = TC.grid || {};
     };
 })();
 //@ sourceURL=tribe:///Common/Panes/grid
-TC.scriptEnvironment = { resourcePath: '/Common/tabs' };
-TC.registerModel(function (pane) {
+T.scriptEnvironment = { resourcePath: '/Common/tabs' };
+T.registerModel(function (pane) {
     var self = this;
 
     this.content = ko.observable();
@@ -1231,11 +1231,11 @@ ko.bindingHandlers.colspan = {
     utils.elementIsRightAligned = function(element) {
         return findParentElement(element, function(target) {
             if ($(target).css('right') !== 'auto' && $(target).css('left') === 'auto') {
-                TC.logger.debug("Element is aligned right by position (" + $(target).css('right') + "): " + $(element).attr('class'));
+                T.logger.debug("Element is aligned right by position (" + $(target).css('right') + "): " + $(element).attr('class'));
                 return target;
             }
             if ($(target).css('float') === 'right') {
-                TC.logger.debug("Element is aligned right by float: " + $(element).attr('class'));
+                T.logger.debug("Element is aligned right by float: " + $(element).attr('class'));
                 return target;
             }
             return false;
@@ -1248,7 +1248,7 @@ ko.bindingHandlers.colspan = {
                 return target;
         });
     };
-})(TC.Utils);
+})(T.Utils);
 
 //@ sourceURL=tribe:///Common/Infrastructure/elements
 
@@ -1271,9 +1271,9 @@ ko.bindingHandlers.colspan = {
 //@ sourceURL=tribe:///Common/Infrastructure/sortBy
 
 (function () {
-    var utils = TC.Utils;
+    var utils = T.Utils;
 
-    TC.tooltipTimeout = 5000;
+    T.tooltipTimeout = 5000;
 
     ko.bindingHandlers.tooltip = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -1286,13 +1286,13 @@ ko.bindingHandlers.colspan = {
                     data = { html: value, target: $(element), position: bindings.position };
                 else
                     data = value;
-                TC.createNode(element, { path: '/Common/tooltip', data: data }, utils.extractNode(bindingContext));
+                T.createNode(element, { path: '/Common/tooltip', data: data }, utils.extractNode(bindingContext));
             }
 
         }
     };
 
-    TC.renderTooltips = function (tooltips, topic, parentPane, show) {
+    T.renderTooltips = function (tooltips, topic, parentPane, show) {
         if ($.isArray(tooltips))
             for (var i = 0; i < tooltips.length; i++)
                 renderTooltip(tooltips[i], true);
@@ -1308,14 +1308,14 @@ ko.bindingHandlers.colspan = {
             var target = $(parentPane.element).find(tooltip.selector);
             if (target.length > 0) {
                 if (parentPane.element)
-                    TC.insertNodeAfter(target, { path: '/Common/tooltip', data: extend(tooltip, autoShow) });
+                    T.insertNodeAfter(target, { path: '/Common/tooltip', data: extend(tooltip, autoShow) });
             } else {
-                TC.logger.warn("Tooltip for selector " + tooltip.selector + " not rendered - element not found");
+                T.logger.warn("Tooltip for selector " + tooltip.selector + " not rendered - element not found");
             }
         }
 
         function extend(tooltip, autoShow) {
-            return $.extend({ timeout: TC.tooltipTimeout, topic: topic, autoShow: autoShow && !tooltip.hover, target: $(parentPane.element).find(tooltip.selector) }, tooltip);
+            return $.extend({ timeout: T.tooltipTimeout, topic: topic, autoShow: autoShow && !tooltip.hover, target: $(parentPane.element).find(tooltip.selector) }, tooltip);
         }
 
         function tipShownKey(property) {

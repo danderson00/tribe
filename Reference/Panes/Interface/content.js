@@ -1,4 +1,4 @@
-﻿TC.registerModel(function (pane) {
+﻿T.registerModel(function (pane) {
     this.panePath = panePath(pane.data);
 
     this.renderComplete = function() {

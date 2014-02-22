@@ -3,13 +3,13 @@
     // http://yuilibrary.com/yui/docs/api/files/querystring_js_querystring-parse.js.html
     // Either it should be rewritten or attribution and licensing be available here and on the website like in http://yuilibrary.com/license/
 
-    TC.Utils.Querystring = TC.Utils.Querystring || {};
+    T.Utils.Querystring = T.Utils.Querystring || {};
 
-    TC.Utils.Querystring.parse = function (source, seperator, eqSymbol) {
+    T.Utils.Querystring.parse = function (source, seperator, eqSymbol) {
         stripLeadIn();
         
-        return TC.Utils.reduce(
-            TC.Utils.map(
+        return T.Utils.reduce(
+            T.Utils.map(
                 source.split(seperator || "&"),
                 pieceParser(eqSymbol || "=")
             ),

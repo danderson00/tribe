@@ -1,5 +1,5 @@
 ﻿(function () {
-    TC.Utils.elementDestroyed = function (element) {
+    T.Utils.elementDestroyed = function (element) {
         if (element.constructor === jQuery)
             element = element[0];
 
@@ -28,7 +28,7 @@
     // this used to use DOM functions to raise events, but IE8 doesn't support custom events
     // we'll use jQuery, but expose the originalEvent for DOM events and the jQuery event
     // for custom events (originalEvent is null for custom events).
-    TC.Utils.raiseDocumentEvent = function (name, eventData) {
+    T.Utils.raiseDocumentEvent = function (name, eventData) {
         var e = $.Event(name);
         e.eventData = eventData;
         $(document).trigger(e);
@@ -37,7 +37,7 @@
     var handlers = {};
 
     // if a handler is used for more than one event, a leak will occur
-    TC.Utils.handleDocumentEvent = function (name, handler) {
+    T.Utils.handleDocumentEvent = function (name, handler) {
         $(document).on(name, internalHandler);
         handlers[handler] = internalHandler;
         
@@ -46,7 +46,7 @@
         }
     };
 
-    TC.Utils.detachDocumentEvent = function (name, handler) {
+    T.Utils.detachDocumentEvent = function (name, handler) {
         $(document).off(name, handlers[handler]);
         delete handlers[handler];
     };

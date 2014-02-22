@@ -1,5 +1,5 @@
 ﻿Reference.Types.Loader = {
-    name: 'TC.Types.Loader',
+    name: 'T.Types.Loader',
     description: 'Ensures URLs are only loaded once. Concurrent requests return the same promise. The actual loading of resources is performed by specific LoadHandlers.',
     functions: [
         {

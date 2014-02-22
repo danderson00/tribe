@@ -1,27 +1,27 @@
-﻿TC.Types.Node = function (parent, pane) {
+﻿T.Types.Node = function (parent, pane) {
     this.parent = parent;
     this.children = [];
     this.root = parent ? parent.root : this;
-    this.id = TC.Utils.getUniqueId();
+    this.id = T.Utils.getUniqueId();
 
     if (parent) parent.children.push(this);
     if (pane) this.setPane(pane);
 };
 
-TC.Types.Node.prototype.navigate = function (pathOrPane, data) {
-    var paneOptions = TC.Utils.getPaneOptions(pathOrPane, { data: data });
-    if (!TC.Path(paneOptions.path).isAbsolute())
+T.Types.Node.prototype.navigate = function (pathOrPane, data) {
+    var paneOptions = T.Utils.getPaneOptions(pathOrPane, { data: data });
+    if (!T.Path(paneOptions.path).isAbsolute())
         // this is duplicated in Pane.inheritPathFrom - the concept (relative paths inherit existing paths) needs to be clearer
-        paneOptions.path = TC.Path(this.nodeForPath().pane.path).withoutFilename().combine(paneOptions.path).toString();
+        paneOptions.path = T.Path(this.nodeForPath().pane.path).withoutFilename().combine(paneOptions.path).toString();
     
     this.findNavigation().navigate(paneOptions);
 };
 
-TC.Types.Node.prototype.navigateBack = function () {
+T.Types.Node.prototype.navigateBack = function () {
     this.findNavigation().go(-1);
 };
 
-TC.Types.Node.prototype.findNavigation = function() {
+T.Types.Node.prototype.findNavigation = function() {
     if (this.defaultNavigation)
         return this.defaultNavigation;
 
@@ -29,18 +29,18 @@ TC.Types.Node.prototype.findNavigation = function() {
         return this.navigation;
         
     if (!this.parent) {
-        this.navigation = new TC.Types.Navigation(this);
+        this.navigation = new T.Types.Navigation(this);
         return this.navigation;
     }
 
     return this.parent.findNavigation();
 };
 
-TC.Types.Node.prototype.transitionTo = function(paneOptions, transition, reverse) {
-    TC.transition(this, transition, reverse).to(paneOptions);
+T.Types.Node.prototype.transitionTo = function(paneOptions, transition, reverse) {
+    T.transition(this, transition, reverse).to(paneOptions);
 };
 
-TC.Types.Node.prototype.setPane = function (pane) {
+T.Types.Node.prototype.setPane = function (pane) {
     if (this.pane)
         this.pane.node = null;
 
@@ -49,7 +49,7 @@ TC.Types.Node.prototype.setPane = function (pane) {
     this.skipPath = pane.skipPath;
 
     if (pane.handlesNavigation) {
-        this.navigation = new TC.Types.Navigation(this, pane.handlesNavigation);
+        this.navigation = new T.Types.Navigation(this, pane.handlesNavigation);
         
         // this sets this pane as the "default", accessible from panes outside the tree. First in best dressed.
         this.root.defaultNavigation = this.root.defaultNavigation || this.navigation;
@@ -58,16 +58,16 @@ TC.Types.Node.prototype.setPane = function (pane) {
     pane.inheritPathFrom(this.parent);
 };
 
-TC.Types.Node.prototype.nodeForPath = function() {
+T.Types.Node.prototype.nodeForPath = function() {
     return this.skipPath && this.parent ? this.parent.nodeForPath() : this;
 };
 
-TC.Types.Node.prototype.dispose = function() {
+T.Types.Node.prototype.dispose = function() {
     if (this.root.defaultNavigation === this.navigation)
         this.root.defaultNavigation = null;
 
     if (this.parent)
-        TC.Utils.removeItem(this.parent.children, this);
+        T.Utils.removeItem(this.parent.children, this);
 
     if (this.pane && this.pane.dispose) {
         delete this.pane.node;
@@ -75,4 +75,4 @@ TC.Types.Node.prototype.dispose = function() {
     }
 };
 
-TC.Types.Node.prototype.startFlow = TC.Types.Flow.startFlow;
+T.Types.Node.prototype.startFlow = T.Types.Flow.startFlow;

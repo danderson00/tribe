@@ -4,7 +4,7 @@
 Article = {
     show: function (section, topic) {
         return function () {
-            TC.nodeFor('.content').pane.pubsub.publish('article.show', { section: section, topic: topic });
+            T.nodeFor('.content').pane.pubsub.publish('article.show', { section: section, topic: topic });
         };
     }
 };
@@ -20,7 +20,7 @@ var articleUrlProvider = {
     },
     paneOptionsFrom: function (querystring) {
         if (querystring) {
-            var options = TC.Utils.Querystring.parse(querystring);
+            var options = T.Utils.Querystring.parse(querystring);
             return {
                 path: '/Interface/content',
                 data: {
@@ -130,14 +130,14 @@ Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'create.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>// Declare model constructors using this simple function.<br/>// Tribe creates an instance and binds it to the template.<br/><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.task = ko.observable();<br/>    <br/>    this.create = function() {<br/>        pane.pubsub.publish(\'task.create\', self.task());<br/>        self.task(\'\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>// Declare model constructors using this simple function.<br/>// Tribe creates an instance and binds it to the template.<br/><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.task = ko.observable();<br/>    <br/>    this.create = function() {<br/>        pane.pubsub.publish(\'task.create\', self.task());<br/>        self.task(\'\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Todos&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript"><br/>            // all the configuration you need!<br/>            $(TC.run);<br/>        &lt;/script><br/>    &lt;/head><br/>    &lt;body data-bind="pane: \'layout\'">&lt;/body><br/>&lt;/html></pre>'
+    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Todos&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript"><br/>            // all the configuration you need!<br/>            $(T.run);<br/>        &lt;/script><br/>    &lt;/head><br/>    &lt;body data-bind="pane: \'layout\'">&lt;/body><br/>&lt;/html></pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Tasks'] = Samples['About/Tasks'] || [];
@@ -165,7 +165,7 @@ Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'list.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.tasks = ko.observableArray([\'Sample task\']);<br/><br/>    // Using messages decouples your components.<br/>    // Tribe cleans up subscriptions automatically.<br/>    pane.pubsub.subscribe(\'task.create\', function(task) {<br/>        self.tasks.push(task);<br/>    });<br/><br/>    pane.pubsub.subscribe(\'task.delete\', function (task) {<br/>        var index = self.tasks.indexOf(task);<br/>        self.tasks.splice(index, 1);<br/>    });<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.tasks = ko.observableArray([\'Sample task\']);<br/><br/>    // Using messages decouples your components.<br/>    // Tribe cleans up subscriptions automatically.<br/>    pane.pubsub.subscribe(\'task.create\', function(task) {<br/>        self.tasks.push(task);<br/>    });<br/><br/>    pane.pubsub.subscribe(\'task.delete\', function (task) {<br/>        var index = self.tasks.indexOf(task);<br/>        self.tasks.splice(index, 1);<br/>    });<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Tasks'] = Samples['About/Tasks'] || [];
@@ -179,7 +179,7 @@ Samples['About/Tasks'] = Samples['About/Tasks'] || [];
 Samples['About/Tasks'].push({
     filename: 'task.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.task = pane.data;<br/>    <br/>    this.deleteTask = function() {<br/>        pane.pubsub.publish(\'task.delete\', self.task);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.task = pane.data;<br/>    <br/>    this.deleteTask = function() {<br/>        pane.pubsub.publish(\'task.delete\', self.task);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Chat'] = Samples['About/Chat'] || [];
@@ -193,14 +193,14 @@ Samples['About/Chat'] = Samples['About/Chat'] || [];
 Samples['About/Chat'].push({
     filename: 'chat.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    // Hook up our message hub and join a channel<br/>    TMH.initialise(pane.pubsub);<br/>    TMH.joinChannel(\'chat\', {<br/>         serverEvents: [\'chat.*\']<br/>    });<br/><br/>    // The dispose function is called automatically<br/>    // when the pane is removed from the DOM.<br/>    this.dispose = function() {<br/>        TMH.leaveChannel(\'chat\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    // Hook up our message hub and join a channel<br/>    //TMH.initialise(pane.pubsub);<br/>    //TMH.joinChannel(\'chat\', {<br/>    //     serverEvents: [\'chat.*\']<br/>    //});<br/><br/>    // The dispose function is called automatically<br/>    // when the pane is removed from the DOM.<br/>    this.dispose = function() {<br/>        //TMH.leaveChannel(\'chat\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Chat'] = Samples['About/Chat'] || [];
 Samples['About/Chat'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Todos&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript"><br/>            $(TC.run);<br/>        &lt;/script><br/>    &lt;/head><br/>    &lt;body data-bind="pane: \'chat\'">&lt;/body><br/>&lt;/html></pre>'
+    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Todos&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript"><br/>            $(T.run);<br/>        &lt;/script><br/>    &lt;/head><br/>    &lt;body data-bind="pane: \'chat\'">&lt;/body><br/>&lt;/html></pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Chat'] = Samples['About/Chat'] || [];
@@ -221,7 +221,7 @@ Samples['About/Chat'] = Samples['About/Chat'] || [];
 Samples['About/Chat'].push({
     filename: 'messages.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.messages = ko.observableArray();<br/><br/>    pane.pubsub.subscribe(\'chat.message\',<br/>        function (message) {<br/>            self.messages.push(message);<br/>        });<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.messages = ko.observableArray();<br/><br/>    pane.pubsub.subscribe(\'chat.message\',<br/>        function (message) {<br/>            self.messages.push(message);<br/>        });<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Chat'] = Samples['About/Chat'] || [];
@@ -235,7 +235,7 @@ Samples['About/Chat'] = Samples['About/Chat'] || [];
 Samples['About/Chat'].push({
     filename: 'sender.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.name = ko.observable(\'Anonymous\');<br/>    this.message = ko.observable();<br/><br/>    this.send = function() {<br/>        pane.pubsub.publish(\'chat.message\', {<br/>            name: self.name(),<br/>            message: self.message()<br/>        });<br/>        self.message(\'\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    this.name = ko.observable(\'Anonymous\');<br/>    this.message = ko.observable();<br/><br/>    this.send = function() {<br/>        pane.pubsub.publish(\'chat.message\', {<br/>            name: self.name(),<br/>            message: self.message()<br/>        });<br/>        self.message(\'\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Mobile'] = Samples['About/Mobile'] || [];
@@ -249,7 +249,7 @@ Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>  &lt;head><br/>    &lt;title>Tribe Mobile&lt;/title><br/>    <br/>    &lt;!-- Some metadata for mobile browsers --><br/>    &lt;meta name="viewport"<br/>          content="minimum-scale=1.0, width=device-width, <br/>                   maximum-scale=1.0, user-scalable=no" /><br/>     <br/>    &lt;script src="jquery.js">&lt;/script><br/>    &lt;script src="knockout.js">&lt;/script><br/>    &lt;script src="Tribe.js">&lt;/script><br/><br/>    &lt;!-- Tribe.Mobile.js is all you need to load --><br/>    &lt;script src="Tribe.Mobile.js">&lt;/script><br/><br/>    &lt;script type="text/javascript"><br/>        $(TC.run);<br/>    &lt;/script><br/>  &lt;/head><br/><br/>  &lt;!-- Use /Mobile/main as your host pane --><br/>  &lt;body data-bind="pane: \'/Mobile/main\',<br/>                   data: { pane: \'welcome\' }"><br/>  &lt;/body><br/>&lt;/html><br/></pre>'
+    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>  &lt;head><br/>    &lt;title>Tribe Mobile&lt;/title><br/>    <br/>    &lt;!-- Some metadata for mobile browsers --><br/>    &lt;meta name="viewport"<br/>          content="minimum-scale=1.0, width=device-width, <br/>                   maximum-scale=1.0, user-scalable=no" /><br/>     <br/>    &lt;script src="jquery.js">&lt;/script><br/>    &lt;script src="knockout.js">&lt;/script><br/>    &lt;script src="Tribe.js">&lt;/script><br/><br/>    &lt;!-- Tribe.Mobile.js is all you need to load --><br/>    &lt;script src="Tribe.Mobile.js">&lt;/script><br/><br/>    &lt;script type="text/javascript"><br/>        $(T.run);<br/>    &lt;/script><br/>  &lt;/head><br/><br/>  &lt;!-- Use /Mobile/main as your host pane --><br/>  &lt;body data-bind="pane: \'/Mobile/main\',<br/>                   data: { pane: \'welcome\' }"><br/>  &lt;/body><br/>&lt;/html><br/></pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Mobile'] = Samples['About/Mobile'] || [];
@@ -277,7 +277,7 @@ Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
     filename: 'samples.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    TC.toolbar.title(\'Title!\');<br/>    <br/>    TC.toolbar.options([<br/>        { text: \'Option 1\', func: function () { } },<br/>        { text: \'Option 2\', func: function () { } }<br/>    ]);<br/><br/>    this.listData = {<br/>        items: [<br/>            { id: 1, name: \'Item 1\' },<br/>            { id: 2, name: \'Item 2\' }<br/>        ],<br/>        itemText: function(item) {<br/>             return item.id + \' - \' + item.name;<br/>        },<br/>        headerText: \'Select List\',<br/>        itemClick: function(item) { }<br/>    };<br/><br/>    this.overlay = function() {<br/>        TC.overlay(\'overlay\');<br/>    };<br/><br/>    this.navigate = function() {<br/>        pane.navigate(\'navigate\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    T.toolbar.title(\'Title!\');<br/>    <br/>    T.toolbar.options([<br/>        { text: \'Option 1\', func: function () { } },<br/>        { text: \'Option 2\', func: function () { } }<br/>    ]);<br/><br/>    this.listData = {<br/>        items: [<br/>            { id: 1, name: \'Item 1\' },<br/>            { id: 2, name: \'Item 2\' }<br/>        ],<br/>        itemText: function(item) {<br/>             return item.id + \' - \' + item.name;<br/>        },<br/>        headerText: \'Select List\',<br/>        itemClick: function(item) { }<br/>    };<br/><br/>    this.overlay = function() {<br/>        T.overlay(\'overlay\');<br/>    };<br/><br/>    this.navigate = function() {<br/>        pane.navigate(\'navigate\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['About/Mobile'] = Samples['About/Mobile'] || [];
@@ -298,7 +298,7 @@ Samples['About/Mobile'] = Samples['About/Mobile'] || [];
 Samples['About/Mobile'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    TC.toolbar.defaults.back = true;<br/><br/>    this.samples = function() {<br/>        pane.navigate(\'samples\');<br/>    };<br/><br/>    this.chat = function () {<br/>        pane.navigate(\'chat\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    T.toolbar.defaults.back = true;<br/><br/>    this.samples = function() {<br/>        pane.navigate(\'samples\');<br/>    };<br/><br/>    this.chat = function () {<br/>        pane.navigate(\'chat\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Creating'] = Samples['Panes/Creating'] || [];
@@ -319,14 +319,14 @@ Samples['Panes/Creating'] = Samples['Panes/Creating'] || [];
 Samples['Panes/Creating'].push({
     filename: 'helloWorld.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    // Model properties are available for <br/>    // data binding in your template.<br/>    this.message = "Message passed: " + pane.data.message;<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    // Model properties are available for <br/>    // data binding in your template.<br/>    this.message = "Message passed: " + pane.data.message;<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Creating'] = Samples['Panes/Creating'] || [];
 Samples['Panes/Creating'].push({
     filename: 'index.html',
     icon: 'Images/icon.html.png',
-    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Creating Panes&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript">$(TC.run)&lt;/script><br/>    &lt;/head><br/>    <br/>    &lt;!-- Create a pane and pass it some data --><br/>    &lt;body data-bind="pane: \'helloWorld\',<br/>                     data: { message: \'Test message.\' }"><br/>    &lt;/body><br/>&lt;/html></pre>'
+    content: '<pre class="prettyprint"><br/>&lt;!DOCTYPE html><br/>&lt;html><br/>    &lt;head><br/>        &lt;title>Creating Panes&lt;/title><br/>        &lt;script src="jquery.js">&lt;/script><br/>        &lt;script src="knockout.js">&lt;/script><br/>        &lt;script src="Tribe.js">&lt;/script><br/>        <br/>        &lt;script type="text/javascript">$(T.run)&lt;/script><br/>    &lt;/head><br/>    <br/>    &lt;!-- Create a pane and pass it some data --><br/>    &lt;body data-bind="pane: \'helloWorld\',<br/>                     data: { message: \'Test message.\' }"><br/>    &lt;/body><br/>&lt;/html></pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Dynamic'] = Samples['Panes/Dynamic'] || [];
@@ -340,7 +340,7 @@ Samples['Panes/Dynamic'] = Samples['Panes/Dynamic'] || [];
 Samples['Panes/Dynamic'].push({
     filename: 'create.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var i = 0;<br/>    <br/>    // Dynamically insert a pane into the element<br/>    // with its class set to "items".<br/>    this.createPane = function() {<br/>        TC.appendNode(\'.items\', { path: \'item\', data: ++i });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var i = 0;<br/>    <br/>    // Dynamically insert a pane into the element<br/>    // with its class set to "items".<br/>    this.createPane = function() {<br/>        T.appendNode(\'.items\', { path: \'item\', data: ++i });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Dynamic'] = Samples['Panes/Dynamic'] || [];
@@ -382,7 +382,7 @@ Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
 Samples['Panes/Communicating'].push({
     filename: 'layout.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    // Create an observable to share between child panes<br/>    this.observable = ko.observable(\'Test\');<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    // Create an observable to share between child panes<br/>    this.observable = ko.observable(\'Test\');<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
@@ -396,7 +396,7 @@ Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
 Samples['Panes/Communicating'].push({
     filename: 'receiver.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    // Our shared observable<br/>    this.observable = pane.data;<br/>    <br/>    // Listen for messages and push them onto <br/>    // an array as they arrive<br/>    this.messages = ko.observableArray();<br/>    pane.pubsub.subscribe(\'sample.message\', function (data) {<br/>        self.messages.push(data);<br/>    });<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    var self = this;<br/><br/>    // Our shared observable<br/>    this.observable = pane.data;<br/>    <br/>    // Listen for messages and push them onto <br/>    // an array as they arrive<br/>    this.messages = ko.observableArray();<br/>    pane.pubsub.subscribe(\'sample.message\', function (data) {<br/>        self.messages.push(data);<br/>    });<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
@@ -410,7 +410,7 @@ Samples['Panes/Communicating'] = Samples['Panes/Communicating'] || [];
 Samples['Panes/Communicating'].push({
     filename: 'sender.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    // Our shared observable<br/>    this.observable = pane.data;<br/>    <br/>    // The pubsub object is available through the pane object.<br/>    this.message = ko.observable();<br/>    this.send = function() {<br/>        pane.pubsub.publish(\'sample.message\',<br/>            { message: self.message() });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    // Our shared observable<br/>    this.observable = pane.data;<br/>    <br/>    // The pubsub object is available through the pane object.<br/>    this.message = ko.observable();<br/>    this.send = function() {<br/>        pane.pubsub.publish(\'sample.message\',<br/>            { message: self.message() });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Lifecycle'] = Samples['Panes/Lifecycle'] || [];
@@ -424,7 +424,7 @@ Samples['Panes/Lifecycle'] = Samples['Panes/Lifecycle'] || [];
 Samples['Panes/Lifecycle'].push({
     filename: 'create.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var i = 0;<br/>    <br/>    this.createPane = function() {<br/>        TC.appendNode(pane.find(\'.items\'),<br/>            { path: \'item\', data: ++i });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var i = 0;<br/>    <br/>    this.createPane = function() {<br/>        T.appendNode(pane.find(\'.items\'),<br/>            { path: \'item\', data: ++i });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Lifecycle'] = Samples['Panes/Lifecycle'] || [];
@@ -445,7 +445,7 @@ Samples['Panes/Lifecycle'] = Samples['Panes/Lifecycle'] || [];
 Samples['Panes/Lifecycle'].push({
     filename: 'item.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    this.data = pane.data;<br/><br/>    // The initialise function is called before the pane<br/>    // is rendered. If you return a jQuery deferred object,<br/>    // Tribe will wait for it to resolve before continuing.<br/>    <br/>    this.initialise = function() {<br/>        var promise = $.Deferred();<br/>        setTimeout(promise.resolve, 500);<br/>        return promise;<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    this.data = pane.data;<br/><br/>    // The initialise function is called before the pane<br/>    // is rendered. If you return a jQuery deferred object,<br/>    // Tribe will wait for it to resolve before continuing.<br/>    <br/>    this.initialise = function() {<br/>        var promise = $.Deferred();<br/>        setTimeout(promise.resolve, 500);<br/>        return promise;<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
@@ -459,7 +459,7 @@ Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
 Samples['Panes/Navigating'].push({
     filename: 'first.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.next = function() {<br/>        pane.navigate(\'second\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.next = function() {<br/>        pane.navigate(\'second\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
@@ -487,7 +487,7 @@ Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
 Samples['Panes/Navigating'].push({
     filename: 'second.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.back = function () {<br/>        pane.navigateBack();<br/>    };<br/><br/>    this.next = function () {<br/>        pane.navigate(\'third\');<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.back = function () {<br/>        pane.navigateBack();<br/>    };<br/><br/>    this.next = function () {<br/>        pane.navigate(\'third\');<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
@@ -501,7 +501,7 @@ Samples['Panes/Navigating'] = Samples['Panes/Navigating'] || [];
 Samples['Panes/Navigating'].push({
     filename: 'third.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.back = function() {<br/>        pane.navigateBack();<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.back = function() {<br/>        pane.navigateBack();<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
@@ -522,7 +522,7 @@ Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
 Samples['Webmail/1-Folders'].push({
     filename: 'folders.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>// Our model just contains a list of folders and<br/>// an observable to hold the selected folder.<br/><br/>TC.registerModel(function (pane) {<br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(\'Inbox\');<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>// Our model just contains a list of folders and<br/>// an observable to hold the selected folder.<br/><br/>T.registerModel(function (pane) {<br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(\'Inbox\');<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/1-Folders'] = Samples['Webmail/1-Folders'] || [];
@@ -550,7 +550,7 @@ Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
 Samples['Webmail/2-Mails'].push({
     filename: 'folders.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(pane.data.folder);<br/><br/>    // We\'ve added a separate click handler to navigate<br/>    // when a folder is selected.<br/>    this.selectFolder = function (folder) {<br/>        self.selectedFolder(folder);<br/>        pane.navigate(\'mails\', { folder: folder });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(pane.data.folder);<br/><br/>    // We\'ve added a separate click handler to navigate<br/>    // when a folder is selected.<br/>    this.selectFolder = function (folder) {<br/>        self.selectedFolder(folder);<br/>        pane.navigate(\'mails\', { folder: folder });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
@@ -585,7 +585,7 @@ Samples['Webmail/2-Mails'] = Samples['Webmail/2-Mails'] || [];
 Samples['Webmail/2-Mails'].push({
     filename: 'mails.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = ko.observable();<br/><br/>    // Load data using AJAX to our data property    <br/>    this.initialise = function() {<br/>        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = ko.observable();<br/><br/>    // Load data using AJAX to our data property    <br/>    this.initialise = function() {<br/>        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
@@ -606,7 +606,7 @@ Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
 Samples['Webmail/3-Content'].push({
     filename: 'folders.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(pane.data.folder);<br/><br/>    this.selectFolder = function (folder) {<br/>        self.selectedFolder(folder);<br/>        pane.navigate(\'mails\', { folder: folder });<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.folders = [\'Inbox\', \'Archive\', \'Sent\', \'Spam\'];<br/>    this.selectedFolder = ko.observable(pane.data.folder);<br/><br/>    this.selectFolder = function (folder) {<br/>        self.selectedFolder(folder);<br/>        pane.navigate(\'mails\', { folder: folder });<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
@@ -641,7 +641,7 @@ Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
 Samples['Webmail/3-Content'].push({
     filename: 'mails.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = ko.observable();<br/><br/>    this.initialise = function () {<br/>        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);<br/>    };<br/>    <br/>    this.selectMail = function (mail) {<br/>        pane.navigate(\'viewMail\', mail);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = ko.observable();<br/><br/>    this.initialise = function () {<br/>        $.getJSON(\'Data/folder/\' + pane.data.folder, self.data);<br/>    };<br/>    <br/>    this.selectMail = function (mail) {<br/>        pane.navigate(\'viewMail\', mail);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
@@ -662,7 +662,7 @@ Samples['Webmail/3-Content'] = Samples['Webmail/3-Content'] || [];
 Samples['Webmail/3-Content'].push({
     filename: 'viewMail.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.data = ko.observable();<br/><br/>    this.initialise = function () {<br/>        $.getJSON(\'Data/mail/\' + pane.data.id, self.data);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/>    <br/>    this.data = ko.observable();<br/><br/>    this.initialise = function () {<br/>        $.getJSON(\'Data/mail/\' + pane.data.id, self.data);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
@@ -676,7 +676,7 @@ Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'confirm.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function () {<br/>        // Dump the details object on screen for our viewer\'s pleasure.<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function () {<br/>        // Dump the details object on screen for our viewer\'s pleasure.<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
@@ -711,7 +711,7 @@ Samples['CreditCard/1-Personal'] = Samples['CreditCard/1-Personal'] || [];
 Samples['CreditCard/1-Personal'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.start = function () {<br/>        // panes expose a simple function for starting flows<br/>        pane.startFlow(PersonalFlow);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.start = function () {<br/>        // panes expose a simple function for starting flows<br/>        pane.startFlow(PersonalFlow);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/2-Business'] = Samples['CreditCard/2-Business'] || [];
@@ -746,7 +746,7 @@ Samples['CreditCard/2-Business'] = Samples['CreditCard/2-Business'] || [];
 Samples['CreditCard/2-Business'].push({
     filename: 'confirm.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/2-Business'] = Samples['CreditCard/2-Business'] || [];
@@ -781,7 +781,7 @@ Samples['CreditCard/2-Business'] = Samples['CreditCard/2-Business'] || [];
 Samples['CreditCard/2-Business'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.personal = function() {<br/>        pane.startFlow(PersonalFlow2);<br/>    };<br/><br/>    this.business = function () {<br/>        pane.startFlow(BusinessFlow2);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.personal = function() {<br/>        pane.startFlow(PersonalFlow2);<br/>    };<br/><br/>    this.business = function () {<br/>        pane.startFlow(BusinessFlow2);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/3-Saga'] = Samples['CreditCard/3-Saga'] || [];
@@ -816,7 +816,7 @@ Samples['CreditCard/3-Saga'] = Samples['CreditCard/3-Saga'] || [];
 Samples['CreditCard/3-Saga'].push({
     filename: 'confirm.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/3-Saga'] = Samples['CreditCard/3-Saga'] || [];
@@ -858,7 +858,7 @@ Samples['CreditCard/3-Saga'] = Samples['CreditCard/3-Saga'] || [];
 Samples['CreditCard/3-Saga'].push({
     filename: 'welcome.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    this.personal = function() {<br/>        pane.startFlow(PersonalFlow3);<br/>    };<br/><br/>    this.business = function () {<br/>        pane.startFlow(BusinessFlow3);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    this.personal = function() {<br/>        pane.startFlow(PersonalFlow3);<br/>    };<br/><br/>    this.business = function () {<br/>        pane.startFlow(BusinessFlow3);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
@@ -886,7 +886,7 @@ Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
 Samples['CreditCard/4-Combined'].push({
     filename: 'confirm.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/><br/>    this.restart = function() {<br/>        pane.startFlow(CreditCardFlow);<br/>    };<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function (pane) {<br/>    var self = this;<br/><br/>    this.data = pane.data;<br/>    this.json = ko.observable();<br/><br/>    this.submit = function() {<br/>        self.json(JSON.stringify(pane.data));<br/>    };<br/><br/>    this.restart = function() {<br/>        pane.startFlow(CreditCardFlow);<br/>    };<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
@@ -914,7 +914,7 @@ Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
 Samples['CreditCard/4-Combined'].push({
     filename: 'host.js',
     icon: 'Images/icon.js.png',
-    content: '<pre class="prettyprint"><br/>TC.registerModel(function(pane) {<br/>    pane.startFlow(CreditCardFlow);<br/>});</pre>'
+    content: '<pre class="prettyprint"><br/>T.registerModel(function(pane) {<br/>    pane.startFlow(CreditCardFlow);<br/>});</pre>'
 });
 Samples = window.Samples || {};
 Samples['CreditCard/4-Combined'] = Samples['CreditCard/4-Combined'] || [];
@@ -934,7 +934,7 @@ Samples['CreditCard/4-Combined'].push({
 
 // Infrastructure/syntaxHighlightEvent.js
 
-TC.Events.syntaxHighlight = function(pane) {
+T.Events.syntaxHighlight = function(pane) {
     pane.find();
 };
 
@@ -942,7 +942,7 @@ TC.Events.syntaxHighlight = function(pane) {
 // Panes/Content/Guides/Tutorials/CreditCard/tutorial.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Guides/Tutorials/CreditCard/tutorial' };
+T.scriptEnvironment = { resourcePath: '/Content/Guides/Tutorials/CreditCard/tutorial' };
 
 Tutorials.creditCard = {
     frames: [
@@ -959,7 +959,7 @@ Tutorials.creditCard = {
 // Panes/Content/Guides/Tutorials/Webmail/tutorial.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Guides/Tutorials/Webmail/tutorial' };
+T.scriptEnvironment = { resourcePath: '/Content/Guides/Tutorials/Webmail/tutorial' };
 
 Tutorials.webmail = {
     frames: [
@@ -974,11 +974,11 @@ Tutorials.webmail = {
 // Panes/Content/Reference/Core/api.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/api' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Core/api' };
 
 Reference.API = [
     {
-        name: 'TC.run',
+        name: 'T.run',
         description: 'Start Tribe.Composite, ensuring the specified resources are loaded first.',
         arguments: [
             { name: 'resourcesToPreload', type: '[String]', description: 'URLs to required HTML, CSS or JS resources.' },
@@ -987,49 +987,49 @@ Reference.API = [
         returns: 'undefined'
     },
     {
-        name: 'TC.createNode',
+        name: 'T.createNode',
         description: 'Creates a new Pane object and binds it to the specified element with the specified pane options, and encapsulates it in a Node object.',
         arguments: [
-            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' },
+            { name: 'element', type: 'selector | T.Types.Node | T.Types.Pane' },
             { name: 'paneOptions', type: 'Object' },
-            { name: 'parentNode', type: 'TC.Types.Node' },
-            { name: 'context', type: 'TC.Types.Context' }
+            { name: 'parentNode', type: 'T.Types.Node' },
+            { name: 'context', type: 'T.Types.Context' }
         ],
-        returns: 'TC.Types.Node'
+        returns: 'T.Types.Node'
     },
     {
-        name: 'TC.appendNode',
+        name: 'T.appendNode',
         description: 'Same as createNode, but appends a new DIV element to the target element.',
         arguments: [
-            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' },
+            { name: 'element', type: 'selector | T.Types.Node | T.Types.Pane' },
             { name: 'paneOptions', type: 'Object' },
-            { name: 'parentNode', type: 'TC.Types.Node' },
-            { name: 'context', type: 'TC.Types.Context' }
+            { name: 'parentNode', type: 'T.Types.Node' },
+            { name: 'context', type: 'T.Types.Context' }
         ],
-        returns: 'TC.Types.Node'
+        returns: 'T.Types.Node'
     },
     {
-        name: 'TC.insertNodeAfter',
+        name: 'T.insertNodeAfter',
         description: 'Same as createNode, but inserts a new DIV element after the target element.',
         arguments: [
-            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' },
+            { name: 'element', type: 'selector | T.Types.Node | T.Types.Pane' },
             { name: 'paneOptions', type: 'Object' },
-            { name: 'parentNode', type: 'TC.Types.Node' },
-            { name: 'context', type: 'TC.Types.Context' }
+            { name: 'parentNode', type: 'T.Types.Node' },
+            { name: 'context', type: 'T.Types.Context' }
         ],
-        returns: 'TC.Types.Node'
+        returns: 'T.Types.Node'
     },
     {
-        name: 'TC.nodeFor',
+        name: 'T.nodeFor',
         description: 'Find the Node object for the specified selector, Node or Pane.',
         arguments: [
-            { name: 'element', type: 'selector | TC.Types.Node | TC.Types.Pane' }
+            { name: 'element', type: 'selector | T.Types.Node | T.Types.Pane' }
         ],
-        returns: 'TC.Types.Node'
+        returns: 'T.Types.Node'
     },
     {
-        name: 'TC.registerModel',
-        description: 'Registers a model in the repository. Either the TC.scriptEnvironment must be set first or a resourcePath must be specified.',
+        name: 'T.registerModel',
+        description: 'Registers a model in the repository. Either the T.scriptEnvironment must be set first or a resourcePath must be specified.',
         arguments: [
             { name: 'modelConstructor', type: 'Function' },
             { name: 'options', type: 'Object' },
@@ -1044,7 +1044,7 @@ Reference.API = [
 // Panes/Content/Reference/Core/bindingHandlers.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/bindingHandlers' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Core/bindingHandlers' };
 
 Reference.BindingHandlers = [
     {
@@ -1072,7 +1072,7 @@ Reference.BindingHandlers = [
 // Panes/Content/Reference/Core/panes.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/panes' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Core/panes' };
 
 Reference.Panes = {
     options: [
@@ -1095,14 +1095,14 @@ Reference.Panes = {
 // Panes/Content/Reference/Core/transitions.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Core/transitions' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Core/transitions' };
 
 Reference.Transition = {
-    name: 'TC.transition',
+    name: 'T.transition',
     description: 'Create an object with a set of functions for transition elements and nodes.',
     arguments: [
-        { name: 'target', type: 'selector | TC.Types.Pane | TC.Types.Node', description: 'The target of the transition.' },
-        { name: 'transition', type: 'String', description: 'The name of the transition registered in the TC.Transitions collection. If not specified, this will default to transition specified on the pane or node.<br/>Built-in transitions are fade, slideLeft, slideRight, slideUp and slideDown.' },
+        { name: 'target', type: 'selector | T.Types.Pane | T.Types.Node', description: 'The target of the transition.' },
+        { name: 'transition', type: 'String', description: 'The name of the transition registered in the T.Transitions collection. If not specified, this will default to transition specified on the pane or node.<br/>Built-in transitions are fade, slideLeft, slideRight, slideUp and slideDown.' },
         { name: 'reverse', type: 'Boolean', description: 'Use the reverse transition to the one specified.' }
     ],
     returns: 'Object'
@@ -1138,7 +1138,7 @@ Reference.Transition.Functions = [
 // Panes/Content/Reference/MessageHub/client.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/client' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/client' };
 
 Reference.MessageHub = [
     {
@@ -1190,7 +1190,7 @@ Reference.MessageHub.ChannelOptions = [
 // Panes/Content/Reference/MessageHub/configuration.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/configuration' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/MessageHub/configuration' };
 
 Reference.MessageHub.Server = [
     {
@@ -1263,7 +1263,7 @@ Reference.MessageHub.Server = [
 // Panes/Content/Reference/PackScript/packscript.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/PackScript/packscript' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/PackScript/packscript' };
 
 Reference.PackScript = {
     options: [
@@ -1377,7 +1377,7 @@ Reference.PackScript = {
 // Panes/Content/Reference/PubSub/core.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/core' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/core' };
 
 Reference.PubSub = {
     name: 'Tribe.PubSub',
@@ -1444,7 +1444,7 @@ Reference.PubSub = {
                 { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Saga definition or its constructor.' },
                 { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'TC.Types.Saga'
+            returns: 'T.Types.Saga'
         }
 
     ],
@@ -1472,7 +1472,7 @@ Reference.PubSub = {
 // Panes/Content/Reference/PubSub/envelopes.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/envelopes' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/envelopes' };
 
 Reference.PubSub.Envelopes = [
     { name: 'topic', type: 'String', description: 'The message topic.' },
@@ -1486,7 +1486,7 @@ Reference.PubSub.Envelopes = [
 // Panes/Content/Reference/PubSub/Saga.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/Saga' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/PubSub/Saga' };
 
 Reference.PubSub.Saga = {
     name: 'Tribe.PubSub.Saga',
@@ -1526,11 +1526,11 @@ Reference.PubSub.Saga = {
     ],
     properties: [
         { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub instance used for subscriptions.' },
-        { name: 'children', type: '[TC.Types.Saga]', description: 'An array of sagas added through handler definitions or startChild.' }
+        { name: 'children', type: '[T.Types.Saga]', description: 'An array of sagas added through handler definitions or startChild.' }
     ],
     Definition: {
         arguments: [
-            { Argument: 'saga', Type: 'TC.Types.Flow', Description: 'The Saga object that is consuming the definition.' },
+            { Argument: 'saga', Type: 'T.Types.Flow', Description: 'The Saga object that is consuming the definition.' },
             { Argument: 'args, ...', Type: 'Any', Description: 'The additional arguments that were passed to the Saga constructor.' }
         ],
         properties: [
@@ -1545,14 +1545,14 @@ Reference.PubSub.Saga = {
 // Panes/Content/Reference/Types/Flow.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Flow' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Flow' };
 
 Reference.Types.Flow = {
-    name: 'TC.Types.Flow',
+    name: 'T.Types.Flow',
     description: 'Manages a navigation flow by maintaining state and handling specific messages.',
     constructor: {
         arguments: [
-            { name: 'navigationSource', type: 'TC.Types.Pane | TC.Types.Node', description: 'The flow attaches to the navigation node of the pane or node specified.' },
+            { name: 'navigationSource', type: 'T.Types.Pane | T.Types.Node', description: 'The flow attaches to the navigation node of the pane or node specified.' },
             { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
             { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
         ]
@@ -1564,7 +1564,7 @@ Reference.Types.Flow = {
             arguments: [
                 { name: 'data', type: 'Constructor', description: 'Data that is passed to the onstart handler.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'startChild',
@@ -1573,7 +1573,7 @@ Reference.Types.Flow = {
                 { name: 'definition', type: 'Constructor', description: 'The constructor for the object that contains the Flow definition.' },
                 { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'end',
@@ -1581,7 +1581,7 @@ Reference.Types.Flow = {
             arguments: [
                 { name: 'data', type: 'Constructor', description: 'Data that is passed to the onend handler.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'startSaga',
@@ -1632,14 +1632,14 @@ Reference.Types.Flow = {
         }
     ],
     properties: [
-        { name: 'node', type: 'TC.Types.Node', description: 'The node being used for navigation.' },
+        { name: 'node', type: 'T.Types.Node', description: 'The node being used for navigation.' },
         { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub instance used for subscriptions.' },
         { name: 'saga', type: 'Tribe.PubSub.Saga', description: 'The underlying Saga instance.' },
-        { name: 'sagas', type: '[TC.Types.Saga]', description: 'Array of Sagas started with the startSaga function.' }
+        { name: 'sagas', type: '[T.Types.Saga]', description: 'Array of Sagas started with the startSaga function.' }
     ],
     Definition: {
         arguments: [
-            { Argument: 'flow', Type: 'TC.Types.Flow', Description: 'The Flow object that is consuming the definition.' },
+            { Argument: 'flow', Type: 'T.Types.Flow', Description: 'The Flow object that is consuming the definition.' },
             { Argument: 'args, ...', Type: 'Any', Description: 'The additional arguments that were passed to the Flow constructor.' }
         ],
         properties: [
@@ -1654,10 +1654,10 @@ Reference.Types.Flow = {
 // Panes/Content/Reference/Types/History.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/History' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/History' };
 
 Reference.Types.History = {
-    name: 'TC.Types.History',
+    name: 'T.Types.History',
     description: 'Maintains the state of the browser history stack, including URL data.',
     constructor: {
         arguments: [
@@ -1702,10 +1702,10 @@ Reference.Types.History = {
 // Panes/Content/Reference/Types/Loader.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Loader' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Loader' };
 
 Reference.Types.Loader = {
-    name: 'TC.Types.Loader',
+    name: 'T.Types.Loader',
     description: 'Ensures URLs are only loaded once. Concurrent requests return the same promise. The actual loading of resources is performed by specific LoadHandlers.',
     functions: [
         {
@@ -1726,10 +1726,10 @@ Reference.Types.Loader = {
 // Panes/Content/Reference/Types/Logger.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Logger' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Logger' };
 
 Reference.Types.Logger = {
-    name: 'TC.Types.Logger',
+    name: 'T.Types.Logger',
     description: 'Provides a unified API for logging functionality',
     functions: [
         {
@@ -1774,7 +1774,7 @@ Reference.Types.Logger = {
         },
         {
             name: 'setLogger',
-            description: 'Set the underlying logging mechanism registed in the TC.Loggers collection. Default is \'console\'.',
+            description: 'Set the underlying logging mechanism registed in the T.Loggers collection. Default is \'console\'.',
             arguments: [
                 { name: 'newLogger', type: 'String' }
             ],
@@ -1788,10 +1788,10 @@ Reference.Types.Logger = {
 // Panes/Content/Reference/Types/Models.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Models' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Models' };
 
 Reference.Types.Models = {
-    name: 'TC.Types.Models',
+    name: 'T.Types.Models',
     description: 'Managed collection of pane models.',
     functions: [
         {
@@ -1812,15 +1812,15 @@ Reference.Types.Models = {
 // Panes/Content/Reference/Types/Node.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Node' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Node' };
 
 Reference.Types.Node = {
-    name: 'TC.Types.Node',
+    name: 'T.Types.Node',
     description: 'A Node object is a placeholder for a pane within the UI structure. Nodes can be transitioned to display different panes using the navigate or transitionTo functions.',
     constructor: {
         arguments: [
-            { name: 'parent', type: 'TC.Types.Node' },
-            { name: 'pane', type: 'TC.Types.Pane' }
+            { name: 'parent', type: 'T.Types.Node' },
+            { name: 'pane', type: 'T.Types.Pane' }
         ]
     },
     functions: [
@@ -1841,7 +1841,7 @@ Reference.Types.Node = {
         {
             name: 'findNavigation',
             description: 'Find the node that handles navigation for the current node. Usually the closest parent that has been marked with handlesNavigation, unless overridden.',
-            returns: 'TC.Types.Navigation'
+            returns: 'T.Types.Navigation'
         },
         {
             name: 'transitionTo',
@@ -1860,20 +1860,20 @@ Reference.Types.Node = {
                 { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
                 { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'setPane',
             description: 'Sets the pane on the current node.',
             arguments: [
-                { name: 'pane', type: 'TC.Types.Pane' }
+                { name: 'pane', type: 'T.Types.Pane' }
             ],
             returns: 'undefined'
         },
         {
             name: 'nodeForPath',
             description: 'Find the node to use for inheriting paths from.',
-            returns: 'TC.Types.Node'
+            returns: 'T.Types.Node'
         },
         {
             name: 'dispose',
@@ -1884,16 +1884,16 @@ Reference.Types.Node = {
     properties: [
         {
             name: 'parent',
-            type: 'TC.Types.Node'
+            type: 'T.Types.Node'
         },
         {
             name: 'children',
-            type: '[TC.Types.Node]'
+            type: '[T.Types.Node]'
         },
         {
             name: 'root',
             description: 'The root node of the current node tree.',
-            type: 'TC.Types.Node'
+            type: 'T.Types.Node'
         },
         {
             name: 'id',
@@ -1902,17 +1902,17 @@ Reference.Types.Node = {
         },
         {
             name: 'pane',
-            type: 'TC.Types.Pane'
+            type: 'T.Types.Pane'
         },
         {
             name: 'navigation',
             description: 'The Navigation object for the current node, if any.',
-            type: 'TC.Types.Navigation'
+            type: 'T.Types.Navigation'
         },
         {
             name: 'defaultNavigation',
             description: 'The default Navigation object to use for the current node. Set on the root node so that all nodes in the tree can access the navigation node.',
-            type: 'TC.Types.Node'
+            type: 'T.Types.Node'
         }
     ]
 };
@@ -1922,10 +1922,10 @@ Reference.Types.Node = {
 // Panes/Content/Reference/Types/Operation.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Operation' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Operation' };
 
 Reference.Types.Operation = {
-    name: 'TC.Types.Operation',
+    name: 'T.Types.Operation',
     description: 'Encapsulates an operation involving several child operations, keyed by an id. Child operations can be added cumulatively. Promise resolves when the all child operations complete.',
     functions: [
         {
@@ -1959,10 +1959,10 @@ Reference.Types.Operation = {
 // Panes/Content/Reference/Types/Pane.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Pane' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Pane' };
 
 Reference.Types.Pane = {
-    name: 'TC.Types.Pane',
+    name: 'T.Types.Pane',
     description: 'A pane is a single user interface component within an application. It can consist of a HTML template, a JavaScript model and a CSS stylesheet. Panes can be nested within other panes.',
     constructor: {
         arguments: [
@@ -1986,7 +1986,7 @@ Reference.Types.Pane = {
                 { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
                 { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'remove',
@@ -2005,7 +2005,7 @@ Reference.Types.Pane = {
             name: 'inheritPathFrom',
             description: 'If the pane\'s current path is relative, inherit the absolute path from the specified node.',
             arguments: [
-                { name: 'node', type: 'TC.Types.Node' }
+                { name: 'node', type: 'T.Types.Node' }
             ],
             returns: 'undefined'
         },
@@ -2089,10 +2089,10 @@ Reference.Types.Pane = {
 // Panes/Content/Reference/Types/Pipeline.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Pipeline' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Pipeline' };
 
 Reference.Types.Pipeline = {
-    name: 'TC.Types.Pipeline',
+    name: 'T.Types.Pipeline',
     description: 'Manages the step by step execution of a number of named events. Each step will only execute after the promise returned by the previous step resolves. A rejected promise will halt execution of the pipeline.',
     constructor: {
         arguments: [
@@ -2118,10 +2118,10 @@ Reference.Types.Pipeline = {
 // Panes/Content/Reference/Types/Templates.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Templates' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Types/Templates' };
 
 Reference.Types.Templates = {
-    name: 'TC.Types.Templates',
+    name: 'T.Types.Templates',
     description: 'Managed collection of HTML templates.',
     functions: [
         {
@@ -2158,14 +2158,14 @@ Reference.Types.Templates = {
 // Panes/Content/Reference/Utilities/collections.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/collections' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/collections' };
 
 Reference.Utilities.Collections = [
-    { name: 'TC.Utils.each', description: '', arguments: [{ name: 'collection' }, { name: 'iterator' }] },
-    { name: 'TC.Utils.map', description: '', arguments: [{ name: 'collection' }, { name: 'iterator' }] },
-    { name: 'TC.Utils.reduce', description: '', arguments: [{ name: 'collection' }, { name: 'initialValue' }, { name: 'iterator' }] },
-    { name: 'TC.Utils.filter', description: '', arguments: [{ name: 'array' }, { name: 'iterator' }] },
-    { name: 'TC.Utils.pluck', description: '', arguments: [{ name: 'array' }, { name: 'iterator' }] }
+    { name: 'T.Utils.each', description: '', arguments: [{ name: 'collection' }, { name: 'iterator' }] },
+    { name: 'T.Utils.map', description: '', arguments: [{ name: 'collection' }, { name: 'iterator' }] },
+    { name: 'T.Utils.reduce', description: '', arguments: [{ name: 'collection' }, { name: 'initialValue' }, { name: 'iterator' }] },
+    { name: 'T.Utils.filter', description: '', arguments: [{ name: 'array' }, { name: 'iterator' }] },
+    { name: 'T.Utils.pluck', description: '', arguments: [{ name: 'array' }, { name: 'iterator' }] }
 ];
 
 
@@ -2173,13 +2173,13 @@ Reference.Utilities.Collections = [
 // Panes/Content/Reference/Utilities/embeddedState.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/embeddedState' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/embeddedState' };
 
 Reference.Utilities.EmbeddedState = [
-    { name: 'TC.Utils.embedState', description: '', arguments: [{ name: 'model' }, { name: 'context' }, { name: 'node' }] },
-    { name: 'TC.Utils.contextFor', description: '', arguments: [{ name: 'element' }] },
-    { name: 'TC.Utils.extractContext', description: '', arguments: [{ name: 'koBindingContext' }] },
-    { name: 'TC.Utils.extractNode', description: '', arguments: [{ name: 'koBindingContext' }] }
+    { name: 'T.Utils.embedState', description: '', arguments: [{ name: 'model' }, { name: 'context' }, { name: 'node' }] },
+    { name: 'T.Utils.contextFor', description: '', arguments: [{ name: 'element' }] },
+    { name: 'T.Utils.extractContext', description: '', arguments: [{ name: 'koBindingContext' }] },
+    { name: 'T.Utils.extractNode', description: '', arguments: [{ name: 'koBindingContext' }] }
 ];
 
 
@@ -2187,12 +2187,12 @@ Reference.Utilities.EmbeddedState = [
 // Panes/Content/Reference/Utilities/events.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/events' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/events' };
 
 Reference.Utilities.Events = [
-    { name: 'TC.Utils.elementDestroyed', description: '', arguments: [{ name: 'element' }], returns: 'jQuery.Deferred' },
-    { name: 'TC.Utils.raiseDocumentEvent', description: '', arguments: [{ name: 'name' }, { name: 'data' }] },
-    { name: 'TC.Utils.handleDocumentEvent', description: '', arguments: [{ name: 'name' }, { name: 'handler' }] },
+    { name: 'T.Utils.elementDestroyed', description: '', arguments: [{ name: 'element' }], returns: 'jQuery.Deferred' },
+    { name: 'T.Utils.raiseDocumentEvent', description: '', arguments: [{ name: 'name' }, { name: 'data' }] },
+    { name: 'T.Utils.handleDocumentEvent', description: '', arguments: [{ name: 'name' }, { name: 'handler' }] },
     { name: '$.complete', description: '', arguments: [{ name: 'deferreds' }] },
     { name: 'jQuery.Event("destroyed")' }
 ];
@@ -2203,13 +2203,13 @@ Reference.Utilities.Events = [
 // Panes/Content/Reference/Utilities/misc.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/misc' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/misc' };
 
 Reference.Utilities.Misc = [
-    { name: 'TC.Utils.try', description: '', arguments: [{ name: 'func' }, { name: 'args' }, { name: 'handleExceptions' }, { name: 'message' }] },
-    { name: 'TC.Utils.idGenerator', description: '', returns: '{ next: function() }' },
-    { name: 'TC.Utils.getUniqueId', description: '' },
-    { name: 'TC.Utils.cleanElement', description: '', arguments: [{ name: 'element' }] }
+    { name: 'T.Utils.try', description: '', arguments: [{ name: 'func' }, { name: 'args' }, { name: 'handleExceptions' }, { name: 'message' }] },
+    { name: 'T.Utils.idGenerator', description: '', returns: '{ next: function() }' },
+    { name: 'T.Utils.getUniqueId', description: '' },
+    { name: 'T.Utils.cleanElement', description: '', arguments: [{ name: 'element' }] }
 ];
 
 
@@ -2218,14 +2218,14 @@ Reference.Utilities.Misc = [
 // Panes/Content/Reference/Utilities/objects.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/objects' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/objects' };
 
 Reference.Utilities.Objects = [
-    { name: 'TC.Utils.arguments', description: '', arguments: [{ name: 'args' }] },
-    { name: 'TC.Utils.removeItem', description: '', arguments: [{ name: 'array' }, { name: 'item' }] },
-    { name: 'TC.Utils.inheritOptions', description: '', arguments: [{ name: 'from' }, { name: 'to' }, { name: 'options' }] },
-    { name: 'TC.Utils.evaluateProperty', description: '', arguments: [{ name: 'target' }, { name: 'property' }] },
-    { name: 'TC.Utils.cloneData', description: '', arguments: [{ name: 'from' }, { name: 'except' }] }
+    { name: 'T.Utils.arguments', description: '', arguments: [{ name: 'args' }] },
+    { name: 'T.Utils.removeItem', description: '', arguments: [{ name: 'array' }, { name: 'item' }] },
+    { name: 'T.Utils.inheritOptions', description: '', arguments: [{ name: 'from' }, { name: 'to' }, { name: 'options' }] },
+    { name: 'T.Utils.evaluateProperty', description: '', arguments: [{ name: 'target' }, { name: 'property' }] },
+    { name: 'T.Utils.cloneData', description: '', arguments: [{ name: 'from' }, { name: 'except' }] }
 ];
 
 
@@ -2234,7 +2234,7 @@ Reference.Utilities.Objects = [
 // Panes/Content/Reference/Utilities/packScript.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/packScript' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/packScript' };
 
 Reference.Utilities.PackScript = [
 ];
@@ -2244,21 +2244,21 @@ Reference.Utilities.PackScript = [
 // Panes/Content/Reference/Utilities/panes.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/panes' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/panes' };
 
 Reference.Utilities.Panes = [
     {
-        name: 'TC.Utils.getPaneOptions',
+        name: 'T.Utils.getPaneOptions',
         description: 'Normalise the passed value and merge the other options.',
         arguments: [{ name: 'value' }, { name: 'otherOptions' }]
     },
     {
-        name: 'TC.Utils.bindPane',
+        name: 'T.Utils.bindPane',
         description: 'Load and bind the pane specified in paneOptions to the specified element and link it to the specified node.',
         arguments: [{ name: 'node' }, { name: 'element' }, { name: 'paneOptions' }, { name: 'context' }]
     },
     {
-        name: 'TC.Utils.insertPaneAfter',
+        name: 'T.Utils.insertPaneAfter',
         description: 'As bindPane, but create a new DIV element and insert it after the specified target.',
         arguments: [{ name: 'node' }, { name: 'target' }, { name: 'paneOptions' }, { name: 'context' }]
     }
@@ -2269,33 +2269,33 @@ Reference.Utilities.Panes = [
 // Panes/Content/Reference/Utilities/paths.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/paths' };
+T.scriptEnvironment = { resourcePath: '/Content/Reference/Utilities/paths' };
 
 Reference.Path = [
     {
-        name: 'TC.Path',
+        name: 'T.Path',
         description: 'The Path function accepts a string containing a path, normalises the path and returns an object with several manipulation functions attached.',
         arguments: [{ name: 'path', type: 'String' }],
-        returns: 'TC.Path',
+        returns: 'T.Path',
         examples: [{
             description: 'Most functions can be chained',
-            code: "TC.Path('Folder').makeAbsolute().combine('file.ext').withoutExtension().toString()",
+            code: "T.Path('Folder').makeAbsolute().combine('file.ext').withoutExtension().toString()",
             result: '/Folder/file'
         }]
     }
 ];
 
 Reference.Path.Functions = [
-    { name: 'withoutFilename', description: '', returns: 'TC.Path' },
-    { name: 'filename', description: '', returns: 'TC.Path' },
+    { name: 'withoutFilename', description: '', returns: 'T.Path' },
+    { name: 'filename', description: '', returns: 'T.Path' },
     { name: 'extension', description: '', returns: 'String' },
-    { name: 'withoutExtension', description: '', returns: 'TC.Path' },
-    { name: 'combine', description: '', arguments: [{ name: 'additionalPath' }], returns: 'TC.Path' },
+    { name: 'withoutExtension', description: '', returns: 'T.Path' },
+    { name: 'combine', description: '', arguments: [{ name: 'additionalPath' }], returns: 'T.Path' },
     { name: 'isAbsolute', description: '', returns: 'Boolean' },
-    { name: 'makeAbsolute', description: '', returns: 'TC.Path' },
-    { name: 'makeRelative', description: '', returns: 'TC.Path' },
+    { name: 'makeAbsolute', description: '', returns: 'T.Path' },
+    { name: 'makeRelative', description: '', returns: 'T.Path' },
     { name: 'asMarkupIdentifier', description: '', returns: 'String' },
-    { name: 'setExtension', description: '', arguments: [{ name: 'extension' }], returns: 'TC.Path' },
+    { name: 'setExtension', description: '', arguments: [{ name: 'extension' }], returns: 'T.Path' },
     { name: 'toString', description: '', returns: 'String' }
 ];
 
@@ -2304,9 +2304,9 @@ Reference.Path.Functions = [
 // Panes/Interface/content.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/content' };
+T.scriptEnvironment = { resourcePath: '/Interface/content' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     this.panePath = panePath(pane.data);
 
     this.renderComplete = function() {
@@ -2330,9 +2330,9 @@ TC.registerModel(function (pane) {
 // Panes/Interface/feedback.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/feedback' };
+T.scriptEnvironment = { resourcePath: '/Interface/feedback' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
     
     this.email = ko.observable().extend({ email: 'This' });
@@ -2371,10 +2371,10 @@ TC.registerModel(function (pane) {
 // Panes/Interface/header.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/header' };
+T.scriptEnvironment = { resourcePath: '/Interface/header' };
 
-TC.registerModel(function (pane) {
-    TC.Utils.handleDocumentEvent('navigating', navigating);
+T.registerModel(function (pane) {
+    T.Utils.handleDocumentEvent('navigating', navigating);
     function navigating(e) {
         if (Navigation.isHome(e.eventData.options.data))
             hide();
@@ -2389,17 +2389,17 @@ TC.registerModel(function (pane) {
 
     function show() {
         if (!$('.header .logo').is(':visible'))
-            TC.transition('.header .logo', 'fade')['in']();
+            T.transition('.header .logo', 'fade')['in']();
     }
 
     function hide() {
         if ($('.header .logo').is(':visible'))
-            TC.transition('.header .logo', 'fade').out(false);
+            T.transition('.header .logo', 'fade').out(false);
     }
 
     this.feedback = function () {
-        TC.transition(
-            TC.appendNode('body', { path: '/Interface/feedback' }),
+        T.transition(
+            T.appendNode('body', { path: '/Interface/feedback' }),
             'fade')['in']();
     };
 
@@ -2413,9 +2413,9 @@ TC.registerModel(function (pane) {
 // Panes/Interface/navigation.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/navigation' };
+T.scriptEnvironment = { resourcePath: '/Interface/navigation' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
     var currentSection;
 
@@ -2440,7 +2440,7 @@ TC.registerModel(function (pane) {
 
     // it would be nice to use the article.show message for this,
     // but that won't work with browser back and forward buttons
-    TC.Utils.handleDocumentEvent('navigating', navigating);
+    T.Utils.handleDocumentEvent('navigating', navigating);
     function navigating(e) {
         var data = e.eventData.options.data || {};
         updateCurrentArticle(data);
@@ -2470,12 +2470,12 @@ TC.registerModel(function (pane) {
 
     function show() {
         if (!$('.navigation').is(':visible'))
-            TC.transition('.navigation', 'slideRight')['in']();
+            T.transition('.navigation', 'slideRight')['in']();
     }
 
     function hide() {
         if ($('.navigation').is(':visible'))
-            TC.transition('.navigation', 'slideLeft').out(false);
+            T.transition('.navigation', 'slideLeft').out(false);
     }
 
     this.dispose = function () {
@@ -2484,7 +2484,7 @@ TC.registerModel(function (pane) {
 
     // maps the cleaner API navigation structure into a structure suitable for data bindings. could be refactored out.
     function mapNavigation(section) {
-        return TC.Utils.map(Navigation[section], function (item, key) {
+        return T.Utils.map(Navigation[section], function (item, key) {
             return {
                 displayText: key,
                 section: section,
@@ -2496,7 +2496,7 @@ TC.registerModel(function (pane) {
     }
 
     function mapChildItems(parentKey, container) {
-        return TC.Utils.map(container, function (item, key) {
+        return T.Utils.map(container, function (item, key) {
             return {
                 displayText: key,
                 topic: parentKey + '/' + item
@@ -2510,9 +2510,9 @@ TC.registerModel(function (pane) {
 // Panes/Interface/navigationContainer.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/navigationContainer' };
+T.scriptEnvironment = { resourcePath: '/Interface/navigationContainer' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     pane.node.skipPath = true;
     pane.node.root = pane.node;
 
@@ -2542,9 +2542,9 @@ TC.registerModel(function (pane) {
 // Panes/Interface/sample.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/sample' };
+T.scriptEnvironment = { resourcePath: '/Interface/sample' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
     var data = pane.data || {};
     var rootPane = data.rootPane || 'layout';
@@ -2581,9 +2581,9 @@ TC.registerModel(function (pane) {
 // Panes/Interface/API/constructor.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/API/constructor' };
+T.scriptEnvironment = { resourcePath: '/Interface/API/constructor' };
 
-TC.registerModel(function (pane) {    
+T.registerModel(function (pane) {    
     this.func = $.extend({ name: 'new ' + pane.data.name }, pane.data.constructor);
 });
 
@@ -2592,12 +2592,12 @@ TC.registerModel(function (pane) {
 // Panes/Interface/API/function.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/API/function' };
+T.scriptEnvironment = { resourcePath: '/Interface/API/function' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.f = pane.data;
 
-    this.argumentNames = TC.Utils.pluck(pane.data.arguments, 'name').join(', ');
+    this.argumentNames = T.Utils.pluck(pane.data.arguments, 'name').join(', ');
 });
 
 
@@ -2605,21 +2605,21 @@ TC.registerModel(function(pane) {
 // Panes/Interface/API/table.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/API/table' };
+T.scriptEnvironment = { resourcePath: '/Interface/API/table' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.columns = mapColumns();
     this.rows = mapRows();
     
     function mapColumns() {
-        return TC.Utils.map(pane.data[0], function(value, key) {
+        return T.Utils.map(pane.data[0], function(value, key) {
             return key;
         });
     }
     
     function mapRows() {
-        return TC.Utils.map(pane.data, function (row) {
-            return TC.Utils.map(row, function(value) {
+        return T.Utils.map(pane.data, function (row) {
+            return T.Utils.map(row, function(value) {
                 return value.toString();
             });
         });
@@ -2631,9 +2631,9 @@ TC.registerModel(function(pane) {
 // Panes/Interface/API/type.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/API/type' };
+T.scriptEnvironment = { resourcePath: '/Interface/API/type' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.t = pane.data;
 });
 
@@ -2642,11 +2642,11 @@ TC.registerModel(function(pane) {
 // Panes/Samples/mobile.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/mobile' };
+T.scriptEnvironment = { resourcePath: '/Samples/mobile' };
 
-TC.registerModel(function(pane) {
-    TMH.initialise(pane.pubsub, 'signalr');
-    TMH.joinChannel('chat', { serverEvents: ['chat.*'] });
+T.registerModel(function(pane) {
+    //TMH.initialise(pane.pubsub, 'signalr');
+    //TMH.joinChannel('chat', { serverEvents: ['chat.*'] });
 });
 
 
@@ -2654,19 +2654,19 @@ TC.registerModel(function(pane) {
 // Panes/Samples/About/Chat/chat.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Chat/chat' };
+T.scriptEnvironment = { resourcePath: '/Samples/About/Chat/chat' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     // Hook up our message hub and join a channel
-    TMH.initialise(pane.pubsub);
-    TMH.joinChannel('chat', {
-         serverEvents: ['chat.*']
-    });
+    //TMH.initialise(pane.pubsub);
+    //TMH.joinChannel('chat', {
+    //     serverEvents: ['chat.*']
+    //});
 
     // The dispose function is called automatically
     // when the pane is removed from the DOM.
     this.dispose = function() {
-        TMH.leaveChannel('chat');
+        //TMH.leaveChannel('chat');
     };
 });
 
@@ -2675,9 +2675,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/About/Chat/messages.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Chat/messages' };
+T.scriptEnvironment = { resourcePath: '/Samples/About/Chat/messages' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     var self = this;
 
     this.messages = ko.observableArray();
@@ -2693,9 +2693,9 @@ TC.registerModel(function(pane) {
 // Panes/Samples/About/Chat/sender.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Chat/sender' };
+T.scriptEnvironment = { resourcePath: '/Samples/About/Chat/sender' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     var self = this;
 
     this.name = ko.observable('Anonymous');
@@ -2715,12 +2715,12 @@ TC.registerModel(function(pane) {
 // Panes/Samples/About/Mobile/samples.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/samples' };
+T.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/samples' };
 
-TC.registerModel(function (pane) {
-    TC.toolbar.title('Title!');
+T.registerModel(function (pane) {
+    T.toolbar.title('Title!');
     
-    TC.toolbar.options([
+    T.toolbar.options([
         { text: 'Option 1', func: function () { } },
         { text: 'Option 2', func: function () { } }
     ]);
@@ -2738,7 +2738,7 @@ TC.registerModel(function (pane) {
     };
 
     this.overlay = function() {
-        TC.overlay('overlay');
+        T.overlay('overlay');
     };
 
     this.navigate = function() {
@@ -2751,10 +2751,10 @@ TC.registerModel(function (pane) {
 // Panes/Samples/About/Mobile/welcome.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/welcome' };
+T.scriptEnvironment = { resourcePath: '/Samples/About/Mobile/welcome' };
 
-TC.registerModel(function (pane) {
-    TC.toolbar.defaults.back = true;
+T.registerModel(function (pane) {
+    T.toolbar.defaults.back = true;
 
     this.samples = function() {
         pane.navigate('samples');
@@ -2770,12 +2770,12 @@ TC.registerModel(function (pane) {
 // Panes/Samples/About/Tasks/create.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/create' };
+T.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/create' };
 
 // Declare model constructors using this simple function.
 // Tribe creates an instance and binds it to the template.
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
     
     this.task = ko.observable();
@@ -2791,9 +2791,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/About/Tasks/list.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/list' };
+T.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/list' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     var self = this;
 
     this.tasks = ko.observableArray(['Sample task']);
@@ -2815,9 +2815,9 @@ TC.registerModel(function(pane) {
 // Panes/Samples/About/Tasks/task.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/task' };
+T.scriptEnvironment = { resourcePath: '/Samples/About/Tasks/task' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     var self = this;
 
     this.task = pane.data;
@@ -2832,9 +2832,9 @@ TC.registerModel(function(pane) {
 // Panes/Samples/CreditCard/1-Personal/confirm.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/confirm' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/confirm' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
 
     this.data = pane.data;
@@ -2851,7 +2851,7 @@ TC.registerModel(function (pane) {
 // Panes/Samples/CreditCard/1-Personal/PersonalFlow.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/PersonalFlow' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/PersonalFlow' };
 
 PersonalFlow = function (flow) {
     var details = { type: 'personal' };         // An object to hold application details
@@ -2875,9 +2875,9 @@ PersonalFlow = function (flow) {
 // Panes/Samples/CreditCard/1-Personal/welcome.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/welcome' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/1-Personal/welcome' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.start = function () {
         // panes expose a simple function for starting flows
         pane.startFlow(PersonalFlow);
@@ -2889,7 +2889,7 @@ TC.registerModel(function(pane) {
 // Panes/Samples/CreditCard/2-Business/BusinessFlow.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Business/BusinessFlow' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Business/BusinessFlow' };
 
 BusinessFlow2 = function (flow) {
     var details = { type: 'business' };
@@ -2917,9 +2917,9 @@ BusinessFlow2 = function (flow) {
 // Panes/Samples/CreditCard/2-Business/confirm.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Business/confirm' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Business/confirm' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
 
     this.data = pane.data;
@@ -2935,7 +2935,7 @@ TC.registerModel(function (pane) {
 // Panes/Samples/CreditCard/2-Business/PersonalFlow.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Business/PersonalFlow' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Business/PersonalFlow' };
 
 PersonalFlow2 = function (flow) {
     var details = { type: 'personal' };
@@ -2959,9 +2959,9 @@ PersonalFlow2 = function (flow) {
 // Panes/Samples/CreditCard/2-Business/welcome.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Business/welcome' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/2-Business/welcome' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.personal = function() {
         pane.startFlow(PersonalFlow2);
     };
@@ -2976,7 +2976,7 @@ TC.registerModel(function(pane) {
 // Panes/Samples/CreditCard/3-Saga/BusinessFlow.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/BusinessFlow' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/BusinessFlow' };
 
 BusinessFlow3 = function (flow) {
     var details = { type: 'business' };
@@ -2995,9 +2995,9 @@ BusinessFlow3 = function (flow) {
 // Panes/Samples/CreditCard/3-Saga/confirm.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/confirm' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/confirm' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
 
     this.data = pane.data;
@@ -3013,7 +3013,7 @@ TC.registerModel(function (pane) {
 // Panes/Samples/CreditCard/3-Saga/CreditCard.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/CreditCard' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/CreditCard' };
 
 CreditCard = function (saga, details) {
     this.handles = {
@@ -3034,7 +3034,7 @@ CreditCard = function (saga, details) {
 // Panes/Samples/CreditCard/3-Saga/PersonalFlow.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/PersonalFlow' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/PersonalFlow' };
 
 PersonalFlow3 = function (flow) {
     var details = { type: 'personal' };
@@ -3052,9 +3052,9 @@ PersonalFlow3 = function (flow) {
 // Panes/Samples/CreditCard/3-Saga/welcome.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/welcome' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/3-Saga/welcome' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.personal = function() {
         pane.startFlow(PersonalFlow3);
     };
@@ -3069,9 +3069,9 @@ TC.registerModel(function(pane) {
 // Panes/Samples/CreditCard/4-Combined/confirm.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/4-Combined/confirm' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/4-Combined/confirm' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
 
     this.data = pane.data;
@@ -3091,7 +3091,7 @@ TC.registerModel(function (pane) {
 // Panes/Samples/CreditCard/4-Combined/CreditCard.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/4-Combined/CreditCard' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/4-Combined/CreditCard' };
 
 CreditCard = function (saga, details) {
     this.handles = {
@@ -3118,7 +3118,7 @@ CreditCard = function (saga, details) {
 // Panes/Samples/CreditCard/4-Combined/CreditCardFlow.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/4-Combined/CreditCardFlow' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/4-Combined/CreditCardFlow' };
 
 CreditCardFlow = function (flow) {
     var details = { };
@@ -3144,9 +3144,9 @@ CreditCardFlow = function (flow) {
 // Panes/Samples/CreditCard/4-Combined/host.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/CreditCard/4-Combined/host' };
+T.scriptEnvironment = { resourcePath: '/Samples/CreditCard/4-Combined/host' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     pane.startFlow(CreditCardFlow);
 });
 
@@ -3155,9 +3155,9 @@ TC.registerModel(function(pane) {
 // Panes/Samples/Panes/Communicating/layout.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/layout' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/layout' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     // Create an observable to share between child panes
     this.observable = ko.observable('Test');
 });
@@ -3167,9 +3167,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Panes/Communicating/receiver.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/receiver' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/receiver' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     var self = this;
 
     // Our shared observable
@@ -3188,9 +3188,9 @@ TC.registerModel(function(pane) {
 // Panes/Samples/Panes/Communicating/sender.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/sender' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Communicating/sender' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
     
     // Our shared observable
@@ -3209,9 +3209,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Panes/Creating/helloWorld.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Creating/helloWorld' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Creating/helloWorld' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     // Model properties are available for 
     // data binding in your template.
     this.message = "Message passed: " + pane.data.message;
@@ -3222,15 +3222,15 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Panes/Dynamic/create.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Dynamic/create' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Dynamic/create' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var i = 0;
     
     // Dynamically insert a pane into the element
     // with its class set to "items".
     this.createPane = function() {
-        TC.appendNode('.items', { path: 'item', data: ++i });
+        T.appendNode('.items', { path: 'item', data: ++i });
     };
 });
 
@@ -3239,13 +3239,13 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Panes/Lifecycle/create.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Lifecycle/create' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Lifecycle/create' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var i = 0;
     
     this.createPane = function() {
-        TC.appendNode(pane.find('.items'),
+        T.appendNode(pane.find('.items'),
             { path: 'item', data: ++i });
     };
 });
@@ -3255,9 +3255,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Panes/Lifecycle/item.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Lifecycle/item' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Lifecycle/item' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     this.data = pane.data;
 
     // The initialise function is called before the pane
@@ -3276,9 +3276,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Panes/Navigating/first.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/first' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/first' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.next = function() {
         pane.navigate('second');
     };
@@ -3289,9 +3289,9 @@ TC.registerModel(function(pane) {
 // Panes/Samples/Panes/Navigating/second.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/second' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/second' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.back = function () {
         pane.navigateBack();
     };
@@ -3306,9 +3306,9 @@ TC.registerModel(function(pane) {
 // Panes/Samples/Panes/Navigating/third.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/third' };
+T.scriptEnvironment = { resourcePath: '/Samples/Panes/Navigating/third' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.back = function() {
         pane.navigateBack();
     };
@@ -3319,12 +3319,12 @@ TC.registerModel(function(pane) {
 // Panes/Samples/Webmail/1-Folders/folders.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/1-Folders/folders' };
+T.scriptEnvironment = { resourcePath: '/Samples/Webmail/1-Folders/folders' };
 
 // Our model just contains a list of folders and
 // an observable to hold the selected folder.
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
     this.selectedFolder = ko.observable('Inbox');
 });
@@ -3334,9 +3334,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Webmail/2-Mails/folders.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/folders' };
+T.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/folders' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
     
     this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
@@ -3355,9 +3355,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Webmail/2-Mails/mails.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/mails' };
+T.scriptEnvironment = { resourcePath: '/Samples/Webmail/2-Mails/mails' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
 
     this.data = ko.observable();
@@ -3373,9 +3373,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Webmail/3-Content/folders.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/folders' };
+T.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/folders' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
 
     this.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
@@ -3392,9 +3392,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Webmail/3-Content/mails.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/mails' };
+T.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/mails' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
 
     this.data = ko.observable();
@@ -3413,9 +3413,9 @@ TC.registerModel(function (pane) {
 // Panes/Samples/Webmail/3-Content/viewMail.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/viewMail' };
+T.scriptEnvironment = { resourcePath: '/Samples/Webmail/3-Content/viewMail' };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     var self = this;
     
     this.data = ko.observable();
@@ -3469,7 +3469,7 @@ window.__appendTemplate('\n<div class="masthead">\n    <h1 class="logo">tribe</h
 window.__appendTemplate('\n<div class="content block">\n    <h1>Features</h1>\n    \n    <div class="child">\n        <h1>Comprehensively Tested</h1>\n        <p>Tribe has a comprehensive suite of hundreds of unit and integration tests.</p>\n        <p>\n            You can see the JavaScript tests online for\n            <a href="tests.html" target="_blank">Tribe</a> and <a href="http://danderson00.github.io/PackScript/PackScript.Tests/" target="_blank">PackScript</a>.\n        </p>\n        <p>\n            More C# unit and integration tests are available in the <a href="https://github.com/danderson00/Tribe" target="_blank">source</a>.\n        </p>\n    </div>\n\n    <div class="child">\n        <h1>Composite</h1>\n        <img src="Images/Features/composite.jpg" />\n        <ul>\n            <li>Built on the power of <a href="http://knockoutjs.com/" target="_blank">knockout</a> - <b>declarative data binding</b>, <b>observables</b> and more.</li>\n            <li>Break your UI down into reusable pieces in a way that makes sense to you.</li>\n            <li>Simply and easily model <b>navigation flow</b> and <b>business processes</b>.</li>\n            <li>Smooth, <b>hardware accelerated transitions</b> - a core part of Tribe.Composite.</li>\n            <li>Full <b>resource lifecycle management</b> - Tribe manages the lifecycle of panes from load through to disposal.</li>\n            <li><b>Simple and intuitive</b> - structure your project how you need <b>without complex configuration</b>.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>MessageBus</h1>\n        <img src="Images/Features/communication.jpg" />\n        <ul>\n            <li>Built on <b>reliable</b>, <b>highly scalable</b>, proven technology (Microsoft SignalR).</li>\n            <li><b>Transparently broadcast messages</b> to other users on both web and mobile devices.</li>\n            <li>Seamlessly translate messages into server side messaging technology, like <b>NServiceBus</b> or <b>Azure queues</b>.</li>\n            <li>Built in <b>record and replay semantics</b> - event sourcing out of the box.</li>\n            <li><b>Secure channels</b> with simple and extensible authorisation.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Mobile</h1>\n        <img src="Images/Features/mobile.jpg" />\n        <ul>\n            <li>Target <b>mobile devices</b> with the <b>same codebase</b> as your web application.</li>\n            <li>Easily customisable <b>pre-built themes</b> and <b>UI components</b> - focus on building your app.</li>\n        </ul>\n        <br/><br/>\n    </div>\n\n    <div class="child">\n        <h1>PackScript</h1>\n        <img src="Images/Features/simple.jpg" />\n        <ul>\n            <li>Powerful resource building system for combining and minifying resources.</li>\n            <li><b>Combine, minify, transform, template, compile</b> and more.</li>\n            <li>Simple <b>JavaScript configuration</b> API.</li>\n            <li><b>"Watch" mode</b> to update your build every time you save a file.</li>\n            <li>Easily integrates with <b>continuous integration</b> tools.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Forms</h1>\n        <ul>\n            <li>Simple, themable set of templates for creating forms.</li>\n            <li>Model-based validation without any additional markup.</li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Components</h1>\n        <ul>\n            <li>A basic set of reusable user interface components including:\n                <ul>\n                    <li>Grid</li>\n                    <li>Graph</li>\n                    <li>Dialog</li>\n                    <li>Expander</li>\n                    <li>Tab panel</li>\n                    <li>Tooltip</li>\n                    <li>Google Map</li>\n                </ul>\n            </li>\n        </ul>\n    </div>\n</div>\n', 'template--Content-Guides-Introduction-features');
 
 //
-window.__appendTemplate('\n<div class="content block">\n    <h1>Get Started</h1>\n    <p>There are three easy ways to get started with the Tribe platform.</p>\n\n    <div class="tip">\n        <img src="Images/icon.tip.64.png"/>\n        <p>\n            If you\'re using Chrome and running Tribe from a \n            <span class="filename">file://</span> URL, you must start Chrome with the\n            <span class="filename">--allow-file-access-from-files</span> option.\n        </p>\n        <div class="clear"></div>\n    </div>\n\n    <div class="child">\n        <h1>Online Resources</h1>\n        <p>Use the following HTML for your bootstrapper:</p>\n        <div class="example">\n            <pre>\n&lt;!DOCTYPE HTML>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">&lt;/script>        \n        &lt;script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js">&lt;/script>\n        &lt;script src="http://danderson00.github.io/Tribe/Build/Tribe.min.js">&lt;/script>\n        &lt;script>$(TC.run)&lt;/script>\n    &lt;/head>\n    &lt;body data-bind="pane: \'layout\'">&lt;/body>\n&lt;/html></pre>\n        </div>\n        <p>Replace \'layout\' with the path to your starting pane.</p>\n    </div>\n\n    <div class="child">\n        <h1>NuGet Packages</h1>\n        <img class="topRight" style="margin-top: 10px !important" src="Images/Features/nuget.jpg"/>\n        <p>If you\'re a Visual Studio user, the easiest way to get started is to install one of the Tribe NuGet packages.</p>\n        <ul>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe.Composite/" target="_blank">Tribe</a>\n                 - Everything you need for complete Composite and MessageHub functionality.\n            </li>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe/" target="_blank">Tribe.Template</a>\n                 - Everything in the Tribe package plus a basic starter template.\n            </li>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe.Template/" target="_blank">Tribe.Composite</a>\n                 - Tribe.Composite, Mobile, Forms and Components.\n            </li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Download</h1>\n        <a href="http://danderson00.github.io/Tribe/Tribe.zip"><img class="topRight" src="Images/download.png" /></a>\n        <p><a href="http://danderson00.github.io/Tribe/Tribe.zip">Download a ZIP file</a> containing</p>\n        <ul>\n            <li>Production, uncompressed and debug versions of the Tribe libraries</li>\n            <li>Tribe.MessageHub binaries (currently requires IIS, self-hosting server coming soon!)</li>\n            <li>The Tribe test suite</li>\n            <!--<li>A starter template</li>-->\n        </ul>\n    </div>\n</div>', 'template--Content-Guides-Introduction-getStarted');
+window.__appendTemplate('\n<div class="content block">\n    <h1>Get Started</h1>\n    <p>There are three easy ways to get started with the Tribe platform.</p>\n\n    <div class="tip">\n        <img src="Images/icon.tip.64.png"/>\n        <p>\n            If you\'re using Chrome and running Tribe from a \n            <span class="filename">file://</span> URL, you must start Chrome with the\n            <span class="filename">--allow-file-access-from-files</span> option.\n        </p>\n        <div class="clear"></div>\n    </div>\n\n    <div class="child">\n        <h1>Online Resources</h1>\n        <p>Use the following HTML for your bootstrapper:</p>\n        <div class="example">\n            <pre>\n&lt;!DOCTYPE HTML>\n&lt;html>\n    &lt;head>\n        &lt;title>&lt;/title>\n        &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">&lt;/script>        \n        &lt;script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js">&lt;/script>\n        &lt;script src="http://danderson00.github.io/Tribe/Build/Tribe.min.js">&lt;/script>\n        &lt;script>$(T.run)&lt;/script>\n    &lt;/head>\n    &lt;body data-bind="pane: \'layout\'">&lt;/body>\n&lt;/html></pre>\n        </div>\n        <p>Replace \'layout\' with the path to your starting pane.</p>\n    </div>\n\n    <div class="child">\n        <h1>NuGet Packages</h1>\n        <img class="topRight" style="margin-top: 10px !important" src="Images/Features/nuget.jpg"/>\n        <p>If you\'re a Visual Studio user, the easiest way to get started is to install one of the Tribe NuGet packages.</p>\n        <ul>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe.Composite/" target="_blank">Tribe</a>\n                 - Everything you need for complete Composite and MessageHub functionality.\n            </li>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe/" target="_blank">Tribe.Template</a>\n                 - Everything in the Tribe package plus a basic starter template.\n            </li>\n            <li>\n                <a href="https://www.nuget.org/packages/Tribe.Template/" target="_blank">Tribe.Composite</a>\n                 - Tribe.Composite, Mobile, Forms and Components.\n            </li>\n        </ul>\n    </div>\n\n    <div class="child">\n        <h1>Download</h1>\n        <a href="http://danderson00.github.io/Tribe/Tribe.zip"><img class="topRight" src="Images/download.png" /></a>\n        <p><a href="http://danderson00.github.io/Tribe/Tribe.zip">Download a ZIP file</a> containing</p>\n        <ul>\n            <li>Production, uncompressed and debug versions of the Tribe libraries</li>\n            <li>Tribe.MessageHub binaries (currently requires IIS, self-hosting server coming soon!)</li>\n            <li>The Tribe test suite</li>\n            <!--<li>A starter template</li>-->\n        </ul>\n    </div>\n</div>', 'template--Content-Guides-Introduction-getStarted');
 
 //
 window.__appendTemplate('\n<div class="creditcard content block">\n    <h1>Modelling Navigation and Business Processes</h1>\n    <div data-bind="pane: \'/Interface/navigationContainer\', data: Tutorials.creditCard"></div>\n</div>', 'template--Content-Guides-Tutorials-creditcard');
@@ -3517,13 +3517,13 @@ window.__appendTemplate('\n<div class="content block">\n    <h1>Core API</h1>\n 
 window.__appendTemplate('\n<div class="content block">\n    <h1>Binding Handlers</h1>\n    <p>As well as the <span class="filename">pane</span> binding handler, Tribe provides the following additional handlers:</p>\n\n    <div data-bind="foreach: Reference.BindingHandlers">\n        <div class="child">\n            <h1 data-bind="text: name"></h1>\n            <p data-bind="text: description"></p>\n            <div data-bind="pane: \'/Interface/API/table\', data: bindings"></div>\n            <h2>Example</h2>\n            <pre class="example" data-bind="text: example"></pre>\n        </div>\n    </div>    \n</div>', 'template--Content-Reference-Core-bindingHandlers');
 
 //
-window.__appendTemplate('\n<div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the TC.options object.</p>\n    <pre class="example">TC.options.basePath = \'Panes\';</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div>', 'template--Content-Reference-Core-options');
+window.__appendTemplate('\n<div class="content block">\n    <h1>Global Options</h1>\n    <p>Global options can be set on the T.options object.</p>\n    <pre class="example">T.options.basePath = \'Panes\';</pre>\n    <table>\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Type</th>\n                <th>Default</th>\n                <th>Description</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>basePath</td>\n                <td>String</td>\n                <td></td>\n                <td>Root path to load panes from</td>\n            </tr>\n            <tr>\n                <td>synchronous</td>\n                <td>Boolean</td>\n                <td>false</td>\n                <td>Load resources and execute message subscribers synchronously</td>\n            </tr>\n            <tr>\n                <td>handleExceptions</td>\n                <td>Boolean</td>\n                <td>true</td>\n                <td>Handle exceptions within the framework</td>\n            </tr>\n            <tr>\n                <td>loadStrategy</td>\n                <td>String</td>\n                <td>adhoc</td>\n                <td>Name of the registered load strategy to use</td>\n            </tr>\n            <tr>\n                <td>events</td>\n                <td>[String]</td>\n                <td><a data-bind="click: Article.show(\'Reference\', \'Core/panes\')">See reference</a></td>\n                <td>Array of ordered event names to execute in the pane rendering pipeline</td>\n            </tr>\n        </tbody>\n    </table>\n</div>', 'template--Content-Reference-Core-options');
 
 //
-window.__appendTemplate('\n<div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n    <p>\n        When created this way, each pane is encapsulated within a Node object that is\n        inserted into the appropriate position in an underlying node tree.\n    </p>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">TC.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n\n    <div class="tip">\n        <img src="Images/icon.tip.64.png"/>\n        <p>\n            If you\'re using Chrome and running Tribe from a \n            <span class="filename">file://</span> URL, you must start Chrome with the\n            <span class="filename">--allow-file-access-from-files</span> options.\n        </p>\n        <div class="clear"></div>\n    </div>\n</div>\n\n<div class="content block">\n    <h1>Navigation Panes</h1>\n    <p>\n        By default, when <span class="filename">pane.navigate</span> is called,\n        the root node is transitioned. You can specify which node to transition\n        by using the handlesNavigation pane option.\n    </p>\n    <p>\n        Passing a string to the handlesNavigation pane option specifies the name\n        of the transition to use.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', handlesNavigation: \'fade\'">&lt;/div></pre>\n    <p>When passing an object, the following options can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.NavigationOptions }"></div>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', handlesNavigation: { transition: \'slideLeft\', browser: true }">&lt;/div></pre>\n    <p>\n        Multiple navigation nodes can be specified. The closest parent navigation\n        node will be transitioned on navigation. However, the \n        <span class="filename">browser</span> option can only be specified once \n        per application.\n    </p>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n    <p>The specified model functions are executed at the end of the event when they are implemented on pane models.</p>\n</div>', 'template--Content-Reference-Core-panes');
+window.__appendTemplate('\n<div class="content block">\n    <h1>Pane Options</h1>\n    <p>\n        Panes can be created using the pane binding handler or with JavaScript using the \n        <a data-bind="click: Article.show(\'Reference\', \'Core/api\')">core API functions</a>.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true">&lt;/div></pre>\n    <p>\n        When created this way, each pane is encapsulated within a Node object that is\n        inserted into the appropriate position in an underlying node tree.\n    </p>\n\n    <p>The following bindings can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.options }"></div>\n\n    <p>When using API functions, pass these options as an object and provide a path property:</p>\n    <pre class="example">T.createNode(\'body\', { path: \'path/to/pane\', data: { value: 1 }, handlesNavigation: true });</pre>\n\n    <div class="tip">\n        <img src="Images/icon.tip.64.png"/>\n        <p>\n            If you\'re using Chrome and running Tribe from a \n            <span class="filename">file://</span> URL, you must start Chrome with the\n            <span class="filename">--allow-file-access-from-files</span> options.\n        </p>\n        <div class="clear"></div>\n    </div>\n</div>\n\n<div class="content block">\n    <h1>Navigation Panes</h1>\n    <p>\n        By default, when <span class="filename">pane.navigate</span> is called,\n        the root node is transitioned. You can specify which node to transition\n        by using the handlesNavigation pane option.\n    </p>\n    <p>\n        Passing a string to the handlesNavigation pane option specifies the name\n        of the transition to use.\n    </p>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', handlesNavigation: \'fade\'">&lt;/div></pre>\n    <p>When passing an object, the following options can be used:</p>\n    <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.Panes.NavigationOptions }"></div>\n    <pre class="example">&lt;div data-bind="pane: \'path/to/pane\', handlesNavigation: { transition: \'slideLeft\', browser: true }">&lt;/div></pre>\n    <p>\n        Multiple navigation nodes can be specified. The closest parent navigation\n        node will be transitioned on navigation. However, the \n        <span class="filename">browser</span> option can only be specified once \n        per application.\n    </p>\n</div>\n\n<div class="content block">\n    <h1>Pane Lifecycle</h1>\n    <p>The following events are executed in order against each pane:</p>\n    <table>\n        <thead>\n            <tr>\n                <th>Event</th>\n                <th>Description</th>\n                <th>Model Function</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>loadResources</td>\n                <td>HTML, JS and CSS resources for the pane are loaded if required</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createPubSub</td>\n                <td>A Tribe.PubSub object is created and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>createModel</td>\n                <td>The appropriate model is instantiated and attached to the pane</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>initialiseModel</td>\n                <td>The initialise function is called on the pane</td>\n                <td>initialise</td>\n            </tr>\n            <tr>\n                <td>renderPane</td>\n                <td>The pane template is rendered in the target element and the model is bound</td>\n                <td>paneRendered</td>\n            </tr>\n            <tr>\n                <td>renderComplete</td>\n                <td>The renderComplete function is called on the pane when all panes in the render operation have been rendered</td>\n                <td>renderComplete</td>\n            </tr>\n            <tr>\n                <td>active</td>\n                <td>The pane is active</td>\n                <td></td>\n            </tr>\n            <tr>\n                <td>dispose</td>\n                <td>The pane\'s element has been removed from the DOM. Resources for the pane such as pubsub subscriptions are cleaned up</td>\n                <td>dispose</td>\n            </tr>\n        </tbody>\n    </table>\n    <p>The specified model functions are executed at the end of the event when they are implemented on pane models.</p>\n</div>', 'template--Content-Reference-Core-panes');
 
 //
-window.__appendTemplate('\n<div class="content block">\n    <h1>Transitions</h1>\n\n    <p>Use the TC.transition function to perform transitions:</p>\n    <div data-bind="pane: \'/Interface/API/function\', data: Reference.Transition"></div>\n\n    <p>The returned object can be used to transition the target in, out or to another pane:</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.Transition.Functions }"></div>\n    \n    <div class="tip">\n        <img src="Images/icon.tip.64.png"/>\n        <p>To support Internet Explorer 8 and below, the <span class="filename">in</span> function must be called using the syntax in the example below.</p>\n        <div class="clear"></div>\n    </div>\n\n    <div class="child">\n        <h1>Examples</h1>\n\n        <p>Fade the first element with a class of "target" out of view and remove it from the DOM</p>\n        <pre class="example">\nTC.transition(\'.target\', \'fade\').out();</pre>\n\n        <p>Transition the node containing the element with a class of "target" to a new pane</p>\n        <pre class="example">\nTC.transition(TC.nodeFor(\'.target\')).to(\'path/to/pane\');</pre>\n\n        <p>This can also be expressed as:</p>\n        <pre class="example">\nTC.nodeFor(\'.target\').transitionTo(\'path/to/pane\');</pre>\n\n        <p>Supporting IE8 and below:</p>\n        <pre class="example">\nTC.transition(\'.target\')[\'in\']();</pre>\n    </div>\n</div>', 'template--Content-Reference-Core-transitions');
+window.__appendTemplate('\n<div class="content block">\n    <h1>Transitions</h1>\n\n    <p>Use the T.transition function to perform transitions:</p>\n    <div data-bind="pane: \'/Interface/API/function\', data: Reference.Transition"></div>\n\n    <p>The returned object can be used to transition the target in, out or to another pane:</p>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.Transition.Functions }"></div>\n    \n    <div class="tip">\n        <img src="Images/icon.tip.64.png"/>\n        <p>To support Internet Explorer 8 and below, the <span class="filename">in</span> function must be called using the syntax in the example below.</p>\n        <div class="clear"></div>\n    </div>\n\n    <div class="child">\n        <h1>Examples</h1>\n\n        <p>Fade the first element with a class of "target" out of view and remove it from the DOM</p>\n        <pre class="example">\nT.transition(\'.target\', \'fade\').out();</pre>\n\n        <p>Transition the node containing the element with a class of "target" to a new pane</p>\n        <pre class="example">\nT.transition(T.nodeFor(\'.target\')).to(\'path/to/pane\');</pre>\n\n        <p>This can also be expressed as:</p>\n        <pre class="example">\nT.nodeFor(\'.target\').transitionTo(\'path/to/pane\');</pre>\n\n        <p>Supporting IE8 and below:</p>\n        <pre class="example">\nT.transition(\'.target\')[\'in\']();</pre>\n    </div>\n</div>', 'template--Content-Reference-Core-transitions');
 
 //
 window.__appendTemplate('\n<div class="content block">\n    <h1>MessageHub Client API</h1>\n    <div data-bind="pane: \'/Interface/API/functionList\', data: { functions: Reference.MessageHub }"></div>\n    <div class="child">\n        <h1>joinChannel Options</h1>\n        <p>An object containing any of the following options can be passed to the TMH.joinChannel function.</p>\n        <div data-bind="pane: \'/Interface/API/propertyList\', data: { properties: Reference.MessageHub.ChannelOptions }"></div>\n    </div>\n</div>', 'template--Content-Reference-MessageHub-client');

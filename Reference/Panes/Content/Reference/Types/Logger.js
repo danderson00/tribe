@@ -1,5 +1,5 @@
 ﻿Reference.Types.Logger = {
-    name: 'TC.Types.Logger',
+    name: 'T.Types.Logger',
     description: 'Provides a unified API for logging functionality',
     functions: [
         {
@@ -44,7 +44,7 @@
         },
         {
             name: 'setLogger',
-            description: 'Set the underlying logging mechanism registed in the TC.Loggers collection. Default is \'console\'.',
+            description: 'Set the underlying logging mechanism registed in the T.Loggers collection. Default is \'console\'.',
             arguments: [
                 { name: 'newLogger', type: 'String' }
             ],

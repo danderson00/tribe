@@ -1,3 +1,3 @@
-﻿TC.Events.active = function (pane, context) {
-    return TC.Utils.elementDestroyed(pane.element);
+﻿T.Events.active = function (pane, context) {
+    return T.Utils.elementDestroyed(pane.element);
 };

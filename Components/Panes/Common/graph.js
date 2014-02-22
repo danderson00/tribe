@@ -1,5 +1,5 @@
 ﻿(function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         var pubsub = pane.pubsub;
         var data = pane.data;
 
@@ -18,7 +18,7 @@
         this.showSeriesSelect = data.showSeriesSelect !== false;
 
         if (data.selectedSeriesKey)
-            this.selectedSeries.extend({ persist: 'TC.graph.' + data.selectedSeriesKey });
+            this.selectedSeries.extend({ persist: 'T.graph.' + data.selectedSeriesKey });
 
         this.selectedSeries.subscribe(function (value) {
             plot(extractSeries(data.series, ko.utils.unwrapObservable(value)));
@@ -33,7 +33,7 @@
                 $graph.css(data.css);
 
             plot(extractSeries(data.series, self.selectedSeries()));
-            TC.renderTooltips(self.tooltips, 'help', pane);
+            T.renderTooltips(self.tooltips, 'help', pane);
         };
 
         pubsub.subscribe('graphDataUpdated', function(series) {

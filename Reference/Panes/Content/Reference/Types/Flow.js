@@ -1,9 +1,9 @@
 ﻿Reference.Types.Flow = {
-    name: 'TC.Types.Flow',
+    name: 'T.Types.Flow',
     description: 'Manages a navigation flow by maintaining state and handling specific messages.',
     constructor: {
         arguments: [
-            { name: 'navigationSource', type: 'TC.Types.Pane | TC.Types.Node', description: 'The flow attaches to the navigation node of the pane or node specified.' },
+            { name: 'navigationSource', type: 'T.Types.Pane | T.Types.Node', description: 'The flow attaches to the navigation node of the pane or node specified.' },
             { name: 'definition', type: 'Object | Constructor', description: 'The object that contains the Flow definition or its constructor.' },
             { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
         ]
@@ -15,7 +15,7 @@
             arguments: [
                 { name: 'data', type: 'Constructor', description: 'Data that is passed to the onstart handler.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'startChild',
@@ -24,7 +24,7 @@
                 { name: 'definition', type: 'Constructor', description: 'The constructor for the object that contains the Flow definition.' },
                 { name: 'args, ...', type: 'Any', description: 'Arguments to pass to the definition constructor.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'end',
@@ -32,7 +32,7 @@
             arguments: [
                 { name: 'data', type: 'Constructor', description: 'Data that is passed to the onend handler.' }
             ],
-            returns: 'TC.Types.Flow'
+            returns: 'T.Types.Flow'
         },
         {
             name: 'startSaga',
@@ -83,14 +83,14 @@
         }
     ],
     properties: [
-        { name: 'node', type: 'TC.Types.Node', description: 'The node being used for navigation.' },
+        { name: 'node', type: 'T.Types.Node', description: 'The node being used for navigation.' },
         { name: 'pubsub', type: 'Tribe.PubSub', description: 'The PubSub instance used for subscriptions.' },
         { name: 'saga', type: 'Tribe.PubSub.Saga', description: 'The underlying Saga instance.' },
-        { name: 'sagas', type: '[TC.Types.Saga]', description: 'Array of Sagas started with the startSaga function.' }
+        { name: 'sagas', type: '[T.Types.Saga]', description: 'Array of Sagas started with the startSaga function.' }
     ],
     Definition: {
         arguments: [
-            { Argument: 'flow', Type: 'TC.Types.Flow', Description: 'The Flow object that is consuming the definition.' },
+            { Argument: 'flow', Type: 'T.Types.Flow', Description: 'The Flow object that is consuming the definition.' },
             { Argument: 'args, ...', Type: 'Any', Description: 'The additional arguments that were passed to the Flow constructor.' }
         ],
         properties: [

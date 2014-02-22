@@ -1,4 +1,4 @@
-﻿TC.Types.Pipeline = function (events, context) {
+﻿T.Types.Pipeline = function (events, context) {
     this.execute = function (eventsToExecute, target) {
         var currentEvent = -1;
         var promise = $.Deferred();
@@ -15,7 +15,7 @@
             var thisEvent = events[eventName];
 
             if (!thisEvent) {
-                TC.logger.warn("No event defined for " + eventName);
+                T.logger.warn("No event defined for " + eventName);
                 executeNextEvent();
                 return;
             }
@@ -27,7 +27,7 @@
             function handleFailure() {
                 promise.reject();
                 var targetDescription = target ? target.toString() : "empty target";
-                TC.logger.error("An error occurred in the '" + eventName + "' event for " + targetDescription);
+                T.logger.error("An error occurred in the '" + eventName + "' event for " + targetDescription);
             }
         }
 

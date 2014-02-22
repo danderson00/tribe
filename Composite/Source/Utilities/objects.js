@@ -1,4 +1,4 @@
-﻿TC.Utils.arguments = function (args) {
+﻿T.Utils.arguments = function (args) {
     var byConstructor = {};
     $.each(args, function (index, arg) {
         byConstructor[arg.constructor] = arg;
@@ -16,19 +16,19 @@
     };
 };
 
-TC.Utils.removeItem = function (array, item) {
+T.Utils.removeItem = function (array, item) {
     var index = $.inArray(item, array);
     if (index > -1)
         array.splice(index, 1);
 };
 
-TC.Utils.inheritOptions = function (from, to, options) {
+T.Utils.inheritOptions = function (from, to, options) {
     for (var i = 0, l = options.length; i < l; i++)
         to[options[i]] = from[options[i]];
     return to;
 };
 
-TC.Utils.cloneData = function (from, except) {
+T.Utils.cloneData = function (from, except) {
     if (!from) return;
     var result = {};
     for (var property in from) {
@@ -42,7 +42,7 @@ TC.Utils.cloneData = function (from, except) {
     return result;
 };
 
-TC.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
+T.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
     var data = allBindingsAccessor();
     data.value = valueAccessor();
     if (!ko.isObservable(data.value) && $.isFunction(data.value))

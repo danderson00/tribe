@@ -10,17 +10,17 @@ Test.defaultOptions = function() {
         handleExceptions: false,
         basePath: 'Integration/Panes/',
         loadStrategy: 'adhoc',
-        events: TC.defaultOptions().events,
-        defaultUrlProvider: TC.options.defaultUrlProvider
+        events: T.defaultOptions().events,
+        defaultUrlProvider: T.options.defaultUrlProvider
     };
 };
-TC.options = Test.defaultOptions();
+T.options = Test.defaultOptions();
 
 
 QUnit.testDone(function () {
     ko.cleanNode(document.getElementById('qunit-fixture'));
     Test.state = {};
-    TC.options = Test.defaultOptions();
+    T.options = Test.defaultOptions();
 });
 
-TC.history.dispose();
+T.history.dispose();

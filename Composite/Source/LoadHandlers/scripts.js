@@ -1,4 +1,4 @@
-﻿TC.LoadHandlers.js = function (url, resourcePath, context) {
+﻿T.LoadHandlers.js = function (url, resourcePath, context) {
     return $.ajax({
         url: url,
         dataType: 'text',
@@ -8,18 +8,18 @@
     });
 
     function executeScript(script) {
-        TC.scriptEnvironment = {
+        T.scriptEnvironment = {
             url: url,
             resourcePath: resourcePath,
             context: context
         };
 
-        TC.Utils.tryCatch($.globalEval, [appendSourceUrl(script)], context.options.handleExceptions,
+        T.Utils.tryCatch($.globalEval, [appendSourceUrl(script)], context.options.handleExceptions,
             'An error occurred executing script loaded from ' + url + (resourcePath ? ' for resource ' + resourcePath : ''));
 
-        delete TC.scriptEnvironment;
+        delete T.scriptEnvironment;
 
-        TC.logger.debug('Loaded script from ' + url);
+        T.logger.debug('Loaded script from ' + url);
     }
 
     function appendSourceUrl(script) {

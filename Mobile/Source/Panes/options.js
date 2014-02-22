@@ -1,10 +1,10 @@
-﻿TC.registerModel(function (pane) {
+﻿T.registerModel(function (pane) {
     var self = this;
     this.options = pane.data.options;
 
     this.paneRendered = function() {
-        TC.transition('.modalBackground', 'fade')['in']();
-        TC.transition('.optionsList', 'slideDown')['in']();
+        T.transition('.modalBackground', 'fade')['in']();
+        T.transition('.optionsList', 'slideDown')['in']();
     };
 
     this.itemClick = function (item) {
@@ -15,8 +15,8 @@
 
     this.hide = function() {
         $.when(
-            TC.transition('.optionsList', 'slideUp').out(),
-            TC.transition('.modalBackground', 'fade').out()
+            T.transition('.optionsList', 'slideUp').out(),
+            T.transition('.modalBackground', 'fade').out()
         ).done(pane.remove);
     };
 });

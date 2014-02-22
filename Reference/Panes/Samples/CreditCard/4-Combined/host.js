@@ -1,3 +1,3 @@
-﻿TC.registerModel(function(pane) {
+﻿T.registerModel(function(pane) {
     pane.startFlow(CreditCardFlow);
 });

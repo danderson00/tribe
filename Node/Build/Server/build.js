@@ -15,7 +15,7 @@
 
         pack({
             include: [T.sagas('Sagas')],
-            outputTemplate: 'TC.wrapper'
+            outputTemplate: 'T.wrapper'
         }).to('Build/server.js');
 
         pack([T.scripts('Dependencies/*.js'), T.scripts('node_modules/tribe/client/*.debug.js')]).to('Build/dependencies.js');

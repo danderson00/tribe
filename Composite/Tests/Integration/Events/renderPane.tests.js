@@ -25,7 +25,7 @@
 
     asyncTest("paneRendered is called on model when in async mode", function () {
         expect(1);
-        TC.options.synchronous = false;
+        T.options.synchronous = false;
         Test.state.paneRendered = function () {
             equal($('.message').text(), 'test message');
             start();

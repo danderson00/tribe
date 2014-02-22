@@ -12,14 +12,14 @@
 //            $targetElement = $prev.attr('type') === 'hidden' ? $prev.prev() : $prev;
 //        }
 //        var error = ko.observable();
-//        var pane = TC.insertNodeAfter($targetElement, {
+//        var pane = T.insertNodeAfter($targetElement, {
 //            path: '/Common/tooltip',
 //            data: { html: error, position: 'auto', target: $targetElement, timeout: 3000, topic: id }
 //        });
 //        $targetElement.next().addClass('validationMessage');
 //        observable.subscribe(function () {
 //            if (observable.isModified && observable.isModified()) {
-//                TC.context().pubsub.publish(observable.isValid() ? 'tooltip.hide' : 'tooltip.show', { topic: id, immediate: true });
+//                T.context().pubsub.publish(observable.isValid() ? 'tooltip.hide' : 'tooltip.show', { topic: id, immediate: true });
 //                error(observable.error);
 //            }
 //        });

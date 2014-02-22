@@ -1,5 +1,5 @@
-﻿TC.Types.Pane = function (options) {
-    TC.Utils.inheritOptions(options, this, ['path', 'data', 'element', 'transition', 'reverseTransitionIn', 'handlesNavigation', 'pubsub', 'id', 'skipPath']);
+﻿T.Types.Pane = function (options) {
+    T.Utils.inheritOptions(options, this, ['path', 'data', 'element', 'transition', 'reverseTransitionIn', 'handlesNavigation', 'pubsub', 'id', 'skipPath']);
 
     // events we are interested in hooking in to - this could be done completely generically by the pipeline
     this.is = {
@@ -8,19 +8,19 @@
     };    
 };
 
-TC.Types.Pane.prototype.navigate = function (pathOrPane, data) {
+T.Types.Pane.prototype.navigate = function (pathOrPane, data) {
     this.node && this.node.navigate(pathOrPane, data);
 };
 
-TC.Types.Pane.prototype.navigateBack = function () {
+T.Types.Pane.prototype.navigateBack = function () {
     this.node && this.node.navigateBack();
 };
 
-TC.Types.Pane.prototype.remove = function () {
+T.Types.Pane.prototype.remove = function () {
     $(this.element).remove();
 };
 
-TC.Types.Pane.prototype.dispose = function () {
+T.Types.Pane.prototype.dispose = function () {
     if (this.model && this.model.dispose)
         this.model.dispose();
 
@@ -30,38 +30,38 @@ TC.Types.Pane.prototype.dispose = function () {
     }
 
     if (this.element)
-        TC.Utils.cleanElement(this.element);
+        T.Utils.cleanElement(this.element);
 };
 
-TC.Types.Pane.prototype.inheritPathFrom = function (node) {
+T.Types.Pane.prototype.inheritPathFrom = function (node) {
     node = node && node.nodeForPath();
     var pane = node && node.pane;    
-    var path = TC.Path(this.path);
+    var path = T.Path(this.path);
     if (path.isAbsolute() || !pane)
         this.path = path.makeAbsolute().toString();
     else
-        this.path = TC.Path(pane.path).withoutFilename().combine(path).toString();
+        this.path = T.Path(pane.path).withoutFilename().combine(path).toString();
 };
 
-TC.Types.Pane.prototype.find = function(selector) {
+T.Types.Pane.prototype.find = function(selector) {
     return $(this.element).find(selector);
 };
 
-TC.Types.Pane.prototype.startRender = function () {
+T.Types.Pane.prototype.startRender = function () {
     $(this.element).addClass('__rendering');
 };
 
-TC.Types.Pane.prototype.endRender = function () {
+T.Types.Pane.prototype.endRender = function () {
     $(this.element).removeClass('__rendering');
 };
 
-TC.Types.Pane.prototype.toString = function () {
+T.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
 };
 
-TC.Types.Pane.prototype.startSaga = function(path, args) {
-    var saga = TC.context().sagas[path];
+T.Types.Pane.prototype.startSaga = function(path, args) {
+    var saga = T.context().sagas[path];
     this.pubsub.startSaga.apply(this.pubsub, [saga.constructor].concat(Array.prototype.slice.call(arguments, 1)));
 };
 
-TC.Types.Pane.prototype.startFlow = TC.Types.Flow.startFlow;
+T.Types.Pane.prototype.startFlow = T.Types.Flow.startFlow;

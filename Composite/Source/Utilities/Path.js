@@ -1,5 +1,5 @@
 ﻿(function() {
-    TC.Path = Path;
+    T.Path = Path;
 
     function Path(path) {
         path = path ? normalise(path.toString()) : '';

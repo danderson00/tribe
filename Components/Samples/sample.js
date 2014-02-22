@@ -1,4 +1,4 @@
-﻿TC.registerModel(function(pane) {
+﻿T.registerModel(function(pane) {
     this.pane = pane.data.pane;
 
     this.highlightSyntax = function() {

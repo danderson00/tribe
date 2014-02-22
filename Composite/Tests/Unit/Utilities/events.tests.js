@@ -1,5 +1,5 @@
 ﻿(function() {
-    var utils = TC.Utils;
+    var utils = T.Utils;
     var spy;
 
     module('Unit.Utilities.events', {

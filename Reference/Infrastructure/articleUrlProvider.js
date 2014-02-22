@@ -6,7 +6,7 @@
     },
     paneOptionsFrom: function (querystring) {
         if (querystring) {
-            var options = TC.Utils.Querystring.parse(querystring);
+            var options = T.Utils.Querystring.parse(querystring);
             return {
                 path: '/Interface/content',
                 data: {

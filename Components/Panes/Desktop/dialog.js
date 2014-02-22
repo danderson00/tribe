@@ -1,5 +1,5 @@
 ﻿(function () {
-    TC.registerModel(function (pane) {
+    T.registerModel(function (pane) {
         pane.node.skipPath = true;
         
         var self = this;
@@ -21,7 +21,7 @@
 
         this.paneRendered = function() {
             if (options.title)
-                TC.createNode(pane.find('.dialogHeader'), { path: '/Common/contentHeader', data: { text: options.title } });
+                T.createNode(pane.find('.dialogHeader'), { path: '/Common/contentHeader', data: { text: options.title } });
         };
 
         this.renderComplete = function () {
@@ -35,7 +35,7 @@
             }
 
             if(!options.reusable)
-                $.when(TC.Utils.elementDestroyed($(dialogSelector + ' .dialogPane'))).done(function() {
+                $.when(T.Utils.elementDestroyed($(dialogSelector + ' .dialogPane'))).done(function() {
                     pane.remove();
                 });
         };
@@ -104,7 +104,7 @@
     });
 })();
 
-TC.dialog = function (pane, options) {
+T.dialog = function (pane, options) {
     options = options || {};
     var element = options.element ? $(options.element) : 'body';
     pane = typeof (pane) == 'string' ? { path: pane } : pane;
@@ -112,7 +112,7 @@ TC.dialog = function (pane, options) {
     var title = ko.observable(options.title);
     options.title = options.title && title;
 
-    var node = TC.appendNode(element, { path: '/Common/dialog', id: options.id, data: { pane: pane, options: options } }, options.node);
+    var node = T.appendNode(element, { path: '/Common/dialog', id: options.id, data: { pane: pane, options: options } }, options.node);
     return {
         node: node,
         close: node.pane.remove,
@@ -122,8 +122,8 @@ TC.dialog = function (pane, options) {
         }
     };
 };
-TC.overlay = TC.dialog;
+T.overlay = T.dialog;
 
-TC.Types.Pane.prototype.dialog = function (pane, options) {
-    return TC.dialog(pane, $.extend({ node: this.node }, options));
+T.Types.Pane.prototype.dialog = function (pane, options) {
+    return T.dialog(pane, $.extend({ node: this.node }, options));
 };

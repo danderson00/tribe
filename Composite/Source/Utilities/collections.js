@@ -35,4 +35,4 @@
         });
         return initialValue;
     };
-})(TC.Utils);
+})(T.Utils);

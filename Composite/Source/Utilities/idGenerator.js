@@ -1,5 +1,5 @@
 ﻿(function () {
-    TC.Utils.idGenerator = function () {
+    T.Utils.idGenerator = function () {
         return {
             next: (function () {
                 var id = 0;
@@ -14,8 +14,8 @@
         };
     };
 
-    var generator = TC.Utils.idGenerator();
-    TC.Utils.getUniqueId = function () {
+    var generator = T.Utils.idGenerator();
+    T.Utils.getUniqueId = function () {
         return generator.next();
     };
 })();

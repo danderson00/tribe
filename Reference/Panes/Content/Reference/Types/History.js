@@ -1,5 +1,5 @@
 ﻿Reference.Types.History = {
-    name: 'TC.Types.History',
+    name: 'T.Types.History',
     description: 'Maintains the state of the browser history stack, including URL data.',
     constructor: {
         arguments: [

@@ -2,7 +2,7 @@
 // Panes/layout.js
 
 
-TC.scriptEnvironment = { resourcePath: '/layout' };
+T.scriptEnvironment = { resourcePath: '/layout' };
 
 Reference = {};
 Article = {
@@ -13,7 +13,7 @@ Article = {
     }
 };
 
-TC.registerModel(function (pane) {
+T.registerModel(function (pane) {
     this.renderComplete = function() {
         pane.find('pre.example').each(function () {
             $(this).html(PR.prettyPrintOne($(this).html()));
@@ -85,9 +85,9 @@ window.__appendStyle('body{font-family:\'Segoe UI\',\'Trebuchet MS\',Arial,Helve
 // C:/Projects/Tribe/Reference/Panes/Interface/API/constructor.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/API/constructor' };
+T.scriptEnvironment = { resourcePath: '/Interface/API/constructor' };
 
-TC.registerModel(function (pane) {    
+T.registerModel(function (pane) {    
     this.func = $.extend({ name: 'new ' + pane.data.name }, pane.data.constructor);
 });
 
@@ -96,12 +96,12 @@ TC.registerModel(function (pane) {
 // C:/Projects/Tribe/Reference/Panes/Interface/API/function.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/API/function' };
+T.scriptEnvironment = { resourcePath: '/Interface/API/function' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.f = pane.data;
 
-    this.argumentNames = TC.Utils.pluck(pane.data.arguments, 'name').join(', ');
+    this.argumentNames = T.Utils.pluck(pane.data.arguments, 'name').join(', ');
 });
 
 
@@ -109,21 +109,21 @@ TC.registerModel(function(pane) {
 // C:/Projects/Tribe/Reference/Panes/Interface/API/table.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/API/table' };
+T.scriptEnvironment = { resourcePath: '/Interface/API/table' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.columns = mapColumns();
     this.rows = mapRows();
     
     function mapColumns() {
-        return TC.Utils.map(pane.data[0], function(value, key) {
+        return T.Utils.map(pane.data[0], function(value, key) {
             return key;
         });
     }
     
     function mapRows() {
-        return TC.Utils.map(pane.data, function (row) {
-            return TC.Utils.map(row, function(value) {
+        return T.Utils.map(pane.data, function (row) {
+            return T.Utils.map(row, function(value) {
                 return value.toString();
             });
         });
@@ -135,9 +135,9 @@ TC.registerModel(function(pane) {
 // C:/Projects/Tribe/Reference/Panes/Interface/API/type.js
 
 
-TC.scriptEnvironment = { resourcePath: '/Interface/API/type' };
+T.scriptEnvironment = { resourcePath: '/Interface/API/type' };
 
-TC.registerModel(function(pane) {
+T.registerModel(function(pane) {
     this.t = pane.data;
 });
 
@@ -167,7 +167,7 @@ window.__appendStyle('.function h1 .returns{float:right;font-weight:normal}.func
 // C:/Projects/Tribe/Reference/Panes/Content/Reference/PackScript/packscript.js
 
 
-TC.scriptEnvironment = { resourcePath: '/packscript' };
+T.scriptEnvironment = { resourcePath: '/packscript' };
 
 Reference.PackScript = {
     options: [

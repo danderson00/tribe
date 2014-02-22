@@ -1,4 +1,4 @@
-﻿TC.Types.Navigation = function (node, options) {
+﻿T.Types.Navigation = function (node, options) {
     normaliseOptions();
     setInitialPaneState();
 
@@ -10,7 +10,7 @@
 
     this.navigate = function (paneOptions) {
         if (options.browser)
-            TC.history.navigate(options.browser && options.browser.urlDataFrom(paneOptions));
+            T.history.navigate(options.browser && options.browser.urlDataFrom(paneOptions));
 
         trimStack();
         stack.push(paneOptions);
@@ -25,10 +25,10 @@
 
     this.go = function(frameCount) {
         go(frameCount);
-        if (options.browser) TC.history.update(frameCount);
+        if (options.browser) T.history.update(frameCount);
     };
     
-    if(options.browser) TC.Utils.handleDocumentEvent('browser.go', onBrowserGo);
+    if(options.browser) T.Utils.handleDocumentEvent('browser.go', onBrowserGo);
     function onBrowserGo(e) {
         go(e.eventData.count);
     }
@@ -45,7 +45,7 @@
     }
 
     function navigateTo(paneOptions, reverse) {
-        TC.Utils.raiseDocumentEvent('navigating', { node: node, options: paneOptions, browserData: options.browserData });
+        T.Utils.raiseDocumentEvent('navigating', { node: node, options: paneOptions, browserData: options.browserData });
         node.transitionTo(paneOptions, options.transition, reverse);
     }
 
@@ -54,7 +54,7 @@
     }
 
     this.dispose = function() {
-        TC.Utils.detachDocumentEvent('browser.go', onBrowserGo);
+        T.Utils.detachDocumentEvent('browser.go', onBrowserGo);
     };
     
     function normaliseOptions() {
@@ -62,7 +62,7 @@
         if (options.constructor === String)
             options = { transition: options };
         if (options.browser === true)
-            options.browser = TC.options.defaultUrlProvider;
+            options.browser = T.options.defaultUrlProvider;
     }
     
     function setInitialPaneState() {

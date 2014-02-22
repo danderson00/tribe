@@ -2,8 +2,8 @@
     var helpers = Test.Integration;
 
     helpers.executeEvents = function (events, pane, data) {
-        TC.options.events = events;
-        TC.options.basePath = 'Integration/Panes';
+        T.options.events = events;
+        T.options.basePath = 'Integration/Panes';
 
         var $element = $('#qunit-fixture');
         $element.append('<div data-bind="pane: \'' + pane + '\', data: \'' + data + '\'"></div>');
@@ -11,7 +11,7 @@
     };
 
     helpers.executeDefaultEvents = function (pane) {
-        helpers.executeEvents(TC.defaultOptions().events, pane);
+        helpers.executeEvents(T.defaultOptions().events, pane);
     };
 
     helpers.createTestElement = function() {
@@ -20,13 +20,13 @@
 
     helpers.testEventsUntil = function(event) {
         var events = [];
-        var defaultEvents = TC.defaultOptions().events;
+        var defaultEvents = T.defaultOptions().events;
         for (var i = 0, l = defaultEvents.length; i < l; i++) {
             events.push(defaultEvents[i]);
             if (defaultEvents[i] === event)
                 break;
         }
-        TC.Events.spy = sinon.spy();
+        T.Events.spy = sinon.spy();
         events.push('spy');
         return events;
     };
