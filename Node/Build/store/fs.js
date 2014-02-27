@@ -1,6 +1,6 @@
 ﻿module.exports = (function () {
     var fs = require('q-io/fs'),
-        log = resolve('/logger');
+        log = require('tribe/logger');
 
     var api = {
         put: function(partitionKey, rowKey, data) {

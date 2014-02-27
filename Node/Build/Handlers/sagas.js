@@ -1,15 +1,15 @@
-﻿// hack to get knockout working in sagas
+﻿// hack to get knockout working in sagas - this should be done by wrapping sagas in a with statement
 ko = require('knockout');
 
-var store = resolve('/Store/fs'),
-    serializer = resolve('/serializer');
+var store = require('tribe/store/fs'),
+    serializer = require('tribe/serializer');
 
 var sagas = {
     start: function (path, id, data) {
         var saga = createSaga(path);
         var onstart = saga.handles.onstart;
         if (onstart) onstart(data);
-        storeSaga(saga, path, id);
+        storeSagaData(saga, path, id);
     },
     handle: function (envelope) {
         if (envelope.sagaId) {
@@ -19,16 +19,19 @@ var sagas = {
                     saga.data = serializer.deserialize(data.data);
                     var handler = saga.handles[envelope.topic];
                     if (handler) handler(envelope.data, envelope);
-                    storeSaga(saga, data.path, envelope.sagaId);
+                    storeSagaData(saga, data.path, envelope.sagaId);
                 })
                 .fail(console.error);
         }
+    },
+    register: function (path, constructor) {
+        sagas[path] = { constructor: constructor };
     }
 };
 
 module.exports = sagas;
     
-function storeSaga(saga, path, id) {
+function storeSagaData(saga, path, id) {
     store.put(id, id, {
         path: path,
         data: serializer.serialize(saga.data),
@@ -37,6 +40,6 @@ function storeSaga(saga, path, id) {
 }
 
 function createSaga(path) {
-    var pubsub = require('tribe/pubsub');
+    var pubsub = require('pubsub');
     return new Tribe.PubSub.Saga(pubsub, sagas[path].constructor);
 }

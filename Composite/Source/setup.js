@@ -6,9 +6,7 @@
     if (typeof(T) === 'undefined')
         throw 'Tribe.Common must be loaded before knockout.composite can initialise';
 
-    global.Tribe = global.Tribe || {};
-    global.Tribe.Composite = {};
-    global.TC = global.Tribe.Composite;
+    global.T = T || {};
     global.T.Events = {};
     global.T.Factories = {};
     global.T.LoadHandlers = {};

@@ -1,7 +1,7 @@
 ﻿module.exports = {
     configure: function () {
         var pack = require('packscript').pack,
-            options = resolve('/options');
+            options = require('tribe/options');
 
         Pack.context.configPath = options.basePath;
         Pack.api.Log.setLevel('info');
@@ -14,8 +14,8 @@
         ]).to('Build/site.js');
 
         pack({
-            include: [T.sagas('Sagas')],
-            outputTemplate: 'T.wrapper'
+            include: [T.sagas('Sagas'), T.staticHandlers('Handlers')],
+            outputTemplate: 'registerResource'
         }).to('Build/server.js');
 
         pack([T.scripts('Dependencies/*.js'), T.scripts('node_modules/tribe/client/*.debug.js')]).to('Build/dependencies.js');

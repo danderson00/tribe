@@ -10,7 +10,9 @@
         if (!socket)
             throw 'Hub must be connected before calling publish';
         if(envelope.origin !== 'server')
-            socket.emit('message', envelope);
+            socket.emit('message', envelope, function () {
+                console.log('message acknowledged');
+            });
     };
 
     this.join = function(channel) {

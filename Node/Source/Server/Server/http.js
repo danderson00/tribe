@@ -4,9 +4,9 @@
             app = express(),
             server = require('http').createServer(app),
             fs = require('q-io/fs'),
-            log = resolve('/logger'),
-            store = resolve('/Store/fs'),
-            options = resolve('/options');
+            log = require('tribe/logger'),
+            store = require('tribe/store/fs'),
+            options = require('tribe/options');
 
         app.get('/', function (req, res) {
             fs.read(options.basePath + 'Build/index.html').then(function (data) {

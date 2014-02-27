@@ -9,7 +9,8 @@
 		"packscript": "~0.2.9",
 		"q-io": "~1.10.6",
 		"socket.io": "~0.9.16",
-		"underscore": "~1.5.2"
+		"underscore": "~1.5.2",
+		"node-uuid": "~1.4.1"
     },
 	"devDependencies": {
 		"sinon": "~1.7.3"

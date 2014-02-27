@@ -1,5 +1,5 @@
-﻿var utils = resolve('/utilities'),
-    _ = resolve('underscore');
+﻿var utils = require('tribe/utilities'),
+    _ = require('underscore');
 
 module.exports = {
     apply: function (options) {
