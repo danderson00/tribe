@@ -15,3 +15,4 @@ sync('Source/bin/tribe').to('Build/bin');
 
 sync({ directory: 'Build' }).to('Samples/Chat/node_modules/tribe');
 sync({ directory: 'Build' }).to('Samples/Static/node_modules/tribe');
+sync({ directory: 'Build' }).to('TestHarness/node_modules/tribe');
