@@ -6,10 +6,11 @@
 
 T.scriptEnvironment = { resourcePath: '/test.run' };
 
-var qunit = require('tribe/test/qunit');
+var qunit = require('tribe/test/qunit'),
+    options = require('tribe/options');
 
 T.registerHandler('test.run', function (handler, envelope) {
-    qunit.run(handler);
+    qunit.run(options.modulePath + '/tests', handler);
 });
 
        

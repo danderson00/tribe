@@ -9,6 +9,7 @@ module.exports = {
     port: 1678,
     basePath: defaultBasePath(),
     dataPath: defaultBasePath() + 'Data/',
+    modulePath: modulePath(),
     libPath: libPath(),
     testFramework: 'qunit'
 };
@@ -16,6 +17,10 @@ module.exports = {
 function defaultBasePath() {
     var path = process.argv[1];
     return path.substr(0, path.replace(/\\/g, '/').lastIndexOf('/')) + '/';
+}
+
+function modulePath() {
+    return path.join(__dirname, '..');
 }
 
 function libPath() {

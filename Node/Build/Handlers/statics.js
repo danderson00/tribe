@@ -15,8 +15,8 @@ function startHandlers(envelope) {
     for (var i = 0, l = statics.handlers.length; i < l; i++) {
         var handler = statics.handlers[i];
 
-        if ((handler.messageFilter.constructor === String && envelope.topic === handler.messageFilter) ||
-            (handler.messageFilter.constructor === Function && handler.messageFilter(envelope)))
+        if ((typeof(handler.messageFilter) === "string" && envelope.topic === handler.messageFilter) ||
+            (typeof(handler.messageFilter) === "function" && handler.messageFilter(envelope)))
 
             handleMessage(handler, envelope);
     }

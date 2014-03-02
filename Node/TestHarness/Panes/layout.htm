@@ -1,1 +1,4 @@
 ﻿<button data-bind="click: run">Run</button>
+<div data-bind="foreach: tests">
+    <div data-bind="pane: 'test', data: $data"></div>
+</div>
