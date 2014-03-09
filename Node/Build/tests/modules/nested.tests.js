@@ -1,1 +1,0 @@
-﻿module.exports = { counter: require('tribe/tests/modules/counter') };
