@@ -7,7 +7,6 @@
 module.exports = {
     enable: function () {
         stubbed = {};
-        mocked = {};
         loaded = [];
         var loader = Module._load = function (request, parent, isMain) {
             if (stubbed[request])
@@ -20,16 +19,12 @@ module.exports = {
                 loaded.push(modulePath);
             }
 
-            var loadedModule = originalLoader(request, parent, isMain);
-            return mocked[request] ?
-                sinon.mock(loadedModule) :
-                loadedModule;
+            return originalLoader(request, parent, isMain);
         };
     },
     disable: function () {
         Module._load = originalLoader;
         stubbed = {};
-        mocked = {};
         loaded = [];
     },
     stub: function (request, target) {

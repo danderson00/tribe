@@ -1,5 +1,4 @@
-﻿sync({ directory: 'Source', clean: true }).to('node_modules/tribe');
-sync({ directory: '../Common/Source' }).to('node_modules/tribe');
+﻿sync({ directory: ['Source', '../Common/Source'] }).to('node_modules/tribe');
 pack('../PubSub/Build/Tribe.PubSub.js').to('node_modules/tribe/pubsub.js');
 sync('../Build/*.debug.js').to('node_modules/tribe/client/build/');
 

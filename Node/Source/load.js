@@ -8,66 +8,91 @@
 
 module.exports = {
     file: loadFile,
-    directory: loadDirectory
+    directory: loadDirectory,
+    enumerate: enumerateFiles
 };
-
-function loadDirectory(pathOrOptions) {
-    pathOrOptions = normaliseOptions(pathOrOptions);
-    return fs.listTree(pathOrOptions.path, guard)
-        .then(function (filePaths) {
-            var promises = _.map(filePaths, function (filePath) {
-                var options = _.extend({}, pathOrOptions, {
-                    path: filePath,
-                    debugPath: (pathOrOptions.debugPath || '') + path.normalize(filePath).replace(path.normalize(pathOrOptions.path), '').replace(/\\/g, '/')
-                });
-                return loadFile(options);
-            });
-            return q.all(promises);
-        })
-        .fail(utils.rethrow('Error loading directory: ' + pathOrOptions.path));
-}
-
-function guard(path, stat) {
-    return !stat.isDirectory();
-}
 
 function loadFile(pathOrOptions) {
     pathOrOptions = normaliseOptions(pathOrOptions);
     return fs.read(pathOrOptions.path)
         .then(function (source) {
-            var args = provideModuleObjects(pathOrOptions.args, pathOrOptions.path);
+            extendArgs();
 
-            var pre = '(function(' + Object.keys(args).join(', ') + ') { ';
-            var post = '} )';
+            var newModule = new Module(pathOrOptions.path);
+            newModule.paths = Module._nodeModulePaths(pathOrOptions.path);
+            newModule._compile(constructSource(source), debugPath());
 
-            if (pathOrOptions.withArg && pathOrOptions.args[pathOrOptions.withArg]) {
-                pre += 'with (' + pathOrOptions.withArg + ') {';
-                post = '} ' + post;
-            }
+            if (pathOrOptions.beforeExecute) pathOrOptions.beforeExecute(pathOrOptions.path);
+            var result = newModule.exports.apply(pathOrOptions.thisArg, _.values(pathOrOptions.args));
+            if (pathOrOptions.afterExecute) pathOrOptions.afterExecute(pathOrOptions.path);
 
-            var compiled = vm.runInNewContext(pre + source + post, pathOrOptions.global, 'http://' + pathOrOptions.debugDomain + '/' + pathOrOptions.debugPath);
-            return compiled.apply(pathOrOptions.thisArg, _.values(args));
+            return result;
         })
-        .fail(utils.rethrow('Error loading file: ' + pathOrOptions.path));
-}
+    .fail(utils.rethrow('Error loading file: ' + pathOrOptions.path));
 
-function provideModuleObjects(args, filePath) {
-    var fakeModule = new Module(filePath, module);
-    fakeModule.paths = Module._nodeModulePaths(path.dirname(filePath));
+    function constructSource(source) {
+        var pre = 'module.exports = (function(' + Object.keys(pathOrOptions.args).join(', ') + ') { ';
+        var post = '} )';
 
-    function loadModule(request) {
-        return Module._load(request, fakeModule);
+        if (pathOrOptions.withArg && pathOrOptions.args[pathOrOptions.withArg]) {
+            pre += 'with (' + pathOrOptions.withArg + ') {';
+            post = '} ' + post;
+        }
+        post = '\n' + post;
+
+        return pre + source + post;
     }
 
-    return _.extend({
-        require: loadModule,
-        __filename: path.resolve(filePath),
-        __dirname: path.dirname(path.resolve(filePath))
-    }, args);
+    function debugPath() {
+        return pathOrOptions.debugPath ?
+            ('http://' + (pathOrOptions.debugDomain ? pathOrOptions.debugDomain + '/' : '') + pathOrOptions.debugPath).replace(/\\/g, '/') :
+            pathOrOptions.path;
+    }
+
+    function extendArgs() {
+        pathOrOptions.args = _.extend({
+            // __dirname and __filename resolve to the path that we pass to module._compile. 
+            // Given this is our debug path, override these values with the true value.
+            __filename: pathOrOptions.path,
+            __dirname: path.dirname(pathOrOptions.path)
+        }, pathOrOptions.args);
+    }
+}
+
+function enumerateFiles(directoryPath, callback, recursive) {
+    directoryPath = path.normalize(directoryPath);
+    return fs.listTree(directoryPath, guard)
+        .then(function (filePaths) {
+            var promises = _.map(filePaths, function (filePath) {
+                filePath = path.normalize(filePath);
+                return callback(filePath, filePath.replace(directoryPath, ''));
+            });
+            return q.all(promises);
+        })
+    .fail(utils.rethrow('Error enumerating directory: ' + directoryPath));
+
+    function guard(path, stat) {
+        if (stat.isDirectory())
+            return recursive !== false ? false : null;
+        return true;
+    }
+}
+
+function loadDirectory(pathOrOptions) {
+    pathOrOptions = normaliseOptions(pathOrOptions);
+    return enumerateFiles(pathOrOptions.path, function (filePath, relativePath) {
+        var options = _.extend({}, pathOrOptions, {
+            path: filePath,
+            debugPath: (pathOrOptions.debugPath || '') + path.normalize(filePath).replace(path.normalize(pathOrOptions.path), '').replace(/\\/g, '/')
+        });
+        return loadFile(options);
+    });
 }
 
 function normaliseOptions(pathOrOptions) {
-    return typeof(pathOrOptions) === "string" ?
+    var options = typeof (pathOrOptions) === "string" ?
         { path: pathOrOptions } :
         pathOrOptions;
+    options.path = path.normalize(options.path);
+    return options;
 }

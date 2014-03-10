@@ -30,7 +30,12 @@
         },
         error: function (message, error) {
             if (level >= 1)
-                console.error(('ERROR: ' + message), error);
+                console.error(('ERROR: ' + message + '\n'), api.errorDetails(error));
+        },
+        errorDetails: function (ex) {
+            if (!ex) return '';
+            return (ex.constructor === String) ? ex :
+                (ex.stack || '') + (ex.inner ? '\n\n' + this.errorDetails(ex.inner) : '\n');
         }
     };
     api.log = api.debug;

@@ -18,9 +18,5 @@
                 stack: ex.stack,
                 inner: extractError(ex.inner)
             };
-    },
-    errorDetails: function (ex) {
-        return ex && ex.constructor === String ? ex :
-            ex.stack + (ex.inner ? '\n\n' + this.errorDetails(ex.inner) : '');
     }
 };

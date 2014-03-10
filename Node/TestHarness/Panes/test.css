@@ -1,37 +1,31 @@
 ﻿.test {
-    border: 2px solid salmon;    
+    border: 2px solid lightgray;    
     margin-top: 10px;
+}
+
+.test.fail {
+    border: 2px solid salmon;    
 }
 
 .test.pass {
     border: 2px solid lightgreen;
 }
 
-.test > div {
-    background: salmon;
+.test .summary {
     padding: 2px 10px;
     cursor: pointer;
 }
 
-.test.pass > div {
+.test.pass .summary {
     background: lightgreen;
 }
 
-.assertions {
-    list-style: none;
+.test.fail .summary {
+    background: salmon;
+}
+
+.details {
     margin: 0;
     padding: 5px;
-}
-
-.assertions li {
-}
-
-.assertions li div {
-    display: inline-block;
-    width: 5px;
-    background: red;
-}
-
-.assertions li div.pass {
-    background: green;
+    background: white;
 }

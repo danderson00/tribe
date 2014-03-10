@@ -3,27 +3,17 @@
         test = pane.data;
 
     this.test = test;
-    this.pass = test.failed === 0;
-    this.result = this.pass ? 
-        'Passed (' + test.total + ')' :
-        'Failed (' + test.failed + '/' + test.total + ')';
+    this.pass = test.state === 'passed';
+    this.fail = test.state === 'failed';
+    this.details = 'Filename: ' + test.filename + (test.error ? '<br/>' + test.error : '').replace(/\n/g, '<br/>');
+    this.fixture = test.fixture ?
+        test.fixture.join('.') :
+        'No fixture';
 
-    this.showAssertions = ko.observable(this.pass !== true);
+    this.showDetails = ko.observable(this.pass !== true);
 
-    this.toggleAssertions = function () {
-        self.showAssertions(!self.showAssertions());
+    this.toggleDetails = function () {
+        self.showDetails(!self.showDetails());
     };
 
-    this.formatAssertion = function (assertion) {
-        var description = '';
-        if (assertion.message)
-            description += assertion.message.replace(/\n/g, '<br/>');
-        else
-            description += assertion.result ? 'Passed' : 'Failed';
-        if (assertion.expected)
-            description += '<br/>Expected: ' + JSON.stringify(assertion.expected, null, 2);
-        if (assertion.actual && !assertion.result)
-            description += '<br/>Actual: ' + JSON.stringify(assertion.actual, null, 2);
-        return description;
-    };
 });

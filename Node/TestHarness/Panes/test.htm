@@ -1,14 +1,10 @@
-﻿<div class="test" data-bind="css: { pass: pass }">
-    <div data-bind="click: toggleAssertions">
-        <span data-bind="text: test.module"></span>: 
+﻿<div class="test" data-bind="css: { pass: pass, fail: fail }">
+    <div class="summary" data-bind="click: toggleDetails">
+        <span data-bind="text: fixture"></span>: 
         <span data-bind="text: test.name"></span> - 
-        <span data-bind="text: result"></span>
+        <span data-bind="text: test.state"></span>
     </div>
-
-    <ul class="assertions" data-bind="foreach: test.assertions, visible: showAssertions">
-        <li>
-            <div data-bind="css: { pass: result }">&nbsp;</div>
-            <span data-bind="html: $root.formatAssertion($data)"></span>
-        </li>
-    </ul>
+    <div class="details" data-bind="visible: showDetails">
+        <span data-bind="html: details"></span>
+    </div>
 </div>

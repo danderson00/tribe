@@ -1,6 +1,6 @@
 ﻿T.registerModel(function (pane) {
     var self = this,
-        channel = pane.pubsub.channel('test').connect();
+        channel = pane.pubsub.channel('__test').connect();
 
     this.renderComplete = function () {
         channel.publish('test.run');
@@ -13,7 +13,7 @@
         channel.publish('test.run');
     };
 
-    channel.subscribe('test.done', function (test) {
+    channel.subscribe('test.complete', function (test) {
         self.tests.push(test);
     });
 

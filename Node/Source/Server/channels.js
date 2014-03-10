@@ -22,5 +22,9 @@ var api = module.exports = {
     broadcast: function (envelope, origin) {
         var id = envelope.channelId;
         if (id && channels[id]) channels[id].broadcast(envelope, origin);
+    },
+    broadcastTo: function (id, envelope, origin) {
+        envelope.channelId = id;
+        api.broadcast(envelope, origin);
     }
 };

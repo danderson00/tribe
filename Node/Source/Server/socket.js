@@ -9,6 +9,7 @@
 
         module.exports.io = io;
 
+        io.set('log level', 2);
         io.sockets.on('connection', function (socket) {
             log.debug('connected...');
             
