@@ -1,5 +1,4 @@
-﻿
-describe('tribe.test.require', function () {
+﻿describe('tribe.test.require', function () {
     it('require returns specified stub', function () {
         var target = {};
         stub('counter', target);

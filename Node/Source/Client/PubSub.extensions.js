@@ -4,11 +4,12 @@
             path = '/' + path;
 
         var saga = new Tribe.PubSub.Saga(this, sagaDefinition(path));
-        saga.id = id;
 
-        attachToHub(saga);
-
-        T.hub.startSaga(path, id, data);
+        if (id) {
+            saga.id = id;
+            attachToHub(saga);
+            T.hub.startSaga(path, id, data);
+        }
 
         return saga.start(data);
     };
@@ -16,7 +17,7 @@
     Tribe.PubSub.prototype.joinSaga = function (id, path, data) {
         var deferred = $.Deferred();
         var self = this;
-        $.when($.get('/Data/' + id + '/' + id))
+        $.when($.get('Data/' + id + '/' + id))
             .done(function (data) {
                 var saga = new Tribe.PubSub.Saga(self, sagaDefinition(data.path));
                 saga.id = id;

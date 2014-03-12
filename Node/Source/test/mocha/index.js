@@ -3,12 +3,13 @@
     chai = require('chai'),
     sinon = require('sinon'),
     load = require('tribe/load'),
+    log = require('tribe/logger'),
     testRequire = require('tribe/test/require'),
-    overrides = require('tribe/test/mocha/overrides'),
     channels = require('tribe/server/channels'),
-    log = require('tribe/logger');
+    overrides = require('./overrides'),
+    convert = require('./convert'),
+    service = require('./service');
 
-mocha.suite.title = 'Server';
 mocha.ui('tdd');
 
 module.exports = {
@@ -21,13 +22,14 @@ module.exports = {
         });
 
         runner.on('fail', function (test, error) {
-            broadcastEvent('test.complete', test, error);
             testRequire.disable();
+            test.error = error;
+            broadcastEvent('test.complete', test, error);
         });
 
         runner.on('pass', function (test) {
-            broadcastEvent('test.complete', test);
             testRequire.disable();
+            broadcastEvent('test.complete', test);
         });
 
         runner.run();
@@ -53,7 +55,11 @@ module.exports = {
             originalAddTest = Mocha.Suite.prototype.addTest;
             Mocha.Suite.prototype.addTest = function (test) {
                 originalAddTest.call(this, test)
+
+                // we can add the line number of the test from the stack trace
+                // use this for setting breakpoints for individual tests automatically
                 test.filename = path;
+
                 broadcastEvent('test.loaded', test);
                 log.debug('Loaded test "' + test.title + '" from ' + path);
             };
@@ -70,29 +76,13 @@ module.exports = {
     },
     loadDirectory: function (path) {
         return load.enumerate(path, module.exports.loadFile);
+    },
+    tests: function () {
+        return convert.suite(mocha.suite);
     }
 };
 
 function broadcastEvent(topic, test, error) {
-    channels.broadcastTo('__test', { topic: topic, data: convertTest(test, error) });
+    channels.broadcastTo('__test', { topic: topic, data: convert.test(test, error) });
 }
 
-function convertTest(test, error) {
-    return {
-        name: test.title,
-        fixture: testFixture(test),
-        duration: test.duration,
-        filename: test.filename,
-        state: test.state,
-        error: error && log.errorDetails(error)
-    };
-}
-
-function testFixture(test, fixtures) {
-    fixtures = fixtures || [];
-    if (test.parent) {
-        fixtures.unshift(test.parent.title);
-        testFixture(test.parent, fixtures);
-    }
-    return fixtures;
-}

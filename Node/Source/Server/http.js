@@ -1,13 +1,13 @@
-﻿module.exports = {
-    start: function () {
-        var express = require('express'),
-            app = express(),
-            server = require('http').createServer(app),
-            fs = require('q-io/fs'),
-            log = require('tribe/logger'),
-            store = require('tribe/store/fs'),
-            options = require('tribe/options');
+﻿var express = require('express'),
+    app = express(),
+    server = require('http').createServer(app),
+    fs = require('q-io/fs'),
+    log = require('tribe/logger'),
+    store = require('tribe/store/fs'),
+    options = require('tribe/options');
 
+module.exports = {
+    start: function () {
         app.get('/', function (req, res) {
             fs.read(options.basePath + 'Build/index.html').then(function (data) {
                 res.send(data);
@@ -29,5 +29,8 @@
         server.listen(options.port);
 
         return server;
+    },
+    registerService: function (uri, handler, verb) {
+        app[verb || 'all'](uri, handler);
     }
 };

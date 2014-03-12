@@ -1,4 +1,4 @@
-﻿var runner = require('tribe/test/mocha'),
+﻿var runner = require('tribe/test'),
     options = require('tribe/options');
 
 runner.loadDirectory(options.modulePath + '/tests/server');

@@ -1,4 +1,4 @@
-﻿// hack to get knockout working in sagas - this should be done by wrapping sagas in a with statement
+﻿// hack to get knockout working in sagas - when we load sagas using the resource loader, provide ko as an argument instead
 ko = require('knockout');
 
 var store = require('tribe/store/fs'),

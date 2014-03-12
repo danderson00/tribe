@@ -246,6 +246,7 @@
     <Content Include="Samples\Static\Panes\layout.htm" />
     <Content Include="Samples\Static\Panes\layout.js" />
     <Content Include="Samples\Static\server.js" />
+    <Content Include="Source\client\services.js" />
     <Content Include="Source\client\setup.js" />
     <Content Include="Source\client\PubSub.extensions.js" />
     <Content Include="node_modules\sinon\lib\sinon.js" />
@@ -1117,6 +1118,7 @@
     <Content Include="node_modules\socket.io\node_modules\socket.io-client\test\socket.test.js" />
     <Content Include="node_modules\socket.io\node_modules\socket.io-client\test\util.test.js" />
     <Content Include="node_modules\socket.io\node_modules\socket.io-client\test\worker.js" />
+    <Content Include="Source\handlers\services.js" />
     <Content Include="Source\pack\registerResource.template.js" />
     <Content Include="Source\pack\index.template.html" />
     <None Include="node_modules\.bin\mocha" />
@@ -1226,6 +1228,7 @@
     <Content Include="Source\store\fs.js" />
     <Content Include="Source\index.js" />
     <Content Include="Source\handlers\sagas.js" />
+    <Content Include="Source\tests\server\handlers\services.tests.js" />
     <Content Include="Source\tests\server\load.tests.js" />
     <Content Include="Source\tests\load\args\customArg.js" />
     <Content Include="Source\tests\load\args\builtins.js" />
@@ -1236,8 +1239,14 @@
     <Content Include="Source\tests\node_modules\counter\nested.js" />
     <Content Include="Source\tests\server\handlers\statics.tests.js" />
     <Content Include="Source\tests\server\server\channels.tests.js" />
+    <Content Include="Source\tests\server\test\mocha\convert.tests.js" />
+    <Content Include="Source\tests\server\test\mocha\overrides.tests.js" />
     <Content Include="Source\tests\server\test\require.tests.js" />
-    <Content Include="Source\test\mocha.js" />
+    <Content Include="Source\test\index.js" />
+    <Content Include="Source\test\mocha\convert.js" />
+    <Content Include="Source\test\mocha\index.js" />
+    <Content Include="Source\test\mocha\overrides.js" />
+    <Content Include="Source\test\service.js" />
     <Content Include="Source\test\require.js" />
     <Content Include="Source\types\Channel.js" />
     <Content Include="Source\utilities.js" />
@@ -1247,12 +1256,17 @@
     <Content Include="Source\templates\basic\Sagas\readme.txt" />
     <Content Include="Source\templates\basic\server.js" />
     <Content Include="TestHarness\Handlers\test.run.js" />
+    <Content Include="TestHarness\Panes\fixture.htm" />
+    <Content Include="TestHarness\Panes\fixture.js" />
+    <Content Include="TestHarness\Panes\list.htm" />
     <Content Include="TestHarness\Panes\layout.css" />
     <Content Include="TestHarness\Panes\layout.htm" />
     <Content Include="TestHarness\Panes\layout.js" />
+    <Content Include="TestHarness\Panes\list.js" />
     <Content Include="TestHarness\Panes\test.css" />
     <Content Include="TestHarness\Panes\test.htm" />
     <Content Include="TestHarness\Panes\test.js" />
+    <Content Include="TestHarness\Sagas\session.js" />
     <Content Include="TestHarness\server.js" />
     <Content Include="Samples\Chat\server.js" />
   </ItemGroup>

@@ -11,7 +11,8 @@ module.exports = {
     dataPath: defaultBasePath() + 'Data/',
     modulePath: modulePath(),
     libPath: libPath(),
-    testFramework: 'qunit'
+    testFramework: 'mocha',
+    debugPort: process.debugPort
 };
 
 function defaultBasePath() {

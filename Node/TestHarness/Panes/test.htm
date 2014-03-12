@@ -1,10 +1,11 @@
-﻿<div class="test" data-bind="css: { pass: pass, fail: fail }">
+﻿<div class="test" data-bind="css: { pass: test.state() === 'passed', fail: test.state() === 'failed' }">
     <div class="summary" data-bind="click: toggleDetails">
-        <span data-bind="text: fixture"></span>: 
-        <span data-bind="text: test.name"></span> - 
-        <span data-bind="text: test.state"></span>
+        <span class="fixture" data-bind="text: fixture"></span>: 
+        <span class="testName" data-bind="text: test.name"></span> - 
+        <span class="testState" data-bind="text: test.state() || 'not run'"></span>
     </div>
     <div class="details" data-bind="visible: showDetails">
-        <span data-bind="html: details"></span>
+        <div>Filename: <span data-bind="text: test.filename"></span></div>
+        <div data-bind="html: error"></div>
     </div>
 </div>

@@ -3,14 +3,17 @@
         test = pane.data;
 
     this.test = test;
-    this.pass = test.state === 'passed';
-    this.fail = test.state === 'failed';
-    this.details = 'Filename: ' + test.filename + (test.error ? '<br/>' + test.error : '').replace(/\n/g, '<br/>');
+
+    this.error = ko.computed(function () {
+        var error = test.error();
+        return error && error.replace(/\n/g, '<br/>');
+    });
+
     this.fixture = test.fixture ?
         test.fixture.join('.') :
         'No fixture';
 
-    this.showDetails = ko.observable(this.pass !== true);
+    this.showDetails = ko.observable(test.state() === 'failed');
 
     this.toggleDetails = function () {
         self.showDetails(!self.showDetails());
