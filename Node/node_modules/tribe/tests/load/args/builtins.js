@@ -1,0 +1,1 @@
+﻿return { require: require, __dirname: __dirname, __filename: __filename };
