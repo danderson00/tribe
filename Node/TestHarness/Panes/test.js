@@ -19,4 +19,7 @@
         self.showDetails(!self.showDetails());
     };
 
+    this.run = function () {
+        pane.pubsub.publish('test.run', { fixture: test.fixture, title: test.title });
+    };
 });

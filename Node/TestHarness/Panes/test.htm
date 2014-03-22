@@ -1,4 +1,8 @@
 ﻿<div class="test" data-bind="css: { pass: test.state() === 'passed', fail: test.state() === 'failed' }">
+    <div class="icons">
+        <div class="stale" data-bind="css: { invisible: test.stale }"></div>
+        <div class="run" data-bind="click: run"></div>
+    </div>
     <div class="summary" data-bind="click: toggleDetails">
         <span class="fixture" data-bind="text: fixture"></span>: 
         <span class="testName" data-bind="text: test.name"></span> - 
