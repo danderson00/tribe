@@ -68,6 +68,7 @@
     <Content Include="node_modules\tribe\tests\load\args\builtins.js" />
     <Content Include="node_modules\tribe\tests\load\args\customArg.js" />
     <Content Include="node_modules\tribe\tests\load\args\require.js" />
+    <Content Include="node_modules\tribe\tests\load\args\requireExtensions.js" />
     <Content Include="node_modules\tribe\tests\load\basic\test.js" />
     <Content Include="node_modules\tribe\tests\load\basic\test2.js" />
     <Content Include="node_modules\tribe\tests\node_modules\counter\index.js" />
@@ -118,6 +119,7 @@
     <Content Include="TestHarness\Panes\test.css" />
     <Content Include="TestHarness\Panes\test.htm" />
     <Content Include="TestHarness\Panes\test.js" />
+    <Content Include="TestHarness\run.js" />
     <Content Include="TestHarness\Sagas\session.js" />
     <Content Include="TestHarness\server.js" />
     <Content Include="Samples\Chat\server.js" />

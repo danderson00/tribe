@@ -2,4 +2,6 @@
     tests = require('tribe/test');
 
 options.test.mocha.reporter = 'dot';
-tests.loadDirectory(options.testPath).then(tests.run);
+tests.loadDirectory(options.testPath).then(function () {
+    tests.run();
+});
