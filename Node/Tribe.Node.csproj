@@ -52,9 +52,14 @@
     <Content Include="node_modules\tribe\options\structure.js" />
     <Content Include="node_modules\tribe\pack\index.template.html" />
     <Content Include="node_modules\tribe\pack\registerResource.template.js" />
+    <Content Include="node_modules\tribe\process\bootstrapper.js" />
+    <Content Include="node_modules\tribe\process\inspector.js" />
+    <Content Include="node_modules\tribe\process\pubsub.js" />
+    <Content Include="node_modules\tribe\pubsub.js" />
     <Content Include="node_modules\tribe\server\build.js" />
     <Content Include="node_modules\tribe\server\channels.js" />
     <Content Include="node_modules\tribe\server\http.js" />
+    <Content Include="node_modules\tribe\process\index.js" />
     <Content Include="node_modules\tribe\server\socket.js" />
     <Content Include="node_modules\tribe\store\fs.js" />
     <Content Include="node_modules\tribe\templates\basic\Build\index.html" />
@@ -73,14 +78,16 @@
     <Content Include="node_modules\tribe\tests\load\basic\test2.js" />
     <Content Include="node_modules\tribe\tests\node_modules\counter\index.js" />
     <Content Include="node_modules\tribe\tests\node_modules\counter\nested.js" />
+    <Content Include="node_modules\tribe\tests\node_modules\redirect\to.js" />
+    <Content Include="node_modules\tribe\tests\node_modules\redirect\from.js" />
     <Content Include="node_modules\tribe\tests\server\handlers\services.tests.js" />
-    <Content Include="node_modules\tribe\tests\server\handlers\statics.tests.js" />
     <Content Include="node_modules\tribe\tests\server\load.tests.js" />
     <Content Include="node_modules\tribe\tests\server\server\channels.tests.js" />
     <Content Include="node_modules\tribe\tests\server\test\mocha\convert.tests.js" />
     <Content Include="node_modules\tribe\tests\server\test\mocha\loader.tests.js" />
     <Content Include="node_modules\tribe\tests\server\test\mocha\overrides.tests.js" />
     <Content Include="node_modules\tribe\tests\server\test\require.tests.js" />
+    <Content Include="node_modules\tribe\tests\server\utilities\module.tests.js" />
     <Content Include="node_modules\tribe\tests\server\utilities\watcher.tests.js" />
     <Content Include="node_modules\tribe\test\index.js" />
     <Content Include="node_modules\tribe\test\mocha\convert.js" />
@@ -92,6 +99,7 @@
     <Content Include="node_modules\tribe\test\service.js" />
     <Content Include="node_modules\tribe\types\Channel.js" />
     <Content Include="node_modules\tribe\utilities\index.js" />
+    <Content Include="node_modules\tribe\utilities\module.js" />
     <Content Include="node_modules\tribe\utilities\watcher.js" />
     <Content Include="Samples\Chat\Panes\chat.css" />
     <Content Include="Samples\Chat\Panes\chat.htm" />
@@ -141,6 +149,9 @@
   <ItemGroup>
     <None Include="node_modules\tribe\bin\tribe" />
     <None Include="node_modules\tribe\package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

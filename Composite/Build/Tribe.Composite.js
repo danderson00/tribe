@@ -137,6 +137,7 @@ Tribe.PubSub = function (options) {
     var utils = Tribe.PubSub.utils;
 
     this.owner = this;
+    this.options = options || {};
     this.sync = option('sync');
      
     var subscribers = new Tribe.PubSub.SubscriberList();
@@ -161,11 +162,11 @@ Tribe.PubSub = function (options) {
         function executeSubscriber(func) {
             var exceptionHandler = option('exceptionHandler');
             
-            if(option('handleExceptions'))
+            if(option('handleExceptions')  && exceptionHandler)
                 try {
                     func(envelope.data, envelope);
                 } catch (e) {
-                    if (exceptionHandler) exceptionHandler(e, envelope);
+                    exceptionHandler(e, envelope);
                 }
             else
                 func(envelope.data, envelope);
@@ -221,7 +222,7 @@ Tribe.PubSub = function (options) {
     };
     
     function option(name) {
-        return (options && options.hasOwnProperty(name)) ? options[name] : Tribe.PubSub.options[name];
+        return (self.options.hasOwnProperty(name)) ? self.options[name] : Tribe.PubSub.options[name];
     }
 };
 
@@ -339,7 +340,7 @@ Tribe.PubSub.options = {
     sync: false,
     handleExceptions: true,
     exceptionHandler: function(e, envelope) {
-        window.console && console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + e.message);
+        typeof(console) !== 'undefined' && console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + e.message);
     }
 };
 
