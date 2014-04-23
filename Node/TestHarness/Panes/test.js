@@ -20,6 +20,10 @@
     };
 
     this.run = function () {
-        pane.pubsub.publish('test.run', { fixture: test.fixture, title: test.title });
+        pane.pubsub.publish({ topic: 'test.run', data: [{ fixture: test.fixture, title: test.title }], channelId: '__test' });
+    };
+
+    this.select = function () {
+        test.selected(!test.selected());
     };
 });

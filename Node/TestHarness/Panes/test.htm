@@ -1,12 +1,12 @@
 ﻿<div class="test" data-bind="css: { pass: test.state() === 'passed', fail: test.state() === 'failed' }">
     <div class="icons">
-        <div class="stale" data-bind="css: { invisible: test.stale }"></div>
-        <div class="selected" data-bind="css: { invisible: !test.selected() }"></div>
-        <div class="run" data-bind="click: run"></div>
+        <div class="stale" data-bind="css: { invisible: !test.stale() }"></div>
+        <div data-bind="css: { selected: test.selected() }, click: select, clickBubble: false"></div>
+        <div class="run" data-bind="click: run, clickBubble: false"></div>
     </div>
     <div class="summary" data-bind="click: toggleDetails">
         <span class="fixture" data-bind="text: fixture"></span>: 
-        <span class="testName" data-bind="text: test.name"></span> - 
+        <span class="testName" data-bind="text: test.title"></span> - 
         <span class="testState" data-bind="text: test.state() || 'not run'"></span>
     </div>
     <div class="details" data-bind="visible: showDetails">

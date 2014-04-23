@@ -82,6 +82,7 @@
     <Content Include="node_modules\tribe\tests\server\load.tests.js" />
     <Content Include="node_modules\tribe\tests\server\process\process.tests.js" />
     <Content Include="node_modules\tribe\tests\server\server\channels.tests.js" />
+    <Content Include="node_modules\tribe\tests\server\test\mocha\construct.tests.js" />
     <Content Include="node_modules\tribe\tests\server\test\mocha\convert.tests.js" />
     <Content Include="node_modules\tribe\tests\server\test\mocha\loader.tests.js" />
     <Content Include="node_modules\tribe\tests\server\test\mocha\overrides.tests.js" />
@@ -90,6 +91,7 @@
     <Content Include="node_modules\tribe\test\client.js" />
     <Content Include="node_modules\tribe\test\host.js" />
     <Content Include="node_modules\tribe\test\index.js" />
+    <Content Include="node_modules\tribe\test\mocha\construct.js" />
     <Content Include="node_modules\tribe\test\mocha\convert.js" />
     <Content Include="node_modules\tribe\test\mocha\index.js" />
     <Content Include="node_modules\tribe\test\mocha\loader.js" />
@@ -115,7 +117,12 @@
     <Content Include="Samples\Chat\Old\Infrastructure\setup.js" />
     <Content Include="Samples\Chat\Old\Panes\layout.htm" />
     <Content Include="pack.js" />
-    <Content Include="TestHarness\Handlers\test.run.js" />
+    <Content Include="TestHarness\Images\play-pause.png" />
+    <Content Include="TestHarness\Images\play.png" />
+    <Content Include="TestHarness\Images\question.png" />
+    <Content Include="TestHarness\Images\tick.png" />
+    <Content Include="TestHarness\Panes\toolbar.css" />
+    <Content Include="TestHarness\Panes\toolbar.htm" />
     <Content Include="TestHarness\Panes\fixture.htm" />
     <Content Include="TestHarness\Panes\fixture.js" />
     <Content Include="TestHarness\Panes\list.htm" />
@@ -126,6 +133,7 @@
     <Content Include="TestHarness\Panes\test.css" />
     <Content Include="TestHarness\Panes\test.htm" />
     <Content Include="TestHarness\Panes\test.js" />
+    <Content Include="TestHarness\Panes\toolbar.js" />
     <Content Include="TestHarness\run.js" />
     <Content Include="TestHarness\Sagas\session.js" />
     <Content Include="TestHarness\server.js" />

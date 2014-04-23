@@ -1,28 +1,26 @@
 ﻿.test {
     border: 2px solid rgb(222, 222, 222);
+    background: rgb(222, 222, 222);
     margin-top: 1px;
 }
 
 .test.fail {
     border: 2px solid rgb(255, 222, 222);
+    background: rgb(255, 222, 222);
 }
 
 .test.pass {
     border: 2px solid rgb(222, 255, 222);
+    background: rgb(222, 255, 222);
 }
 
 .test .summary {
-    background: rgb(222, 222, 222);
-    padding: 2px 10px;
+    padding: 2px;
     cursor: pointer;
 }
 
 .test .summary .testName {
     color: black;
-}
-
-.test.pass .summary {
-    background: rgb(222, 255, 222);
 }
 
 .test.pass .summary .fixture {
@@ -33,10 +31,6 @@
 .test.pass .summary .testState {
     color: #0F0;
     font-weight: bold;
-}
-
-.test.fail .summary {
-    background: rgb(255, 222, 222);
 }
 
 .test.fail .summary .fixture {
@@ -55,10 +49,22 @@
     background: white;
 }
 
+.icons {
+    float: left;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.icons .invisible {
+    visibility: hidden;
+}
+
 .icons > * {
+    display: inline-block;
     width: 18px;
     height: 18px;
     margin: 2px;
+    padding: 0;
 }
 
 /* icons from https://www.iconfinder.com/search/?q=iconset:defaulticon */
@@ -73,6 +79,5 @@
 .icons .run {
     width: 16px;
     height: 16px;
-    margin: 4px;
     background: url(Images/play.png)
 }

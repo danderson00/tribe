@@ -20,7 +20,8 @@ T.registerSaga(function (saga) {
 
     function updateTest(update) {
         var test = findTest(update);
-        test.state(update.state);
+        test.stale(update.state === undefined);
+        if(update.state) test.state(update.state);
         test.error(update.error);
         test.duration(update.duration);
     }
@@ -33,6 +34,7 @@ T.registerSaga(function (saga) {
     }
 
     function extendTest(test) {
+        test.stale = ko.observable(true);
         test.state = ko.observable(test.state);
         test.error = ko.observable(test.error);
         test.duration = ko.observable(test.duration);
@@ -43,11 +45,15 @@ T.registerSaga(function (saga) {
     function findTest(test) {
         var testFixture = findFixture(test.fixture),
             sagaTest = $.grep(testFixture.tests(), function (currentTest) {
-                return currentTest.name === test.name;
+                return currentTest.title === test.title;
             })[0];
 
         if (!sagaTest) {
-            sagaTest = extendTest(test);
+            sagaTest = extendTest({
+                filename: test.filename,
+                fixture: test.fixture,
+                title: test.title
+            });
             testFixture.tests.push(sagaTest);
         }
 
@@ -57,7 +63,7 @@ T.registerSaga(function (saga) {
     function removeTest(test) {
         var testFixture = findFixture(test.fixture),
             test = $.grep(testFixture.tests(), function (currentTest) {
-                return currentTest.name === test.name;
+                return currentTest.title === test.title;
             })[0];
         testFixture.tests.splice(testFixture.tests.indexOf(test), 1);
     }
