@@ -54,3 +54,25 @@
     padding: 5px;
     background: white;
 }
+
+.icons > * {
+    width: 18px;
+    height: 18px;
+    margin: 2px;
+}
+
+/* icons from https://www.iconfinder.com/search/?q=iconset:defaulticon */
+.icons .stale {
+    background: url(Images/question.png)
+}
+
+.icons .selected {
+    background: url(Images/tick.png)
+}
+
+.icons .run {
+    width: 16px;
+    height: 16px;
+    margin: 4px;
+    background: url(Images/play.png)
+}

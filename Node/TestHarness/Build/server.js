@@ -13,12 +13,12 @@ T.registerSaga(function (saga) {
         onstart: function (data) {
             fixture = extendFixture(data);
         },
-        'test.complete': function (test) {
-            updateTestFrom(test);
-        }
+        'test.complete': updateTest,
+        'test.loaded': updateTest,
+        'test.removed': removeTest
     };
 
-    function updateTestFrom(update) {
+    function updateTest(update) {
         var test = findTest(update);
         test.state(update.state);
         test.error(update.error);
@@ -36,14 +36,30 @@ T.registerSaga(function (saga) {
         test.state = ko.observable(test.state);
         test.error = ko.observable(test.error);
         test.duration = ko.observable(test.duration);
+        test.selected = ko.observable(true);
         return test;
     }
 
     function findTest(test) {
-        var testFixture = findFixture(test.fixture);
-        return $.grep(testFixture.tests(), function (currentTest) {
-            return currentTest.name === test.name;
-        })[0];
+        var testFixture = findFixture(test.fixture),
+            sagaTest = $.grep(testFixture.tests(), function (currentTest) {
+                return currentTest.name === test.name;
+            })[0];
+
+        if (!sagaTest) {
+            sagaTest = extendTest(test);
+            testFixture.tests.push(sagaTest);
+        }
+
+        return sagaTest;
+    }
+
+    function removeTest(test) {
+        var testFixture = findFixture(test.fixture),
+            test = $.grep(testFixture.tests(), function (currentTest) {
+                return currentTest.name === test.name;
+            })[0];
+        testFixture.tests.splice(testFixture.tests.indexOf(test), 1);
     }
 
     function findFixture(spec) {
@@ -56,17 +72,6 @@ T.registerSaga(function (saga) {
     }
 });
 
-
-
-
-// Handlers/test.run.js
-
-
-T.scriptEnvironment = { resourcePath: '/test.run' };
-
-T.registerHandler('test.run', function (data) {
-    require('tribe/test').run(data);
-});
 
        
 })({
