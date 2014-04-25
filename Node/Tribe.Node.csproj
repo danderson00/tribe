@@ -36,7 +36,15 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="node_modules\tribe\build\steps.js" />
+    <Content Include="node_modules\tribe\build\steps\app.js" />
+    <Content Include="node_modules\tribe\build\steps\bootstrapper.js" />
+    <Content Include="node_modules\tribe\build\steps\css.js" />
+    <Content Include="node_modules\tribe\build\steps\pane.js" />
+    <Content Include="node_modules\tribe\build\steps\resource.js" />
     <Content Include="node_modules\tribe\build\index.js" />
+    <Content Include="node_modules\tribe\build\steps\scripts.js" />
+    <Content Include="node_modules\tribe\build\templates\bootstrapper.htm" />
     <Content Include="node_modules\tribe\client\build\jquery-1.9.1.js" />
     <Content Include="node_modules\tribe\client\build\knockout-2.3.0.debug.js" />
     <Content Include="node_modules\tribe\client\build\socket.io.js" />
@@ -48,7 +56,9 @@
     <Content Include="node_modules\tribe\handlers\services.js" />
     <Content Include="node_modules\tribe\handlers\statics.js" />
     <Content Include="node_modules\tribe\index.js" />
-    <Content Include="node_modules\tribe\load.js" />
+    <Content Include="node_modules\tribe\tests\server\build\steps.tests.js" />
+    <Content Include="node_modules\tribe\tests\server\utilities\resources.tests.js" />
+    <Content Include="node_modules\tribe\test\load.js" />
     <Content Include="node_modules\tribe\options\index.js" />
     <Content Include="node_modules\tribe\options\structure.js" />
     <Content Include="node_modules\tribe\pack\index.template.html" />
@@ -77,11 +87,9 @@
     <Content Include="node_modules\tribe\tests\load\args\requireExtensions.js" />
     <Content Include="node_modules\tribe\tests\load\basic\test.js" />
     <Content Include="node_modules\tribe\tests\load\basic\test2.js" />
-    <Content Include="node_modules\tribe\tests\node_modules\browserify-test.js" />
     <Content Include="node_modules\tribe\tests\node_modules\counter\index.js" />
     <Content Include="node_modules\tribe\tests\node_modules\counter\nested.js" />
     <Content Include="node_modules\tribe\tests\node_modules\process\child.js" />
-    <Content Include="node_modules\tribe\tests\browserify\main.js" />
     <Content Include="node_modules\tribe\tests\server\handlers\services.tests.js" />
     <Content Include="node_modules\tribe\tests\server\load.tests.js" />
     <Content Include="node_modules\tribe\tests\server\process\process.tests.js" />
@@ -105,6 +113,7 @@
     <Content Include="node_modules\tribe\test\service.js" />
     <Content Include="node_modules\tribe\server\Channel.js" />
     <Content Include="node_modules\tribe\utilities\index.js" />
+    <Content Include="node_modules\tribe\utilities\resources.js" />
     <Content Include="node_modules\tribe\utilities\watcher.js" />
     <Content Include="Samples\Chat\Panes\chat.css" />
     <Content Include="Samples\Chat\Panes\chat.htm" />
