@@ -36,14 +36,22 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="node_modules\tribe\build\blocks.js" />
+    <Content Include="node_modules\tribe\build\blocks\addPathsToContext.js" />
+    <Content Include="node_modules\tribe\build\blocks\browserify.js" />
+    <Content Include="node_modules\tribe\build\blocks\addContentsToContext.js" />
+    <Content Include="node_modules\tribe\build\blocks\renderTemplate.js" />
+    <Content Include="node_modules\tribe\build\blocks\requireDirectory.js" />
     <Content Include="node_modules\tribe\build\steps.js" />
     <Content Include="node_modules\tribe\build\steps\app.js" />
     <Content Include="node_modules\tribe\build\steps\bootstrapper.js" />
+    <Content Include="node_modules\tribe\build\steps\styles.js" />
     <Content Include="node_modules\tribe\build\steps\css.js" />
-    <Content Include="node_modules\tribe\build\steps\pane.js" />
-    <Content Include="node_modules\tribe\build\steps\resource.js" />
+    <Content Include="node_modules\tribe\build\steps\panes.js" />
+    <Content Include="node_modules\tribe\build\steps\resources.js" />
     <Content Include="node_modules\tribe\build\index.js" />
     <Content Include="node_modules\tribe\build\steps\scripts.js" />
+    <Content Include="node_modules\tribe\build\templates.js" />
     <Content Include="node_modules\tribe\build\templates\bootstrapper.htm" />
     <Content Include="node_modules\tribe\client\build\jquery-1.9.1.js" />
     <Content Include="node_modules\tribe\client\build\knockout-2.3.0.debug.js" />
@@ -56,11 +64,14 @@
     <Content Include="node_modules\tribe\handlers\services.js" />
     <Content Include="node_modules\tribe\handlers\statics.js" />
     <Content Include="node_modules\tribe\index.js" />
+    <Content Include="node_modules\tribe\tests\files\resources\child\test3.js" />
+    <Content Include="node_modules\tribe\tests\files\resources\test2.js" />
+    <Content Include="node_modules\tribe\tests\files\resources\test1.js" />
+    <Content Include="node_modules\tribe\tests\server\build\build.tests.js" />
     <Content Include="node_modules\tribe\tests\server\build\steps.tests.js" />
     <Content Include="node_modules\tribe\tests\server\utilities\resources.tests.js" />
     <Content Include="node_modules\tribe\test\load.js" />
     <Content Include="node_modules\tribe\options\index.js" />
-    <Content Include="node_modules\tribe\options\structure.js" />
     <Content Include="node_modules\tribe\pack\index.template.html" />
     <Content Include="node_modules\tribe\pack\registerResource.template.js" />
     <Content Include="node_modules\tribe\process\bootstrapper.js" />
@@ -81,12 +92,12 @@
     <Content Include="node_modules\tribe\templates\basic\Panes\layout.htm" />
     <Content Include="node_modules\tribe\templates\basic\Sagas\readme.txt" />
     <Content Include="node_modules\tribe\templates\basic\server.js" />
-    <Content Include="node_modules\tribe\tests\load\args\builtins.js" />
-    <Content Include="node_modules\tribe\tests\load\args\customArg.js" />
-    <Content Include="node_modules\tribe\tests\load\args\require.js" />
-    <Content Include="node_modules\tribe\tests\load\args\requireExtensions.js" />
-    <Content Include="node_modules\tribe\tests\load\basic\test.js" />
-    <Content Include="node_modules\tribe\tests\load\basic\test2.js" />
+    <Content Include="node_modules\tribe\tests\files\load\args\builtins.js" />
+    <Content Include="node_modules\tribe\tests\files\load\args\customArg.js" />
+    <Content Include="node_modules\tribe\tests\files\load\args\require.js" />
+    <Content Include="node_modules\tribe\tests\files\load\args\requireExtensions.js" />
+    <Content Include="node_modules\tribe\tests\files\load\basic\test.js" />
+    <Content Include="node_modules\tribe\tests\files\load\basic\test2.js" />
     <Content Include="node_modules\tribe\tests\node_modules\counter\index.js" />
     <Content Include="node_modules\tribe\tests\node_modules\counter\nested.js" />
     <Content Include="node_modules\tribe\tests\node_modules\process\child.js" />
