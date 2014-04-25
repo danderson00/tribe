@@ -4,6 +4,7 @@
     };
 
     this.debug = function () {
-        window.open('http://localhost:8080/debug?port=5859');
+        var debugWindow = window.open('http://localhost:8080/debug?port=5859', 'debugger');
+        debugWindow.focus();
     };
 });

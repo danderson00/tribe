@@ -81,3 +81,8 @@
     height: 16px;
     background: url(Images/play.png)
 }
+
+.icons .pending {
+    background: url(Images/loading.gif)
+}
+

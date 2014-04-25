@@ -36,6 +36,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="node_modules\tribe\build\index.js" />
     <Content Include="node_modules\tribe\client\build\jquery-1.9.1.js" />
     <Content Include="node_modules\tribe\client\build\knockout-2.3.0.debug.js" />
     <Content Include="node_modules\tribe\client\build\socket.io.js" />
@@ -55,7 +56,8 @@
     <Content Include="node_modules\tribe\process\bootstrapper.js" />
     <Content Include="node_modules\tribe\process\inspector.js" />
     <Content Include="node_modules\tribe\pubsub.js" />
-    <Content Include="node_modules\tribe\server\build.js" />
+    <Content Include="node_modules\tribe\build\pack.js" />
+    <Content Include="node_modules\tribe\register.js" />
     <Content Include="node_modules\tribe\server\channels.js" />
     <Content Include="node_modules\tribe\server\http.js" />
     <Content Include="node_modules\tribe\process\index.js" />
@@ -75,9 +77,11 @@
     <Content Include="node_modules\tribe\tests\load\args\requireExtensions.js" />
     <Content Include="node_modules\tribe\tests\load\basic\test.js" />
     <Content Include="node_modules\tribe\tests\load\basic\test2.js" />
+    <Content Include="node_modules\tribe\tests\node_modules\browserify-test.js" />
     <Content Include="node_modules\tribe\tests\node_modules\counter\index.js" />
     <Content Include="node_modules\tribe\tests\node_modules\counter\nested.js" />
     <Content Include="node_modules\tribe\tests\node_modules\process\child.js" />
+    <Content Include="node_modules\tribe\tests\browserify\main.js" />
     <Content Include="node_modules\tribe\tests\server\handlers\services.tests.js" />
     <Content Include="node_modules\tribe\tests\server\load.tests.js" />
     <Content Include="node_modules\tribe\tests\server\process\process.tests.js" />
@@ -117,10 +121,13 @@
     <Content Include="Samples\Chat\Old\Infrastructure\setup.js" />
     <Content Include="Samples\Chat\Old\Panes\layout.htm" />
     <Content Include="pack.js" />
+    <Content Include="TestHarness\Images\loading.gif" />
     <Content Include="TestHarness\Images\play-pause.png" />
     <Content Include="TestHarness\Images\play.png" />
     <Content Include="TestHarness\Images\question.png" />
     <Content Include="TestHarness\Images\tick.png" />
+    <Content Include="TestHarness\node_modules\operations.js" />
+    <Content Include="TestHarness\node_modules\queries.js" />
     <Content Include="TestHarness\Panes\toolbar.css" />
     <Content Include="TestHarness\Panes\toolbar.htm" />
     <Content Include="TestHarness\Panes\fixture.htm" />
@@ -138,6 +145,8 @@
     <Content Include="TestHarness\Sagas\session.js" />
     <Content Include="TestHarness\server.js" />
     <Content Include="Samples\Chat\server.js" />
+    <Content Include="TestHarness\Tests\queries.tests.js" />
+    <Content Include="TestHarness\Tests\operations.tests.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="node_modules\tribe\templates\basic\Data\" />
