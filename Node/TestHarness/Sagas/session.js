@@ -1,5 +1,4 @@
 ﻿require('tribe/register').saga(function (saga) {
-T.registerSaga(function (saga) {
     var fixture;
 
     saga.handles = {
