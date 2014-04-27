@@ -1,0 +1,92 @@
+body {
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+}
+.test {
+    border: 2px solid rgb(222, 222, 222);
+    background: rgb(222, 222, 222);
+    margin-top: 1px;
+}
+
+.test.fail {
+    border: 2px solid rgb(255, 222, 222);
+    background: rgb(255, 222, 222);
+}
+
+.test.pass {
+    border: 2px solid rgb(222, 255, 222);
+    background: rgb(222, 255, 222);
+}
+
+.test .summary {
+    padding: 2px;
+    cursor: pointer;
+}
+
+.test .summary .testName {
+    color: black;
+}
+
+.test.pass .summary .fixture {
+    color: #060;
+    font-weight: bold;
+}
+
+.test.pass .summary .testState {
+    color: #0F0;
+    font-weight: bold;
+}
+
+.test.fail .summary .fixture {
+    color: #A00;
+    font-weight: bold;
+}
+
+.test.fail .summary .testState {
+    color: #F00;
+    font-weight: bold;
+}
+
+.details {
+    margin: 0;
+    padding: 5px;
+    background: white;
+}
+
+.icons {
+    float: left;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.icons .invisible {
+    visibility: hidden;
+}
+
+.icons > * {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 2px;
+    padding: 0;
+}
+
+/* icons from https://www.iconfinder.com/search/?q=iconset:defaulticon */
+.icons .stale {
+    background: url(Images/question.png)
+}
+
+.icons .selected {
+    background: url(Images/tick.png)
+}
+
+.icons .run {
+    width: 16px;
+    height: 16px;
+    background: url(Images/play.png)
+}
+
+.icons .pending {
+    background: url(Images/loading.gif)
+}
+
+

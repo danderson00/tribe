@@ -3,11 +3,11 @@
 
     saga.handles = {
         onstart: function (data) {
-            fixture = extendFixture(data);
+            //fixture = extendFixture(data);
         },
         'test.complete': updateTest,
         'test.loaded': updateTest,
-        'test.removed': removeTest
+        //'test.removed': removeTest
     };
 
     function updateTest(update) {

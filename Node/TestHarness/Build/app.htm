@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Tribe</title>
+    
+    <script type="text/javascript" src="Dependencies/jquery-1.9.1.js"></script>
+    
+    <script type="text/javascript" src="Dependencies/knockout-2.3.0.debug.js"></script>
+    
+    <script type="text/javascript" src="Dependencies/socket.io.js"></script>
+    
+
+    <script type="text/javascript" src="Build/app.js"></script>
+    <link rel="stylesheet" type="text/css" href="Build/app.css" />
+
+    
+    <script type="text/template" id="template--fixture">
+    <div data-bind="foreach: fixture.fixtures">
+    <div data-bind="pane: 'fixture', data: $data"></div>
+</div>
+<div data-bind="foreach: fixture.tests">
+    <div data-bind="pane: 'test', data: $data"></div>
+</div>
+    </script>
+    
+    <script type="text/template" id="template--layout">
+    <div data-bind="pane: 'toolbar', data: fixture"></div>
+<div data-bind="pane: 'fixture', data: fixture"></div>
+    </script>
+    
+    <script type="text/template" id="template--list">
+    <div data-bind="foreach: tests">
+    <div data-bind="pane: 'test', data: $data"></div>
+</div>
+    </script>
+    
+    <script type="text/template" id="template--test">
+    <div class="test" data-bind="css: { pass: test.state() === 'passed', fail: test.state() === 'failed' }">
+    <div class="icons">
+        <div class="stale" data-bind="css: { invisible: !test.stale() }"></div>
+        <div data-bind="css: { selected: test.selected() }, click: select, clickBubble: false"></div>
+        <div class="run" data-bind="click: run, clickBubble: false"></div>
+    </div>
+    <div class="summary" data-bind="click: toggleDetails">
+        <span class="fixture" data-bind="text: fixture"></span>: 
+        <span class="testName" data-bind="text: test.title"></span> - 
+        <span class="testState" data-bind="text: test.state() || 'not run'"></span>
+    </div>
+    <div class="details" data-bind="visible: showDetails">
+        <div>Filename: <span data-bind="text: test.filename"></span></div>
+        <div data-bind="html: error"></div>
+    </div>
+</div>
+    </script>
+    
+    <script type="text/template" id="template--toolbar">
+    <button data-bind="click: run">Run</button>
+<button data-bind="click: debug">Open Debugger</button>
+
+    </script>
+    
+    
+    <script type="text/javascript">
+        $(function () {
+            var pubsub = new Tribe.PubSub();
+            var options = {
+                socketUrl: '/',
+                pubsub: pubsub
+            };
+
+            T.hub = new T.Types.Hub(io, pubsub, options);
+            T.run(options);
+        });
+    </script>
+</head>
+    <body><div data-bind="pane: { path: '/layout', handlesNavigation: { transition: 'fade' } }"></div></body>
+</html>
