@@ -10,8 +10,8 @@
     <script type="text/javascript" src="Dependencies/socket.io.js"></script>
     
 
-    <script type="text/javascript" src="Build/app.js"></script>
-    <link rel="stylesheet" type="text/css" href="Build/app.css" />
+    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="app.css" />
 
     
     <script type="text/template" id="template--fixture">
@@ -42,7 +42,7 @@
         <div class="run" data-bind="click: run, clickBubble: false"></div>
     </div>
     <div class="summary" data-bind="click: toggleDetails">
-        <span class="fixture" data-bind="text: fixture"></span>: 
+        <span class="fixture" data-bind="text: test.fixture"></span>: 
         <span class="testName" data-bind="text: test.title"></span> - 
         <span class="testState" data-bind="text: test.state() || 'not run'"></span>
     </div>
@@ -62,13 +62,11 @@
     
     <script type="text/javascript">
         $(function () {
-            var pubsub = new Tribe.PubSub();
             var options = {
-                socketUrl: '/',
-                pubsub: pubsub
+                pubsub: new Tribe.PubSub()
             };
 
-            T.hub = new T.Types.Hub(io, pubsub, options);
+            T.hub = new T.Types.Hub(io, options);
             T.run(options);
         });
     </script>

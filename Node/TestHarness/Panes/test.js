@@ -9,10 +9,6 @@
         return error && error.replace(/\n/g, '<br/>');
     });
 
-    this.fixture = test.fixture ?
-        test.fixture.join('.') :
-        'No fixture';
-
     this.showDetails = ko.observable(test.state() === 'failed');
 
     this.toggleDetails = function () {

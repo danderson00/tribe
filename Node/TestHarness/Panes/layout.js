@@ -5,6 +5,7 @@
 
     this.initialise = function () {
         return T.services('Tests').invoke().then(function (fixture) {
+            fixture = require('operations').extendFixture(fixture);
             saga = channel.startSaga(null, 'session', fixture);
             self.fixture = fixture;
         });        

@@ -5,7 +5,7 @@
         <div class="run" data-bind="click: run, clickBubble: false"></div>
     </div>
     <div class="summary" data-bind="click: toggleDetails">
-        <span class="fixture" data-bind="text: fixture"></span>: 
+        <span class="fixture" data-bind="text: test.fixture"></span>: 
         <span class="testName" data-bind="text: test.title"></span> - 
         <span class="testState" data-bind="text: test.state() || 'not run'"></span>
     </div>
