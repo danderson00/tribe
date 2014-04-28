@@ -1,20 +1,19 @@
-﻿require('tribe/register').saga(function (saga) {
-    var fixture;
+﻿require('tribe').register.saga(function (saga) {
+    var queries, suite;
 
     saga.handles = {
         onstart: function (data) {
-            //fixture = extendFixture(data);
+            suite = data;
+            queries = require('queries').for(suite);
         },
-        'test.complete': updateTest,
-        'test.loaded': updateTest,
-        //'test.removed': removeTest
+        'test.complete': function (test) {
+            queries.updateTest(test);
+        },
+        'test.loaded': function (test) {
+            queries.updateTest(test);
+        },
+        'test.removed': function (test) {
+            queries.removeTest(test);
+        }
     };
-
-    function updateTest(update) {
-        var test = findTest(update);
-        test.stale(update.state === undefined);
-        if(update.state) test.state(update.state);
-        test.error(update.error);
-        test.duration(update.duration);
-    }
 });

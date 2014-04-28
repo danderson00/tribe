@@ -1,7 +1,7 @@
 ﻿pack([
     'license.js',
     T.webDependency('../../Common/Build/Tribe.Common'),
-    T.webDependency('../../PubSub/Build/Tribe.PubSub'),
+    //T.webDependency('../../PubSub/Build/Tribe.PubSub'),
     T.scripts(options('setup.js')),
     T.scripts(options('options.js')),
     T.scripts(options('Utilities')),
