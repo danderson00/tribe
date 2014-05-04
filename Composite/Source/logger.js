@@ -7,7 +7,7 @@ var levels = {
     none: 0
 };
 
-var api = module.exports = {
+T.logger = {
     setLevel: function (newLevel) {
         level = levels[newLevel];
         if (level === undefined) level = 4;

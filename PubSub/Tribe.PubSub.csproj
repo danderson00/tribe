@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="package.json" />
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

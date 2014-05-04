@@ -1,143 +1,15 @@
 /*! The Tribe platform is licensed under the MIT license. See http://tribejs.com/ for more information. */
 
 
-// Source/logger.js
-
-(function () {
-    var level = 4;
-    var levels = {
-        debug: 4,
-        info: 3,
-        warn: 2,
-        error: 1,
-        none: 0
-    };
-
-    var api = {
-        setLevel: function (newLevel) {
-            level = levels[newLevel];
-            if (level === undefined) level = 4;
-        },
-        debug: function (message) {
-            if (level >= 4)
-                console.log(('DEBUG: ' + message));
-        },
-        info: function (message) {
-            if (level >= 3)
-                console.info(('INFO: ' + message));
-        },
-        warn: function (message) {
-            if (level >= 2)
-                console.warn(('WARN: ' + message));
-        },
-        error: function (message, error) {
-            if (level >= 1)
-                console.error(('ERROR: ' + message + '\n'), api.errorDetails(error));
-        },
-        errorDetails: function (ex) {
-            if (!ex) return '';
-            return (ex.constructor === String) ? ex :
-                (ex.stack || '') + (ex.inner ? '\n\n' + this.errorDetails(ex.inner) : '\n');
-        }
-    };
-    api.log = api.debug;
-    
-    if (typeof (exports) !== 'undefined' && typeof (module) !== 'undefined')
-        module.exports = api;
-    else {
-        if (typeof (T) === 'undefined')
-            T = {};
-        T.logger = api;
-    }
-})();
-
-
-
-
-// Source/serializer.js
-
-(function () {
-    // man... this cross-platform stuff sucks...
-    var ko;
-    if (typeof (window) !== 'undefined')
-        ko = window.ko;
-    if (typeof (require) !== 'undefined')
-        ko = require('knockout');
-
-    var api = {
-        serialize: function (source) {
-            return JSON.stringify(this.extractMetadata(source));
-        },
-        extractMetadata: function (source) {
-            var target = source,
-                metadata = {};
-            removeObservables();
-            return {
-                target: target,
-                metadata: metadata
-            };
-
-            function removeObservables() {
-                metadata.observables = [];
-                for (var property in target)
-                    if (target.hasOwnProperty(property) && ko.isObservable(target[property])) {
-                        target[property] = target[property]();
-                        metadata.observables.push(property);
-                    }
-
-            }
-        },
-        deserialize: function (source) {
-            source = JSON.parse(source);
-            if (source.target)
-                return this.applyMetadata(source.target, source.metadata);
-            return source;
-        },
-        applyMetadata: function (target, metadata) {
-            if (metadata)
-                restoreObservables();
-            return target;
-
-            function restoreObservables() {
-                var observables = metadata.observables;
-                for (var i = 0, l = observables.length; i < l; i++)
-                    restoreProperty(observables[i]);
-            }
-
-            function restoreProperty(property) {
-                target[property] = createObservable(target[property]);
-            }
-
-            function createObservable(value) {
-                return value.constructor === Array ?
-                    ko.observableArray(value) :
-                    ko.observable(value);
-            }
-        }
-    };
-
-    if (typeof (exports) !== 'undefined' && typeof (module) !== 'undefined')
-        module.exports = api;
-    else {
-        if (typeof (T) === 'undefined')
-            T = {};
-        T.serializer = api;
-    }
-})();
-
-
-
 // setup.js
 
 (function (global) {
-    if (typeof (jQuery) === 'undefined')
+    if (typeof ($) === 'undefined')
         throw 'jQuery must be loaded before knockout.composite can initialise';
     if (typeof (ko) === 'undefined')
         throw 'knockout.js must be loaded before knockout.composite can initialise';
-    if (typeof(T) === 'undefined')
-        throw 'Tribe.Common must be loaded before knockout.composite can initialise';
 
-    global.T = T || {};
+    global.T = global.T || {};
     global.T.Events = {};
     global.T.Factories = {};
     global.T.LoadHandlers = {};
@@ -145,8 +17,6 @@
     global.T.Transitions = {};
     global.T.Types = {};
     global.T.Utils = {};
-    global.T.logger = T.logger;
-    global.T.pubsub = new Tribe.PubSub();
 
     $(function() {
         $('head').append('<style class="__tribe">.__rendering { position: fixed; top: -10000px; left: -10000px; }</style>');
@@ -167,6 +37,50 @@ T.defaultOptions = function() {
     };
 };
 T.options = T.defaultOptions();
+
+
+
+// logger.js
+
+var level = 4;
+var levels = {
+    debug: 4,
+    info: 3,
+    warn: 2,
+    error: 1,
+    none: 0
+};
+
+T.logger = {
+    setLevel: function (newLevel) {
+        level = levels[newLevel];
+        if (level === undefined) level = 4;
+    },
+    debug: function (message) {
+        if (level >= 4)
+            console.log(('DEBUG: ' + message));
+    },
+    info: function (message) {
+        if (level >= 3)
+            console.info(('INFO: ' + message));
+    },
+    warn: function (message) {
+        if (level >= 2)
+            console.warn(('WARN: ' + message));
+    },
+    error: function (message, error) {
+        if (level >= 1)
+            console.error(('ERROR: ' + message + '\n'), api.errorDetails(error));
+    },
+    errorDetails: function (ex) {
+        if (!ex) return '';
+        return (ex.constructor === String) ? ex :
+            (ex.stack || '') + (ex.inner ? '\n\n' + this.errorDetails(ex.inner) : '\n');
+    },
+    log: function (message) {
+        console.log(message);
+    }
+};
 
 
 
@@ -552,8 +466,8 @@ if (!Array.prototype.indexOf) {
 
 // Utilities/jquery.destroyed.js
 
-(function ($) {
-    var oldClean = jQuery.cleanData;
+(function () {
+    var oldClean = $.cleanData;
 
     // knockout also calls cleanData from it's cleanNode method - avoid any loops
     //var cleaning = {};
@@ -568,7 +482,7 @@ if (!Array.prototype.indexOf) {
         }
         oldClean(elements);
     };
-})(jQuery);
+})();
 
 
 // Utilities/knockout.js

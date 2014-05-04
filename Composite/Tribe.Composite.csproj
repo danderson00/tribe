@@ -50,6 +50,7 @@
     <Content Include="Source\BindingHandlers\navigate.js" />
     <Content Include="Source\BindingHandlers\publish.js" />
     <Content Include="Source\license.js" />
+    <Content Include="Source\logger.js" />
     <Content Include="Source\Transitions\Css\slide.css" />
     <Content Include="Source\Types\Flow.js" />
     <Content Include="Source\Types\History.js" />
@@ -229,6 +230,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="package.json" />
     <None Include="README.md" />
     <Content Include="Tests\Integration\Paths.tests.js" />
   </ItemGroup>

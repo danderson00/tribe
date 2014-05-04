@@ -1,7 +1,4 @@
-﻿// humm... got to do something about this!
-ko = require('knockout');
-
-suite('tribe.testharness.queries', function () {
+﻿suite('tribe.testharness.queries', function () {
     var suite, queries;
 
     setup(function () {

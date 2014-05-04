@@ -1,5 +1,5 @@
-﻿(function ($) {
-    var oldClean = jQuery.cleanData;
+﻿(function () {
+    var oldClean = $.cleanData;
 
     // knockout also calls cleanData from it's cleanNode method - avoid any loops
     //var cleaning = {};
@@ -14,4 +14,4 @@
         }
         oldClean(elements);
     };
-})(jQuery);
+})();

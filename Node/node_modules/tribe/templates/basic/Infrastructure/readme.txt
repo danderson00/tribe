@@ -1,1 +1,0 @@
-﻿You can put any infrastructure code in this directory. It will be loaded on the client at application start.
