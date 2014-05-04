@@ -44,4 +44,23 @@
         expect(tests.length).to.equal(7);
         expect(tests).to.deep.equal([1, 2, 3, 4, 5, 6, 7]);
     });
+
+    test("filter returns tests that pass a truth test", function () {
+        suite.fixtures.push({
+            tests: ko.observableArray([1, 2, 3]),
+            fixtures: ko.observableArray([{
+                tests: ko.observableArray([4, 5]),
+                fixtures: ko.observableArray()
+            }, {
+                tests: ko.observableArray([6, 7]),
+                fixtures: ko.observableArray()
+            }])
+        });
+        var tests = queries.filter(function (test) {
+            return test > 2 && test < 5;
+        });
+        expect(tests.length).to.equal(2);
+        expect(tests).to.deep.equal([3, 4]);
+    });
+
 });

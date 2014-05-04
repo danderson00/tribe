@@ -16,11 +16,6 @@
     <link rel="stylesheet" type="text/css" href="app.css" />
 
     
-    <script type="text/template" id="template--layout">
-    <div data-bind="pane: 'toolbar', data: fixture"></div>
-<div data-bind="pane: 'fixture', data: fixture"></div>
-    </script>
-    
     <script type="text/template" id="template--fixture">
     <div data-bind="foreach: fixture.fixtures">
     <div data-bind="pane: 'fixture', data: $data"></div>
@@ -28,6 +23,11 @@
 <div data-bind="foreach: fixture.tests">
     <div data-bind="pane: 'test', data: $data"></div>
 </div>
+    </script>
+    
+    <script type="text/template" id="template--layout">
+    <div data-bind="pane: 'toolbar', data: fixture"></div>
+<div data-bind="pane: 'fixture', data: fixture"></div>
     </script>
     
     <script type="text/template" id="template--list">
@@ -58,7 +58,11 @@
     <script type="text/template" id="template--toolbar">
     <button data-bind="click: run">Run</button>
 <button data-bind="click: debug">Open Debugger</button>
-
+<span>
+    (<span data-bind="text: total"></span>
+    /<span data-bind="text: passed"></span>
+    /<span data-bind="text: failed"></span>)
+</span>
     </script>
     
     
