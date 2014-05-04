@@ -22,4 +22,9 @@
     this.select = function () {
         test.selected(!test.selected());
     };
+
+    this.test.state.subscribe(function (state) {
+        if (state === 'failed')
+            self.showDetails(true);
+    });
 });

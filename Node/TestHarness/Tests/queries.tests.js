@@ -63,4 +63,18 @@
         expect(tests).to.deep.equal([3, 4]);
     });
 
+    test("where returns tests where the specified property equals the specified value", function () {
+        suite.fixtures.push({
+            tests: ko.observableArray([{ test: 1 }, { test: 2 }, { test: 2 }]),
+            fixtures: ko.observableArray([{
+                tests: ko.observableArray([{ test: 1 }, { test: 2 }]),
+                fixtures: ko.observableArray()
+            }, {
+                tests: ko.observableArray([{ test: 2 }, { test: 1 }]),
+                fixtures: ko.observableArray()
+            }])
+        });
+        var tests = queries.where('test', 2);
+        expect(tests.length).to.equal(4);
+    });
 });

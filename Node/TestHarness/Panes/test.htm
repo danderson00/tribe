@@ -8,6 +8,7 @@
         <span class="fixture" data-bind="text: test.fixture"></span>: 
         <span class="testName" data-bind="text: test.title"></span> - 
         <span class="testState" data-bind="text: test.state() || 'not run'"></span>
+        <span class="duration" data-bind="visible: test.duration() !== undefined">(<span data-bind="text: test.duration"></span>ms)</span>
     </div>
     <div class="details" data-bind="visible: showDetails">
         <div>Filename: <span data-bind="text: test.filename"></span></div>

@@ -95,3 +95,20 @@ body {
 }
 
 
+.toolbar {
+    background: rgb(222, 222, 222);
+    padding: 2px 10px;
+    border: 1px solid #CCC;
+}
+
+.toolbar.passing {
+    background: rgb(222, 255, 222);
+}
+
+.toolbar.failing {
+    background: rgb(255, 222, 222);
+}
+
+.toolbar .debugButtons {
+    float: right;
+}

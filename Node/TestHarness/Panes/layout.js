@@ -4,10 +4,10 @@
         channel = pane.pubsub.channel('__test').connect();
 
     this.initialise = function () {
-        return require('tribe').services('Tests').invoke().then(function (fixture) {
-            fixture = require('construct').extendFixture(fixture);
-            saga = channel.startSaga(null, 'session', fixture);
-            self.fixture = fixture;
+        return require('tribe').services('Tests').invoke().then(function (options) {
+            options.fixture = require('construct').extendFixture(options.fixture);
+            saga = channel.startSaga(null, 'session', options.fixture);
+            self.options = options;
         });        
     };
 
