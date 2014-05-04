@@ -1,8 +1,8 @@
-﻿<div class="test" data-bind="css: { pass: test.state() === 'passed', fail: test.state() === 'failed' }">
+﻿<div class="test" data-bind="css: { pass: test.state() === 'passed', fail: test.state() === 'failed', stale: test.stale }">
     <div class="icons">
-        <div class="stale" data-bind="css: { invisible: !test.stale() }"></div>
         <div data-bind="css: { selected: test.selected() }, click: select, clickBubble: false"></div>
-        <div class="run" data-bind="click: run, clickBubble: false"></div>
+        <div class="run" data-bind="click: run, clickBubble: false, visible: !test.pending()"></div>
+        <div class="pending" data-bind="visible: test.pending()"></div>
     </div>
     <div class="summary" data-bind="click: toggleDetails">
         <span class="fixture" data-bind="text: test.fixture"></span>: 

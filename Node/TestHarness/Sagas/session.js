@@ -1,5 +1,6 @@
 ﻿require('tribe').register.saga(function (saga) {
-    var queries, suite;
+    var operations = require('operations'),
+        queries, suite;
 
     saga.handles = {
         onstart: function (data) {
@@ -7,13 +8,16 @@
             queries = require('queries').for(suite);
         },
         'test.complete': function (test) {
-            queries.updateTest(test);
+            operations.updateTest(queries.findTest(test), test);
         },
         'test.loaded': function (test) {
-            queries.updateTest(test);
+            operations.updateTest(queries.findTest(test), test);
         },
         'test.removed': function (test) {
-            queries.removeTest(test);
+            operations.removeTest(test, suite);
+        },
+        'test.run': function (tests) {
+            operations.setPending(suite, tests);
         }
     };
 });

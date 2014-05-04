@@ -5,7 +5,7 @@
 
     this.initialise = function () {
         return require('tribe').services('Tests').invoke().then(function (fixture) {
-            fixture = require('operations').extendFixture(fixture);
+            fixture = require('construct').extendFixture(fixture);
             saga = channel.startSaga(null, 'session', fixture);
             self.fixture = fixture;
         });        

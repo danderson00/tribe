@@ -2,7 +2,7 @@
     var suite, queries;
 
     setup(function () {
-        suite = { fixtures: ko.observableArray() };
+        suite = { fixtures: ko.observableArray(), tests: ko.observableArray() };
         queries = require('queries').for(suite);
     });
 
@@ -29,4 +29,19 @@
         expect(queries.findTest({ title: 'test', fixture: 'test1' })).to.equal(test);
     });
 
+    test("allTests returns flattened array of tests", function () {
+        suite.fixtures.push({
+            tests: ko.observableArray([1, 2, 3]),
+            fixtures: ko.observableArray([{
+                tests: ko.observableArray([4, 5]),
+                fixtures: ko.observableArray()
+            }, {
+                tests: ko.observableArray([6, 7]),
+                fixtures: ko.observableArray()
+            }])
+        });
+        var tests = queries.allTests();
+        expect(tests.length).to.equal(7);
+        expect(tests).to.deep.equal([1, 2, 3, 4, 5, 6, 7]);
+    });
 });
