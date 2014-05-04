@@ -9,7 +9,7 @@
     if (typeof (ko) === 'undefined')
         throw 'knockout.js must be loaded before knockout.composite can initialise';
 
-    global.T = T || {};
+    global.T = global.T || {};
     global.T.Events = {};
     global.T.Factories = {};
     global.T.LoadHandlers = {};

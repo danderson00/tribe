@@ -2,6 +2,6 @@
     sync: false,
     handleExceptions: true,
     exceptionHandler: function(e, envelope) {
-        typeof(console) !== 'undefined' && console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + e.message);
+        typeof(console) !== 'undefined' && console.log("Exception occurred in subscriber to '" + envelope.topic + "': " + Tribe.PubSub.utils.errorDetails(e));
     }
 };

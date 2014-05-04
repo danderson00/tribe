@@ -43,4 +43,10 @@
                 target[property] = source[property];
         }
     };
+
+    utils.errorDetails = function (ex) {
+        if (!ex) return '';
+        return (ex.constructor === String) ? ex :
+            (ex.stack || '') + (ex.inner ? '\n\n' + utils.errorDetails(ex.inner) : '\n');
+    };
 })(Tribe.PubSub.utils);
