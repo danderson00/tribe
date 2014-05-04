@@ -3,6 +3,7 @@
         <div data-bind="css: { selected: test.selected() }, click: select, clickBubble: false"></div>
         <div class="run" data-bind="click: run, clickBubble: false, visible: !test.pending()"></div>
         <div class="pending" data-bind="visible: test.pending()"></div>
+        <div class="stepInto" data-bind="click: stepInto, clickBubble: false"></div>
     </div>
     <div class="summary" data-bind="click: toggleDetails">
         <span class="fixture" data-bind="text: test.fixture"></span>: 
@@ -13,5 +14,6 @@
     <div class="details" data-bind="visible: showDetails">
         <div>Filename: <span data-bind="text: test.filename"></span></div>
         <div data-bind="html: error"></div>
+        <div data-bind="html: output"></div>
     </div>
 </div>

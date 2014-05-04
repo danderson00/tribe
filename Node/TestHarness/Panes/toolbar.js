@@ -27,8 +27,7 @@
     }
 
     this.debug = function () {
-        var debugWindow = window.open('http://' + window.location.hostname + ':' + options.inspectorPort + '/debug?port=' + options.debugPort, 'debugger');
-        debugWindow.focus();
+        require('debugWindow').open();
     };
 
     this.total = ko.computed(function () {

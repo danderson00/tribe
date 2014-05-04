@@ -9,6 +9,11 @@
         return error && error.replace(/\n/g, '<br/>');
     });
 
+    this.output = ko.computed(function () {
+        var output = test.output();
+        return output && output.replace(/\n/g, '<br/>');
+    });
+
     this.showDetails = ko.observable(test.state() === 'failed');
 
     this.toggleDetails = function () {
@@ -17,6 +22,11 @@
 
     this.run = function () {
         pane.pubsub.publish({ topic: 'test.run', data: [{ fixture: test.fixture, title: test.title }], channelId: '__test' });
+    };
+
+    this.stepInto = function () {
+        pane.pubsub.publish({ topic: 'test.run', data: [{ fixture: test.fixture, title: test.title, stepInto: true }], channelId: '__test' });
+        require('debugWindow').open();
     };
 
     this.select = function () {

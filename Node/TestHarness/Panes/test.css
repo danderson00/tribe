@@ -87,6 +87,12 @@
     background: url(Images/play.png)
 }
 
+.icons .stepInto {
+    width: 16px;
+    height: 16px;
+    background: url(Images/play-pause.png)
+}
+
 .icons .pending {
     background: url(Images/loading.gif)
 }
