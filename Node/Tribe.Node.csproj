@@ -89,10 +89,13 @@
     <Content Include="node_modules\tribe\tests\server\build\integration.tests.js" />
     <Content Include="node_modules\tribe\tests\server\build\activities.tests.js" />
     <Content Include="node_modules\tribe\tests\server\build\templates.tests.js" />
+    <Content Include="node_modules\tribe\tests\server\logger.tests.js" />
+    <Content Include="node_modules\tribe\tests\server\test\consoleCapture.tests.js" />
     <Content Include="node_modules\tribe\tests\server\utilities\files.tests.js" />
     <Content Include="node_modules\tribe\tests\server\utilities\paths.tests.js" />
     <Content Include="node_modules\tribe\tests\server\utilities\resources.tests.js" />
     <Content Include="node_modules\tribe\tests\server\utilities\serializer.tests.js" />
+    <Content Include="node_modules\tribe\test\consoleCapture.js" />
     <Content Include="node_modules\tribe\test\load.js" />
     <Content Include="node_modules\tribe\options.js" />
     <Content Include="node_modules\tribe\process\bootstrapper.js" />
@@ -133,6 +136,7 @@
     <Content Include="node_modules\tribe\test\mocha\runner.js" />
     <Content Include="node_modules\tribe\test\require.js" />
     <Content Include="node_modules\tribe\server\Channel.js" />
+    <Content Include="node_modules\tribe\test\stepInto.js" />
     <Content Include="node_modules\tribe\utilities\index.js" />
     <Content Include="node_modules\tribe\utilities\paths.js" />
     <Content Include="node_modules\tribe\utilities\files.js" />
@@ -158,17 +162,17 @@
     <Content Include="TestHarness\images\play.png" />
     <Content Include="TestHarness\images\question.png" />
     <Content Include="TestHarness\images\tick.png" />
+    <Content Include="TestHarness\node_modules\construct.js" />
+    <Content Include="TestHarness\node_modules\debugWindow.js" />
     <Content Include="TestHarness\node_modules\operations.js" />
     <Content Include="TestHarness\node_modules\queries.js" />
     <Content Include="TestHarness\panes\toolbar.css" />
     <Content Include="TestHarness\panes\toolbar.htm" />
     <Content Include="TestHarness\panes\fixture.htm" />
     <Content Include="TestHarness\panes\fixture.js" />
-    <Content Include="TestHarness\panes\list.htm" />
     <Content Include="TestHarness\panes\layout.css" />
     <Content Include="TestHarness\panes\layout.htm" />
     <Content Include="TestHarness\panes\layout.js" />
-    <Content Include="TestHarness\panes\list.js" />
     <Content Include="TestHarness\panes\test.css" />
     <Content Include="TestHarness\panes\test.htm" />
     <Content Include="TestHarness\panes\test.js" />
@@ -177,8 +181,9 @@
     <Content Include="TestHarness\sagas\session.js" />
     <Content Include="TestHarness\server.js" />
     <Content Include="Samples\Chat\server.js" />
-    <Content Include="TestHarness\tests\queries.tests.js" />
     <Content Include="TestHarness\tests\operations.tests.js" />
+    <Content Include="TestHarness\tests\queries.tests.js" />
+    <Content Include="TestHarness\tests\construct.tests.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="node_modules\tribe\tests\files\blocks\output\" />
