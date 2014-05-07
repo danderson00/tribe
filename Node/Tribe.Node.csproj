@@ -36,6 +36,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="node_modules\tribe\build\activities\output.js" />
     <Content Include="node_modules\tribe\build\blocks.js" />
     <Content Include="node_modules\tribe\build\blocks\browserify.js" />
     <Content Include="node_modules\tribe\build\blocks\addFilesToContext.js" />
@@ -60,11 +61,16 @@
     <Content Include="node_modules\tribe\client\services.js" />
     <Content Include="node_modules\tribe\client\hub.js" />
     <Content Include="node_modules\tribe\client\register.js" />
+    <Content Include="node_modules\tribe\server\index.js" />
+    <Content Include="node_modules\tribe\server\modules\index.js" />
+    <Content Include="node_modules\tribe\server\modules\memory.js" />
+    <Content Include="node_modules\tribe\server\modules\fs.js" />
     <Content Include="node_modules\tribe\handlers\sagas.js" />
     <Content Include="node_modules\tribe\handlers\services.js" />
     <Content Include="node_modules\tribe\handlers\statics.js" />
     <Content Include="node_modules\tribe\index.js" />
     <Content Include="node_modules\tribe\logger.js" />
+    <Content Include="node_modules\tribe\server\response.js" />
     <Content Include="node_modules\tribe\tests\files\blocks\browserify\test1.js" />
     <Content Include="node_modules\tribe\tests\files\blocks\browserify\test2.js" />
     <Content Include="node_modules\tribe\tests\files\blocks\simple\child\test3.js" />
@@ -90,6 +96,7 @@
     <Content Include="node_modules\tribe\tests\server\build\activities.tests.js" />
     <Content Include="node_modules\tribe\tests\server\build\templates.tests.js" />
     <Content Include="node_modules\tribe\tests\server\logger.tests.js" />
+    <Content Include="node_modules\tribe\tests\server\server\modules.memory.tests.js" />
     <Content Include="node_modules\tribe\tests\server\test\consoleCapture.tests.js" />
     <Content Include="node_modules\tribe\tests\server\utilities\files.tests.js" />
     <Content Include="node_modules\tribe\tests\server\utilities\paths.tests.js" />
@@ -188,7 +195,6 @@
   <ItemGroup>
     <Folder Include="node_modules\tribe\test-studio\build\" />
     <Folder Include="node_modules\tribe\tests\files\blocks\output\" />
-    <Folder Include="node_modules\tribe\tests\files\build\output\" />
     <Folder Include="Samples\Chat\Build\" />
     <Folder Include="Samples\Chat\Dependencies\" />
     <Folder Include="Samples\Chat\node_modules\tribe\client\" />
