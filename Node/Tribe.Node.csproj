@@ -71,6 +71,7 @@
     <Content Include="node_modules\tribe\index.js" />
     <Content Include="node_modules\tribe\logger.js" />
     <Content Include="node_modules\tribe\server\response.js" />
+    <Content Include="node_modules\tribe\test-studio\index.js" />
     <Content Include="node_modules\tribe\tests\files\blocks\browserify\test1.js" />
     <Content Include="node_modules\tribe\tests\files\blocks\browserify\test2.js" />
     <Content Include="node_modules\tribe\tests\files\blocks\simple\child\test3.js" />
@@ -148,6 +149,7 @@
     <Content Include="node_modules\tribe\utilities\paths.js" />
     <Content Include="node_modules\tribe\utilities\files.js" />
     <Content Include="node_modules\tribe\utilities\serializer.js" />
+    <Content Include="node_modules\tribe\utilities\text.js" />
     <Content Include="node_modules\tribe\utilities\watcher.js" />
     <Content Include="Samples\Chat\Panes\chat.css" />
     <Content Include="Samples\Chat\Panes\chat.htm" />
@@ -169,10 +171,10 @@
     <Content Include="node_modules\tribe\test-studio\images\play.png" />
     <Content Include="node_modules\tribe\test-studio\images\question.png" />
     <Content Include="node_modules\tribe\test-studio\images\tick.png" />
-    <Content Include="node_modules\tribe\test-studio\node_modules\construct.js" />
-    <Content Include="node_modules\tribe\test-studio\node_modules\debugWindow.js" />
-    <Content Include="node_modules\tribe\test-studio\node_modules\operations.js" />
-    <Content Include="node_modules\tribe\test-studio\node_modules\queries.js" />
+    <Content Include="node_modules\tribe\test-studio\modules\construct.js" />
+    <Content Include="node_modules\tribe\test-studio\modules\debugWindow.js" />
+    <Content Include="node_modules\tribe\test-studio\modules\operations.js" />
+    <Content Include="node_modules\tribe\test-studio\modules\queries.js" />
     <Content Include="node_modules\tribe\test-studio\panes\toolbar.css" />
     <Content Include="node_modules\tribe\test-studio\panes\toolbar.htm" />
     <Content Include="node_modules\tribe\test-studio\panes\fixture.htm" />
@@ -193,7 +195,7 @@
     <Content Include="node_modules\tribe\test-studio\tests\construct.tests.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="node_modules\tribe\test-studio\build\" />
+    <Folder Include="node_modules\tribe\test-studio\node_modules\" />
     <Folder Include="node_modules\tribe\tests\files\blocks\output\" />
     <Folder Include="Samples\Chat\Build\" />
     <Folder Include="Samples\Chat\Dependencies\" />
