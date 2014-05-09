@@ -71,7 +71,6 @@
     <Content Include="node_modules\tribe\index.js" />
     <Content Include="node_modules\tribe\logger.js" />
     <Content Include="node_modules\tribe\server\response.js" />
-    <Content Include="node_modules\tribe\test-studio\index.js" />
     <Content Include="node_modules\tribe\tests\files\blocks\browserify\test1.js" />
     <Content Include="node_modules\tribe\tests\files\blocks\browserify\test2.js" />
     <Content Include="node_modules\tribe\tests\files\blocks\simple\child\test3.js" />
