@@ -1,6 +1,7 @@
 user.pack.js
 Binary/
 Binaries/
+node_modules/nh/
 
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 #[Bb]in/
