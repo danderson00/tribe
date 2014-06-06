@@ -217,107 +217,6 @@ Tribe.PubSub.options = {
 };
 
 
-// Saga.core.js
-
-Tribe.PubSub.Saga = function (pubsub, definition) {
-    var self = this;
-    var utils = Tribe.PubSub.utils;
-
-    pubsub = pubsub.createLifetime();
-    this.pubsub = pubsub;
-    this.children = [];
-
-    configureSaga();
-    var handlers = this.handles || {};
-
-    // this is not ie<9 compatible and includes onstart / onend
-    this.topics = Object.keys(handlers);
-
-    this.start = function (startData) {
-        utils.each(handlers, self.addHandler, self);
-        if (handlers.onstart) handlers.onstart(startData, self);
-        return self;
-    };
-
-    this.startChild = function (child, onstartData) {
-        self.children.push(new Tribe.PubSub.Saga(pubsub, child)
-            .start(onstartData));
-        return self;
-    };
-
-    this.join = function (data, onjoinData) {
-        utils.each(handlers, self.addHandler, self);
-        self.data = data;
-        if (handlers.onjoin) handlers.onjoin(onjoinData, self);
-        return self;
-    };
-
-    this.end = function (onendData) {
-        if (handlers.onend) handlers.onend(onendData, self);
-        pubsub.end();
-        self.endChildren(onendData);
-        return self;
-    };
-
-    this.endChildren = function(data) {
-        Tribe.PubSub.utils.each(self.children, function(child) {
-             child.end(data);
-        });
-    }
-    
-    function configureSaga() {
-        if (definition)
-            if (definition.constructor === Function)
-                definition(self);
-            else
-                Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly']);
-    }
-};
-
-Tribe.PubSub.Saga.startSaga = function (definition, data) {
-    return new Tribe.PubSub.Saga(this, definition).start(data);
-};
-
-Tribe.PubSub.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
-Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
-
-
-// Saga.handlers.js
-
-Tribe.PubSub.Saga.prototype.addHandler = function (handler, topic) {
-    var self = this;
-
-    if (topic !== 'onstart' && topic !== 'onend' && topic !== 'onjoin')
-        if (!handler)
-            this.pubsub.subscribe(topic, endHandler());
-        else if (handler.constructor === Function)
-            this.pubsub.subscribe(topic, messageHandlerFor(handler));
-        else
-            this.pubsub.subscribe(topic, childHandlerFor(handler));
-
-    function messageHandlerFor(handler) {
-        return function (messageData, envelope) {
-            if (!self.endsChildrenExplicitly)
-                self.endChildren(messageData);
-            handler(messageData, envelope, self);
-        };
-    }
-
-    function childHandlerFor(childHandlers) {
-        return function (messageData, envelope) {
-            self.startChild({ handles: childHandlers }, messageData);
-        };
-    }
-
-    function endHandler() {
-        return function (messageData) {
-            self.end(messageData);
-        };
-    }
-};
-
-
-
 // subscribeOnce.js
 
 Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
@@ -455,6 +354,108 @@ Tribe.PubSub.utils = {};
             (ex.stack || '') + (ex.inner ? '\n\n' + utils.errorDetails(ex.inner) : '\n');
     };
 })(Tribe.PubSub.utils);
+
+
+
+// Actor.core.js
+
+Tribe.PubSub.Actor = function (pubsub, definition) {
+    var self = this;
+    var utils = Tribe.PubSub.utils;
+
+    pubsub = pubsub.createLifetime();
+    this.pubsub = pubsub;
+    this.children = [];
+
+    configureActor();
+    var handlers = this.handles || {};
+
+    // this is not ie<9 compatible and includes onstart / onend
+    this.topics = Object.keys(handlers);
+
+    this.start = function (startData) {
+        utils.each(handlers, self.addHandler, self);
+        if (handlers.onstart) handlers.onstart(startData, self);
+        return self;
+    };
+
+    this.startChild = function (child, onstartData) {
+        self.children.push(new Tribe.PubSub.Actor(pubsub, child)
+            .start(onstartData));
+        return self;
+    };
+
+    this.join = function (data, onjoinData) {
+        utils.each(handlers, self.addHandler, self);
+        self.data = data;
+        if (handlers.onjoin) handlers.onjoin(onjoinData, self);
+        return self;
+    };
+
+    this.end = function (onendData) {
+        if (handlers.onend) handlers.onend(onendData, self);
+        pubsub.end();
+        self.endChildren(onendData);
+        return self;
+    };
+
+    this.endChildren = function(data) {
+        Tribe.PubSub.utils.each(self.children, function(child) {
+             child.end(data);
+        });
+    }
+    
+    function configureActor() {
+        if (definition)
+            if (definition.constructor === Function)
+                definition(self);
+            else
+                Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly']);
+    }
+};
+
+Tribe.PubSub.Actor.startActor = function (definition, data) {
+    return new Tribe.PubSub.Actor(this, definition).start(data);
+};
+
+Tribe.PubSub.prototype.startActor = Tribe.PubSub.Actor.startActor;
+Tribe.PubSub.Lifetime.prototype.startActor = Tribe.PubSub.Actor.startActor;
+
+
+
+// Actor.handlers.js
+
+Tribe.PubSub.Actor.prototype.addHandler = function (handler, topic) {
+    var self = this;
+
+    if (topic !== 'onstart' && topic !== 'onend' && topic !== 'onjoin')
+        if (!handler)
+            this.pubsub.subscribe(topic, endHandler());
+        else if (handler.constructor === Function)
+            this.pubsub.subscribe(topic, messageHandlerFor(handler));
+        else
+            this.pubsub.subscribe(topic, childHandlerFor(handler));
+
+    function messageHandlerFor(handler) {
+        return function (messageData, envelope) {
+            if (!self.endsChildrenExplicitly)
+                self.endChildren(messageData);
+            handler(messageData, envelope, self);
+        };
+    }
+
+    function childHandlerFor(childHandlers) {
+        return function (messageData, envelope) {
+            self.startChild({ handles: childHandlers }, messageData);
+        };
+    }
+
+    function endHandler() {
+        return function (messageData) {
+            self.end(messageData);
+        };
+    }
+};
 
 
 

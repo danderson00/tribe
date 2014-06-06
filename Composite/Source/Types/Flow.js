@@ -4,20 +4,20 @@
 
         this.node = navigationNode();
         this.pubsub = this.node.pane.pubsub.owner;
-        this.sagas = [];
+        this.actors = [];
 
         definition = createDefinition(self, definition);
-        this.saga = new Tribe.PubSub.Saga(this.pubsub, definition);
+        this.actor = new Tribe.PubSub.Actor(this.pubsub, definition);
 
         this.start = function(data) {
-            self.saga.start(data);
+            self.actor.start(data);
             return self;
         };
 
         this.end = function(data) {
-            self.saga.end(data);
-            T.Utils.each(self.sagas, function(saga) {
-                saga.end(data);
+            self.actor.end(data);
+            T.Utils.each(self.actors, function(actor) {
+                actor.end(data);
             });
             return self;
         };
@@ -33,7 +33,7 @@
 
     T.Types.Flow.prototype.startChild = function(definition, data) {
         definition = createDefinition(this, definition);
-        this.saga.startChild(definition, data);
+        this.actor.startChild(definition, data);
         return this;
     };
 
@@ -41,13 +41,13 @@
         this.node.navigate(pathOrOptions, data);
     };
     
-    // This keeps a separate collection of sagas bound to this flow's lifetime
-    // It would be nice to make them children of the underlying saga, but
+    // This keeps a separate collection of actors bound to this flow's lifetime
+    // It would be nice to make them children of the underlying actor, but
     // then they would end any time a message was executed.
-    T.Types.Flow.prototype.startSaga = function (definition, data) {
-        var saga = this.pubsub.startSaga(definition, data);
-        this.sagas.push(saga);
-        return saga;
+    T.Types.Flow.prototype.startActor = function (definition, data) {
+        var actor = this.pubsub.startActor(definition, data);
+        this.actors.push(actor);
+        return actor;
     };
 
     // flow helpers

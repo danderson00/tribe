@@ -59,9 +59,9 @@ T.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
 };
 
-T.Types.Pane.prototype.startSaga = function(path, args) {
-    var saga = T.context().sagas[path];
-    this.pubsub.startSaga.apply(this.pubsub, [saga.constructor].concat(Array.prototype.slice.call(arguments, 1)));
+T.Types.Pane.prototype.startActor = function(path, args) {
+    var actor = T.context().actors[path];
+    this.pubsub.startActor.apply(this.pubsub, [actor.constructor].concat(Array.prototype.slice.call(arguments, 1)));
 };
 
 T.Types.Pane.prototype.startFlow = T.Types.Flow.startFlow;

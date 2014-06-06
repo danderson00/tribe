@@ -26,7 +26,7 @@ T.logger = {
     },
     error: function (message, error) {
         if (level >= 1)
-            console.error(('ERROR: ' + message + '\n'), api.errorDetails(error));
+            console.error(('ERROR: ' + message + '\n'), T.logger.errorDetails(error));
     },
     errorDetails: function (ex) {
         if (!ex) return '';

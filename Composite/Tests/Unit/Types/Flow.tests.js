@@ -99,15 +99,15 @@
         ok(spy.calledTwice);
     });
 
-    test("Sagas started with startSaga end when this flow ends", function() {
+    test("Actors started with startActor end when this flow ends", function() {
         var f = new T.Types.Flow(node, TestFlow).start();
-        var sagaHandler = sinon.spy();
-        f.startSaga({ handles: { 'sagaMessage': sagaHandler } });
-        pubsub.publish('sagaMessage');
-        ok(sagaHandler.calledOnce);
+        var actorHandler = sinon.spy();
+        f.startActor({ handles: { 'actorMessage': actorHandler } });
+        pubsub.publish('actorMessage');
+        ok(actorHandler.calledOnce);
         f.end();
-        pubsub.publish('sagaMessage');
-        ok(sagaHandler.calledOnce);
+        pubsub.publish('actorMessage');
+        ok(actorHandler.calledOnce);
     });
 
     test("Child flows are constructed with same flow object", function () {

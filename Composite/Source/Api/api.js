@@ -3,8 +3,8 @@
         addResource('models', T.Utils.arguments(arguments));
     };
 
-    T.registerSaga = function () {
-        addResource('sagas', T.Utils.arguments(arguments));
+    T.registerActor = function () {
+        addResource('actors', T.Utils.arguments(arguments));
     };
     
     function addResource(contextProperty, args) {

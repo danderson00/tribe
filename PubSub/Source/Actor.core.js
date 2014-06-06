@@ -1,4 +1,4 @@
-﻿Tribe.PubSub.Saga = function (pubsub, definition) {
+﻿Tribe.PubSub.Actor = function (pubsub, definition) {
     var self = this;
     var utils = Tribe.PubSub.utils;
 
@@ -6,7 +6,7 @@
     this.pubsub = pubsub;
     this.children = [];
 
-    configureSaga();
+    configureActor();
     var handlers = this.handles || {};
 
     // this is not ie<9 compatible and includes onstart / onend
@@ -19,7 +19,7 @@
     };
 
     this.startChild = function (child, onstartData) {
-        self.children.push(new Tribe.PubSub.Saga(pubsub, child)
+        self.children.push(new Tribe.PubSub.Actor(pubsub, child)
             .start(onstartData));
         return self;
     };
@@ -44,7 +44,7 @@
         });
     }
     
-    function configureSaga() {
+    function configureActor() {
         if (definition)
             if (definition.constructor === Function)
                 definition(self);
@@ -53,9 +53,9 @@
     }
 };
 
-Tribe.PubSub.Saga.startSaga = function (definition, data) {
-    return new Tribe.PubSub.Saga(this, definition).start(data);
+Tribe.PubSub.Actor.startActor = function (definition, data) {
+    return new Tribe.PubSub.Actor(this, definition).start(data);
 };
 
-Tribe.PubSub.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
-Tribe.PubSub.Lifetime.prototype.startSaga = Tribe.PubSub.Saga.startSaga;
+Tribe.PubSub.prototype.startActor = Tribe.PubSub.Actor.startActor;
+Tribe.PubSub.Lifetime.prototype.startActor = Tribe.PubSub.Actor.startActor;

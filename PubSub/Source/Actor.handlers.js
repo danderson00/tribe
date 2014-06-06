@@ -1,4 +1,4 @@
-﻿Tribe.PubSub.Saga.prototype.addHandler = function (handler, topic) {
+﻿Tribe.PubSub.Actor.prototype.addHandler = function (handler, topic) {
     var self = this;
 
     if (topic !== 'onstart' && topic !== 'onend' && topic !== 'onjoin')

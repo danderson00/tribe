@@ -22,10 +22,10 @@
         equal(Test.Integration.context.models.test.constructor, constructor);
     });
 
-    test("registerSaga takes path from T.scriptEnvironment", function () {
+    test("registerActor takes path from T.scriptEnvironment", function () {
         var constructor = function () { };
         T.scriptEnvironment = { resourcePath: 'test' };
-        T.registerSaga(constructor);
-        equal(Test.Integration.context.sagas.test.constructor, constructor);
+        T.registerActor(constructor);
+        equal(Test.Integration.context.actors.test.constructor, constructor);
     });
 })();

@@ -31,7 +31,7 @@ T.history.dispose();
 T.context = function (state) {
     Test.Integration.context = $.extend({
         models: new T.Types.Resources(),
-        sagas: new T.Types.Resources(),
+        actors: new T.Types.Resources(),
         loader: new T.Types.Loader(),
         options: T.options,
         templates: new T.Types.Templates(),
@@ -905,15 +905,15 @@ asyncTest("promise resolves when element is removed using native functions", fun
         ok(spy.calledTwice);
     });
 
-    test("Sagas started with startSaga end when this flow ends", function() {
+    test("Actors started with startActor end when this flow ends", function() {
         var f = new T.Types.Flow(node, TestFlow).start();
-        var sagaHandler = sinon.spy();
-        f.startSaga({ handles: { 'sagaMessage': sagaHandler } });
-        pubsub.publish('sagaMessage');
-        ok(sagaHandler.calledOnce);
+        var actorHandler = sinon.spy();
+        f.startActor({ handles: { 'actorMessage': actorHandler } });
+        pubsub.publish('actorMessage');
+        ok(actorHandler.calledOnce);
         f.end();
-        pubsub.publish('sagaMessage');
-        ok(sagaHandler.calledOnce);
+        pubsub.publish('actorMessage');
+        ok(actorHandler.calledOnce);
     });
 
     test("Child flows are constructed with same flow object", function () {
@@ -1962,11 +1962,11 @@ test("returns rejected promise if no resources have been loaded for the specifie
         equal(Test.Integration.context.models.test.constructor, constructor);
     });
 
-    test("registerSaga takes path from T.scriptEnvironment", function () {
+    test("registerActor takes path from T.scriptEnvironment", function () {
         var constructor = function () { };
         T.scriptEnvironment = { resourcePath: 'test' };
-        T.registerSaga(constructor);
-        equal(Test.Integration.context.sagas.test.constructor, constructor);
+        T.registerActor(constructor);
+        equal(Test.Integration.context.actors.test.constructor, constructor);
     });
 })();
 
@@ -2226,25 +2226,25 @@ test("subscription is removed when pane is removed from DOM", function () {
 
 // Integration/Sagas.tests.js
 
-module('Integration.Sagas', {
+module('Integration.Actors', {
     setup: Test.Integration.createTestElement,
     teardown: Test.Integration.teardown
 });
 
-test("sagas can be registered by name", function () {
+test("actors can be registered by name", function () {
     var func = function () { };
-    T.registerSaga('test1', func);
+    T.registerActor('test1', func);
 
-    equal(Test.Integration.context.sagas.test1.constructor, func);
+    equal(Test.Integration.context.actors.test1.constructor, func);
 });
 
-test("sagas can be registered using scriptEnvironment", function () {
+test("actors can be registered using scriptEnvironment", function () {
     var func = function () { };
     T.scriptEnvironment = { resourcePath: 'test2' };
-    T.registerSaga(func);
+    T.registerActor(func);
     delete T.scriptEnvironment;
     
-    equal(Test.Integration.context.sagas.test2.constructor, func);
+    equal(Test.Integration.context.actors.test2.constructor, func);
 });
 
 

@@ -70,7 +70,7 @@ T.logger = {
     },
     error: function (message, error) {
         if (level >= 1)
-            console.error(('ERROR: ' + message + '\n'), api.errorDetails(error));
+            console.error(('ERROR: ' + message + '\n'), T.logger.errorDetails(error));
     },
     errorDetails: function (ex) {
         if (!ex) return '';
@@ -855,20 +855,20 @@ T.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 
         this.node = navigationNode();
         this.pubsub = this.node.pane.pubsub.owner;
-        this.sagas = [];
+        this.actors = [];
 
         definition = createDefinition(self, definition);
-        this.saga = new Tribe.PubSub.Saga(this.pubsub, definition);
+        this.actor = new Tribe.PubSub.Actor(this.pubsub, definition);
 
         this.start = function(data) {
-            self.saga.start(data);
+            self.actor.start(data);
             return self;
         };
 
         this.end = function(data) {
-            self.saga.end(data);
-            T.Utils.each(self.sagas, function(saga) {
-                saga.end(data);
+            self.actor.end(data);
+            T.Utils.each(self.actors, function(actor) {
+                actor.end(data);
             });
             return self;
         };
@@ -884,7 +884,7 @@ T.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
 
     T.Types.Flow.prototype.startChild = function(definition, data) {
         definition = createDefinition(this, definition);
-        this.saga.startChild(definition, data);
+        this.actor.startChild(definition, data);
         return this;
     };
 
@@ -892,13 +892,13 @@ T.Utils.normaliseBindings = function (valueAccessor, allBindingsAccessor) {
         this.node.navigate(pathOrOptions, data);
     };
     
-    // This keeps a separate collection of sagas bound to this flow's lifetime
-    // It would be nice to make them children of the underlying saga, but
+    // This keeps a separate collection of actors bound to this flow's lifetime
+    // It would be nice to make them children of the underlying actor, but
     // then they would end any time a message was executed.
-    T.Types.Flow.prototype.startSaga = function (definition, data) {
-        var saga = this.pubsub.startSaga(definition, data);
-        this.sagas.push(saga);
-        return saga;
+    T.Types.Flow.prototype.startActor = function (definition, data) {
+        var actor = this.pubsub.startActor(definition, data);
+        this.actors.push(actor);
+        return actor;
     };
 
     // flow helpers
@@ -1276,9 +1276,9 @@ T.Types.Pane.prototype.toString = function () {
     return "{ path: '" + this.path + "' }";
 };
 
-T.Types.Pane.prototype.startSaga = function(path, args) {
-    var saga = T.context().sagas[path];
-    this.pubsub.startSaga.apply(this.pubsub, [saga.constructor].concat(Array.prototype.slice.call(arguments, 1)));
+T.Types.Pane.prototype.startActor = function(path, args) {
+    var actor = T.context().actors[path];
+    this.pubsub.startActor.apply(this.pubsub, [actor.constructor].concat(Array.prototype.slice.call(arguments, 1)));
 };
 
 T.Types.Pane.prototype.startFlow = T.Types.Flow.startFlow;
@@ -1788,8 +1788,8 @@ window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transiti
         addResource('models', T.Utils.arguments(arguments));
     };
 
-    T.registerSaga = function () {
-        addResource('sagas', T.Utils.arguments(arguments));
+    T.registerActor = function () {
+        addResource('actors', T.Utils.arguments(arguments));
     };
     
     function addResource(contextProperty, args) {
@@ -1819,7 +1819,7 @@ window.__appendStyle('.trigger{-webkit-transition:all 250ms ease-in-out;transiti
     T.context = function (source) {
         staticState = staticState || {
             models: new T.Types.Resources(),
-            sagas: new T.Types.Resources(),
+            actors: new T.Types.Resources(),
             loader: new T.Types.Loader(),
             options: T.options,
             templates: new T.Types.Templates(),
