@@ -1,61 +1,64 @@
-﻿Tribe.PubSub.Actor = function (pubsub, definition) {
-    var self = this;
+﻿(function () {
     var utils = Tribe.PubSub.utils;
 
-    pubsub = pubsub.createLifetime();
-    this.pubsub = pubsub;
-    this.children = [];
+    Tribe.PubSub.Actor = function (pubsub, definition) {
+        var self = this;
 
-    configureActor();
-    var handlers = this.handles || {};
+        pubsub = pubsub.createLifetime();
+        this.pubsub = pubsub;
+        this.children = [];
 
-    // this is not ie<9 compatible and includes onstart / onend
-    this.topics = Object.keys(handlers);
+        configureActor();
+        this.handles = this.handles || {};
 
-    this.start = function (startData) {
-        utils.each(handlers, self.addHandler, self);
-        if (handlers.onstart) handlers.onstart(startData, self);
-        return self;
+        // TODO: this is not ie<9 compatible and includes onstart / onend
+        this.topics = Object.keys(this.handles);
+
+        function configureActor() {
+            if (definition)
+                if (definition.constructor === Function)
+                    definition(self);
+                else
+                    Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly']);
+        }
     };
 
-    this.startChild = function (child, onstartData) {
-        self.children.push(new Tribe.PubSub.Actor(pubsub, child)
+    Tribe.PubSub.Actor.prototype.start = function (startData) {
+        utils.each(this.handles, this.addHandler, this);
+        if (this.handles.onstart) this.handles.onstart(startData, this);
+        return this;
+    };
+
+    Tribe.PubSub.Actor.prototype.startChild = function (child, onstartData) {
+        this.children.push(new Tribe.PubSub.Actor(this.pubsub, child)
             .start(onstartData));
-        return self;
+        return this;
     };
 
-    this.join = function (data, onjoinData) {
-        utils.each(handlers, self.addHandler, self);
-        self.data = data;
-        if (handlers.onjoin) handlers.onjoin(onjoinData, self);
-        return self;
+    Tribe.PubSub.Actor.prototype.join = function (data, onjoinData) {
+        utils.each(this.handles, this.addHandler, this);
+        this.data = data;
+        if (this.handles.onjoin) this.handles.onjoin(onjoinData, this);
+        return this;
     };
 
-    this.end = function (onendData) {
-        if (handlers.onend) handlers.onend(onendData, self);
-        pubsub.end();
-        self.endChildren(onendData);
-        return self;
+    Tribe.PubSub.Actor.prototype.end = function (onendData) {
+        if (this.handles.onend) this.handles.onend(onendData, this);
+        this.pubsub.end();
+        this.endChildren(onendData);
+        return this;
     };
 
-    this.endChildren = function(data) {
-        Tribe.PubSub.utils.each(self.children, function(child) {
-             child.end(data);
+    Tribe.PubSub.Actor.prototype.endChildren = function (data) {
+        Tribe.PubSub.utils.each(this.children, function (child) {
+            child.end(data);
         });
-    }
+    };
     
-    function configureActor() {
-        if (definition)
-            if (definition.constructor === Function)
-                definition(self);
-            else
-                Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly']);
-    }
-};
+    Tribe.PubSub.Actor.startActor = function (definition, data) {
+        return new Tribe.PubSub.Actor(this, definition).start(data);
+    };
 
-Tribe.PubSub.Actor.startActor = function (definition, data) {
-    return new Tribe.PubSub.Actor(this, definition).start(data);
-};
-
-Tribe.PubSub.prototype.startActor = Tribe.PubSub.Actor.startActor;
-Tribe.PubSub.Lifetime.prototype.startActor = Tribe.PubSub.Actor.startActor;
+    Tribe.PubSub.prototype.startActor = Tribe.PubSub.Actor.startActor;
+    Tribe.PubSub.Lifetime.prototype.startActor = Tribe.PubSub.Actor.startActor;
+})();
