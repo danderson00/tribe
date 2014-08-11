@@ -443,7 +443,10 @@ Tribe.PubSub.Actor.prototype.addHandler = function (handler, topic) {
         return function (messageData, envelope) {
             if (!self.endsChildrenExplicitly)
                 self.endChildren(messageData);
+
+            if (self.preMessage) self.preMessage(envelope);
             handler(messageData, envelope, self);
+            if (self.postMessage) self.postMessage(envelope);
         };
     }
 

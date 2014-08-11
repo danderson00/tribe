@@ -178,6 +178,38 @@
         ok(spy.calledOnce);
     });
 
+    test("pre and post message handlers are executed for each handled message", function () {
+        definition.handles = { 'testTopic1': spy, 'testTopic2': spy };
+        var actor = new Tribe.PubSub.Actor(pubsub, definition).start();
+        actor.preMessage = sinon.spy();
+        actor.postMessage = sinon.spy();
+        pubsub.publish('testTopic1', 'data');
+        pubsub.publish('testTopic2', 'data');
+        pubsub.publish('testTopic3', 'data');
+
+        ok(actor.preMessage.calledTwice);
+        ok(actor.postMessage.calledTwice);
+    });
+
+    test("pre and post message handlers are executed when defined in constructor", function () {
+        var pre = sinon.spy(),
+            post = sinon.spy(),
+            s = pubsub.startActor(constructor, 'data');
+
+        pubsub.publish('testTopic1', 'data');
+        pubsub.publish('testTopic2', 'data');
+        pubsub.publish('testTopic3', 'data');
+
+        ok(pre.calledTwice);
+        ok(post.calledTwice);
+
+        function constructor(actor) {
+            actor.handles = { 'testTopic1': spy, 'testTopic2': spy };
+            actor.preMessage = pre;
+            actor.postMessage = post;
+        }
+    });
+
     function createDefinition(handlers) {
         return {
             pubsub: pubsub,
