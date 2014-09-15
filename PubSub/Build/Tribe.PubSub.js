@@ -1,5 +1,5 @@
 
-// PubSub.js
+// Source/PubSub.js
 
 if (typeof (Tribe) === 'undefined')
     Tribe = {};
@@ -99,7 +99,7 @@ Tribe.PubSub = function (options) {
 };
 
 
-// Channel.js
+// Source/Channel.js
 
 Tribe.PubSub.Channel = function (pubsub, channelId) {
     var self = this;
@@ -153,7 +153,7 @@ Tribe.PubSub.Channel = function (pubsub, channelId) {
 };
 
 
-// Lifetime.js
+// Source/Lifetime.js
 
 Tribe.PubSub.Lifetime = function (parent, owner) {
     var self = this;
@@ -206,7 +206,7 @@ Tribe.PubSub.Lifetime = function (parent, owner) {
 };
 
 
-// options.js
+// Source/options.js
 
 Tribe.PubSub.options = {
     sync: false,
@@ -217,7 +217,7 @@ Tribe.PubSub.options = {
 };
 
 
-// subscribeOnce.js
+// Source/subscribeOnce.js
 
 Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
     var self = this;
@@ -254,7 +254,7 @@ Tribe.PubSub.prototype.subscribeOnce = function (topic, handler) {
 };
 
 
-// SubscriberList.js
+// Source/SubscriberList.js
 
 Tribe.PubSub.SubscriberList = function() {
     var subscribers = {};
@@ -300,7 +300,7 @@ Tribe.PubSub.SubscriberList = function() {
 };
 
 
-// utils.js
+// Source/utils.js
 
 Tribe.PubSub.utils = {};
 (function(utils) {
@@ -357,7 +357,7 @@ Tribe.PubSub.utils = {};
 
 
 
-// Actor.core.js
+// Source/Actor.core.js
 
 (function () {
     var utils = Tribe.PubSub.utils;
@@ -380,13 +380,13 @@ Tribe.PubSub.utils = {};
                 if (definition.constructor === Function)
                     definition(self);
                 else
-                    Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly']);
+                    Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly', 'onstart', 'onjoin', 'onend']);
         }
     };
 
     Tribe.PubSub.Actor.prototype.start = function (startData) {
         utils.each(this.handles, this.addHandler, this);
-        if (this.handles.onstart) this.handles.onstart(startData, this);
+        if (this.onstart) this.onstart(startData, this);
         return this;
     };
 
@@ -399,12 +399,12 @@ Tribe.PubSub.utils = {};
     Tribe.PubSub.Actor.prototype.join = function (data, onjoinData) {
         utils.each(this.handles, this.addHandler, this);
         this.data = data;
-        if (this.handles.onjoin) this.handles.onjoin(onjoinData, this);
+        if (this.onjoin) this.onjoin(onjoinData, this);
         return this;
     };
 
     Tribe.PubSub.Actor.prototype.end = function (onendData) {
-        if (this.handles.onend) this.handles.onend(onendData, this);
+        if (this.onend) this.onend(onendData, this);
         this.pubsub.end();
         this.endChildren(onendData);
         return this;
@@ -426,7 +426,7 @@ Tribe.PubSub.utils = {};
 
 
 
-// Actor.handlers.js
+// Source/Actor.handlers.js
 
 Tribe.PubSub.Actor.prototype.addHandler = function (handler, topic) {
     var self = this;
@@ -465,7 +465,7 @@ Tribe.PubSub.Actor.prototype.addHandler = function (handler, topic) {
 
 
 
-// exports.js
+// Source/exports.js
 
 if (typeof(module) !== 'undefined')
     module.exports = new Tribe.PubSub();

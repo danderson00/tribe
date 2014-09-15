@@ -5,6 +5,7 @@
     "dependencies": {
     },
 	"devDependencies": {
+		"packscript": "^0.2.9"
 	},
     "main": "Build/Tribe.PubSub.js",
     "homepage": "http://github.com/danderson00/tribe",

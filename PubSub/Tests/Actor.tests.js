@@ -16,9 +16,7 @@
         var s = pubsub.startActor(constructor, 'data');
         function constructor(actor) {
             equal(actor.pubsub.owner, pubsub);
-            actor.handles = {
-                onstart: function (data) { equal(data, 'data'); }
-            };
+            actor.onstart = function (data) { equal(data, 'data'); };
         }
     });
 
@@ -27,9 +25,7 @@
         var s = pubsub.createLifetime().startActor(constructor, 'data');
         function constructor(actor) {
             equal(actor.pubsub.owner, pubsub);
-            actor.handles = {
-                onstart: function (data) { equal(data, 'data'); }
-            };
+            actor.onstart = function (data) { equal(data, 'data'); };
         }
     });
 
@@ -45,7 +41,7 @@
     });
 
     test("onstart handler is executed when actor is started", function () {
-        definition.handles = { onstart: spy };
+        definition.onstart = spy;
         var actor = new Tribe.PubSub.Actor(pubsub, definition);
         ok(spy.notCalled);
         actor.start();
@@ -53,7 +49,7 @@
     });
 
     test("onstart is called with argument passed to start", function () {
-        definition.handles = { onstart: spy };
+        definition.onstart = spy;
         var actor = new Tribe.PubSub.Actor(pubsub, definition).start('arg');
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'arg');
@@ -61,7 +57,7 @@
     });
 
     test("onend handler is executed when actor is ended", function () {
-        definition.handles = { onend: spy };
+        definition.onend = spy;
         var actor = new Tribe.PubSub.Actor(pubsub, definition).start();
         ok(spy.notCalled);
         actor.end();
@@ -69,7 +65,7 @@
     });
 
     test("onend handler is called wtih argument passed to end", function () {
-        definition.handles = { onend: spy };
+        definition.onend = spy;
         var actor = new Tribe.PubSub.Actor(pubsub, definition).start();
         actor.end('arg');
         equal(spy.firstCall.args[0], 'arg');
@@ -77,7 +73,8 @@
     });
 
     test("onstart and onend handlers are not executed when topics are published", function () {
-        definition.handles = { onstart: spy, onend: spy };
+        definition.onstart = spy
+        definition.onend = spy;
         var actor = new Tribe.PubSub.Actor(pubsub, definition).start();
         pubsub.publish('onstart');
         pubsub.publish('onend');
@@ -85,7 +82,7 @@
     });
 
     test("startChild starts child and adds to children", function () {
-        var child = createDefinition({ onstart: spy });
+        var child = createDefinition(spy);
         var actor = new Tribe.PubSub.Actor(pubsub, definition);
         actor.startChild(child);
         ok(spy.calledOnce);
@@ -95,10 +92,8 @@
     test("startChild passes data to child start function", function () {
         expect(1);
         var child = function(childActor, data) {
-            childActor.handles = {
-                onstart: function(data) {
-                    equal(data, 'data');
-                }
+            childActor.onstart = function(data) {
+                equal(data, 'data');
             };
         };
         var actor = new Tribe.PubSub.Actor(pubsub, definition);
@@ -106,7 +101,7 @@
     });
 
     test("end calls end on any children with data passed", function () {
-        var child = createDefinition({ onend: spy });
+        var child = createDefinition(null, spy);
         var actor = new Tribe.PubSub.Actor(pubsub, definition);
         actor.startChild(child);
         actor.end('arg');
@@ -115,10 +110,11 @@
     });
 
     test("Actor ends when null handler is executed", function () {
-        definition.handles = { 'endTopic': null, onend: spy };
+        definition.handles = { 'endTopic': null };
+        definition.onend = spy;
         var actor = new Tribe.PubSub.Actor(pubsub, definition).start();
         pubsub.publish('endTopic');
-        ok(definition.handles.onend.calledOnce);
+        ok(definition.onend.calledOnce);
     });
 
     test("Child actor is started when child handler is executed", function () {
@@ -167,9 +163,7 @@
     });
 
     test("join sets data and executes onjoin handler", function () {
-        definition.handles = {
-            onjoin: spy
-        };
+        definition.onjoin = spy;
         var actor = new Tribe.PubSub.Actor(pubsub, definition).join('test');
         equal(actor.data, 'test');
         ok(spy.calledOnce);
@@ -207,10 +201,11 @@
         }
     });
 
-    function createDefinition(handlers) {
+    function createDefinition(onstart, onend) {
         return {
             pubsub: pubsub,
-            handles: handlers
+            onstart: onstart,
+            onend: onend
         };
     }
 })();

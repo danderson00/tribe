@@ -19,13 +19,13 @@
                 if (definition.constructor === Function)
                     definition(self);
                 else
-                    Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly']);
+                    Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly', 'onstart', 'onjoin', 'onend']);
         }
     };
 
     Tribe.PubSub.Actor.prototype.start = function (startData) {
         utils.each(this.handles, this.addHandler, this);
-        if (this.handles.onstart) this.handles.onstart(startData, this);
+        if (this.onstart) this.onstart(startData, this);
         return this;
     };
 
@@ -38,12 +38,12 @@
     Tribe.PubSub.Actor.prototype.join = function (data, onjoinData) {
         utils.each(this.handles, this.addHandler, this);
         this.data = data;
-        if (this.handles.onjoin) this.handles.onjoin(onjoinData, this);
+        if (this.onjoin) this.onjoin(onjoinData, this);
         return this;
     };
 
     Tribe.PubSub.Actor.prototype.end = function (onendData) {
-        if (this.handles.onend) this.handles.onend(onendData, this);
+        if (this.onend) this.onend(onendData, this);
         this.pubsub.end();
         this.endChildren(onendData);
         return this;
