@@ -37,13 +37,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="build.js" />
     <Content Include="Source\Channel.js" />
     <Content Include="Source\Actor.handlers.js" />
     <Content Include="Source\exports.js" />
     <Content Include="Source\options.js" />
     <Content Include="Source\Lifetime.js" />
     <Content Include="Source\PubSub.js" />
-    <Content Include="Source\pack.js" />
     <Content Include="Source\Actor.core.js" />
     <Content Include="Source\subscribeOnce.js" />
     <Content Include="Source\SubscriberList.js" />
@@ -53,22 +53,20 @@
     <Content Include="Tests\PubSub.subscribe.tests.js" />
     <Content Include="Tests\PubSub.publish.tests.js" />
     <Content Include="Tests\Lifetime.tests.js" />
-    <Content Include="Tests\pack.js" />
-    <Content Include="Tests\Resources\debug.pack.js" />
-    <Content Include="Tests\Resources\debug.template.js" />
     <Content Include="Tests\Actor.tests.js" />
     <Content Include="Tests\subscribeOnce.tests.js" />
-    <Content Include="Tests\index.html" />
+    <Content Include="tests.html" />
     <Content Include="Tests\PubSub.unsubscribe.tests.js" />
-    <Content Include="Tests\Resources\qunit.css" />
-    <Content Include="Tests\Resources\qunit.js" />
-    <Content Include="Tests\Resources\sinon.js" />
+    <Content Include="Resources\qunit.css" />
+    <Content Include="Resources\qunit.js" />
+    <Content Include="Resources\sinon.js" />
     <Content Include="Tests\SubscriberList.tests.js" />
     <Content Include="Tests\tests.min.js" />
     <Content Include="Tests\utils.tests.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Build\" />
+    <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="package.json" />
