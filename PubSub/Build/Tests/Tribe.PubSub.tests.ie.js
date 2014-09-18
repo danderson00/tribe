@@ -75,15 +75,6 @@
         equal(spy.firstCall.args[1], actor);
     });
 
-    test("onstart and onend handlers are not executed when topics are published", function () {
-        definition.onstart = spy
-        definition.onend = spy;
-        var actor = new Tribe.PubSub.Actor(pubsub, definition).start();
-        pubsub.publish('onstart');
-        pubsub.publish('onend');
-        ok(spy.calledOnce);
-    });
-
     test("startChild starts child and adds to children", function () {
         var child = createDefinition(spy);
         var actor = new Tribe.PubSub.Actor(pubsub, definition);
@@ -108,6 +99,15 @@
         var actor = new Tribe.PubSub.Actor(pubsub, definition);
         actor.startChild(child);
         actor.end('arg');
+        ok(spy.calledOnce);
+        equal(spy.firstCall.args[0], 'arg');
+    });
+
+    test("suspend calls suspend on any children with data passed", function () {
+        var child = createDefinition(null, null, spy);
+        var actor = new Tribe.PubSub.Actor(pubsub, definition);
+        actor.startChild(child);
+        actor.suspend('arg');
         ok(spy.calledOnce);
         equal(spy.firstCall.args[0], 'arg');
     });
@@ -165,9 +165,9 @@
         ok(spy.calledTwice);
     });
 
-    test("join sets data and executes onjoin handler", function () {
-        definition.onjoin = spy;
-        var actor = new Tribe.PubSub.Actor(pubsub, definition).join('test');
+    test("resume sets data and executes onresume handler", function () {
+        definition.onresume = spy;
+        var actor = new Tribe.PubSub.Actor(pubsub, definition).resume('test');
         equal(actor.data, 'test');
         ok(spy.calledOnce);
     });
@@ -204,11 +204,12 @@
         }
     });
 
-    function createDefinition(onstart, onend) {
+    function createDefinition(onstart, onend, onsuspend) {
         return {
             pubsub: pubsub,
             onstart: onstart,
-            onend: onend
+            onend: onend,
+            onsuspend: onsuspend
         };
     }
 })();

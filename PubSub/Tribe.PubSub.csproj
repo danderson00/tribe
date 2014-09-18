@@ -46,6 +46,7 @@
     <Content Include="Source\PubSub.js" />
     <Content Include="Source\Actor.core.js" />
     <Content Include="Source\subscribeOnce.js" />
+    <Content Include="Source\TopicList.js" />
     <Content Include="Source\SubscriberList.js" />
     <Content Include="Source\utils.js" />
     <Content Include="Tests\Channel.tests.js" />
@@ -66,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Build\" />
+    <Folder Include="NewFolder1\" />
     <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>

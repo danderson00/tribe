@@ -380,7 +380,7 @@ Tribe.PubSub.utils = {};
                 if (definition.constructor === Function)
                     definition(self);
                 else
-                    Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly', 'onstart', 'onjoin', 'onend']);
+                    Tribe.PubSub.utils.copyProperties(definition, self, ['handles', 'endsChildrenExplicitly', 'onstart', 'onresume', 'onsuspend', 'onend']);
         }
     };
 
@@ -396,17 +396,24 @@ Tribe.PubSub.utils = {};
         return this;
     };
 
-    Tribe.PubSub.Actor.prototype.join = function (data, onjoinData) {
+    Tribe.PubSub.Actor.prototype.resume = function (data, resumeData) {
         utils.each(this.handles, this.addHandler, this);
         this.data = data;
-        if (this.onjoin) this.onjoin(onjoinData, this);
+        if (this.onresume) this.onresume(resumeData, this);
         return this;
     };
 
-    Tribe.PubSub.Actor.prototype.end = function (onendData) {
-        if (this.onend) this.onend(onendData, this);
+    Tribe.PubSub.Actor.prototype.suspend = function (suspendData) {
+        if (this.onsuspend) this.onsuspend(suspendData, this);
         this.pubsub.end();
-        this.endChildren(onendData);
+        this.suspendChildren(suspendData);
+        return this;
+    };
+
+    Tribe.PubSub.Actor.prototype.end = function (endData) {
+        if (this.onend) this.onend(endData, this);
+        this.pubsub.end();
+        this.endChildren(endData);
         return this;
     };
 
@@ -416,6 +423,12 @@ Tribe.PubSub.utils = {};
         });
     };
     
+    Tribe.PubSub.Actor.prototype.suspendChildren = function (data) {
+        Tribe.PubSub.utils.each(this.children, function (child) {
+            child.suspend(data);
+        });
+    };
+
     Tribe.PubSub.Actor.startActor = function (definition, data) {
         return new Tribe.PubSub.Actor(this, definition).start(data);
     };
@@ -431,13 +444,12 @@ Tribe.PubSub.utils = {};
 Tribe.PubSub.Actor.prototype.addHandler = function (handler, topic) {
     var self = this;
 
-    if (topic !== 'onstart' && topic !== 'onend' && topic !== 'onjoin')
-        if (!handler)
-            this.pubsub.subscribe(topic, endHandler());
-        else if (handler.constructor === Function)
-            this.pubsub.subscribe(topic, messageHandlerFor(handler));
-        else
-            this.pubsub.subscribe(topic, childHandlerFor(handler));
+    if (!handler)
+        this.pubsub.subscribe(topic, endHandler());
+    else if (handler.constructor === Function)
+        this.pubsub.subscribe(topic, messageHandlerFor(handler));
+    else
+        this.pubsub.subscribe(topic, childHandlerFor(handler));
 
     function messageHandlerFor(handler) {
         return function (messageData, envelope) {
