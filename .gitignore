@@ -1,8 +1,8 @@
-user.pack.js
-Binary/
-Binaries/
 node_modules/ru/
 node_modules/temp/
+node_modules/oc/
+Binary/
+Binaries/
 
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 #[Bb]in/
