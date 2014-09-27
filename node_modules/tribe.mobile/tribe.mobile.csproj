@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{25A3AD00-CF30-4DE7-83A5-D11554420B30}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tribe.Mobile</RootNamespace>
+    <AssemblyName>Tribe.Mobile</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IntermediateOutputPath>..\temp\</IntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\temp\</BaseIntermediateOutputPath>
+    <OutputPath>..\temp\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="css\core.css" />
+    <Content Include="css\buttons.css" />
+    <Content Include="css\forms.css" />
+    <Content Include="documentation.txt" />
+    <Content Include="index.js" />
+    <Content Include="infrastructure\screen.js" />
+    <Content Include="panes\blank.js" />
+    <Content Include="panes\editable.css" />
+    <Content Include="panes\editable.js" />
+    <Content Include="panes\editable.htm" />
+    <Content Include="panes\list.css" />
+    <Content Include="panes\list.htm" />
+    <Content Include="panes\list.js" />
+    <Content Include="panes\main.css" />
+    <Content Include="panes\main.htm" />
+    <Content Include="panes\main.js" />
+    <Content Include="panes\options.css" />
+    <Content Include="panes\options.htm" />
+    <Content Include="panes\options.js" />
+    <Content Include="panes\overlay.css" />
+    <Content Include="panes\overlay.htm" />
+    <Content Include="panes\overlay.js" />
+    <Content Include="panes\toolbar.css" />
+    <Content Include="panes\toolbar.htm" />
+    <Content Include="panes\toolbar.js" />
+    <Content Include="infrastructure\click.js" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
