@@ -1,4 +1,3 @@
-
 //
 window.__appendStyle = function (content) {
     var element = document.getElementById('__tribeStyles');

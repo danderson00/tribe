@@ -24,10 +24,10 @@
                 .done(executeNextEvent)
                 .fail(handleFailure);
 
-            function handleFailure() {
-                promise.reject();
+            function handleFailure(error) {
+                promise.reject(error);
                 var targetDescription = target ? target.toString() : "empty target";
-                T.logger.error("An error occurred in the '" + eventName + "' event for " + targetDescription);
+                T.logger.error("An error occurred in the '" + eventName + "' event for " + targetDescription, error);
             }
         }
 
