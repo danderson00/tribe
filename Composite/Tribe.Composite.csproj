@@ -36,7 +36,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".gitignore" />
     <Content Include="Libraries\knockout-2.3.0.debug.js" />
     <Content Include="Libraries\knockout-2.3.0.js" />
     <Content Include="Samples\Transitions\index.html" />
