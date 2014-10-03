@@ -1,0 +1,13 @@
+﻿var database = require('./database'),
+    counter = 0;
+
+module.exports = {
+    next: function () {
+        return ++counter;
+    },
+    initialise: function () {
+        return database.get("select max(id) as currentId from messages").then(function (row) {
+            counter = row.currentId || 0;
+        });
+    }
+};
