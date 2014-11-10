@@ -20,6 +20,9 @@
                 return;
             }
 
+            // could possibly improve debugging in non-production scenarios by omitting the fail handler
+            // using .done without a fail handler should mean the exception is unhandled, allowing it
+            // to be caught by the debugger easily.
             $.when(thisEvent(target, context))
                 .done(executeNextEvent)
                 .fail(handleFailure);
