@@ -1,6 +1,6 @@
 {
     "name": "tribe.composite",
-    "version": "0.2.9",
+    "version": "0.2.10",
     "description": "Tribe is a platform for building rich, powerful, highly scalable distributed HTML5 web and mobile systems.",
     "dependencies": {
 		"tribe.pubsub": "~0.2.2"

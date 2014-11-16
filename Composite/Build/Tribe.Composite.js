@@ -1092,8 +1092,8 @@ T.Types.Node.prototype.setPane = function (pane) {
     if (pane.handlesNavigation) {
         this.navigation = new T.Types.Navigation(this, pane.handlesNavigation);
         
-        // this sets this pane as the "default", accessible from panes outside the tree. First in best dressed.
-        this.root.defaultNavigation = this.root.defaultNavigation || this.navigation;
+        // this sets this pane as the "default", accessible from panes outside the tree. Last in best dressed.
+        this.root.defaultNavigation = this.navigation;
     }
 
     pane.inheritPathFrom(this.parent);
@@ -1228,6 +1228,9 @@ T.Types.Pipeline = function (events, context) {
                 return;
             }
 
+            // could possibly improve debugging in non-production scenarios by omitting the fail handler
+            // using .done without a fail handler should mean the exception is unhandled, allowing it
+            // to be caught by the debugger easily.
             $.when(thisEvent(target, context))
                 .done(executeNextEvent)
                 .fail(handleFailure);

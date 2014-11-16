@@ -51,8 +51,8 @@ T.Types.Node.prototype.setPane = function (pane) {
     if (pane.handlesNavigation) {
         this.navigation = new T.Types.Navigation(this, pane.handlesNavigation);
         
-        // this sets this pane as the "default", accessible from panes outside the tree. First in best dressed.
-        this.root.defaultNavigation = this.root.defaultNavigation || this.navigation;
+        // this sets this pane as the "default", accessible from panes outside the tree. Last in best dressed.
+        this.root.defaultNavigation = this.navigation;
     }
 
     pane.inheritPathFrom(this.parent);
