@@ -29,7 +29,7 @@ T.Utils.inheritOptions = function (from, to, options) {
 };
 
 T.Utils.cloneData = function (from, except) {
-    if (!from) return;
+    if (!from || typeof from !== "object") return from;
     var result = {};
     for (var property in from) {
         var value = from[property];

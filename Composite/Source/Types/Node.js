@@ -74,5 +74,3 @@ T.Types.Node.prototype.dispose = function() {
         this.pane.dispose();
     }
 };
-
-T.Types.Node.prototype.startFlow = T.Types.Flow.startFlow;

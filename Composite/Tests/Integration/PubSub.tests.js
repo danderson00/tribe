@@ -13,7 +13,7 @@ test("subscription in pane is executed", function() {
 
 test("subscription is removed when pane is removed from DOM", function () {
     T.createNode('.test', { path: 'PubSub/subscriber' });
-    equal(Test.Integration.context.pubsub.subscribers.get('test').length, 1);
+    equal(Test.Integration.context.pubsub.subscribers.get({ topic: 'test' }).length, 1);
     $('.test').remove();
-    equal(Test.Integration.context.pubsub.subscribers.get('test').length, 0);
+    equal(Test.Integration.context.pubsub.subscribers.get({ topic: 'test' }).length, 0);
 });

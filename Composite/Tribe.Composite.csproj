@@ -51,7 +51,6 @@
     <Content Include="Source\license.js" />
     <Content Include="Source\logger.js" />
     <Content Include="Source\Transitions\Css\slide.css" />
-    <Content Include="Source\Types\Flow.js" />
     <Content Include="Source\Types\History.js" />
     <Content Include="Source\Types\Navigation.js" />
     <Content Include="Source\Utilities\bindingHandlers.js" />
@@ -186,7 +185,6 @@
     <Content Include="Tests\Unit\LoadStrategies\adhoc.tests.js" />
     <Content Include="Tests\Unit\Events\renderPane.tests.js" />
     <Content Include="Tests\Unit\LoadStrategies\preloaded.tests.js" />
-    <Content Include="Tests\Unit\Types\Flow.tests.js" />
     <Content Include="Tests\Unit\Types\History.tests.js" />
     <Content Include="Tests\Unit\Types\Node.findNavigation.tests.js" />
     <Content Include="Tests\Unit\Types\Navigation.tests.js" />

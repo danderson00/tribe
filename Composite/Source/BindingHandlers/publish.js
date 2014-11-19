@@ -5,7 +5,7 @@
 
         var data = T.Utils.normaliseBindings(valueAccessor, allBindingsAccessor);
         var handler = ko.bindingHandlers.validatedClick || ko.bindingHandlers.click;
-        handler.init(element, publishAccessor, allBindingsAccessor, viewModel);
+        handler.init(element, publishAccessor, allBindingsAccessor, viewModel, bindingContext);
 
         function publishAccessor() {
             return function () {

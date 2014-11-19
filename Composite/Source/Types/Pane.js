@@ -64,4 +64,3 @@ T.Types.Pane.prototype.startActor = function(path, args) {
     this.pubsub.startActor.apply(this.pubsub, [actor.constructor].concat(Array.prototype.slice.call(arguments, 1)));
 };
 
-T.Types.Pane.prototype.startFlow = T.Types.Flow.startFlow;

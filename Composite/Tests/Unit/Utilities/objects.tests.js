@@ -54,6 +54,11 @@
         equal(result.except1, undefined);
         equal(result.except2, undefined);
     });
+
+    test("cloneData handles value objects", function () {
+        equal(utils.cloneData('test'), 'test');
+        equal(utils.cloneData(1), 1);
+    });
     
     test("normaliseBindings evaluates function passed as value", function () {
         equal(utils.normaliseBindings(value, function () { return {}; }).value, 'test');
