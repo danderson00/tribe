@@ -1198,14 +1198,24 @@ T.Events.active = function (pane, context) {
 };
 // Events/createModel.js
 T.Events.createModel = function (pane, context) {
-    var definition = context.models[pane.path];
-    var model = definition && definition.constructor ?
-        new definition.constructor(pane) :
-        { pane: pane, data: pane.data };
+    var definition = context.models[pane.path],
+        model = definition && definition.constructor
+            ? new definition.constructor(pane)
+            : {
+                pane: pane,
+                data: pane.data,
+                navigate: navigate
+            };
 
     T.Utils.embedState(model, context, pane.node);
 
     pane.model = model;
+
+    function navigate(path, data) {
+        return function () {
+            pane.navigate(path, data);
+        };
+    }
 };
 // Events/createPubSub.js
 T.Events.createPubSub = function (pane, context) {
