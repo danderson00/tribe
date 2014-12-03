@@ -1,6 +1,0 @@
-﻿Reference = {
-    Utilities: {},
-    Types: {}
-};
-
-Tutorials = {};

@@ -1,8 +1,9 @@
-Tribe
+﻿tribe
 =====
 
-Tribe is a platform for building distributed composite HTML5 web and mobile systems.
+tribe is a platform for building event based systems. See http://tribejs.com/ for more information.
 
-For a full reference, guides and worked examples, see http://tribejs.com.
+License
+-------
 
-For the JavaScript test suite, see http://tribejs.com/tests.html.
+The Tribe platform is licensed under the MIT license.

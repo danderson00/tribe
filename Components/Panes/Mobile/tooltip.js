@@ -1,3 +1,0 @@
-﻿T.registerModel(function(pane) {
-
-});

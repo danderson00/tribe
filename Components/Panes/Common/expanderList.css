@@ -1,7 +1,0 @@
-﻿.expanderList {
-    padding: 10px;
-}
-
-.expanderContainer:nth-child(n+2) .expander {
-    margin-top: 10px;
-}

@@ -1,7 +1,0 @@
-﻿<!-- The click binding is now to the selectFolder function -->
-
-<ul class="folders" data-bind="foreach: folders">
-    <li data-bind="text: $data,
-                   css: { selected: $data === $root.selectedFolder() },
-                   click: $root.selectFolder"></li>
-</ul>
