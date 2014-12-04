@@ -1,9 +1,9 @@
 {
     "name": "test-studio",
-    "version": "0.1.20",
+    "version": "0.1.25",
     "description": "A powerful browser based unit testing user interface.",
     "dependencies": {
-		"tribe": "~0.0.19",
+		"tribe": "~0.0.26",
 		"optimist": "~0.6.1",
 		"q": "~1.0.0",
 		"underscore": "~1.5.2"

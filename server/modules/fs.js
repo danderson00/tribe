@@ -8,7 +8,7 @@ module.exports = function (targetPath, sourcePath) {
             app.use(targetPath, express.static(sourcePath));
         },
         'static': function (outputPath) {
-            var fullOutputPath = path.resolve(outputPath + targetPath);
+            var fullOutputPath = path.resolve(outputPath, targetPath);
             return fs.makeTree(fullOutputPath)
                 .then(function () {
                     return fs.copyTree(sourcePath, fullOutputPath);

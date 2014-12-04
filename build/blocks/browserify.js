@@ -18,7 +18,7 @@ module.exports = function (property, configCallback) {
             targetProperty = targetProperty || 'output';
 
             return function (context, build) {
-                var b = browserify(),
+                var b = browserify({ paths: [__dirname] }),
                     bundleQ = Q.defer(),
                     dependencyQ = Q.defer(),
                     q = Q.defer(),

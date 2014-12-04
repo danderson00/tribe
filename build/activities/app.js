@@ -22,8 +22,8 @@ build.activities.register('app', function () {
                 b.require(require.resolve('tribe/client'), { expose: 'tribe' });
 
                 // modules that should be exposed to external bundles, such as tests.agent. There must be a better way to do this!
-                b.require('tribe.pubsub');
-                b.require('tribe/actors');
+                b.require(require.resolve('tribe.pubsub'), { expose: 'tribe.pubsub' });
+                b.require(require.resolve('tribe/actors'), { expose: 'tribe/actors' });
 
                 b.transform(utils.streams.throughTransform(function (source, file) {
                     if (options.debug && options.enhancedDebug && !file.path.match(/enhancedDebug\.js$/))
