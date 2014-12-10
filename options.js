@@ -94,6 +94,7 @@ var options = module.exports = {
         operations: {
             'actor': 'tribe/server/operations/actor',
             'message': 'tribe/server/operations/message',
+            'scope': 'tribe/server/operations/scope',
             'subscribe': 'tribe/server/operations/subscribe'
         }
     },

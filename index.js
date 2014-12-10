@@ -25,7 +25,7 @@ module.exports = {
             var indexes = require('tribe/actors').indexes().concat(['topic']);
             return require('tribe/storage')
                 .initialise([
-                    { name: 'messages', indexes: indexes },
+                    { name: 'messages', indexes: indexes, keyPath: 'seq', autoIncrement: true },
                     //{ name: 'users', indexes: ['username'] }
                 ], options.storage);
         })

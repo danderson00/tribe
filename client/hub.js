@@ -19,6 +19,10 @@ var hub = module.exports = {
         }
     },
 
+    scope: function (options) {
+        return defer('scope', options);
+    },
+
     actor: function (options) {
         return defer('actor', options);
     },

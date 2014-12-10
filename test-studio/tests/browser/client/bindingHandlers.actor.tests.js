@@ -1,4 +1,4 @@
-﻿suite('tribe.browser.bindingHandlers.actor', function () {
+﻿suite('tribe.client.bindingHandlers.actor', function () {
     test("actor is obtained and bound before renderOperation completes", function () {
         var node = T.createNode('body', { path: '/tests/browserTest' });
         expect($('body span').text()).to.equal('');

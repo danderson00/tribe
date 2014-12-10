@@ -11,7 +11,6 @@ pubsub.prototype.obtainActor = function (path, scope) {
     if (!definition)
         throw new Error("Requested actor '" + path + "' has not been registered");
 
-    // jQuery deferreds... this sucks, cross platform?
     return loadDependencies(this, definition, scope)
         .then(function (dependencies) {
             actor = actors.create(self, path, scope, dependencies);
