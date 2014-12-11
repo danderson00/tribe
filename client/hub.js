@@ -39,7 +39,7 @@ var hub = module.exports = {
 };
 
 function defer(event, data) {
-    var deferred = Q.defer();
+    var deferred = $.Deferred();
 
     if (!socket) hub.connect();
 
@@ -50,5 +50,5 @@ function defer(event, data) {
         });
     });
 
-    return deferred.promise;
+    return deferred.promise();
 }

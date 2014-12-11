@@ -83,6 +83,14 @@
             });
     });
 
+    test("new scope is not requested for subsets of existing scopes", function () {
+        assert(false, 'test not implemented');
+    });
+
+    test("existing scope is replaced if superset is requested", function () {
+        assert(false, 'test not implemented');
+    });
+
     function delay(ms) {
         return function () {
             var promise = Q.defer();

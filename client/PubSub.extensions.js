@@ -1,8 +1,7 @@
 ﻿var hub = require('./hub'),
     actors = require('tribe/actors'),
     pubsub = require('tribe.pubsub/pubsub'),
-    lifetime = require('tribe.pubsub/lifetime'),
-    Q = require('q');
+    lifetime = require('tribe.pubsub/lifetime');
 
 pubsub.prototype.obtainActor = function (path, scope) {
     var self = this,
@@ -29,7 +28,7 @@ pubsub.prototype.obtainActor = function (path, scope) {
 function loadDependencies(pubsub, definition, scope) {
     var dependencies = {};
 
-    if (!definition.dependencies) return Q.when();
+    if (!definition.dependencies) return $.when();
 
     var promises = $.map(definition.dependencies, function (dependency) {
         return pubsub.obtainActor(dependency, scope).then(function (instance) {
@@ -37,7 +36,7 @@ function loadDependencies(pubsub, definition, scope) {
         });
     });
 
-    return Q.all(promises).then(function () {
+    return $.when.apply(null, promises).then(function () {
         return dependencies;
     });
 }
