@@ -24,7 +24,7 @@ module.exports = {
 
 function initialise() {
     if(!db)
-        return storage.open([{ name: 'messages', indexes: actors.indexes(), keyPath: 'seq', autoIncrement: true }])
+        return storage.open([{ name: 'messages', indexes: actors.indexes(), keyPath: 'clientSeq', autoIncrement: true }])
             .then(function (provider) {
                 db = provider;
                 messages = provider.entity('messages');

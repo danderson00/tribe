@@ -1,4 +1,5 @@
 ﻿var pubsub = require('tribe.pubsub'),
+    Q = require('q'),
     socket;
 
 var hub = module.exports = {
@@ -6,8 +7,13 @@ var hub = module.exports = {
         socket = io.connect();
 
         socket.on('message', function (envelope) {
-            envelope.origin = 'server';
-            pubsub.publish(envelope);
+            // in some circumstances, emitting a message from the publish function below was causing the
+            // message to be immediately sent back to this function, bypassing the server. NFI.
+            // this if statement prevents "bouncing"
+            if (envelope.origin !== 'server') {
+                envelope.origin = 'server';
+                pubsub.publish(envelope);
+            }
         });
     },
 
@@ -32,9 +38,8 @@ var hub = module.exports = {
     }
 };
 
-// *sigh* using jQuery promises on the client... a pain...
 function defer(event, data) {
-    var deferred = $.Deferred();
+    var deferred = Q.defer();
 
     if (!socket) hub.connect();
 
@@ -45,5 +50,5 @@ function defer(event, data) {
         });
     });
 
-    return deferred.promise();
+    return deferred.promise;
 }
