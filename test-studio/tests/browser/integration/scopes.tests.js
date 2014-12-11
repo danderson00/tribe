@@ -22,6 +22,7 @@
             })
             .then(function (messages) {
                 expect(messages.length).to.equal(1);
+                return eventStore.retrieve({ test: id });
             })
             .then(function (messages) {
                 expect(messages.length).to.equal(1);
@@ -32,6 +33,7 @@
         return scopes.request({ test: id })
             .then(function (messages) {
                 pubsub.publish('topic', { test: id });
+                return delay(100)();
             })
             .then(function () {
                 return eventStore.retrieve({ test: id });

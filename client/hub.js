@@ -18,9 +18,8 @@ var hub = module.exports = {
     },
 
     publish: function (envelope) {
-        if (envelope.origin !== 'server' && !envelope.published) {
-            // functions are not serialised. feels a bit hacky.
-            envelope.published = function () { };
+        if (envelope.origin !== 'server' && envelope.origin !== 'client') {
+            envelope.origin = 'client';
             return defer('message', envelope);
         }
     },

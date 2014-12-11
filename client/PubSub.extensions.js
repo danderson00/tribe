@@ -1,5 +1,6 @@
 ﻿var hub = require('./hub'),
     actors = require('tribe/actors'),
+    scopes = require('./scopes'),
     pubsub = require('tribe.pubsub/pubsub'),
     lifetime = require('tribe.pubsub/lifetime');
 
@@ -14,8 +15,9 @@ pubsub.prototype.obtainActor = function (path, scope) {
     return loadDependencies(this, definition, scope)
         .then(function (dependencies) {
             actor = actors.create(self, path, scope, dependencies);
-            if(actor.metadata.isDistributed)
-                return attachToHub(path, actor, true)
+            if (actor.metadata.isDistributed)
+                //return attachToHub(path, actor, true)
+                return scopes.request(scope);
         })
         .then(function (data) {
             if(data && data.envelopes)
@@ -41,13 +43,7 @@ function loadDependencies(pubsub, definition, scope) {
     });
 }
 
-// need to also be able to detach
-function attachToHub(path, actor, replay) {
-    actor.pubsub.subscribe(actor.topics, function (message, envelope) {
-        hub.publish(envelope);
-    }, actor.metadata.expression);
-    return hub.actor({ actor: path, scope: actor.scope, replay: replay });
-}
+lifetime.prototype.obtainActor = pubsub.prototype.obtainActor;
 
 
 // deprecated. only used by test-studio
@@ -60,7 +56,13 @@ pubsub.prototype.startActor = function (path, scope, options) {
         attachToHub(path, actor, false);
 
     return actor.start(options.data);
+
+    function attachToHub(path, actor, replay) {
+        actor.pubsub.subscribe(actor.topics, function (message, envelope) {
+            hub.publish(envelope);
+        }, actor.metadata.expression);
+        return hub.actor({ actor: path, scope: actor.scope, replay: replay });
+    }
 };
 
 lifetime.prototype.startActor = pubsub.prototype.startActor;
-lifetime.prototype.obtainActor = pubsub.prototype.obtainActor;
