@@ -1,4 +1,6 @@
-﻿require('tribe/driveLetterHack');
+﻿debugger;
+
+require('tribe/driveLetterHack');
 
 var path = require('path'),
     options = require('tribe/options');

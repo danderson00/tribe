@@ -7,6 +7,8 @@
             message = sinon.spy(), emit = sinon.spy(), ack = sinon.spy(),
             context = { pubsub: pubsub, socket: { emit: emit }, ack: ack, clientId: 'id' };
 
+        pubsub.owner.sync = true;
+
         actors.register('operations.actor', function (actor) {
             actor.isDistributed();
             actor.handles = {

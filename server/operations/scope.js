@@ -1,6 +1,7 @@
 ﻿var eventStore = require('tribe/storage').entity('messages'),
     actors = require('tribe/actors'),
     expressions = require('tribe.expressions'),
+    log = require('tribe.logger'),
     _ = require('underscore');
 
 module.exports = function (options, context) {
