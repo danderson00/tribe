@@ -17,7 +17,7 @@ suite('tribe.client.scopes', function () {
     });
 
     test("request returns messages stored locally", function () {
-        return eventStore.store({ data: { id: 1 }})
+        return eventStore.store({ id: 1 }, { data: { id: 1 }})
             .then(function () {
                 return scopes.request({ id: 1 });
             })

@@ -1,4 +1,4 @@
-﻿suite('tribe.integration.message', function () {
+﻿suite('tribe.browser.integration.message', function () {
     var hub = require('tribe/client/hub');
 
     test("message hub function returns envelope populated with seq property set", function () {

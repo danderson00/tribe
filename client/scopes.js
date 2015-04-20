@@ -29,26 +29,27 @@ module.exports = {
 
                 // otherwise we're already active, just return local messages below
             })
-            .then(function (result) {
+            .then(function (scopeEnvelopes) {
                 data.count++;
 
-                if(result && result.envelopes)
-                    messages = messages.concat(result.envelopes);
+                if(scopeEnvelopes)
+                    messages = messages.concat(scopeEnvelopes);
 
                 return messages;
             });
 
         function requestScope(since) {
-            var scopeResult;
+            var scopeEnvelopes;
 
             data.promise = Q.when(hub.scope({ scope: scope, since: since }))
                 .then(function (result) {
                     relayAndStore();
-                    scopeResult = result;
-                    return store.store(result.envelopes);
+                    scopeEnvelopes = result && result.envelopes;
+                    if(scopeEnvelopes)
+                        return store.store(scope, scopeEnvelopes);
                 })
                 .then(function () {
-                    return scopeResult;
+                    return scopeEnvelopes;
                 });
 
             return data.promise;
@@ -56,17 +57,14 @@ module.exports = {
 
         function relayAndStore() {
             data.token = pubsub.subscribe('*', function (message, envelope) {
-                Q.when(
-                    store.store(envelope),
-                    hub.publish(envelope)
-                ).then(function (results) {
-                    // update the local store with the envelope back from the server containing sequence number
-                    results[1].clientSeq = results[0].clientSeq;
-                    store.store(results[1]);
-                }).fail(function (error) {
-                    // as we're not returning the promise anywhere, we need to log our own errors
-                    log.error('Exception occurred while storing or relaying message', error);
-                });
+                Q(hub.publish(envelope))
+                    .then(function (envelope) {
+                        return store.store(scope, envelope);
+                    })
+                    .fail(function (error) {
+                        // as we're not returning the promise anywhere, we need to log our own errors
+                        log.error('Exception occurred while storing or relaying message', error);
+                    });
             }, expressions.create(scope, 'data'));
         }
     },

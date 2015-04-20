@@ -1,28 +1,33 @@
-﻿suite('tribe.integration.scopes', function () {
+﻿suite('tribe.browser.integration.scopes', function () {
     var scopes = require('tribe/client/scopes'),
         hub = require('tribe/client/hub'),
         eventStore = require('tribe/client/eventStore'),
         pubsub = require('tribe.pubsub'),
         uuid = require('node-uuid').v4,
         Q = require('q'),
-        id;
+
+        scope;
 
     setup(function () {
-        id = uuid();
+        scope = { test: uuid() };
     });
 
     test("messages are retrieved from server store and persisted locally", function () {
-        return scopes.request({ test: id })
+        return eventStore.clear()
+            .then(function () {
+                return scopes.request(scope);
+            })
             .then(function (messages) {
                 expect(messages.length).to.equal(0);
-                return pubsub.publish({ topic: 'topic', data: { test: id } });
+                pubsub.publish({ topic: 'topic', data: scope });
+                return delay(100)();
             })
             .then(function () {
-                return scopes.request({ test: id })
+                return scopes.request(scope);
             })
             .then(function (messages) {
                 expect(messages.length).to.equal(1);
-                return eventStore.retrieve({ test: id });
+                return eventStore.retrieve(scope);
             })
             .then(function (messages) {
                 expect(messages.length).to.equal(1);
@@ -30,13 +35,16 @@
     });
 
     test("messages are persisted locally", function () {
-        return scopes.request({ test: id })
+        return eventStore.clear()
+            .then(function () {
+                return scopes.request(scope);
+            })
             .then(function (messages) {
-                pubsub.publish('topic', { test: id });
+                pubsub.publish('topic', scope);
                 return delay(100)();
             })
             .then(function () {
-                return eventStore.retrieve({ test: id });
+                return eventStore.retrieve(scope);
             })
             .then(function (messages) {
                 expect(messages.length).to.equal(1);
@@ -44,9 +52,12 @@
     });
 
     test("messages are retrieved from local store", function () {
-        return eventStore.store({ topic: 'topic', data: { test: id } })
+        return eventStore.clear()
             .then(function () {
-                return scopes.request({ test: id });
+                return eventStore.store(scope, { topic: 'topic', data: scope });
+            })
+            .then(function () {
+                return scopes.request(scope);
             })
             .then(function (messages) {
                 expect(messages.length).to.equal(1);
@@ -54,12 +65,15 @@
     });
 
     test("messages stored locally are combined with server messages", function () {
-        return eventStore.store({ topic: 'topic', data: { test: id } })
+        return eventStore.clear()
             .then(function () {
-                return hub.publish({ topic: 'topic', data: { test: id } });
+                return eventStore.store(scope, { topic: 'topic', data: scope });
             })
             .then(function () {
-                return scopes.request({ test: id });
+                return hub.publish({ topic: 'topic', data: scope });
+            })
+            .then(function () {
+                return scopes.request(scope);
             })
             .then(function (messages) {
                 expect(messages.length).to.equal(2);
@@ -68,16 +82,19 @@
 
     test("only server messages with seq later than requested are returned", function () {
         var first;
-        return hub.publish({ topic: 'topic', data: { test: id } })
+        return eventStore.clear()
+            .then(function () {
+                return hub.publish({ topic: 'topic', data: scope })
+            })
             .then(function (envelope) {
                 first = envelope;
-                return hub.publish({ topic: 'topic', data: { test: id } })
+                return hub.publish({ topic: 'topic', data: scope })
             })
             .then(function () {
-                return eventStore.store(first);
+                return eventStore.store(scope, first);
             })
             .then(function () {
-                return hub.scope({ scope: { test: id }, since: first.seq });
+                return hub.scope({ scope: scope, since: first.seq });
             })
             .then(function (result) {
                 expect(result.envelopes.length).to.equal(1);

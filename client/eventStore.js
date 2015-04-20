@@ -5,21 +5,45 @@
     Q = require('q'),
     messages, db;
 
-// really just provides lazy initialisation of our object store
 module.exports = {
-    store: function (envelopes) {
+    store: function (scope, envelopes) {
         return Q.when(initialise()).then(function () {
-            return messages.store(envelopes);
+            if(envelopes.constructor === Array)
+                return messages.store(envelopes.map(createContainer));
+            return messages.store(createContainer(envelopes));
         }).fail(function (error) {
             log.error('Failed to store message', error);
         });
+
+        function createContainer(envelope) {
+            return {
+                envelope: envelope,
+                scope: JSON.stringify(scope)
+            };
+        }
     },
     retrieve: function (scope) {
         return Q.when(initialise())
             .then(function () {
-                return messages.retrieve(expressions.create(scope, 'data'));
-            }).fail(function (error) {
+                return messages
+                    .retrieve([
+                        //{ p: 'clientSeq', o: '>', v: 0 }, // we should be sorting by this to be sure, but there is some bug in storage here
+                        { p: 'scope', v: JSON.stringify(scope) }
+                    ])
+            })
+            .then(function (messages) {
+                return messages.map(function (message) {
+                    return message.envelope;
+                });
+            })
+            .fail(function (error) {
                 log.error('Failed to retrieve messages', error);
+            });
+    },
+    clear: function () {
+        return Q.when(initialise())
+            .then(function () {
+                return messages.clear();
             });
     },
     close: function () {
@@ -30,7 +54,7 @@ module.exports = {
 
 function initialise() {
     if(!db)
-        return storage.open([{ name: 'messages', indexes: actors.indexes(), keyPath: 'clientSeq', autoIncrement: true }], { type: module.exports.type })
+        return storage.open([{ name: 'messages', indexes: [['scope']], keyPath: 'clientSeq', autoIncrement: true }], { type: module.exports.type })
             .then(function (provider) {
                 db = provider;
                 messages = provider.entity('messages');
