@@ -21,8 +21,8 @@ suite('tribe.client.scopes', function () {
             .then(function () {
                 return scopes.request({ id: 1 });
             })
-            .then(function (messages) {
-                expect(messages.length).to.equal(1);
+            .then(function (data) {
+                expect(data.envelopes.length).to.equal(1);
             });
     });
 

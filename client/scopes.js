@@ -35,7 +35,7 @@ module.exports = {
                 if(scopeEnvelopes)
                     messages = messages.concat(scopeEnvelopes);
 
-                return messages;
+                return { envelopes: messages };
             });
 
         function requestScope(since) {

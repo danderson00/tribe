@@ -17,16 +17,16 @@
             .then(function () {
                 return scopes.request(scope);
             })
-            .then(function (messages) {
-                expect(messages.length).to.equal(0);
+            .then(function (data) {
+                expect(data.envelopes.length).to.equal(0);
                 pubsub.publish({ topic: 'topic', data: scope });
                 return delay(100)();
             })
             .then(function () {
                 return scopes.request(scope);
             })
-            .then(function (messages) {
-                expect(messages.length).to.equal(1);
+            .then(function (data) {
+                expect(data.envelopes.length).to.equal(1);
                 return eventStore.retrieve(scope);
             })
             .then(function (messages) {
@@ -39,7 +39,7 @@
             .then(function () {
                 return scopes.request(scope);
             })
-            .then(function (messages) {
+            .then(function (data) {
                 pubsub.publish('topic', scope);
                 return delay(100)();
             })
@@ -59,8 +59,8 @@
             .then(function () {
                 return scopes.request(scope);
             })
-            .then(function (messages) {
-                expect(messages.length).to.equal(1);
+            .then(function (data) {
+                expect(data.envelopes.length).to.equal(1);
             });
     });
 
@@ -75,8 +75,8 @@
             .then(function () {
                 return scopes.request(scope);
             })
-            .then(function (messages) {
-                expect(messages.length).to.equal(2);
+            .then(function (data) {
+                expect(data.envelopes.length).to.equal(2);
             });
     });
 
