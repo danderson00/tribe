@@ -15,13 +15,12 @@ pubsub.prototype.obtainActor = function (path, scope) {
         throw new Error("Requested actor '" + path + "' has not been registered");
 
     if(scope && typeof scope !== "object")
-        scope = expressions.apply(definition.expression, scope);
+        scope = createScopeFromScalar(definition.scope, scope);
 
     return loadDependencies(this, definition, scope)
         .then(function (dependencies) {
             actor = actors.create(self, path, scope, dependencies);
             if (actor.metadata.isDistributed)
-                //return attachToHub(path, actor, true)
                 return scopes.request(scope);
         })
         .then(function (data) {
@@ -30,6 +29,13 @@ pubsub.prototype.obtainActor = function (path, scope) {
             return actor.start().instance;
         });
 };
+
+function createScopeFromScalar(definition, scopeValue) {
+    var scope = {};
+    for(var i = 0, l = definition.length; i < l; i++)
+        scope[definition[i]] = scopeValue;
+    return scope;
+}
 
 function loadDependencies(pubsub, definition, scope) {
     var dependencies = {};
@@ -47,7 +53,12 @@ function loadDependencies(pubsub, definition, scope) {
     });
 }
 
+pubsub.prototype.releaseActor = function (actorOrScope) {
+    scopes.release(actorOrScope.__actor ? actorOrScope.__actor.scope : actorOrScope);
+}
+
 lifetime.prototype.obtainActor = pubsub.prototype.obtainActor;
+lifetime.prototype.releaseActor = pubsub.prototype.releaseActor;
 
 
 // deprecated. only used by test-studio

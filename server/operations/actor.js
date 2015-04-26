@@ -3,6 +3,7 @@
     expressions = require('tribe.expressions'),
     _ = require('underscore');
 
+// deprecated. only used by test-studio
 module.exports = function (options, context) {
     //{ actor: '/path', scope: 'scope' }
     // authenticate and authorise!

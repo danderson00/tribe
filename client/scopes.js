@@ -72,7 +72,7 @@ module.exports = {
         var data = getScopeData(scope);
         data.count--;
         if(!data.count) {
-            pubsub.unsubscribe(token);
+            pubsub.unsubscribe(data.token);
             data.promise = null;
             data.token = null;
         }

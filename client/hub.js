@@ -37,17 +37,23 @@ var hub = module.exports = {
     }
 };
 
-function defer(event, data) {
+function defer(operation, data) {
     var deferred = $.Deferred();
 
     if (!socket) hub.connect();
 
     // don't know why this timeout is required... only 'message' events are queued using emit??
     setTimeout(function () {
-        socket.emit(event, data, function (result, err) {
-            err ? deferred.reject(err) : deferred.resolve(result);
+        socket.emit(operation, data, function (result, err) {
+            err ? deferred.reject(wrapError(err)) : deferred.resolve(result);
         });
     });
+
+    function wrapError(err) {
+        return err.constructor !== Error
+            ? new Error('An error occurred performing ' + operation + ' operation: ' + (err.constructor === String ? err : JSON.stringify(err)))
+            : err;
+    }
 
     return deferred.promise();
 }

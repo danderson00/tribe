@@ -16,7 +16,8 @@
             expression: [{ p: 'data.property', v: undefined }],
             topics: ['topic1', 'topic2'],
             isDistributed: true,
-            dependencies: undefined
+            dependencies: undefined,
+            scope: ['property']
         });
 
         //expect(api.indexes()).to.deep.equal(['data.property']);

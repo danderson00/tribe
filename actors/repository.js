@@ -38,7 +38,8 @@ function extractDefinition(path, constructor) {
         expression: actor.metadata.expression,
         isDistributed: actor.metadata.isDistributed,
         topics: _.keys(actor.handles),
-        dependencies: actor.metadata.dependencies
+        dependencies: actor.metadata.dependencies,
+        scope: actor.metadata.scope
     };
 }
 
