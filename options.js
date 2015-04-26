@@ -108,7 +108,7 @@ var options = module.exports = {
         fileFilter: /\.tests\.js$/,
         // suspending watchers causes all watchers against that path to be cancelled
         // will be resolved when file changes are broadcast using pubsub
-        suspendWatchers: false, 
+        suspendWatchers: false,
         browser: {
             runOnServer: false,
             loadApp: true

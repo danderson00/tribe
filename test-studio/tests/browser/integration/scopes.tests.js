@@ -9,7 +9,7 @@
         scope;
 
     setup(function () {
-        scope = { test: uuid() };
+        scope = { actorId: uuid() };
     });
 
     test("messages are retrieved from server store and persisted locally", function () {
@@ -108,6 +108,21 @@
     //
     // test("existing scope is replaced if superset is requested", function () {
     //     assert(false, 'test not implemented');
+    // });
+
+    // test("messages are no longer published to server after scope is released", function () {
+    //     var scope = { actorId: uuid() };
+    //     return scopes.request(scope)
+    //         .then(function () {
+    //             pubsub.publish('topic', scope);
+    //             scopes.release(scope);
+    //             pubsub.publish('topic', scope);
+    //             return scopes.request(scope);
+    //         })
+    //         .then(function (data) {
+    //             expect(data.envelopes.length).to.equal(1);
+    //             scopes.release(scope);
+    //         });
     // });
 
     function delay(ms) {

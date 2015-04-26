@@ -3,6 +3,7 @@
     scopes = require('./scopes'),
     pubsub = require('tribe.pubsub/pubsub'),
     lifetime = require('tribe.pubsub/lifetime'),
+    expressions = require('tribe.expressions'),
     Q = require('q');
 
 pubsub.prototype.obtainActor = function (path, scope) {
@@ -12,6 +13,9 @@ pubsub.prototype.obtainActor = function (path, scope) {
 
     if (!definition)
         throw new Error("Requested actor '" + path + "' has not been registered");
+
+    if(scope && typeof scope !== "object")
+        scope = expressions.apply(definition.expression, scope);
 
     return loadDependencies(this, definition, scope)
         .then(function (dependencies) {
