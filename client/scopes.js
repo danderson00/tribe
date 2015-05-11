@@ -57,14 +57,16 @@ module.exports = {
 
         function relayAndStore() {
             data.token = pubsub.subscribe('*', function (message, envelope) {
-                Q(hub.publish(envelope))
-                    .then(function (envelope) {
-                        return store.store(scope, envelope);
-                    })
-                    .fail(function (error) {
-                        // as we're not returning the promise anywhere, we need to log our own errors
-                        log.error('Exception occurred while storing or relaying message', error);
-                    });
+                if (envelope.origin !== 'server' && envelope.origin !== 'client') {
+                    Q(hub.publish(envelope))
+                        .then(function (envelope) {
+                            return store.store(scope, envelope);
+                        })
+                        .fail(function (error) {
+                            // as we're not returning the promise anywhere, we need to log our own errors
+                            log.error('Exception occurred while storing or relaying message', error);
+                        });
+                }
             }, expressions.create(scope, 'data'));
         }
     },
