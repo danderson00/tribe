@@ -43,7 +43,7 @@ module.exports = {
 
             data.promise = Q.when(hub.scope({ scope: scope, since: since }))
                 .then(function (result) {
-                    relayAndStore();
+                    data.token = module.exports.relayAndStore(scope);
                     scopeEnvelopes = result && result.envelopes;
                     if(scopeEnvelopes)
                         return store.store(scope, scopeEnvelopes);
@@ -54,21 +54,6 @@ module.exports = {
 
             return data.promise;
         }
-
-        function relayAndStore() {
-            data.token = pubsub.subscribe('*', function (message, envelope) {
-                if (envelope.origin !== 'server' && envelope.origin !== 'client') {
-                    Q(hub.publish(envelope))
-                        .then(function (envelope) {
-                            return store.store(scope, envelope);
-                        })
-                        .fail(function (error) {
-                            // as we're not returning the promise anywhere, we need to log our own errors
-                            log.error('Exception occurred while storing or relaying message', error);
-                        });
-                }
-            }, expressions.create(scope, 'data'));
-        }
     },
     release: function (scope) {
         var data = getScopeData(scope);
@@ -78,6 +63,20 @@ module.exports = {
             data.promise = null;
             data.token = null;
         }
+    },
+    relayAndStore: function (scope, topics) {
+        return pubsub.subscribe(topics || '*', function (message, envelope) {
+            if (envelope.origin !== 'server' && envelope.origin !== 'client') {
+                Q(hub.publish(envelope))
+                    .then(function (envelope) {
+                        return store.store(scope, envelope);
+                    })
+                    .fail(function (error) {
+                        // as we're not returning the promise anywhere, we need to log our own errors
+                        log.error('Exception occurred while storing or relaying message', error);
+                    });
+            }
+        }, expressions.create(scope, 'data'));
     }
 };
 
