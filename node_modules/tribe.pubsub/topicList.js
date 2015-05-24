@@ -1,0 +1,56 @@
+﻿var filterTypes = {
+    'default': require('./filters/default'),
+    'expression': require('./filters/expression')
+};
+
+module.exports = function () {
+    var topics = {};
+    var lastUid = -1;
+
+    this.get = function (envelope) {
+        var publishedTopic = envelope.topic,
+            matching = [];
+
+        for (var registeredTopic in topics)
+            if (topics.hasOwnProperty(registeredTopic) && topicMatches(publishedTopic, registeredTopic))
+
+                for (var filter in topics[registeredTopic])
+                    if (topics[registeredTopic].hasOwnProperty(filter))
+                        matching = matching.concat(topics[registeredTopic][filter].get(envelope));
+
+        return matching;
+    };
+
+    this.add = function (topic, handler, expression) {
+        var token = (++lastUid).toString(),
+            filter = (expression && (expression.constructor !== Array || expression.length > 0)) ? 'expression' : 'default';
+
+        if (!topics.hasOwnProperty(topic))
+            topics[topic] = {};
+
+        var filters = topics[topic];
+        if (!filters[filter])
+            filters[filter] = new filterTypes[filter](topic);
+
+        filters[filter].add(handler, token, expression);
+        return token;
+    };
+
+    this.remove = function(token) {
+        for (var topic in topics)
+            if (topics.hasOwnProperty(topic))
+                for (var filter in topics[topic])
+                    if (topics[topic].hasOwnProperty(filter))
+                        topics[topic][filter].remove(token);
+    };
+
+    function topicMatches(published, subscriber) {
+        if (subscriber === '*')
+            return true;
+        
+        var expression = "^" + subscriber
+            .replace(/\./g, "\\.")
+            .replace(/\*/g, "[^\.]*") + "$";
+        return published.match(expression);
+    }
+};

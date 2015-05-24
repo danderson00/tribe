@@ -1,0 +1,56 @@
+﻿var colors = require('colors'),
+    level = 4,
+    levels = {
+        debug: 4,
+        info: 3,
+        warn: 2,
+        error: 1,
+        none: 0
+    },
+    coloriseDisabled;
+
+var api = module.exports = {
+    setLevel: function (newLevel) {
+        level = levels[newLevel];
+        if (level === undefined) level = 4;
+    },
+    disableColor: function () {
+        coloriseDisabled = true;
+    },
+    debug: function (message) {
+        if (level >= 4)
+            console.log(colorise('DEBUG: ' + message, 'grey'));
+    },
+    info: function (message) {
+        if (level >= 3)
+            console.info(colorise('INFO: ' + message, 'white'));
+    },
+    warn: function (message) {
+        if (level >= 2)
+            console.warn(colorise('WARN: ' + message, 'red'));
+    },
+    error: function (message, error) {
+        if (level >= 1)
+            console.error(colorise('ERROR: ' + message + '\n', 'red'), api.errorDetails(error).red);
+    },
+    errorDetails: function (ex) {
+        if (!ex) return '';
+        return (ex.constructor === String) ? ex :
+            (ex.stack || '') + (ex.inner ? '\n\n' + this.errorDetails(ex.inner) : '\n');
+    },
+    log: function (message, prefix) {
+        var match = message && message.toString().match(/([^:]*):/),
+            matchedLevel = match && match[1].toLowerCase();
+
+        if (api[matchedLevel])
+            api[matchedLevel]((prefix ? prefix + ' ' : '') + message.substring(matchedLevel.length + 2).replace(/\r?\n$/, ''));
+        else if (level >= 4)
+            console.log((prefix ? prefix + ' ' : '') + message);
+    }
+};
+
+function colorise(message, color) {
+    if (!coloriseDisabled)
+        return message[color];
+    return message;
+}

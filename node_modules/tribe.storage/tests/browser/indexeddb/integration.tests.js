@@ -1,0 +1,1 @@
+﻿require('../../integration')({ type: 'indexeddb', reset: true }, suite, test, expect, teardown);
