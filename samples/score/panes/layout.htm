@@ -1,9 +1,4 @@
-<div class="score">
-    <span data-bind="text: messages.where(x => x.player == 1).count()"></span>
-    <span data-bind="text: messages.where(x => x.player == 2).count()"></span>
-</div>
+<div data-bind="pane: 'selectPlayer'"></div>
 
-<div>
-    <button data-bind="click: publish('point', { player: 1 })">1</button>
-    <button data-bind="click: publish('point', { player: 2 })">2</button>
-</div>
+<!-- <div data-bind="pane: 'score'"></div>
+<div data-bind="pane: 'controls'"></div> -->

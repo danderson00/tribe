@@ -1,11 +1,13 @@
-div {
-    width: 50%;
-}
-
 .score span {
+    float: left;
     width: 49%;
+    text-align: center;
 }
 
-button {
+.controls {
+    margin: 10px;
+}
+
+.controls button {
     width: 49%;
 }

@@ -1,0 +1,5 @@
+<ul data-bind="foreach: topic('player.name')">
+    <li data-bind="text: name"></li>
+</ul>
+<input data-bind="field: 'name'" />
+<button data-bind="click: publish('player.name', fields)">Create</button>
