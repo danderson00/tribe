@@ -1,5 +1,5 @@
 <ul data-bind="foreach: topic('player.name')">
-    <li data-bind="text: name"></li>
+    <li data-bind="text: name, click: $root.publish('player.selected', { name: name })"></li>
 </ul>
 <input data-bind="field: 'name'" />
-<button data-bind="click: publish('player.name', fields)">Create</button>
+<button data-bind="click: publish([{ topic: 'player.name', data: fields }, { topic: 'player.selected', data: fields }])">Create</button>
