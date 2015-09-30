@@ -1,8 +1,6 @@
-<div class="score">
-    <span data-bind="text: messages.where(x => x.player == 1).count()"></span>
-    <span data-bind="text: messages.where(x => x.player == 2).count()"></span>
+<div class="score" data-bind="foreach: topic('point').groupBy(x => x.playerId)">
+    <span data-bind="text: count()"></span>
 </div>
-<div class="controls">
-    <button data-bind="click: publish('point', { player: 1 })">Player 1</button>
-    <button data-bind="click: publish('point', { player: 2 })">Player 2</button>
+<div class="controls" data-bind="foreach: topic('player.selected')">
+    <button data-bind="click: publish('point', { playerId: playerId }), text: name"></button>
 </div>
