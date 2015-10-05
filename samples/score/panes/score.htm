@@ -1,3 +1,4 @@
+<div data-bind="actor: 'game'"></div>
 <div data-bind="foreach: envelopes.groupBy(x => x.data.playerId)">
     <button data-bind="click: $root.publish('point', { playerId: key })">
         <span data-bind="text: topic('player.selected').select(x => x.data.name)"></span><br />

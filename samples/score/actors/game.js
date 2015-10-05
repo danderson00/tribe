@@ -1,14 +1,11 @@
 require('tribe').register.actor(function (actor) {
-    var currentPane = this.currentPane = ko.observable({ path: 'selectPlayer' })
-
-    actor.isDistributed()
-
-    actor.topic('player.selected')
-        .count()
-        .when(1).then(function () {
-            currentPane({ path: 'selectPlayer' })
+    actor.topic('point')
+        .groupBy(function (x) {
+            return x.playerId
         })
-        .when(2).then(function () {
-            currentPane({ path: 'score' })
+        .forEach(function (x) {
+            x.count().when(3).then(function () {
+                actor.pubsub.publish('game.complete', { playerId: x.key })
+            })
         })
 })
