@@ -5,14 +5,8 @@ require('tribe').register.actor(function (actor) {
 
     actor.topic('player.selected')
         .count()
-        .when(1).then(function () {
-            currentPane({ path: 'selectPlayer' })
-        })
-        .when(2).then(function () {
-            currentPane({ path: 'score' })
-        })
+        .when(1).then(() => currentPane({ path: 'selectPlayer' }))
+        .when(2).then(() => currentPane({ path: 'score' }))
 
-    actor.handles('game.complete', function (data) {
-        currentPane({ path: 'complete', data: data })
-    })
+    actor.handles('game.complete', (data) => currentPane({ path: 'complete', data: data }))
 })
