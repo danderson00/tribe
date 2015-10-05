@@ -1,6 +1,6 @@
-<div class="score" data-bind="foreach: topic('point').groupBy(x => x.playerId)">
-    <span data-bind="text: count()"></span>
-</div>
-<div class="controls" data-bind="foreach: topic('player.selected')">
-    <button data-bind="click: $root.publish('point', { playerId: playerId }), text: name"></button>
+<div data-bind="foreach: envelopes.groupBy(x => x.data.playerId)">
+    <button data-bind="click: $root.publish('point', { playerId: key })">
+        <span data-bind="text: topic('player.selected').select(x => x.data.name)"></span><br />
+        <span data-bind="text: topic('point').count()"></span>
+    </button>
 </div>

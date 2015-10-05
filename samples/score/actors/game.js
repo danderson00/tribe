@@ -1,7 +1,7 @@
 require('tribe').register.actor(function (actor) {
-    var self = this,
-        playersSelected = 0,
-        currentPane = this.currentPane = ko.observable({ path: 'selectPlayer' })
+    var currentPane = this.currentPane = ko.observable({ path: 'selectPlayer' })
+
+    actor.isDistributed()
 
     actor.topic('player.selected')
         .count()
@@ -11,15 +11,4 @@ require('tribe').register.actor(function (actor) {
         .when(2).then(function () {
             currentPane({ path: 'score' })
         })
-
-    // actor.handles({
-    //     'player.selected': function () {
-    //         playersSelected++
-    //         if(playersSelected < 2)
-    //             currentPane({ path: 'selectPlayer' })
-    //         else
-    //             currentPane({ path: 'score' })
-    //     }
-    // })
-
 })
