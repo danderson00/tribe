@@ -2,5 +2,5 @@
     <span data-bind="text: count()"></span>
 </div>
 <div class="controls" data-bind="foreach: topic('player.selected')">
-    <button data-bind="click: publish('point', { playerId: playerId }), text: name"></button>
+    <button data-bind="click: $root.publish('point', { playerId: playerId }), text: name"></button>
 </div>
