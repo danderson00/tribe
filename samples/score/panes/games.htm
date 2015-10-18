@@ -1,0 +1,12 @@
+<div class="games">
+    <ul data-bind="foreach: envelopes.groupBy(x => x.gameId)">
+        <li data-bind="foreach: groupBy(x => x.playerId)">
+            <div>
+                <span data-bind="text: topic('player.selected').select(x => x.name)"></span><br />
+                <span data-bind="text: topic('point').count()"></span>
+            </div>
+        </li>
+    </ul>
+
+    <!-- <button data-bind="click: " -->
+</div>

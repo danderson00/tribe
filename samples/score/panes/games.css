@@ -1,0 +1,18 @@
+.games ul div {
+    display: inline-block;
+    text-align: center;
+    width: 50%;
+}
+
+.games ul {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    list-style: none;
+}
+
+.games li {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
