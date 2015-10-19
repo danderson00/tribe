@@ -1,8 +1,8 @@
 <div class="games">
-    <ul data-bind="foreach: envelopes.groupBy(x => x.gameId)">
-        <li data-bind="foreach: groupBy(x => x.playerId)">
+    <ul data-bind="foreach: envelopes.groupBy(x => x.data.gameId)">
+        <li data-bind="foreach: groupBy(x => x.data.playerId), click: $root.publish('ui.score', { gameId: key })">
             <div>
-                <span data-bind="text: topic('player.selected').select(x => x.name)"></span><br />
+                <span data-bind="text: topic('player.selected').select(x => x.data.name)"></span><br />
                 <span data-bind="text: topic('point').count()"></span>
             </div>
         </li>
