@@ -1,7 +1,8 @@
 <ul data-bind="foreach: topic('player.name')">
-    <li data-bind="text: name, click: $root.publish('player.selected', { playerId: playerId, name: name })"></li>
+    <li data-bind="text: name, click: $root.publish('player.selected', { playerId: playerId, name: name, gameId: $root.pane.data.gameId })"></li>
 </ul>
 
 <input data-bind="field: 'name'" />
 <input data-bind="field: 'playerId', value: uuid()" type="hidden" />
+<input data-bind="field: 'gameId', value: pane.data.gameId" type="hidden" />
 <button data-bind="click: publish([{ topic: 'player.name', data: fields }, { topic: 'player.selected', data: fields }])">Create</button>
