@@ -1,4 +1,4 @@
-<ul data-bind="foreach: query('player.name', {}).select(x => x.data)">
+<ul data-bind="foreach: query('player.name', {}).data()">
     <li data-bind="text: name, click: $root.publish('player.selected', { playerId: playerId, name: name })"></li>
 </ul>
 
