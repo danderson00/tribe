@@ -6,11 +6,11 @@
             <th>Won</th>
         </tr>
     </thead>
-    <tbody data-bind="foreach: envelopes.groupBy(x => x.data.playerId)">
+    <tbody data-bind="foreach: envelopes.players()">
         <tr>
-            <td data-bind="text: topic('player.name').select(x => x.data.name)"></td>
+            <td data-bind="text: playerName()"></td>
             <td data-bind="text: topic('player.selected').count()"></td>
-            <td data-bind="text: topic('game.complete').count()"></td>
+            <td data-bind="text: topic('game.won').count()"></td>
         </tr>
     </tbody>
 </table>
