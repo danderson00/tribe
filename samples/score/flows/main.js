@@ -1,6 +1,6 @@
 require('tribe').register.flow(function (flow) {
-    flow.startsAt('games')
+    flow.startsAt('home')
 
-    flow.on('ui.home').to('games')
+    flow.on('ui.home').to('home')
     flow.on('ui.score').to('game')
 })
