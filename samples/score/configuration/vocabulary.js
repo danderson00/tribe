@@ -1,3 +1,4 @@
 require('tribe').register.vocabulary({
-    'players': x => x.groupBy(y => y.data.playerId)
+    'players': e => e.groupBy(x => x.data.playerId),
+    'points': e => e.topic('point').count()
 })
