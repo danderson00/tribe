@@ -7,3 +7,5 @@
 <input data-bind="field: 'name'" />
 <input data-bind="field: 'playerId', value: uuid()" type="hidden" />
 <button data-bind="click: publish([{ topic: 'player.name', data: fields }, { topic: 'player.selected', data: fields }])">Create</button>
+
+<button data-bind="click: publish('ui.home')">Home</button>
