@@ -1,0 +1,79 @@
+body {
+    padding: 0 10px;
+    font: 13.3333px Arial;
+}
+
+button {
+  display: block;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 10px 0;
+  padding: 10px;
+  text-align: center;
+  text-decoration: inherit;
+  border-radius: 8px;
+  border: 1px solid #52657f;
+}
+
+button.score {
+    height: 200px;
+    width: 100%;
+    border-radius: 0;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+table {
+    margin: 5px 0;
+    border: 1px solid #52657f;
+    width: 100%;
+}
+
+th {
+    text-align: left;
+}
+
+td {
+    border-top: 1px solid #f2f2f2;
+    padding: 10px;
+}
+
+th {
+    padding: 10px;
+}
+
+ul {
+  padding: 0;
+  margin: 5px 0;
+  -webkit-margin-collapse: separate;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0;
+  border: 1px solid #52657f;
+}
+
+ul li {
+  border-top: 1px solid #f2f2f2;
+  list-style-type: none;
+  overflow: hidden;
+  padding: 10px;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+ul li.active {
+  background-image: none;
+  background-color: #3366cc;
+  -webkit-box-shadow: #4372d0 0 1px 0px inset;
+  box-shadow: #4372d0 0 1px 0px inset;
+  color: white;
+  text-shadow: #2952a3 0 -1px 0;
+}
+
+div.twoColumn {
+    display: inline-block;
+    text-align: center;
+    width: 49%;
+}
