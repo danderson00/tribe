@@ -18,7 +18,7 @@ Sample
     cd .\samples\score\
     node --debug .\index.js
 
-Open a browser to http://localhost:1678/. The sample requires node ^4.0.0 and a browser that supports arrow functions. 
+Open a browser to http://localhost:1678/. The sample requires node ^4.0.0 and a browser that supports arrow functions (Chrome).
 
 Try opening multiple windows and watch the flow of messages. Chrome dev tools shows the full source tree. By default, the server uses a SQLite in memory database. Use `ctrl-]` in the browser to reset the client side message cache after restarting the server.
 
