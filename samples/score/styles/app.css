@@ -60,16 +60,6 @@ ul li {
   list-style-type: none;
   overflow: hidden;
   padding: 10px;
-  -webkit-transform: translate3d(0, 0, 0);
-}
-
-ul li.active {
-  background-image: none;
-  background-color: #3366cc;
-  -webkit-box-shadow: #4372d0 0 1px 0px inset;
-  box-shadow: #4372d0 0 1px 0px inset;
-  color: white;
-  text-shadow: #2952a3 0 -1px 0;
 }
 
 div.twoColumn {
