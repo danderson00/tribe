@@ -1,6 +1,8 @@
 tribe
 =====
 
+[![Join the chat at https://gitter.im/danderson00/tribe](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/danderson00/tribe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 tribe is a completely different, more natural and concise way of building software.
 
 This software is extremely experimental but represents a drastic reduction of complexity in the
