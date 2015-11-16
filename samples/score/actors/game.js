@@ -1,7 +1,7 @@
 require('tribe').register.actor(function (actor) {
     actor.isDistributed()
 
-    this.lead = actor.envelopes.players().points().range().asScalar()
+    this.lead = actor.envelopes.players().select(x => x.points()).range().asScalar()
 
     // publish a game.won message when a player has at least 3 points and is at least 2 points ahead of the opposition
     actor.envelopes.players()

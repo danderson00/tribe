@@ -5,10 +5,5 @@ require('tribe').register.vocabulary({
 
     'points': e => e.topic('point').count(),
     'selectedName': e => e.topic('player.selected').data('name'),
-    'playerName': e => e.topic('player.name').data('name'),
-
-    // this is a bit inefficient, creates a separate stream for points().min and .max
-    'range': e => {
-        return e.min().combineLatest(e.max()).select((min, max) => max - min)
-    }
+    'playerName': e => e.topic('player.name').data('name')
 })
