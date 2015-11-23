@@ -1,0 +1,14 @@
+<div class="room">
+    <h1>
+        <span data-bind="text: data.room"></span>
+        <button data-bind="click: () => pane.remove()">Leave Room</button>
+    </h1>
+
+    <input data-bind="field: 'text'" />
+    <input data-bind="field: 'name', value: data.name", type="hidden" />
+    <button data-bind="click: publish('message', fields)">Send</button>
+
+    <ul data-bind="foreach: messages">
+        <li data-bind="text: (name || 'Anonymous') + ': ' + text"></li>
+    </ul>
+</div>

@@ -1,0 +1,13 @@
+.room {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.room ul {
+    list-style: none;
+    padding: 0;
+}
+
+.room h1 {
+    margin: 0;
+}

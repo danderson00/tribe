@@ -1,6 +1,0 @@
-<input data-bind="field: 'text'" />
-<button data-bind="publish: 'message', data: { name: data.name, text: fields.text }">Send</button>
-<button data-bind="click: function () { pane.remove() }">Close</button>
-<ul data-bind="foreach: messages">
-    <li data-bind="text: name + ': ' + text" />
-</ul>
