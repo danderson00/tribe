@@ -1,4 +1,3 @@
-Name: <input data-bind="field: 'name'" /><br />
 Room: <input data-bind="field: 'room'" /><br />
-<button data-bind="click: () => T.appendNode('#rooms', { path: 'room', data: { room: fields.room(), name: fields.name }, scope: { room: fields.room }})">Open</button>
+<button data-bind="click: () => T.appendNode('#rooms', { path: 'room', scope: { room: fields.room }})">Open</button>
 <div id="rooms"></div>
