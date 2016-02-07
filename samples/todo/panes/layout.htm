@@ -1,5 +1,0 @@
-<input data-bind="field: 'text'" />
-<button data-bind="click: publish('add', { text: fields.text, id: uuid() })" />
-<ul data-bind="foreach: messages.groupBy(x => x.id)">
-    <li data-bind="text: underlyingObservable.select(x => x.text)" />
-</ul>

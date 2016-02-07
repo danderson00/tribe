@@ -1,1 +1,0 @@
-C:\Projects\Tribe\node_modules\samples\navigation\bin\Debug\navigation.exe.config

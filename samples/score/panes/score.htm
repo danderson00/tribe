@@ -1,8 +1,0 @@
-<div data-bind="actor: 'game'"></div>
-<div data-bind="foreach: envelopes.players()">
-    <button class="score" data-bind="click: $root.publish('point', { playerId: key })">
-        <span data-bind="text: selectedName()"></span><br />
-        <span data-bind="text: points()"></span>
-    </button>
-</div>
-<button data-bind="click: publish('ui.home')">Home</button>
