@@ -11,6 +11,10 @@ https://github.com/danderson00/score
 
 https://github.com/danderson00/tribe.samples
 
+## More Information
+
+The website http://tribejs.com/ is built on and contains information about an early release of tribe, where communication functionality is built on Microsoft SignalR. The product has significantly evolved since the release of that website and is now completely built on Node.js. 
+
 ## Running Tests
 
 ### Install
