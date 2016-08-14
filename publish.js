@@ -1,4 +1,5 @@
 var fs = require('fs'),
+    child_process = require('child_process'),
 
     modules = [
         'tribe',
@@ -11,10 +12,12 @@ var fs = require('fs'),
     ]
 
 modules.forEach(name => {
-    var packageFilename = __dirname + '/node_modules/' + name + '/package.json',
+    var modulePath = __dirname + '/node_modules/' + name,
+        packageFilename = modulePath + '/package.json',
         package = require(packageFilename)
     package.version = incrementBuild(package.version)
     fs.writeFileSync(packageFilename, JSON.stringify(package, null, 2))
+    //child_process.execSync('npm', ['publish', './node_modules/' + name])
 })
 
 function incrementBuild(version) {
