@@ -1,0 +1,20 @@
+.graph path.line {
+    stroke-width: 3;
+    fill: none;
+}
+
+.graph .axis path {
+    display: none;
+}
+
+.graph .axis .tick:nth-child(2) line {
+    stroke: black !important;
+}
+
+.graph .axis .tick:nth-child(odd) line {
+    display: none;
+}
+
+.graph .axis .tick:nth-child(even) line {
+    stroke: lightgrey;
+}
