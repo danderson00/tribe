@@ -13,7 +13,7 @@ https://github.com/danderson00/tribe.samples
 
 ## More Information
 
-The website http://tribejs.com/ is built on and contains information about an early release of tribe, where communication functionality is built on Microsoft SignalR. The product has significantly evolved since the release of that website and is now completely built on Node.js. 
+The website http://tribejs.azurewebsites.net/ is built on and contains information about an early release of tribe, where communication functionality is built on Microsoft SignalR. The product has significantly evolved since the release of that website and is now completely built on Node.js. 
 
 ## Running Tests
 
@@ -40,8 +40,7 @@ Tests for individual modules can be run by navigating to the relevant module fol
 tribe.composite tests are built using QUnit and can be run by executing the
 `host.js` module and opening a browser to `http://localhost:1678/Tests/`.
 
-Problems? Comments? WTFs?
--------------------------
+## Problems? Comments? WTFs?
 
 This is all highly experimental. Lots of dependencies. Shit is likely to not work.
 "It works on my machine." Ping me at @danderson00, more than happy to help.
